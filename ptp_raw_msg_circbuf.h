@@ -1,3 +1,5 @@
+/* The flexPTP project, (C) András Wiesner, 2024 */
+
 #ifndef FLEXPTP_PTP_RAW_MSG_CIRCBUF_H_
 #define FLEXPTP_PTP_RAW_MSG_CIRCBUF_H_
 

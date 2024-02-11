@@ -1,3 +1,5 @@
+/* The flexPTP project, (C) András Wiesner, 2024 */
+
 #ifndef FLEXPTP_OPTIONS_STM32H743_H_
 #define FLEXPTP_OPTIONS_STM32H743_H_
 

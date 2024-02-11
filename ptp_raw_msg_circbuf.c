@@ -1,3 +1,5 @@
+/* The flexPTP project, (C) András Wiesner, 2024 */
+
 #include <flexptp/ptp_raw_msg_circbuf.h>
 
 void ptp_circ_buf_init(PtpCircBuf * pCircBuf, RawPtpMessage * pMsgPool, uint8_t n)

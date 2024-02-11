@@ -1,3 +1,5 @@
+/* The flexPTP project, (C) András Wiesner, 2024 */
+
 #ifndef TASK_PTP_H_
 #define TASK_PTP_H_
 

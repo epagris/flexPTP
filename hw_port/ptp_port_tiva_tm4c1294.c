@@ -1,4 +1,6 @@
-#include "ptp_port_tiva_tm4c1295.h"
+/* The flexPTP project, (C) András Wiesner, 2024 */
+
+#include "ptp_port_tiva_tm4c1294.h"
 
 #include <stdint.h>
 #include <stdbool.h>

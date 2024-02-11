@@ -1,3 +1,5 @@
+/* The flexPTP project, (C) András Wiesner, 2024 */
+
 #ifndef FLEXPTP_CLI_CMDS_H_
 #define FLEXPTP_CLI_CMDS_H_
 

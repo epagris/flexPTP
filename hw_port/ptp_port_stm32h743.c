@@ -1,3 +1,5 @@
+/* The flexPTP project, (C) András Wiesner, 2024 */
+
 #include <flexptp/hw_port/flexptp_options_stm32h743.h>
 #include <flexptp/hw_port/ptp_port_stm32h743.h>
 #include <stdint.h>

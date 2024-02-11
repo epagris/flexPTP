@@ -1,3 +1,5 @@
+/* The flexPTP project, (C) András Wiesner, 2024 */
+
 #include "ptp_core.h"
 #include <ctype.h>
 #include <flexptp/cli_cmds.h>

@@ -1,3 +1,5 @@
+/* The flexPTP project, (C) András Wiesner, 2024 */
+
 #include "ptp_core.h"
 #include <flexptp/ptp_core.h>
 #include <flexptp/settings_interface.h>

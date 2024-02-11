@@ -1,3 +1,5 @@
+/* The flexPTP project, (C) András Wiesner, 2024 */
+
 #ifndef FLEXPTP_SETTINGS_INTERFACE_H_
 #define FLEXPTP_SETTINGS_INTERFACE_H_
 

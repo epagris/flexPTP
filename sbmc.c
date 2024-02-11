@@ -1,3 +1,5 @@
+/* The flexPTP project, (C) András Wiesner, 2024 */
+
 #include <flexptp/ptp_types.h>
 #include <flexptp/sbmc.h>
 

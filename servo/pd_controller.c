@@ -1,4 +1,4 @@
-/* (C) András Wiesner, 2021 */
+/* The flexPTP project, (C) András Wiesner, 2024 */
 
 #include <flexptp/ptp_core.h>
 #include <flexptp/servo/pd_controller.h>

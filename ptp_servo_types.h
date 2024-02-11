@@ -1,3 +1,5 @@
+/* The flexPTP project, (C) András Wiesner, 2024 */
+
 #ifndef FLEXPTP_SIM_PTP_SERVO_TYPES_H
 #define FLEXPTP_SIM_PTP_SERVO_TYPES_H
 

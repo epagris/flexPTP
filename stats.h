@@ -1,3 +1,5 @@
+/* The flexPTP project, (C) András Wiesner, 2024 */
+
 #ifndef FLEXPTP_STATS_H_
 #define FLEXPTP_STATS_H_
 

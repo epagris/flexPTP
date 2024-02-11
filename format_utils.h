@@ -1,4 +1,4 @@
-/* (C) András Wiesner, 2020-2022 */
+/* The flexPTP project, (C) András Wiesner, 2024 */
 
 #ifndef FLEXPTP_FORMAT_UTILS_H_
 #define FLEXPTP_FORMAT_UTILS_H_

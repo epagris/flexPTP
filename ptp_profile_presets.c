@@ -1,3 +1,5 @@
+/* The flexPTP project, (C) András Wiesner, 2024 */
+
 #include <flexptp/ptp_profile_presets.h>
 
 #define MAX_PROFILE_NAME_LENGTH (7)

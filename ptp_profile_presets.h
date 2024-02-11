@@ -1,3 +1,5 @@
+/* The flexPTP project, (C) András Wiesner, 2024 */
+
 #ifndef PTP_PROFILE_PRESETS_H_
 #define PTP_PROFILE_PRESETS_H_
 

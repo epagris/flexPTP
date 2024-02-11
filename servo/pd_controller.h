@@ -1,4 +1,4 @@
-/* (C) András Wiesner, 2021 */
+/* The flexPTP project, (C) András Wiesner, 2024 */
 
 #ifndef SERVO_PD_CONTROLLER_H_
 #define SERVO_PD_CONTROLLER_H_
