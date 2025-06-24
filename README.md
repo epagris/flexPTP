@@ -26,6 +26,22 @@ flexPTP offers the following capabilities:
 - provides a simple servo (controller) interface
 - automatically cooperates with certain CLI terminals
 
+> [!NOTE]
+> **The full documentation is available [here](https://epagris.com/dev-docs/flexPTP)!**
+
+## Platforms and examples
+
+The library package ships with hardware ports for several platforms, including:
+
+- **TM4C1294** (_lwIP_)
+  - Example: [EK-TM4C1294XL Connected LaunchPad flexPTP demo](https://github.com/epagris/flexPTP-demo-TM4C1294)
+- **STM32F4xx** (_EtherLib_/_lwip_)
+  - Example: [STM32 NUCLEO-F439ZI flexPTP demo](https://github.com/epagris/flexPTP-demo-NUCLEO-F439ZI)
+- **STM32F7xx** (_EtherLib_/_lwip_)
+  - Example: [STM32 NUCLEO-F746ZG flexPTP demo](https://github.com/epagris/flexPTP-demo-NUCLEO-F746ZG)
+- **STM32H7xx** (_EtherLib_/_lwip_)
+  - Example: [STM32 NUCLEO-H743ZI flexPTP demo](https://github.com/epagris/flexPTP-demo-NUCLEO-H743ZI), [STM32 **dual-core** NUCLEO-H745ZI-Q flexPTP demo](https://github.com/epagris/flexPTP-demo-NUCLEO-H745ZI-Q/)
+
 ## Requirements
 
 Apart from the access to a working C compiler, only the following two criteria must be met to compile flexPTP:
