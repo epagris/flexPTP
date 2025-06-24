@@ -1,0 +1,54 @@
+/** \page building Compiling the library
+
+# Compiling
+
+The library can be built in IDE managed mode or using the built-in CMake support. Using CMake is highly recommended. More on that \ref building.
+
+## CMake managed building
+
+1. Add the flexPTP directory to the CMake project as a subdirectory.
+2. Either pick a hardware port from pre-made ones (H743_LWIP, H743_ETHERLIB, F407_ETHERLIB, TM4C1294_LWIP) by setting the `FLEXPTP_HWPORT` CMake variable, or populate the `FLEXPTP_HWPORT_SRC` with the list of custom hardware port files. Bundled hardware ports can be automatically tailored to some compatible devices by specifying the MCU type (e.g. the STM32F407 port works with the STM32F439 device as well, so that setting `FLEXPTP_HWPORT` to `F439_{LWIP|ETHERLIB}}` makes flexPTP using the former port files).
+3. Set the `FLEXPTP_NSD` to the Network Stack Driver files and the `FLEXPTP_NETWORK_STACK` to the name of the network library or pick from the predefined set (LWIP, ETHERLIB). In the latter case, do not populate `FLEXPTP_NETWORK_STACK`.
+4. _Optionally_ select a predefined Clock servo algoritm (currently only PID is bundled) by setting the `FLEXPTP_SERVO` variable. If a custom servo is used, and the developer wants the servo to get compiled into the flexPTP library, then populate the `FLEXPTP_SERVO_SRC` variable with the list of custom servo files. Leaving both `FLEXPTP_SERVO` and `FLEXPTP_SERVO_SRC` variables empty results in a warning message during CMake configuration, however it does not necessarily results in a faulty operation. If servo functions are set correctly in the `flexptp_options.h` configuration file, then the linker will connect flexPTP and the custom servo.
+5. Place a completed `flexptp_options.h` onto a location that is accessible for the flexPTP module. Set the `FLEXPTP_INCLUDES` CMake variable so that the former requirement is satisfied.
+6. _Optionally_, set `FLEXPTP_CPU_PARAMS` and `FLEXPTP_COMPILE_DEFS` to pass target CPU parameters and C definitions.
+
+Building this way results in a static library (`libflexptp`) that is managed by CMake. This library must be linked to the project's output. _Optionally_, the name of the output can be suffixed by a tag for reasons by setting the `FLEXPTP_TARGET_TAG`.
+
+For more information about flexPTP's CMake variables, see `CMakeLists.txt`.
+
+### Example configuration:
+
+The following configuration instructs the flexPTP to:
+- use the bundled STM32F407 hardware port with lwIP bindings
+- load the bundled lwIP network stack driver (and link against the `lwipcore` library)
+- select the bundled PID controller as the clock servo
+
+~~~~~~~~~~~~~~~~~~~~~~~{cmake}
+set(FLEXPTP_HWPORT "F407_LWIP")
+set(FLEXPTP_NSD "LWIP")
+set(FLEXPTP_SERVO "PID")
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The CMake configuration output will be the following:
+
+~~~~~~~~~~~~~~~~~~~~~~~
+[cmake] flexPTP: 'F407_LWIP' hardware port selected
+[cmake] flexPTP: 'LWIP' network stack driver selected
+[cmake] flexPTP: 'PID' clock servo selected
+[cmake] flexPTP: linking against 'lwipcore' network library
+~~~~~~~~~~~~~~~~~~~~~~~
+
+## IDE managed or manual building
+
+1. Register all `*.c` and `*.h` files in the root folder as source file. Do NOT include the `hw_port` directory!
+2. Add the hardware port files if necessary. If a decision was made to pick one of packaged hardware ports, then add **ONLY one pair** of `ptp_port_XXXX.c/h` files from the `hw_port` port directory to the buildset. Repeat the former method for the Network Stack Driver, the network stack library and for the Clock Servo.
+3. Place a completed `flexptp_options.h` onto a location that is accessible for the compiler through the include path.
+
+This way the compilation target is determined by the build system. The build system's settings determine whether a static library is built or the flexPTP will be included into the project's output executable directly.
+
+## Precompiled library
+
+It is possible to build flexPTP separately as well. This way only header files and a precompiled library must be added to the project.
+
+*/

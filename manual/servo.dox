@@ -1,0 +1,20 @@
+/** \page servo Clock servo
+
+# Clock servo
+
+The flexPTP requires a clock servo to calculate how to tune the clock in steady state. A proper servo must define the following four functions:
+
+1. A function that initializes the servo. No parameters are passed. (refer to `PTP_SERVO_INIT()`)
+1. A function that deinitializes the servo. No parameters are passed. (refer to `PTP_SERVO_DEINIT()`)
+3. A function that resets the servo. No parameters passed. (refer to `PTP_SERVO_RESET()`)
+4. A function that runs the servo. Two parameters passed: the time error in nanoseconds and the synchronization cycle context (as a pointer to a `PtpServoAuxInput` object). (refer to `PTP_SERVO_RUN()`)
+
+Clock servo functions must be passed to the flexPTP core by filling the servo-related macros in the `flexptp_config.h` configuration file.
+
+Here we want to hightlight, that a servo init function is not constrained to only initialize the core of a controller. The developer is highly encouraged to include e.g. logging or debug functionality also in the controller.
+
+## Examples
+
+A PID-controller based servo is bundled to the flexPTP package: pid_controller.c, pid_controller.h
+
+*/

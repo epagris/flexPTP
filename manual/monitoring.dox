@@ -1,0 +1,232 @@
+/** \page monitoring Events and logging
+
+In the following flexPTP's detailed logging and monitoring features are described.
+
+# Logging
+
+The flexPTP library implements several kinds of automatic logging, that can be turned on and off using ptp_log_enable(). Predefined logging features are introduced below.
+
+All of these logging features are available through the CLI command `ptp log {def|corr|ts|info|locked|bmca} {on|off}` as well.
+
+## Default logging
+
+ID: `PTP_LOG_DEF`, CLI: `def`
+
+### Slave clock mode
+
+Definition: slave.c, ptp_perform_correction()
+
+Each synchronization cycle (after the reception of a `Sync` message) the below several current clock and network state variables are getting printed.
+
+| Field        | Description                                                                             |                              Format |
+| ------------ | --------------------------------------------------------------------------------------- | ----------------------------------: |
+| **T1**       | _reception time of the `Sync` message corresponding to the current cycle_               |                 (s, ns): `%%d %09d` |
+| **T4**       | _reception time (by the master) of the last `Delay_Req` message_                        |                 (s, ns): `%%d %09d` |
+| **Δt**       | _time error between us and the master (positive value means we're ahead of the master)_ | (s, ns), clock ticks: `%%d %09d %d` |
+| **addend**   | _hardware clock addend_                                                                 |                     (no unit) `%%u` |
+| **corr_ppb** | _relative clock tuning (correction) value in PPB_                                       |                          PPB: `%%f` |
+| **MPD**      | _network Mean Path Delay between us and the master_                                     |                          ns: `%%ld` |
+| **MSP**      | _measured `Sync` period_                                                                |                        ns: `%%09lu` |
+
+A logging header gets also issued when this logging capability is turned on.
+
+`T1 [s] | T1 [ns] | T4 [s] | T4 [ns] | Dt [s] | Dt [ns] | Dt [tick] | addend | corr_ppb | mpd_ns | sync_period_ns`
+
+#### Example
+
+```
+1750245425 776292333 1750245425 331768083 0       -27 -4 4260879975 57.835724 3414 1000057519
+1750245426 776299212 1750245426 456768081 0         3 0 4260879881 -22.133024 3395 1000006879
+1750245427 776371852 1750245427 581767839 0        45 7 4260879708 -40.697857 3381 1000072640
+1750245428 776412971 1750245428 706767677 0       -19 -3 4260879921 50.216988 3380 1000041119
+1750245429 776659935 1750245428 706767677 0        21 3 4260879779 -33.560795 3380 1000246964
+1750245430 776686174 1750245429 831767675 0       -16 -2 4260879907 30.222692 3412 1000026239
+1750245431 776744493 1750245430 956767513 0         8 1 4260879826 -19.040367 3385 1000058319
+1750245432 776754491 1750245432 081767431 0        14 2 4260879794 -7.616276 3391 1000009998
+1750245433 776922094 1750245433 206767028 0        39 6 4260879679 -27.130424 3369 1000167603
+1750245434 776946172 1750245434 331767266 0       -92 -15 4260880170 115.426010 3436 1000024078
+1750245435 776998572 1750245435 456767104 0        75 12 4260879586 -137.089859 3359 1000052400
+1750245436 777026330 1750245436 581767582 0       -32 -5 4260879943 84.012680 3412 1000027758
+1750245437 777052969 1750245437 706766780 0        69 11 4260879566 -88.535973 3338 1000026639
+```
+
+### Master clock mode
+
+Definition: master.c, PTP_MASTER_P2P_SLAVE_STATE_LOG(), ptp_master_commence_mpd_computation()
+
+Print slave recognition states and Mean Path Delay values in any P2P mode.
+
+Possible slave recognition state values:
+
+| State         | Description                                                                      |
+| ------------- | -------------------------------------------------------------------------------- |
+| `NONE`        | _No suitable slave has been recognized_                                          |
+| `CANDIDATE`   | _A slave has been responding consequently and qualification is in progress_      |
+| `ESTABLISHED` | _The slave clock has been accepted, a synchronization path has been established_ |
+
+#### Example
+
+```
+NONE -> CANDIDATE
+CANDIDATE -> ESTABLISHED
+```
+
+## BMCA state transition logging
+
+ID: `PTP_LOG_BMCA`, CLI: `bmca`
+
+### Master and Slave modes
+
+Definition: bmca.c, SBMC_PRINT_LOG()
+
+BMCA state transitions get printed. Possible states: `INITIALIZING`, `LISTENING`, `PRE_MASTER`, `MASTER`, `SLAVE`, `PASSIVE`, `UNCALIBRATED`, `FAULTY`, `DISABLED`. To learn more about the specific state definitions refer to the <a href="https://ieeexplore.ieee.org/document/9120376" target="_blank">IEEE 1588 Standard</a>.
+
+#### Example:
+
+```
+INITIALIZING -> LISTENING
+LISTENING -> PRE_MASTER
+PRE_MASTER -> MASTER
+```
+
+## Timestamp logging
+
+ID: `PTP_LOG_TIMESTAMPS`, CLI: `ts`
+
+### Slave mode
+
+Definition: slave.c, ptp_perform_correction()
+
+Print timestamps of received and transmitted messages tagged with the sequence number of the current synchronization cycle.
+
+#### E2E mode
+
+In E2E mode **four** timestamps get printed in each synchronization cycle, e.g.:
+
+```
+seqID: 26
+T1: 1750245349.770584019 <- Sync TX (master)
+T2: 1750245349.770584664 <- Sync RX (slave) 
+T3: 1750245348.831767544 <- Del_Req TX (slave) 
+T4: 1750245348.831776389 <- Del_Req RX (master)
+```
+
+#### P2P mode
+
+In P2P mode **six** timestamps get printed in each synchronization cycle, e.g.:
+
+```
+T1: 1750244937.371576883 <- Sync TX (master)
+T2: 1750244937.371583093 <- Sync RX (slave)
+t1: 1750244936.716173459 <- PDel_Req TX (our clock)
+t2: 1750244936.716174083 <- PDel_Req RX (their clock)
+t3: 1750244936.716270563 <- PDel_Resp TX (their clock)
+t4: 1750244936.716276743 <- PDel_Resp RX (our clock)
+```
+
+### Master P2P mode
+
+Definition: master.c, ptp_master_commence_mpd_computation()
+
+In master mode the four Peer-Delay Mechanism-related timestamps are printed along the relevant correction fields, e.g.:
+
+```
+T1: 1750245156.806319789 <- PDelay_Req TX (master)
+T2: 1750245156.806323241 <- PDelay_Req RX (slave) 
+T3: 1750245156.806762292 <- PDelay_Resp TX (slave) 
+T4: 1750245156.806765637 <- PDelay_Resp RX (master)
+    000000000 -- 000000000 <- CF in PDelay_Resp and ..._Follow_Up
+```
+
+## Correction fields logging
+
+ID: `PTP_LOG_CORR_FIELD`, CLI: `corr`
+
+### Slave mode
+
+Definition: slave.c, ptp_slave_process_message()
+
+The correction fields of `Follow_Up`, `Delay_Resp`, `PDelay_Resp` and `PDel_Resp_Follow_Up` are printed.
+
+#### Example
+
+```
+C [Follow_Up]: 000238277
+```
+
+## Info notifications
+
+ID: `PTP_LOG_INFO`, CLI: `info`
+
+### Slave mode
+
+Definition: slave.c, ptp_perform_correction()
+
+The user gets notified of unexpected events occurred and exceptions.
+
+#### Example
+
+```
+Time difference has exceeded the coarse correction threshold [-1652684253ns], executing coarse correction!
+```
+
+## Clock has locked in our out notification
+
+ID: `PTP_LOG_LOCKED_STATE`, CLI: `locked`
+
+### Slave mode
+
+Definition: stats.c, ptp_collect_stats()
+
+The user gets notified of changes in the clock's accuracy. The clock is considered `LOCKED` if the filtered time error is less than PTP_ACCURACY_LIMIT_NS.
+
+#### Example
+
+```
+PTP LOCKED!
+PTP DIVERGED!
+```
+
+
+# User events
+
+The flexPTP enables the user to register a callback function that gets invoked whenever one of the following events occur in the core:
+
+| Name                                   | Description                                                                                   |
+| -------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `PTP_UEV_INIT_DONE`                    | The flexPTP core has been initialized.                                                        |
+| `PTP_UEV_RESET_DONE`                   | The flexPTP module has been reset.                                                            |
+| `PTP_UEV_SYNC_RECVED`                  | A Sync message has been received (slave)                                                      |
+| `PTP_UEV_SYNC_SENT`                    | A Sync message has eebn sent (master)                                                         |
+| `PTP_UEV_FOLLOW_UP_RECVED`             | A Follow_Up message has been received (slave)                                                 |
+| `PTP_UEV_DELAY_REQ_RECVED`             | A Delay_Req had been received (master)                                                        |
+| `PTP_UEV_DELAY_REQ_SENT`               | A Delay_Req had been sent (slave)                                                             |
+| `PTP_UEV_DELAY_RESP_RECVED`            | A Delay_Resp had been received (slave)                                                        |
+| `PTP_UEV_DELAY_RESP_SENT`              | A Delay_Resp had been sent (master)                                                           |
+| `PTP_UEV_PDELAY_REQ_RECVED`            | A PDelay_Req had been received (master/slave)                                                 |
+| `PTP_UEV_PDELAY_REQ_SENT`              | A PDelay_Req had been sent (master/slave)                                                     |
+| `PTP_UEV_PDELAY_RESP_RECVED`           | A PDelay_Resp had been received (master/slave)                                                |
+| `PTP_UEV_PDELAY_RESP_SENT`             | A PDelay_Resp had been sent (master/slave)                                                    |
+| `PTP_UEV_PDELAY_RESP_FOLLOW_UP_RECVED` | A PDelay_Resp_Follow_Up had been received (master/slave)                                      |
+| `PTP_UEV_ANNOUNCE_SENT`                | An Announce message has been sent (master)                                                    |
+| `PTP_UEV_ANNOUNCE_RECVED`              | An Announce message has been received (master/slave)                                          |
+| `PTP_UEV_LOCKED`                       | The average clock accuracy is sufficient.                                                     |
+| `PTP_UEV_UNLOCKED`                     | Our clock has deviated from the master in average.                                            |
+| `PTP_UEV_BMCA_STATE_CHANGED`           | The BMCA state has changed.                                                                   |
+| `PTP_UEV_NETWORK_ERROR`                | Indication of lost messages or the absence of expected responses.                             |
+| `PTP_UEV_QUEUE_ERROR`                  | This event signals that the flexPTP's internal transmission output queue is full and blocked. |
+
+The callback function can be hooked into flexPTP either by calling ptp_set_user_event_callback() in runtime or by defining the PTP_USER_EVENT_CALLBACK macro in compile time. PTP_UEV_INIT_DONE can only be caught if the latter method is used.
+
+# Statistics
+
+The flexPTP library collects runtime statistics. Currently two fields are implemented in the PtpStats structure:
+
+| Field         | Description                                                              |
+| ------------- | ------------------------------------------------------------------------ |
+| `filtTimeErr` | _0.1 Hz IIR low-pass filtered time error_                                |
+| `locked`      | _indicates if the filtered time error is less than PTP_ACCURACY_LIMIT_NS |
+
+Statistics can be queried using ptp_get_stats(). Learn more in stats.h.
+
+*/

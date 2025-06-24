@@ -1,0 +1,43 @@
+/** \page cli CLI interface
+
+# Command Line Interface
+
+If a suitable Command Line Interface is defined in [compile time](#porting), the following commands are available:
+
+- `ptp reset`
+  - Resets flexPTP's internal state machines and statistics, but does not clear the PTP profile, clock offset and priority settings.
+- `ptp servo offset [offset_ns]`
+  - Set (if given) or query clock offset in nanoseconds. For special measurements and experiments this way local delay asymmetry can be easily compensated.
+- `ptp log {def|corr|ts|info|locked|bmca} {on|off}`    
+  - Turn logging on or off. For the parameters see [Logging and monitoring](#monitoring).
+- `ptp master [[un]prefer] [clockid]`
+  - Make this device follow ('prefer') or unfollow a specific master clock. If no parameters are passed, then the current master's clock identity is printed.
+- `ptp info`
+  - Print general PTP information: our clock ID and the master's clock ID
+- `ptp domain [domain]`                                
+  - Print or set PTP domain.
+- `ptp addend [addend]`
+  - Print or set the addend, the hardware clock tuning word. Setting this directly influences the clock. If manual control over the clock was desired, disable the servo before.
+- `ptp transport [{ipv4|802.3}]`
+  - Set or get PTP transport layer.
+- `ptp delmech [{e2e|p2p}]`
+  - Set or get PTP delay mechanism
+- `ptp transpec [{def|gPTP}]`
+  - Set or get PTP transportSpecific field (majorSdoId). Currently only used when operating the gPTP profile.
+- `ptp profile [preset [<name>]]`
+  - Print or set PTP profile, or list available presets. Currently `default`, `defp2p` and `gPTP` presets are defined.
+- `ptp tlv [preset [name]|unload]`
+  - Get or set TLV-chain, or list available TLV presets. Currently only the `gptp` TLV-preset is defined.
+- `ptp pflags [<flags>]`                               
+  - Print or set profile flags. All possible profile flags are printed when this command is invoked in any form.
+- `ptp period <delreq|sync|ann> [<lp>|matched]`
+  - Print or set logarithmic `(P)Delay_Req`, `Sync` or `Announce` period. Minimum is -3 maximum is +4. `matched` makes `(P)Delay_Req` transmission triggered by the `Sync` reception, that's why this option is only meaningful when setting `(P)Delay_Req` period.
+- `ptp priority [<p1> <p2>]`
+  - Print or set clock priority fields (0-255)
+- `ptp coarse [threshold]`
+  - Print or set coarse correction kick-in threshold (nanoseconds)
+- `time [ns]`
+  - Print datetime, if `ns` is specified, time is returned in UNIX format
+
+
+*/

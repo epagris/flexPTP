@@ -1,0 +1,52 @@
+/** \page project_organization Project organization
+
+# Modules
+
+The flexPTP project is decomposed into smaller sections, modules that can be grouped based on their purpose. Almost each separate file represents a freestanding module.
+
+## Types, constants and definitions
+
+- \ref ptp_defs.h, \ref ptp_defs.c : Fundamental constants and definitions, like IGMP-groups, Ethernet addresses, ports, PTP header and message lengths, autocalculated values.
+- \ref ptp_types.h : Fundamental PTP types, PTP message types, PTP message bitfields, PTP value enumerations. The types for the core and BMC-algorithm's state machines are also defined here.
+- \ref ptp_servo_types.h : Definition of basic servo types.
+- \ref ptp_sync_cycle_data.h : Definition of the PTP synchronization cycle context type.
+
+## Settings
+
+- \ref settings_interface.h, \ref settings_interface.c : Interface to control all the aspects of the PTP-engine, like profile settings (transport type, delay mechanism, domain, message period etc.), clock settings.
+- \ref profiles.h, \ref profiles.c : Separated definition for reporting current profile. Also global hints for identifying various aspects of a profile are declared and defined here.
+- \ref tlv.h, tlv.c : Simple TLV handling functions.
+
+## Logging and statistics
+
+- \ref logging.h, \ref logging.c : Logging options, which log to enable, or defined new logs.
+- \ref stats.h, \ref stats.c : Runtime statistics collection and aggregation.
+
+## Utilities
+
+- \ref timeutils.c, \ref timeutils.h : Storage class definitions for timestamps and operations on time values. Time printing is also defined in here.
+- \ref msg_utils.c, \ref msg_utils.h : Functions that deal with actual PTP messages; they extract or insert headers timestamps or any data of other kind.
+- \ref format_utils.c, \ref format_utils.h : Format conversion functions between network and host byte order and conversion functions between PTP logarithmic interval designator and time duration value.
+- \ref clock_utils.c, \ref clock_utils.h : Clock identity related operations and PPS offset management.
+
+## Messaging
+
+- \ref ptp_raw_msg_circbuf.c, \ref ptp_raw_msg_circbuf.h : Circular buffer for accepting and omitting PTP messages.
+
+## Events
+
+- \ref event.c, event.h : Core and user events.
+
+## Core:
+
+- \ref ptp_core.c, ptp_core.h : Core of the PTP engine, storing and loading configurations.
+
+- \ref bmca.c, \ref bmca.h : Best Master Clock Algorithm function implementation.
+- \ref common.c, common.h : Functionality used by both Slave and Master modules.
+- \ref slave.c, slave.h : Slave clock functionality, message processing, clock tuning.
+- \ref master.c, master.h : Master clock functionality, message processing.
+
+- \ref task_ptp.c, \ref task_ptp.h : The entry point of the whole PTP-implementation. Calling reg_task_ptp() initializes the PTP-engine, invoking unreg_task_ptp() shuts it down
+
+*/
+

@@ -1,0 +1,18 @@
+/** \page examples Examples
+
+# All-around examples
+
+- **TM4C1294** (_lwIP_)
+  - Example: [EK-TM4C1294XL Connected LaunchPad flexPTP demo](https://gitea.epagris.com/epagris/flexPTP-demo-TM4C1294)
+- **STM32F4xx** (_EtherLib_/_lwip_)
+  - Example: [STM32 NUCLEO-F439ZI flexPTP demo](https://gitea.epagris.com/epagris/flexPTP-demo-NUCLEO-F439ZI.git)
+- **STM32F7xx** (_EtherLib_/_lwip_)
+  - Example: [STM32 NUCLEO-F746ZG flexPTP demo](https://gitea.epagris.com/epagris/flexPTP-demo-NUCLEO-F746ZG)
+- **STM32H7xx** (_EtherLib_/_lwip_)
+  - Example: [STM32 NUCLEO-H743ZI flexPTP demo](https://gitea.epagris.com/epagris/flexPTP-demo-NUCLEO-H743ZI2), [STM32 **dual-core** NUCLEO-H745ZI-Q flexPTP demo](https://gitea.epagris.com/epagris/flexPTP-demo-NUCLEO-H745ZI-Q/)
+
+# Modified drivers
+
+- \subpage H743_ethernetif_modifications
+
+*/

@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="131.64871mm"
+   height="67.083008mm"
+   viewBox="0 0 131.64871 67.083008"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="simplified_bmca_state_chart.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="245.0125"
+     inkscape:cy="131.52186"
+     inkscape:window-width="1920"
+     inkscape:window-height="1172"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:page
+       x="0"
+       y="0"
+       width="131.64871"
+       height="67.083008"
+       id="page9"
+       margin="2"
+       bleed="0" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1">
+    <marker
+       style="overflow:visible"
+       id="Triangle"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Triangle-6"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Triangle-4"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-7" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Triangle-64"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-9" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Triangle-64-6"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-9-3" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Triangle-6-4"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-5-8" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Triangle-0"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-4" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Réteg 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-35.890253,-49.879778)">
+    <g
+       id="g1"
+       transform="translate(-2.3884277,-22.865374)">
+      <circle
+         style="fill:none;stroke:#216778;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;paint-order:stroke fill markers"
+         id="path1"
+         cx="64.583443"
+         cy="84.198441"
+         r="9.3532887" />
+      <text
+         xml:space="preserve"
+         style="font-size:3px;line-height:1;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';letter-spacing:0px;fill:#216778;fill-opacity:1;stroke:none;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;paint-order:stroke fill markers"
+         x="56.810249"
+         y="85.264847"
+         id="text1"><tspan
+           sodipodi:role="line"
+           id="tspan1"
+           style="fill:#216778;fill-opacity:1;stroke:none;stroke-width:0.2"
+           x="56.810249"
+           y="85.264847">INITIALIZING</tspan></text>
+    </g>
+    <g
+       id="g2"
+       transform="translate(-2.5407214,1.7566419)">
+      <circle
+         style="fill:none;stroke:#216778;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;paint-order:stroke fill markers"
+         id="path1-3"
+         cx="64.583443"
+         cy="84.198441"
+         r="9.3532887" />
+      <text
+         xml:space="preserve"
+         style="font-size:3px;line-height:1;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';letter-spacing:0px;fill:#216778;fill-opacity:1;stroke:none;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;paint-order:stroke fill markers"
+         x="58.059029"
+         y="85.264847"
+         id="text1-5"><tspan
+           sodipodi:role="line"
+           id="tspan1-6"
+           style="fill:#216778;fill-opacity:1;stroke:none;stroke-width:0.2"
+           x="58.059029"
+           y="85.264847">LISTENING</tspan></text>
+    </g>
+    <g
+       id="g2-7-5-1"
+       transform="translate(40.918909,15.988618)">
+      <circle
+         style="fill:none;stroke:#216778;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;paint-order:stroke fill markers"
+         id="path1-0-9-9"
+         cx="64.583443"
+         cy="84.198441"
+         r="9.3532887" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.6px;line-height:1;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';letter-spacing:0px;fill:#216778;fill-opacity:1;stroke:none;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;paint-order:stroke fill markers"
+         x="64.565865"
+         y="85.264847"
+         id="text1-9-2-4"><tspan
+           sodipodi:role="line"
+           id="tspan1-3-2-7"
+           style="font-size:2.6px;text-align:center;text-anchor:middle;fill:#216778;fill-opacity:1;stroke:none;stroke-width:0.2"
+           x="64.565865"
+           y="85.264847">UNCALIBRATED</tspan></text>
+    </g>
+    <g
+       id="g2-6"
+       transform="translate(66.895223,15.988618)">
+      <circle
+         style="fill:none;stroke:#216778;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;paint-order:stroke fill markers"
+         id="path1-3-1"
+         cx="64.583443"
+         cy="84.198441"
+         r="9.3532887" />
+      <text
+         xml:space="preserve"
+         style="font-size:3px;line-height:1;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';letter-spacing:0px;fill:#216778;fill-opacity:1;stroke:none;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;paint-order:stroke fill markers"
+         x="60.685493"
+         y="85.264847"
+         id="text1-5-5"><tspan
+           sodipodi:role="line"
+           id="tspan1-6-5"
+           style="fill:#216778;fill-opacity:1;stroke:none;stroke-width:0.2"
+           x="60.685493"
+           y="85.264847">SLAVE</tspan></text>
+    </g>
+    <g
+       id="g7">
+      <path
+         style="fill:#216778;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;marker-start:url(#Triangle);paint-order:stroke fill markers"
+         d="M 51.942573,61.333067 H 37.990253"
+         id="path2" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.2px;line-height:1;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#216778;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;paint-order:stroke fill markers"
+         x="45.271519"
+         y="60.717529"
+         id="text2"><tspan
+           sodipodi:role="line"
+           id="tspan2"
+           style="font-size:2.2px;fill:#000000;stroke:none;stroke-width:0.2"
+           x="45.271519"
+           y="60.717529">RESET</tspan></text>
+    </g>
+    <g
+       id="g3-3"
+       transform="rotate(90,44.938551,78.443252)">
+      <path
+         style="fill:#216778;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;marker-start:url(#Triangle-6);paint-order:stroke fill markers"
+         d="M 41.632432,61.333067 H 37.990253"
+         id="path2-7"
+         sodipodi:nodetypes="cc" />
+    </g>
+    <g
+       id="g4"
+       transform="translate(11.112499)">
+      <g
+         id="g2-7"
+         transform="translate(29.733168,-10.57729)">
+        <circle
+           style="fill:none;stroke:#216778;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;paint-order:stroke fill markers"
+           id="path1-0"
+           cx="64.583443"
+           cy="84.198441"
+           r="9.3532887" />
+        <text
+           xml:space="preserve"
+           style="font-size:3px;line-height:1;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';letter-spacing:0px;fill:#216778;fill-opacity:1;stroke:none;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;paint-order:stroke fill markers"
+           x="64.565865"
+           y="85.264847"
+           id="text1-9"><tspan
+             sodipodi:role="line"
+             id="tspan1-3"
+             style="text-align:center;text-anchor:middle;fill:#216778;fill-opacity:1;stroke:none;stroke-width:0.2"
+             x="64.565865"
+             y="85.264847">PRE_MASTER</tspan></text>
+      </g>
+      <g
+         id="g2-7-5"
+         transform="translate(80.389747,-10.57729)">
+        <circle
+           style="fill:none;stroke:#216778;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;paint-order:stroke fill markers"
+           id="path1-0-9"
+           cx="64.583443"
+           cy="84.198441"
+           r="9.3532887" />
+        <text
+           xml:space="preserve"
+           style="font-size:3px;line-height:1;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';letter-spacing:0px;fill:#216778;fill-opacity:1;stroke:none;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;paint-order:stroke fill markers"
+           x="64.565865"
+           y="85.264847"
+           id="text1-9-2"><tspan
+             sodipodi:role="line"
+             id="tspan1-3-2"
+             style="text-align:center;text-anchor:middle;fill:#216778;fill-opacity:1;stroke:none;stroke-width:0.2"
+             x="64.565865"
+             y="85.264847">MASTER</tspan></text>
+      </g>
+      <g
+         id="g1-4"
+         transform="translate(66.435879,13.177536)">
+        <g
+           id="g3-30"
+           transform="translate(0.1702234,-0.21592847)">
+          <path
+             style="fill:#216778;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;marker-start:url(#Triangle-4);paint-order:stroke fill markers"
+             d="M 67.568314,61.333067 H 37.990253"
+             id="path2-78"
+             sodipodi:nodetypes="cc" />
+          <text
+             xml:space="preserve"
+             style="font-size:1.5px;line-height:1;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#216778;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;paint-order:stroke fill markers"
+             x="53.048138"
+             y="60.537354"
+             id="text2-6"><tspan
+               sodipodi:role="line"
+               id="tspan2-8"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.5px;font-family:'Latin Modern Mono';-inkscape-font-specification:'Latin Modern Mono';fill:#000000;stroke:none;stroke-width:0.2"
+               x="53.048138"
+               y="60.537354">MASTER_QUALIFICATION_TIMEOUT</tspan></text>
+        </g>
+      </g>
+    </g>
+    <g
+       id="g3-2"
+       transform="rotate(-30,96.292025,9.1376788)" />
+    <g
+       id="g3-4"
+       transform="rotate(-21.156495,116.73128,-19.226719)">
+      <path
+         style="fill:#216778;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;marker-start:url(#Triangle-64);paint-order:stroke fill markers"
+         d="M 62.042802,61.046098 37.990253,61.333067"
+         id="path2-8"
+         sodipodi:nodetypes="cc" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.2px;line-height:1;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#216778;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;paint-order:stroke fill markers"
+         x="49.754257"
+         y="60.589081"
+         id="text2-7"><tspan
+           sodipodi:role="line"
+           id="tspan2-1"
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.2px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Italic';fill:#000000;stroke:none;stroke-width:0.2"
+           x="49.754257"
+           y="60.589081">&quot;We are the Best Master&quot;</tspan></text>
+    </g>
+    <g
+       id="g3-4-6"
+       transform="rotate(19.482605,-30.104665,174.07329)">
+      <path
+         style="fill:#216778;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;marker-start:url(#Triangle-64-6);paint-order:stroke fill markers"
+         d="M 62.042802,61.046098 37.990253,61.333067"
+         id="path2-8-1"
+         sodipodi:nodetypes="cc" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.2px;line-height:1;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#216778;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;paint-order:stroke fill markers"
+         x="49.754257"
+         y="60.589081"
+         id="text2-7-1"><tspan
+           sodipodi:role="line"
+           id="tspan2-1-5"
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.2px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Italic';fill:#000000;stroke:none;stroke-width:0.2"
+           x="49.754257"
+           y="60.589081">&quot;We are <tspan
+   style="font-weight:bold"
+   id="tspan4">NOT</tspan> the Best Master&quot;</tspan></text>
+    </g>
+    <g
+       id="g3-3-3"
+       transform="translate(78.494849,38.853992)">
+      <path
+         style="fill:#216778;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;marker-start:url(#Triangle-6-4);paint-order:stroke fill markers"
+         d="M 41.632432,61.333067 H 37.990253"
+         id="path2-7-0"
+         sodipodi:nodetypes="cc" />
+    </g>
+    <g
+       id="g6">
+      <path
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;marker-end:url(#Triangle);paint-order:stroke fill markers"
+         id="path4"
+         sodipodi:type="arc"
+         sodipodi:cx="83.612144"
+         sodipodi:cy="48.764126"
+         sodipodi:rx="8.0900717"
+         sodipodi:ry="8.0900717"
+         sodipodi:start="0.38442418"
+         sodipodi:end="5.0613656"
+         sodipodi:open="true"
+         sodipodi:arc-type="arc"
+         d="M 91.111758,51.798108 A 8.0900717,8.0900717 0 0 1 80.666986,56.299065 8.0900717,8.0900717 0 0 1 76.042933,45.908203 8.0900717,8.0900717 0 0 1 86.378434,41.161698"
+         transform="rotate(30)" />
+      <text
+         xml:space="preserve"
+         style="font-size:1.5px;line-height:1;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#216778;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;paint-order:stroke fill markers"
+         x="47.321812"
+         y="83.732964"
+         id="text2-6-3"><tspan
+           sodipodi:role="line"
+           id="tspan2-8-1"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.5px;font-family:'Latin Modern Mono';-inkscape-font-specification:'Latin Modern Mono';fill:#000000;stroke:none;stroke-width:0.2"
+           x="47.321812"
+           y="83.732964">LISTENING_</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.5px;font-family:'Latin Modern Mono';-inkscape-font-specification:'Latin Modern Mono';fill:#000000;stroke:none;stroke-width:0.2"
+           x="47.321812"
+           y="85.257744"
+           id="tspan5">TIMEOUT</tspan></text>
+    </g>
+    <g
+       id="g5">
+      <text
+         xml:space="preserve"
+         style="font-size:2.2px;line-height:1;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#216778;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;paint-order:stroke fill markers"
+         x="95.995888"
+         y="114.22672"
+         id="text2-1"><tspan
+           sodipodi:role="line"
+           id="tspan2-7"
+           style="font-size:2.2px;fill:#000000;stroke:none;stroke-width:0.2"
+           x="95.995888"
+           y="114.22672">MASTER DROPPED OUT</tspan></text>
+      <path
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;marker-end:url(#Triangle);paint-order:stroke fill markers"
+         d="m 131.47866,110.77974 v 4.08302 l -70.045463,-0.0147 V 98.229822"
+         id="path5"
+         sodipodi:nodetypes="cccc" />
+    </g>
+    <g
+       id="g7-5"
+       transform="rotate(-27.276719,139.79777,-78.333677)">
+      <path
+         style="fill:#216778;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;marker-end:url(#Triangle);paint-order:stroke fill markers"
+         d="M 73.589085,62.878568 37.990253,61.333067"
+         id="path2-9"
+         sodipodi:nodetypes="cc" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.2px;line-height:1;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#216778;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;paint-order:stroke fill markers"
+         x="56.371635"
+         y="59.22134"
+         id="text2-75"
+         transform="rotate(1.6544752)"><tspan
+           sodipodi:role="line"
+           id="tspan2-3"
+           style="font-size:2.2px;fill:#000000;stroke:none;stroke-width:0.2"
+           x="56.371635"
+           y="59.22134">&quot;<tspan
+   style="font-style:italic"
+   id="tspan7">A better Master was found (▲)</tspan>&quot;</tspan></text>
+    </g>
+    <g
+       id="g7-6"
+       transform="translate(73.339779,35.680429)">
+      <path
+         style="fill:#216778;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;marker-end:url(#Triangle);paint-order:stroke fill markers"
+         d="M 48.491492,61.333067 H 42.279139"
+         id="path2-4"
+         sodipodi:nodetypes="cc" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.2px;line-height:1;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#216778;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;paint-order:stroke fill markers"
+         x="45.436886"
+         y="60.849823"
+         id="text2-3"><tspan
+           sodipodi:role="line"
+           id="tspan2-33"
+           style="font-size:2.2px;fill:#000000;stroke:none;stroke-width:0.2"
+           x="45.436886"
+           y="60.849823">▲</tspan></text>
+    </g>
+    <g
+       id="g7-6-8"
+       transform="rotate(-90,87.732539,43.493213)">
+      <path
+         style="fill:#216778;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;marker-end:url(#Triangle-0);paint-order:stroke fill markers"
+         d="M 47.046488,61.333067 H 42.279139"
+         id="path2-4-9"
+         sodipodi:nodetypes="cc" />
+      <text
+         xml:space="preserve"
+         style="font-size:2.2px;line-height:1;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';text-align:center;letter-spacing:0px;text-anchor:middle;fill:#216778;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:square;stroke-miterlimit:4.1;stroke-opacity:1;paint-order:stroke fill markers"
+         x="44.793865"
+         y="60.831818"
+         id="text2-3-7"><tspan
+           sodipodi:role="line"
+           id="tspan2-33-7"
+           style="font-size:2.2px;fill:#000000;stroke:none;stroke-width:0.2"
+           x="44.793865"
+           y="60.831818">▲</tspan></text>
+    </g>
+  </g>
+</svg>
