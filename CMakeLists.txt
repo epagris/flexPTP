@@ -23,7 +23,7 @@ elseif(FLEXPTP_HWPORT MATCHES "^F[47][0-9][0-9]_LWIP$") # STM32F4xx
         port/example_ports/ptp_port_stm32f407_lwip.c
         port/example_ports/ptp_port_stm32f407_lwip.h
     )
-    set(FLEXPTP_HWPORT_BASE "H743_LWIP")
+    set(FLEXPTP_HWPORT_BASE "F407_LWIP")
 elseif(FLEXPTP_HWPORT MATCHES "^F[47][0-9][0-9]_ETHERLIB$")
     set(FLEXPTP_HWPORT_SRC
         port/example_ports/ptp_port_stm32f407_etherlib.c
