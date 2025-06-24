@@ -26,6 +26,9 @@ flexPTP offers the following capabilities:
 - provides a simple servo (controller) interface
 - automatically cooperates with certain CLI terminals
 
+> [!NOTE]
+> **The full documentation is available [here](https://epagris.com/dev-docs/flexPTP)!**
+
 ## Platforms and examples
 
 The library package ships with hardware ports for several platforms, including:
