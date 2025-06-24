@@ -26,22 +26,6 @@ flexPTP offers the following capabilities:
 - provides a simple servo (controller) interface
 - automatically cooperates with certain CLI terminals
 
-> [!NOTE]
-> **The full documentation is available [here](https://epagris.com/dev-docs/flexPTP)!**
-
-## Platforms and examples
-
-The library package ships with hardware ports for several platforms, including:
-
-- **TM4C1294** (_lwIP_)
-  - Example: [EK-TM4C1294XL Connected LaunchPad flexPTP demo](https://gitea.epagris.com/epagris/flexPTP-demo-TM4C1294)
-- **STM32F4xx** (_EtherLib_/_lwip_)
-  - Example: [STM32 NUCLEO-F439ZI flexPTP demo](https://gitea.epagris.com/epagris/flexPTP-demo-NUCLEO-F439ZI.git)
-- **STM32F7xx** (_EtherLib_/_lwip_)
-  - Example: [STM32 NUCLEO-F746ZG flexPTP demo](https://gitea.epagris.com/epagris/flexPTP-demo-NUCLEO-F746ZG)
-- **STM32H7xx** (_EtherLib_/_lwip_)
-  - Example: [STM32 NUCLEO-H743ZI flexPTP demo](https://gitea.epagris.com/epagris/flexPTP-demo-NUCLEO-H743ZI2), [STM32 **dual-core** NUCLEO-H745ZI-Q flexPTP demo](https://gitea.epagris.com/epagris/flexPTP-demo-NUCLEO-H745ZI-Q/)
-
 ## Requirements
 
 Apart from the access to a working C compiler, only the following two criteria must be met to compile flexPTP:
@@ -112,7 +96,7 @@ ptp log {def|corr|ts|info|locked|bmca} {on|off}    Turn on or off logging
 time [ns]                                          Print time
 ptp master [[un]prefer] [clockid]                  Master clock settings
 ptp info                                           Print PTP info
-ptp domain [domain]                                Print or get PTP domain
+ptp domain [domain]                                Print or set PTP domain
 ptp addend [addend]                                Print or set addend
 ptp transport [{ipv4|802.3}]                       Set or get PTP transport layer
 ptp delmech [{e2e|p2p}]                            Set or get PTP delay mechanism
