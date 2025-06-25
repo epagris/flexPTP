@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="245.0125"
-     inkscape:cy="131.52186"
+     inkscape:zoom="2"
+     inkscape:cx="249.25"
+     inkscape:cy="130.5"
      inkscape:window-width="1920"
      inkscape:window-height="1172"
      inkscape:window-x="0"
@@ -39,7 +39,10 @@
        height="67.083008"
        id="page9"
        margin="2"
-       bleed="0" />
+       bleed="0"
+       inkscape:export-filename="simplified_bmca_state_chart.png"
+       inkscape:export-xdpi="482.34424"
+       inkscape:export-ydpi="482.34424" />
   </sodipodi:namedview>
   <defs
      id="defs1">
