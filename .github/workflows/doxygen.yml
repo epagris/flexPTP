@@ -1,23 +1,22 @@
+name: Doxygen GitHub Pages Deploy Action
+
 on:
   push:
     branches:
       - master
       - doxygen-workflow
-permissions:
-  contents: write
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Generate and Deploy Doxygen Docs
-        uses: AgarwalSaurav/ghaction-doxygen-ghpages@release/v2
+      - uses: DenverCoder1/doxygen-github-pages-action@v2.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          working-directory: .
-          doxyfile-path: Doxyfile
-          html-output-folder: docs/html
           branch: gh-pages
-          # env_list_file: path/to/env.list  # Uncomment and set if needed (see below)
+          folder: docs/html
+          config_file: Doxyfile
+          doxygen_version: 1.9.6
