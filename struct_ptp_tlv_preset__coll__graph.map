@@ -1,0 +1,4 @@
+<map id="PtpTlvPreset" name="PtpTlvPreset">
+<area shape="rect" id="node1" title="PTP TLV presets." alt="" coords="33,93,137,119"/>
+<area shape="rect" id="node2" href="$struct_ptp_profile_tlv_element.html" title="PTP profile additional data list element." alt="" coords="5,5,164,31"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="PtpCircBuf" name="PtpCircBuf">
+<area shape="rect" id="node1" title="&quot;Ring&quot; buffer for PTP&#45;messages." alt="" coords="25,196,115,221"/>
+<area shape="rect" id="node2" href="$struct_raw_ptp_message.html" title="Raw PTP message structure." alt="" coords="5,108,135,133"/>
+<area shape="rect" id="node3" href="$struct_timestamp_i.html" title="Timestamp (signed)" alt="" coords="20,5,120,31"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="PtpServoAuxInput" name="PtpServoAuxInput">
+<area shape="rect" id="node1" title="Data to perform a full synchronization." alt="" coords="7,181,145,207"/>
+<area shape="rect" id="node2" href="$struct_ptp_sync_cycle_data.html" title="PTP synchronization cycle data." alt="" coords="5,93,147,119"/>
+<area shape="rect" id="node3" href="$struct_timestamp_i.html" title="Timestamp (signed)" alt="" coords="26,5,126,31"/>
+</map>

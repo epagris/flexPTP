@@ -1,0 +1,5 @@
+<map id="PtpConfig" name="PtpConfig">
+<area shape="rect" id="node1" title="Global storable&#45;loadable configuration." alt="" coords="63,93,147,119"/>
+<area shape="rect" id="node2" href="$struct_ptp_profile.html" title="PTP profile structure." alt="" coords="5,5,89,31"/>
+<area shape="rect" id="node3" href="$struct_timestamp_i.html" title="Timestamp (signed)" alt="" coords="113,5,213,31"/>
+</map>

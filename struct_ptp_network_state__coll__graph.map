@@ -1,0 +1,4 @@
+<map id="PtpNetworkState" name="PtpNetworkState">
+<area shape="rect" id="node1" title="Network state." alt="" coords="5,93,137,119"/>
+<area shape="rect" id="node2" href="$struct_timestamp_i.html" title="Timestamp (signed)" alt="" coords="21,5,121,31"/>
+</map>

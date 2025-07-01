@@ -1,0 +1,4 @@
+<map id="PtpSyncCycleData" name="PtpSyncCycleData">
+<area shape="rect" id="node1" title="PTP synchronization cycle data." alt="" coords="5,93,147,119"/>
+<area shape="rect" id="node2" href="$struct_timestamp_i.html" title="Timestamp (signed)" alt="" coords="26,5,126,31"/>
+</map>

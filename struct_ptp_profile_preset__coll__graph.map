@@ -1,0 +1,4 @@
+<map id="PtpProfilePreset" name="PtpProfilePreset">
+<area shape="rect" id="node1" title="PTP profile preset structure." alt="" coords="5,93,131,119"/>
+<area shape="rect" id="node2" href="$struct_ptp_profile.html" title="PTP profile structure." alt="" coords="26,5,110,31"/>
+</map>

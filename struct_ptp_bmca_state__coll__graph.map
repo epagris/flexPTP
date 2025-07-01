@@ -1,0 +1,4 @@
+<map id="PtpBmcaState" name="PtpBmcaState">
+<area shape="rect" id="node1" title="BMCA state." alt="" coords="18,93,133,119"/>
+<area shape="rect" id="node2" href="$struct_ptp_announce_body.html" title="Contents of a PTP Announce message without the common PTP header." alt="" coords="5,5,145,31"/>
+</map>

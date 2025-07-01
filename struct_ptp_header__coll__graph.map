@@ -1,0 +1,4 @@
+<map id="PtpHeader" name="PtpHeader">
+<area shape="rect" id="node1" title="PTP message header structure." alt="" coords="5,93,96,119"/>
+<area shape="rect" id="node2" href="$struct_ptp_flags.html" title="PTP flags structure." alt="" coords="11,5,90,31"/>
+</map>
