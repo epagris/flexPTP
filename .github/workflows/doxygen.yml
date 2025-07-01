@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - doxygen-workflow
   workflow_dispatch:
 
 jobs:
