@@ -27,7 +27,7 @@ flexPTP offers the following capabilities:
 - automatically cooperates with certain CLI terminals
 
 > [!NOTE]
-> **The full documentation is available [here](https://epagris.com/dev-docs/flexPTP)!**
+> **The full documentation is available [here](https://epagris.github.io/flexPTP/)!**
 
 ## Platforms and examples
 
@@ -51,13 +51,13 @@ Apart from the access to a working C compiler, only the following two criteria m
 
 ## Porting and options
 
-For elaborate information on porting and options refer to [Porting and configuration](https://epagris.com/dev-docs/flexPTP/porting.html).
+For elaborate information on porting and options refer to [Porting and configuration](https://epagris.github.io/flexPTP/porting.html).
 
 ### Network stack requirements
 
 The network stack (lwIP or EtherLib) must provide tools to communicate receive and transmit timestamps along the PTP messages. It's the developers responsibility to make the timestamps captured in the hardware available to the flexPTP module.
 
-For better understading how timestamps are fed into flexPTP, refer to [ptp_receive_enqueue()](https://epagris.com/dev-docs/flexPTP/task__ptp_8c.html#a73b5e9841da53dee4d9230d8a418b2ac) in [task_ptp.c](https://epagris.com/dev-docs/flexPTP/task__ptp_8c.html).
+For better understading how timestamps are fed into flexPTP, refer to [ptp_receive_enqueue()](https://epagris.github.io/flexPTP/task__ptp_8c.html#a73b5e9841da53dee4d9230d8a418b2ac) in [task_ptp.c](https://epagris.github.io/flexPTP/task__ptp_8c.html).
 
 #### lwIP
 
@@ -78,7 +78,7 @@ struct pbuf {
 };
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The low level lwIP-Ethernet driver must be instrumented to communicate receive and transmit timestamps. Fortunately, developing such an extension is not that difficult, at all. As an example you can find a guide [here](https://epagris.com/dev-docs/flexPTP/_h743_ethernetif_modifications.html) that showcases our amendments to the vendor-provided `ethernetif.c` low level lwIP Ethernet driver file for the STM32H743 platform. You can also find examples on PTP-compatible lwip low-level drivers among the [example projects](#platforms-and-examples).
+The low level lwIP-Ethernet driver must be instrumented to communicate receive and transmit timestamps. Fortunately, developing such an extension is not that difficult, at all. As an example you can find a guide [here](https://epagris.github.io/flexPTP/_h743_ethernetif_modifications.html) that showcases our amendments to the vendor-provided `ethernetif.c` low level lwIP Ethernet driver file for the STM32H743 platform. You can also find examples on PTP-compatible lwip low-level drivers among the [example projects](#platforms-and-examples).
 
 #### EtherLib
 
@@ -91,17 +91,17 @@ The flexPTP library expects hardware constants and parameters as well as default
 
 ## Building
 
-The preferred and encouraged way to compile the library is to harness the built-in CMake support, although, building using any IDE is possible. The only requirement is a working a C (cross-)compiler (e.g. `arm-none-eabi-gcc`). More, detailed description on this topic: [Compiling the library](https://epagris.com/dev-docs/flexPTP/building.html).
+The preferred and encouraged way to compile the library is to harness the built-in CMake support, although, building using any IDE is possible. The only requirement is a working a C (cross-)compiler (e.g. `arm-none-eabi-gcc`). More, detailed description on this topic: [Compiling the library](https://epagris.github.io/flexPTP/building.html).
 
 ## Usage
 
 ### Startup and shutdown
 
-The flexPTP module can be started/stopped by calling [reg_task_ptp()](https://epagris.com/dev-docs/flexPTP/task__ptp_8c.html#a2d483d3c32b3890d8c699018e48e45cd)/[unreg_task_ptp](epagris.com/dev-docs/flexPTP/task__ptp_8c.html#a5fd98059e4c2ec1004c74064e17cbe4c).
+The flexPTP module can be started/stopped by calling [reg_task_ptp()](https://epagris.github.io/flexPTP/task__ptp_8c.html#a2d483d3c32b3890d8c699018e48e45cd)/[unreg_task_ptp](https://epagris.github.io/flexPTP/task__ptp_8c.html#a5fd98059e4c2ec1004c74064e17cbe4c).
 
 ### Runtime operation
 
-The library has an extensive interface for manipulating the PTP operation mode during runtime (e.g. change profile, enable logging etc.), learn more [here](https://epagris.com/dev-docs/flexPTP/project_organization.html). The flexPTP includes a CLI interface as well, if a suitable CLI library is given, flexPTP offers the following multitude of CLI commands:
+The library has an extensive interface for manipulating the PTP operation mode during runtime (e.g. change profile, enable logging etc.), learn more [here](https://epagris.github.io/flexPTP/project_organization.html). The flexPTP includes a CLI interface as well, if a suitable CLI library is given, flexPTP offers the following multitude of CLI commands:
 
 ```
 ptp servo params [Kp Kd]                           Set or query K_p and K_d servo parameters

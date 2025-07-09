@@ -73,7 +73,7 @@ All messages indicated in the top figure channelled into the Slave module are pr
 
 Time error is computed using the following formula, based on the IEEE 1588 Standard:
 
-\f$ \Delta t = T_\text{Sync_TX} - T_\text{Sync_RX} - \text{MPD} - (\text{CF}_\text{Sync} + \text{CF}_\text{Follow_Up})\f$
+\f$ \Delta t = T_\text{Sync_RX} - T_\text{Sync_TX} - \text{MPD} - (\text{CF}_\text{Sync} + \text{CF}_\text{Follow_Up})\f$
 
 
 ### Mean Path Delay
