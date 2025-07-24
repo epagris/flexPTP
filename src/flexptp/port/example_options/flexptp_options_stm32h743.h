@@ -1,6 +1,9 @@
 #ifndef FLEXPTP_OPTIONS_STM32H743_H_
 #define FLEXPTP_OPTIONS_STM32H743_H_
 
+#define PTP_ADDEND_INTERFACE
+#define LWIP
+
 // -------------------------------------------
 // --- DEFINES FOR PORTING IMPLEMENTATION ----
 // -------------------------------------------
@@ -33,7 +36,6 @@ extern ETH_HandleTypeDef EthHandle;
 #define PTP_INCREMENT_NSEC (5)
 
 #define PTP_HW_INIT(increment, addend) ptphw_init(increment, addend)
-#define PTP_UPDATE_CLOCK(s,ns) 	ETH_UpdatePTPTime(&EthHandle, labs(s), abs(ns), (s * NANO_PREFIX + ns) < 0)
 #define PTP_SET_CLOCK(s,ns) ETH_InitPTPTime(&EthHandle, labs(s), abs(ns))
 #define PTP_SET_ADDEND(addend) ETH_SetPTPAddend(&EthHandle, addend)
 #define PTP_HW_GET_TIME(pt) ptphw_gettime(pt)

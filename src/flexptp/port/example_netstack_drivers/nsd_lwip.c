@@ -38,6 +38,9 @@ void ptp_nsd_igmp_join_leave(bool join) {
 }
 
 void ptp_nsd_init(PtpTransportType tp, PtpDelayMechanism dm) {
+    // lock LWIP core
+    LOCK_TCPIP_CORE();
+
     // leave current IGMP group if applicable
     ptp_nsd_igmp_join_leave(false);
 
@@ -80,6 +83,9 @@ void ptp_nsd_init(PtpTransportType tp, PtpDelayMechanism dm) {
 
     // join new IGMP group
     ptp_nsd_igmp_join_leave(true);
+
+    // unlock LWIP core
+    UNLOCK_TCPIP_CORE();
 }
 
 static void ptp_receive_cb(void *pArg, struct udp_pcb *pPCB, struct pbuf *pP, const ip_addr_t *pAddr, uint16_t port) {
@@ -128,6 +134,9 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg) {
     p->tag = pMsg;
     p->tx_cb = ptp_transmit_cb;
 
+    // lock LWIP core
+    LOCK_TCPIP_CORE();
+
     // narrow down by transport type
     if (TP == PTP_TP_IPv4) {
         struct udp_pcb *conn = (mc == PTP_MC_EVENT) ? PTP_L4_EVENT : PTP_L4_GENERAL;    // select connection by message type
@@ -138,6 +147,9 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg) {
         const uint8_t *ethaddr = (DM == PTP_DM_E2E) ? PTP_ETHERNET_PRIMARY : PTP_ETHERNET_PEER_DELAY; // select destination address by delmech.
         ethernet_output(netif_default, p, (struct eth_addr *)netif_default->hwaddr, (struct eth_addr *)ethaddr, ETHERTYPE_PTP);
     }
+
+    // unlock LWIP core
+    UNLOCK_TCPIP_CORE();
 
     pbuf_free(p); // release buffer
 }

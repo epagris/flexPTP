@@ -100,7 +100,11 @@ static void ptp_common_init(const uint8_t *hwa) {
     nsToTsI(&S.hwoptions.offset, PTP_DEFAULT_SERVO_OFFSET);
 
     // initialize hardware
+#ifdef PTP_ADDEND_INTERFACE
     PTP_HW_INIT(PTP_INCREMENT_NSEC, (uint32_t)PTP_ADDEND_INIT);
+#elif defined(PTP_HLT_INTERFACE)
+    PTP_HW_INIT();
+#endif
 
     // initialize controller
     PTP_SERVO_INIT();
@@ -166,17 +170,8 @@ void ptp_reset() {
     // pause the heartbeat timer
     ptp_stop_heartbeat_tmr();
 
-    // ------------------------
-
     /* ---- COMMON ---- */
-
-    // reset subsystem states...
-    S.hwclock.addend = PTP_ADDEND_INIT; // HW clock state
-    PTP_SET_ADDEND(S.hwclock.addend);
     memset(&S.network, 0, sizeof(PtpNetworkState)); // network state
-
-    // reset controller
-    PTP_SERVO_RESET();
 
     // reinitialize the Network Stack Driver
     ptp_nsd_init(ptp_get_transport_type(), ptp_get_delay_mechanism());

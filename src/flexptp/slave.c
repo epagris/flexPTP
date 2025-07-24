@@ -33,6 +33,26 @@
 // --------------
 
 /**
+ * Clock tuning.
+ *
+ * @param tuning_ppb clock tuning in PPB
+ */
+static void ptp_tune_clock(float tuning_ppb) {
+#ifdef PTP_ADDEND_INTERFACE
+    int64_t compAddend = (int64_t)S.hwclock.addend + (int64_t)(corr_ppb * PTP_ADDEND_CORR_PER_PPB_F); // compute addend value
+    S.hwclock.addend = MIN(compAddend, 0xFFFFFFFF);                                                   // limit to 32-bit range
+    PTP_SET_ADDEND(S.hwclock.addend);                                                                 // write addend into hardware
+#elif defined(PTP_HLT_INTERFACE)
+    S.hwclock.tuning_ppb += tuning_ppb;
+    PTP_SET_TUNING(S.hwclock.tuning_ppb);
+#endif
+}
+
+#define PTP_FC_SKEW_CORRECTION_CYCLES (4)  ///< Fast compensation: no. of skew correction cycles
+#define PTP_FC_TIME_CORRECTION_CYCLES (1)  ///< Fast compensation: no. of time correction cycles
+#define PTP_FC_TIME_PROPAGATION_CYCLES (2) //< Fast compensation: no. of time propagation cycles
+
+/**
  * Perform clock correction based on gathered timestamps.
  */
 static void ptp_perform_correction() {
@@ -81,6 +101,8 @@ static void ptp_perform_correction() {
                (int32_t)S.slave.scd.t[5].sec, S.slave.scd.t[5].nanosec);
     }
 
+    // ------------------------------
+
     // variable for later substraction of summed correction fields
     TimestampI cf = {0, 0};
     nsToTsI(&cf, S.slave.scd.cf[T1] + S.slave.scd.cf[T2]);
@@ -96,59 +118,149 @@ static void ptp_perform_correction() {
     // normalize time difference (eliminate malformed time value issues)
     normTime(&d);
 
-    // translate time difference into clock tick unit
-    int32_t d_ticks = tsToTick(&d, PTP_CLOCK_TICK_FREQ_HZ);
+    // ------------------------------
 
-    // if time difference is at least one second, then jump the clock
-    int64_t d_ns = nsI(&d);
-    if (llabs(d_ns) > S.slave.coarseLimit) {
-        PTP_SET_CLOCK((int32_t)syncMa.sec, syncMa.nanosec);
-
-        CLILOG(S.logging.info, "Time difference has exceeded the coarse correction threshold [%ldns], executing coarse correction!\n", d_ns);
-
-        S.slave.prevSyncMa = syncMa;
-
-        return;
+    // fill the previous state variables
+    if (!nonZeroI(&S.slave.prevSyncMa) || !nonZeroI(&S.slave.prevSyncSl) || !nonZeroI(&S.slave.prevTimeError)) {
+        goto retain_cycle_data;
     }
+
+    // ------------------------------
+
+    // determine the Sync period
+    int64_t measSyncPeriod_ns;
+    // // if momentarily sync interval is not directly measurable, use the nominal value
+    // if (S.profile.logDelayReqPeriod == PTP_LOGPER_SYNCMATCHED && S.profile.delayMechanism == PTP_DM_E2E) {
+    //     measSyncPeriod_ns = S.slave.messaging.syncPeriodMs * 1E+06;
+    // } else { // if accurately measurable...
+    TimestampI measSyncPeriod;
+    subTime(&measSyncPeriod, &syncMa, &(S.slave.prevSyncMa));
+    measSyncPeriod_ns = nsI(&measSyncPeriod);
+    // }
+
+    // ------------------------------
+
+    // if time difference is greater than the predefined threshold then jump the clock
+    int64_t d_ns = nsI(&d);
+    PtpFastCompState fcs = S.slave.fastCompState;
+    if ((llabs(d_ns) > S.slave.coarseLimit) || (fcs != PTP_FC_IDLE)) {
+        if (fcs == PTP_FC_IDLE) {
+            // reset the servo
+            PTP_SERVO_RESET();
+
+            // print info
+            CLILOG(S.logging.info, "Time difference has exceeded the coarse correction threshold [%ldns], compensation commenced!\n", d_ns);
+        }
+
+        uint8_t fccntr = S.slave.fastCompCntr;
+        switch (fcs) {
+        case PTP_FC_IDLE:
+            fcs = PTP_FC_SKEW_CORRECTION;
+            fccntr = 0;
+        case PTP_FC_SKEW_CORRECTION:
+            if (fccntr == PTP_FC_SKEW_CORRECTION_CYCLES) {
+                fcs = PTP_FC_TIME_CORRECTION;
+                fccntr = 0;
+            }
+            break;
+        case PTP_FC_TIME_CORRECTION:
+            if (fccntr == PTP_FC_TIME_CORRECTION_CYCLES) {
+                fcs = PTP_FC_TIME_CORRECTION_PROPAGATION;
+                fccntr = 0;
+            }
+            break;
+        case PTP_FC_TIME_CORRECTION_PROPAGATION:
+            if (fccntr == PTP_FC_TIME_PROPAGATION_CYCLES) {
+                fcs = PTP_FC_IDLE;
+                fccntr = 0;
+            }
+            break;
+        }
+
+        // skew correction
+        if (fcs == PTP_FC_SKEW_CORRECTION) {
+            // calculate clock skew
+            TimestampI dt2;
+            subTime(&dt2, &syncSl, &S.slave.prevSyncSl);
+            int64_t dt2_ns = nsI(&dt2);
+            double skew = (double)(dt2_ns - measSyncPeriod_ns) / (double)(measSyncPeriod_ns);
+            double skew_compensation_ppb = -skew * 1E+09;
+
+            // compensate the clock skew
+            ptp_tune_clock(skew_compensation_ppb);
+
+            // log skew compensation
+            CLILOG(S.logging.info, "[%u/%u] Skew compensation: % 6.4f ppb\n", fccntr + 1, PTP_FC_SKEW_CORRECTION_CYCLES, skew_compensation_ppb);
+        } else if (fcs == PTP_FC_TIME_CORRECTION) { // time correction
+            // compensate time error
+            TimestampU tu;
+            PTP_HW_GET_TIME(&tu);
+            uint64_t t_ns = nsU(&tu);
+            t_ns -= d_ns;
+            TimestampI ti;
+            nsToTsI(&ti, t_ns);
+            PTP_SET_CLOCK((uint32_t)ti.sec, ti.nanosec);
+
+            // log time compensation
+            CLILOG(S.logging.info, "[%u/%u] Time compensation: %ld ns\n", fccntr + 1, PTP_FC_TIME_CORRECTION_CYCLES, d_ns);
+        } else if (fcs == PTP_FC_TIME_CORRECTION_PROPAGATION) {
+            CLILOG(S.logging.info, "[%u/%u] Waiting for time compensation to propagate.\n", fccntr + 1, PTP_FC_TIME_PROPAGATION_CYCLES, d_ns);
+        }
+
+        // maintain FC state
+        S.slave.fastCompState = fcs;
+        S.slave.fastCompCntr = fccntr + 1;
+
+        // retain sync cycle data
+        goto retain_cycle_data;
+    }
+
+    // ------------------------------
 
     // prepare data to pass to the controller
-    double measSyncPeriod_ns;
-    // if momentarily sync interval is not directly measurable, use the nominal value
-    if (S.profile.logDelayReqPeriod == PTP_LOGPER_SYNCMATCHED && S.profile.delayMechanism == PTP_DM_E2E) {
-        measSyncPeriod_ns = S.slave.messaging.syncPeriodMs * 1E+06;
-    } else { // if accurately measurable...
-        TimestampI measSyncPeriod;
-        subTime(&measSyncPeriod, &syncMa, &(S.slave.prevSyncMa));
-        measSyncPeriod_ns = nsI(&measSyncPeriod);
-    }
-
-    PtpServoAuxInput saux = {S.slave.scd, S.slave.messaging.logSyncPeriod, S.slave.messaging.syncPeriodMs, measSyncPeriod_ns};
+    PtpServoAuxInput saux = {S.slave.scd,
+                             S.slave.messaging.logSyncPeriod,
+                             S.slave.messaging.syncPeriodMs,
+                             measSyncPeriod_ns};
 
     // run controller
     float corr_ppb = PTP_SERVO_RUN(nsI(&d), &saux);
 
-    // compute addend value
-    int64_t compAddend = (int64_t)S.hwclock.addend + (int64_t)(corr_ppb * PTP_ADDEND_CORR_PER_PPB_F); // compute addend value
-    S.hwclock.addend = MIN(compAddend, 0xFFFFFFFF);                                                   // limit to 32-bit range
-
-    // write addend into hardware
-    PTP_SET_ADDEND(S.hwclock.addend);
+    // set clock tuning
+    ptp_tune_clock(corr_ppb);
 
     // collect statistics
     ptp_collect_stats(nsI(&d));
 
     // log on cli (if enabled)
-    CLILOG(S.logging.def, "%d %09d %d %09d %d " PTP_COLOR_BYELLOW "% 9d" PTP_COLOR_RESET " %d %u %f %ld %09lu\n",
+#ifdef PTP_ADDEND_INTERFACE
+    int32_t d_ticks = tsToTick(&d, PTP_CLOCK_TICK_FREQ_HZ);
+    CLILOG(S.logging.def, "%d %09d %d %09d %d " PTP_COLOR_BYELLOW "% 9d" PTP_COLOR_RESET " % 9d % 12u % 8.4f % 9ld % 9lu\n",
            (int32_t)syncMa.sec, syncMa.nanosec, (int32_t)delReqMa.sec, delReqMa.nanosec,
            (int32_t)d.sec, d.nanosec, d_ticks,
            S.hwclock.addend, corr_ppb, nsI(&S.network.meanPathDelay), (uint64_t)measSyncPeriod_ns);
+#elif defined(PTP_HLT_INTERFACE)
+    CLILOG(S.logging.def, "%d %09d %d %09d %d " PTP_COLOR_BYELLOW "% 9d" PTP_COLOR_RESET " % 8.4f % 8.4f % 9ld % 9lu\n",
+           (int32_t)syncMa.sec, syncMa.nanosec, (int32_t)delReqMa.sec, delReqMa.nanosec,
+           (int32_t)d.sec, d.nanosec,
+           S.hwclock.tuning_ppb, corr_ppb, nsI(&S.network.meanPathDelay), (uint64_t)measSyncPeriod_ns);
+#endif
 
     // call sync callback if defined
     if (S.slave.syncCb != NULL) {
+#ifdef PTP_ADDEND_INTERFACE
         S.slave.syncCb(nsI(&d), &S.slave.scd, S.hwclock.addend);
+#elif defined(PTP_HLT_INTERFACE)
+        S.slave.syncCb(nsI(&d), &S.slave.scd, S.hwclock.tuning_ppb);
+#endif
     }
 
+    // ---------------------
+
+retain_cycle_data:
     S.slave.prevSyncMa = syncMa;
+    S.slave.prevSyncSl = syncSl;
+    S.slave.prevTimeError = d;
 }
 
 /**
@@ -373,9 +485,26 @@ void ptp_slave_reset() {
     // clear Sync cycle data
     memset(&S.slave.scd, 0, sizeof(PtpSyncCycleData));
     S.slave.prevSyncMa = zeroTs;
+    S.slave.prevTimeError = zeroTs;
 
     // reset messaging state
     memset(&S.slave.messaging, 0, sizeof(PtpSlaveMessagingState));
+
+    // reset addend/tuning
+#ifdef PTP_ADDEND_INTERFACE
+    S.hwclock.addend = PTP_ADDEND_INIT; // HW clock state
+    PTP_SET_ADDEND(S.hwclock.addend);
+#elif defined(PTP_HLT_INTERFACE)
+    S.hwclock.tuning_ppb = 0.0;
+    PTP_SET_TUNING(0.0);
+#endif
+
+    // reset the controller
+    PTP_SERVO_RESET();
+
+    // reset fast correction state
+    S.slave.fastCompState = PTP_FC_IDLE;
+    S.slave.fastCompCntr = 0;
 }
 
 void ptp_slave_tick() {

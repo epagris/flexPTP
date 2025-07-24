@@ -20,7 +20,7 @@ typedef struct {
     // information about sync interval
     int8_t logMsgPeriod; ///< Logarithmic message period
     double msgPeriodMs; ///< Message period in ms
-    double measSyncPeriodNs; ///< Measured synchronization period (t1->t1)
+    int64_t measSyncPeriodNs; ///< Measured synchronization period (t1->t1)
 } PtpServoAuxInput;
 
 #endif /* FLEXPTP_SIM_PTP_SERVO_TYPES_H_ */

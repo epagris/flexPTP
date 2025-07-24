@@ -59,9 +59,18 @@ extern const uint8_t PTP_ETHERNET_PEER_DELAY[6]; ///< PTP's L2 Peer_Delay Ethern
 
 // ---- CALCULATED VALUES ----
 
-#define PTP_CLOCK_TICK_FREQ_HZ (1000000000 / PTP_INCREMENT_NSEC)                                                                   ///< Rated clock tick frequency
+// automatically select the ADDEND interface if nothing was specified
+#if !defined(PTP_ADDEND_INTERFACE) && !defined(PTP_HLT_INTERFACE)
+#define PTP_ADDEND_INTERFACE
+#endif
+
+// ADDEND interface parameter calculation
+#if defined(PTP_ADDEND_INTERFACE)
 #define PTP_ADDEND_INIT (((double)(0x100000000)) / (((double)(PTP_MAIN_OSCILLATOR_FREQ_HZ)) / ((double)(PTP_CLOCK_TICK_FREQ_HZ)))) ///< Initial addend value
 #define PTP_ADDEND_CORR_PER_PPB_F (((double)0x100000000) / ((double)PTP_INCREMENT_NSEC * PTP_MAIN_OSCILLATOR_FREQ_HZ))             ///< Addend/ppb ratio
+#endif
+
+#define PTP_CLOCK_TICK_FREQ_HZ (1000000000 / PTP_INCREMENT_NSEC) ///< Rated clock tick frequency
 
 // ---- AUTODEFINES ----------
 
@@ -160,18 +169,18 @@ extern const uint8_t PTP_ETHERNET_PEER_DELAY[6]; ///< PTP's L2 Peer_Delay Ethern
 // ---- NETWORK-HOST CONVERSIONS ----
 // -- These are STATICALLY COMPUTABLE macros! ---
 
-#define FLEXPTP_htonl(a)                    \
-        ((((a) >> 24) & 0x000000ff) |   \
-         (((a) >>  8) & 0x0000ff00) |   \
-         (((a) <<  8) & 0x00ff0000) |   \
-         (((a) << 24) & 0xff000000))
+#define FLEXPTP_htonl(a)          \
+    ((((a) >> 24) & 0x000000ff) | \
+     (((a) >> 8) & 0x0000ff00) |  \
+     (((a) << 8) & 0x00ff0000) |  \
+     (((a) << 24) & 0xff000000))
 
-#define FLEXPTP_ntohl(a)    FLEXPTP_htonl((a))
+#define FLEXPTP_ntohl(a) FLEXPTP_htonl((a))
 
-#define FLEXPTP_htons(a)                \
-        ((((a) >> 8) & 0x00ff) |    \
-         (((a) << 8) & 0xff00))
+#define FLEXPTP_htons(a)     \
+    ((((a) >> 8) & 0x00ff) | \
+     (((a) << 8) & 0xff00))
 
-#define FLEXPTP_ntohs(a)    FLEXPTP_htons((a))
+#define FLEXPTP_ntohs(a) FLEXPTP_htons((a))
 
 #endif /* FLEXPTP_PTP_DEFS_H_ */

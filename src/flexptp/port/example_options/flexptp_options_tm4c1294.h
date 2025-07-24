@@ -1,6 +1,9 @@
 #ifndef FLEXPTP_OPTIONS_TM4C1294_H_
 #define FLEXPTP_OPTIONS_TM4C1294_H_
 
+#define LWIP
+#define PTP_ADDEND_INTERFACE
+
 // -------------------------------------------
 // --- DEFINES FOR PORTING IMPLEMENTATION ----
 // -------------------------------------------

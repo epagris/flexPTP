@@ -2,7 +2,7 @@
 
 # Command Line Interface
 
-If a suitable Command Line Interface is defined in [compile time](#porting), the following commands are available:
+If a [suitable](#cli-registering-commands) Command Line Interface is defined in [compile time](#porting), the following commands are available:
 
 - `ptp reset`
   - Resets flexPTP's internal state machines and statistics, but does not clear the PTP profile, clock offset and priority settings.
@@ -17,7 +17,9 @@ If a suitable Command Line Interface is defined in [compile time](#porting), the
 - `ptp domain [domain]`                                
   - Print or set PTP domain.
 - `ptp addend [addend]`
-  - Print or set the addend, the hardware clock tuning word. Setting this directly influences the clock. If manual control over the clock was desired, disable the servo before.
+  - Print or set the addend, the hardware clock tuning word. Setting this directly influences the clock. If manual control over the clock was desired, disable the servo before. *This option in only available with the ADDEND-interface.*
+- `ptp tuning [tuning]`
+  - Print or set the clock tuning in PPB. Setting this directly influences the clock. If manual control over the clock was desired, disable the servo before. *This option in only available with the HLT-interface.*
 - `ptp transport [{ipv4|802.3}]`
   - Set or get PTP transport layer.
 - `ptp delmech [{e2e|p2p}]`
@@ -39,5 +41,30 @@ If a suitable Command Line Interface is defined in [compile time](#porting), the
 - `time [ns]`
   - Print datetime, if `ns` is specified, time is returned in UNIX format
 
+## Registering commands {#cli-registering-commands}
+
+_The following command is used for illustration:_
+`ptp priority [<p1> <p2>]   Print or set clock priority fields`
+
+The flexPTP expects a `CLI_REG_CMD(cmd_hintline, n_cmd, n_min_arg, cb)` macro with the below parameters. The function should return an `int` value. The returned value can be optionally used later to identify the registered commands.
+- `cmd_hintline`: a joint string with the command and the hint separated by *at least* one tabulator (`\t`) character (e.g. `ptp priority [<p1> <p2>]\tPrint or set clock priority fields`),
+- `n_cmd`: number of words in the command section (2 in this case: `ptp` and `priority`),
+- `n_min_arg`: minimum required number of arguments (0 in this case, since both parameters are optional)
+- `cb`: the callback function with the following signature: `int cb(const char ** ppArgs, uint8_t argc)`. The return value should be negative if the command execution fails, and 0 at successful processing.
+  - `ppArgs`: array of command parameters. If  `char **` typing is not viable with the first parameter, then use any equivalent, like `char[N]*`, etc. 
+  - `argc`: number of parameters.
+
+The library also expects a `CMD_FUNCTION(name)` macro to construct the command callback functions, e.g.
+```{C}
+#define CMD_FUNCTION(name) int (name) (const char ** ppArgs, uint8_t argc)
+```
+
+Using the two macro above, the command registration can be easily adapted to any type of CLI management system.
+
+To learn more about flexPTP's CLI command registration, refer to: cli_cmds.c.
+
+### Removing commands
+
+Optionally, define the `CLI_REMOVE_CMD(id)` macro that removes a CLI command. It will be invoked during the de-initialization of the library. The `id` is the numeric value returned by the `CLI_REG_CMD()` call.
 
 */
