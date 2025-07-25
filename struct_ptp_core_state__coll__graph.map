@@ -1,14 +1,14 @@
 <map id="PtpCoreState" name="PtpCoreState">
-<area shape="rect" id="node1" title="Giant PTP core state object." alt="" coords="617,286,724,311"/>
-<area shape="rect" id="node2" href="$struct_ptp_profile.html" title="PTP profile structure." alt="" coords="355,6,439,31"/>
-<area shape="rect" id="node3" href="$struct_ptp_announce_body.html" title="Contents of a PTP Announce message without the common PTP header." alt="" coords="5,75,145,101"/>
-<area shape="rect" id="node6" href="$struct_ptp_bmca_state.html" title="BMCA state." alt="" coords="340,119,455,145"/>
-<area shape="rect" id="node4" href="$struct_ptp_h_w_clock_state.html" title="Hardware clock state." alt="" coords="329,169,465,194"/>
-<area shape="rect" id="node5" href="$struct_timestamp_i.html" title="Timestamp (signed)" alt="" coords="25,297,125,322"/>
-<area shape="rect" id="node7" href="$struct_ptp_network_state.html" title="Network state." alt="" coords="331,297,463,322"/>
-<area shape="rect" id="node11" href="$struct_ptp_sync_cycle_data.html" title="PTP synchronization cycle data." alt="" coords="327,346,468,371"/>
-<area shape="rect" id="node8" href="$struct_ptp_stats.html" title="Structure for statistics." alt="" coords="359,395,435,421"/>
-<area shape="rect" id="node9" href="$struct_ptp_slave_messaging_state.html" title="PTP slave messaging state structure." alt="" coords="306,445,489,470"/>
-<area shape="rect" id="node10" href="$struct_ptp_master_messaging_state.html" title="PTP master messaging state structure." alt="" coords="301,494,493,519"/>
-<area shape="rect" id="node12" href="$struct_ptp_p2_p_slave_info.html" title="PTP P2P slave info structure;." alt="" coords="333,543,461,569"/>
+<area shape="rect" id="node1" title="Giant PTP core state object." alt="" coords="617,317,724,342"/>
+<area shape="rect" id="node2" href="$struct_ptp_profile.html" title="PTP profile structure." alt="" coords="355,7,439,33"/>
+<area shape="rect" id="node3" href="$struct_ptp_announce_body.html" title="Contents of a PTP Announce message without the common PTP header." alt="" coords="5,77,145,102"/>
+<area shape="rect" id="node6" href="$struct_ptp_bmca_state.html" title="BMCA state." alt="" coords="340,121,455,146"/>
+<area shape="rect" id="node4" href="$struct_ptp_h_w_clock_state.html" title="Hardware clock state." alt="" coords="329,170,465,195"/>
+<area shape="rect" id="node5" href="$struct_timestamp_i.html" title="Timestamp (signed)" alt="" coords="25,327,125,353"/>
+<area shape="rect" id="node7" href="$struct_ptp_network_state.html" title="Network state." alt="" coords="331,327,463,353"/>
+<area shape="rect" id="node11" href="$struct_ptp_sync_cycle_data.html" title="PTP synchronization cycle data." alt="" coords="327,377,468,402"/>
+<area shape="rect" id="node8" href="$struct_ptp_stats.html" title="Structure for statistics." alt="" coords="359,426,435,451"/>
+<area shape="rect" id="node9" href="$struct_ptp_slave_messaging_state.html" title="PTP slave messaging state structure." alt="" coords="306,475,489,501"/>
+<area shape="rect" id="node10" href="$struct_ptp_master_messaging_state.html" title="PTP master messaging state structure." alt="" coords="301,525,493,550"/>
+<area shape="rect" id="node12" href="$struct_ptp_p2_p_slave_info.html" title="PTP P2P slave info structure;." alt="" coords="333,574,461,599"/>
 </map>

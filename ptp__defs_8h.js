@@ -8,6 +8,7 @@ var ptp__defs_8h =
     [ "PTP_ACCURACY_LIMIT_NS", "ptp__defs_8h.html#a1fa31ce795774a0904d3d059cee26213", null ],
     [ "PTP_ADDEND_CORR_PER_PPB_F", "ptp__defs_8h.html#a6a201ce3980eb809d9ab9262999858de", null ],
     [ "PTP_ADDEND_INIT", "ptp__defs_8h.html#aac46f9712d10db597b03ae556afede2d", null ],
+    [ "PTP_ADDEND_INTERFACE", "ptp__defs_8h.html#ac421b80fbd859a58e3751d5525a3df60", null ],
     [ "PTP_ANNOUNCE_BODY_LENGTH", "ptp__defs_8h.html#a2551cda8a1e3076342c3a0bb44896093", null ],
     [ "PTP_ANNOUNCE_RECEIPT_TIMEOUT", "ptp__defs_8h.html#a3baebe9cb68cc75ce7c861070caa666e", null ],
     [ "PTP_BEST_CLOCK_CLASS", "ptp__defs_8h.html#aebf65db47fececde895184fcf51b408b", null ],

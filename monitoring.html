@@ -119,14 +119,14 @@ $(document).ready(function(){initNavTree('monitoring.html',''); initResizable();
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>In the following flexPTP's detailed logging and monitoring features are described.</p>
-<h1><a class="anchor" id="autotoc_md32"></a>
+<h1><a class="anchor" id="autotoc_md33"></a>
 Logging</h1>
 <p>The flexPTP library implements several kinds of automatic logging, that can be turned on and off using <a class="el" href="logging_8c.html#a8d85f9f4ac5038dc0902f11c0e2e3c72">ptp_log_enable()</a>. Predefined logging features are introduced below.</p>
 <p>All of these logging features are available through the CLI command <code>ptp log {def|corr|ts|info|locked|bmca} {on|off}</code> as well.</p>
-<h2><a class="anchor" id="autotoc_md33"></a>
+<h2><a class="anchor" id="autotoc_md34"></a>
 Default logging</h2>
 <p>ID: <code>PTP_LOG_DEF</code>, CLI: <code>def</code></p>
-<h3><a class="anchor" id="autotoc_md34"></a>
+<h3><a class="anchor" id="autotoc_md35"></a>
 Slave clock mode</h3>
 <p>Definition: <a class="el" href="slave_8c.html">slave.c</a>, <a class="el" href="slave_8c.html#aafe19c39152756b0911651260674330a">ptp_perform_correction()</a></p>
 <p>Each synchronization cycle (after the reception of a <code>Sync</code> message) the below several current clock and network state variables are getting printed.</p>
@@ -150,7 +150,7 @@ Slave clock mode</h3>
 </table>
 <p>A logging header gets also issued when this logging capability is turned on.</p>
 <p><code>T1 [s] | T1 [ns] | T4 [s] | T4 [ns] | Dt [s] | Dt [ns] | Dt [tick] | addend | corr_ppb | mpd_ns | sync_period_ns</code></p>
-<h4><a class="anchor" id="autotoc_md35"></a>
+<h4><a class="anchor" id="autotoc_md36"></a>
 Example</h4>
 <div class="fragment"><div class="line">1750245425 776292333 1750245425 331768083 0       -27 -4 4260879975 57.835724 3414 1000057519</div>
 <div class="line">1750245426 776299212 1750245426 456768081 0         3 0 4260879881 -22.133024 3395 1000006879</div>
@@ -165,7 +165,7 @@ Example</h4>
 <div class="line">1750245435 776998572 1750245435 456767104 0        75 12 4260879586 -137.089859 3359 1000052400</div>
 <div class="line">1750245436 777026330 1750245436 581767582 0       -32 -5 4260879943 84.012680 3412 1000027758</div>
 <div class="line">1750245437 777052969 1750245437 706766780 0        69 11 4260879566 -88.535973 3338 1000026639</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md36"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md37"></a>
 Master clock mode</h3>
 <p>Definition: <a class="el" href="master_8c.html">master.c</a>, <a class="el" href="master_8c.html#a50ba756ab7b29eb706f6faa4f7e56741">PTP_MASTER_P2P_SLAVE_STATE_LOG()</a>, <a class="el" href="master_8c.html#af9fe93fb1d3db8fe0c08fd7a8e3a5a19">ptp_master_commence_mpd_computation()</a></p>
 <p>Print slave recognition states and Mean Path Delay values in any P2P mode.</p>
@@ -180,30 +180,30 @@ Master clock mode</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>ESTABLISHED</code>   </td><td class="markdownTableBodyNone"><em>The slave clock has been accepted, a synchronization path has been established</em>   </td></tr>
 </table>
-<h4><a class="anchor" id="autotoc_md37"></a>
+<h4><a class="anchor" id="autotoc_md38"></a>
 Example</h4>
 <div class="fragment"><div class="line">NONE -&gt; CANDIDATE</div>
 <div class="line">CANDIDATE -&gt; ESTABLISHED</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md38"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md39"></a>
 BMCA state transition logging</h2>
 <p>ID: <code>PTP_LOG_BMCA</code>, CLI: <code>bmca</code></p>
-<h3><a class="anchor" id="autotoc_md39"></a>
+<h3><a class="anchor" id="autotoc_md40"></a>
 Master and Slave modes</h3>
 <p>Definition: <a class="el" href="bmca_8c.html">bmca.c</a>, <a class="el" href="bmca_8c.html#a656e08271c88df6642947d8b418d69fb">SBMC_PRINT_LOG()</a></p>
 <p>BMCA state transitions get printed. Possible states: <code>INITIALIZING</code>, <code>LISTENING</code>, <code>PRE_MASTER</code>, <code>MASTER</code>, <code>SLAVE</code>, <code>PASSIVE</code>, <code>UNCALIBRATED</code>, <code>FAULTY</code>, <code>DISABLED</code>. To learn more about the specific state definitions refer to the <a href="https://ieeexplore.ieee.org/document/9120376" target="_blank">IEEE 1588 Standard</a>.</p>
-<h4><a class="anchor" id="autotoc_md40"></a>
+<h4><a class="anchor" id="autotoc_md41"></a>
 Example:</h4>
 <div class="fragment"><div class="line">INITIALIZING -&gt; LISTENING</div>
 <div class="line">LISTENING -&gt; PRE_MASTER</div>
 <div class="line">PRE_MASTER -&gt; MASTER</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md41"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md42"></a>
 Timestamp logging</h2>
 <p>ID: <code>PTP_LOG_TIMESTAMPS</code>, CLI: <code>ts</code></p>
-<h3><a class="anchor" id="autotoc_md42"></a>
+<h3><a class="anchor" id="autotoc_md43"></a>
 Slave mode</h3>
 <p>Definition: <a class="el" href="slave_8c.html">slave.c</a>, <a class="el" href="slave_8c.html#aafe19c39152756b0911651260674330a">ptp_perform_correction()</a></p>
 <p>Print timestamps of received and transmitted messages tagged with the sequence number of the current synchronization cycle.</p>
-<h4><a class="anchor" id="autotoc_md43"></a>
+<h4><a class="anchor" id="autotoc_md44"></a>
 E2E mode</h4>
 <p>In E2E mode <b>four</b> timestamps get printed in each synchronization cycle, e.g.:</p>
 <div class="fragment"><div class="line">seqID: 26</div>
@@ -215,7 +215,7 @@ E2E mode</h4>
 <div class="ttc" id="aptp__sync__cycle__data_8h_html_a5d800c5f04f8638061876b9e32c6c508"><div class="ttname"><a href="ptp__sync__cycle__data_8h.html#a5d800c5f04f8638061876b9e32c6c508">T3</a></div><div class="ttdeci">#define T3</div><div class="ttdef"><b>Definition:</b> <a href="ptp__sync__cycle__data_8h_source.html#l00032">ptp_sync_cycle_data.h:32</a></div></div>
 <div class="ttc" id="aptp__sync__cycle__data_8h_html_a935a699e9bf1bffc5dad8738d3cd24c0"><div class="ttname"><a href="ptp__sync__cycle__data_8h.html#a935a699e9bf1bffc5dad8738d3cd24c0">T4</a></div><div class="ttdeci">#define T4</div><div class="ttdef"><b>Definition:</b> <a href="ptp__sync__cycle__data_8h_source.html#l00033">ptp_sync_cycle_data.h:33</a></div></div>
 <div class="ttc" id="aptp__sync__cycle__data_8h_html_ac16509a75e3d3fc46b9df1726be486ec"><div class="ttname"><a href="ptp__sync__cycle__data_8h.html#ac16509a75e3d3fc46b9df1726be486ec">T1</a></div><div class="ttdeci">#define T1</div><div class="ttdef"><b>Definition:</b> <a href="ptp__sync__cycle__data_8h_source.html#l00030">ptp_sync_cycle_data.h:30</a></div></div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md44"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md45"></a>
 P2P mode</h4>
 <p>In P2P mode <b>six</b> timestamps get printed in each synchronization cycle, e.g.:</p>
 <div class="fragment"><div class="line"><a class="code hl_define" href="ptp__sync__cycle__data_8h.html#ac16509a75e3d3fc46b9df1726be486ec">T1</a>: 1750244937.371576883 &lt;- Sync TX (master)</div>
@@ -224,7 +224,7 @@ P2P mode</h4>
 <div class="line">t2: 1750244936.716174083 &lt;- PDel_Req RX (their clock)</div>
 <div class="line">t3: 1750244936.716270563 &lt;- PDel_Resp TX (their clock)</div>
 <div class="line">t4: 1750244936.716276743 &lt;- PDel_Resp RX (our clock)</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md45"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md46"></a>
 Master P2P mode</h3>
 <p>Definition: <a class="el" href="master_8c.html">master.c</a>, <a class="el" href="master_8c.html#af9fe93fb1d3db8fe0c08fd7a8e3a5a19">ptp_master_commence_mpd_computation()</a></p>
 <p>In master mode the four Peer-Delay Mechanism-related timestamps are printed along the relevant correction fields, e.g.:</p>
@@ -233,38 +233,38 @@ Master P2P mode</h3>
 <div class="line"><a class="code hl_define" href="ptp__sync__cycle__data_8h.html#a5d800c5f04f8638061876b9e32c6c508">T3</a>: 1750245156.806762292 &lt;- PDelay_Resp TX (slave) </div>
 <div class="line"><a class="code hl_define" href="ptp__sync__cycle__data_8h.html#a935a699e9bf1bffc5dad8738d3cd24c0">T4</a>: 1750245156.806765637 &lt;- PDelay_Resp RX (master)</div>
 <div class="line">    000000000 -- 000000000 &lt;- CF in PDelay_Resp and ..._Follow_Up</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md46"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md47"></a>
 Correction fields logging</h2>
 <p>ID: <code>PTP_LOG_CORR_FIELD</code>, CLI: <code>corr</code></p>
-<h3><a class="anchor" id="autotoc_md47"></a>
+<h3><a class="anchor" id="autotoc_md48"></a>
 Slave mode</h3>
 <p>Definition: <a class="el" href="slave_8c.html">slave.c</a>, <a class="el" href="slave_8c.html#a591f9730a29b5536e2590e3689a813fe">ptp_slave_process_message()</a></p>
 <p>The correction fields of <code>Follow_Up</code>, <code>Delay_Resp</code>, <code>PDelay_Resp</code> and <code>PDel_Resp_Follow_Up</code> are printed.</p>
-<h4><a class="anchor" id="autotoc_md48"></a>
+<h4><a class="anchor" id="autotoc_md49"></a>
 Example</h4>
 <div class="fragment"><div class="line">C [Follow_Up]: 000238277</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md49"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md50"></a>
 Info notifications</h2>
 <p>ID: <code>PTP_LOG_INFO</code>, CLI: <code>info</code></p>
-<h3><a class="anchor" id="autotoc_md50"></a>
+<h3><a class="anchor" id="autotoc_md51"></a>
 Slave mode</h3>
 <p>Definition: <a class="el" href="slave_8c.html">slave.c</a>, <a class="el" href="slave_8c.html#aafe19c39152756b0911651260674330a">ptp_perform_correction()</a></p>
 <p>The user gets notified of unexpected events occurred and exceptions.</p>
-<h4><a class="anchor" id="autotoc_md51"></a>
+<h4><a class="anchor" id="autotoc_md52"></a>
 Example</h4>
 <div class="fragment"><div class="line">Time difference has exceeded the coarse correction threshold [-1652684253ns], executing coarse correction!</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md52"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md53"></a>
 Clock has locked in our out notification</h2>
 <p>ID: <code>PTP_LOG_LOCKED_STATE</code>, CLI: <code>locked</code></p>
-<h3><a class="anchor" id="autotoc_md53"></a>
+<h3><a class="anchor" id="autotoc_md54"></a>
 Slave mode</h3>
 <p>Definition: <a class="el" href="stats_8c.html">stats.c</a>, <a class="el" href="stats_8c.html#a8d09d27b8413f11a8996ed2b5494d0da">ptp_collect_stats()</a></p>
 <p>The user gets notified of changes in the clock's accuracy. The clock is considered <code>LOCKED</code> if the filtered time error is less than PTP_ACCURACY_LIMIT_NS.</p>
-<h4><a class="anchor" id="autotoc_md54"></a>
+<h4><a class="anchor" id="autotoc_md55"></a>
 Example</h4>
 <div class="fragment"><div class="line">PTP LOCKED!</div>
 <div class="line">PTP DIVERGED!</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md55"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md56"></a>
 User events</h1>
 <p>The flexPTP enables the user to register a callback function that gets invoked whenever one of the following events occur in the core:</p>
 <table class="markdownTable">
@@ -314,7 +314,7 @@ User events</h1>
 <td class="markdownTableBodyNone"><code>PTP_UEV_QUEUE_ERROR</code>   </td><td class="markdownTableBodyNone">This event signals that the flexPTP's internal transmission output queue is full and blocked.   </td></tr>
 </table>
 <p>The callback function can be hooked into flexPTP either by calling <a class="el" href="ptp__core_8c.html#a8c5a3c700b5c8e29e2a839a770409d9f">ptp_set_user_event_callback()</a> in runtime or by defining the PTP_USER_EVENT_CALLBACK macro in compile time. PTP_UEV_INIT_DONE can only be caught if the latter method is used.</p>
-<h1><a class="anchor" id="autotoc_md56"></a>
+<h1><a class="anchor" id="autotoc_md57"></a>
 Statistics</h1>
 <p>The flexPTP library collects runtime statistics. Currently two fields are implemented in the <a class="el" href="struct_ptp_stats.html" title="Structure for statistics.">PtpStats</a> structure:</p>
 <table class="markdownTable">

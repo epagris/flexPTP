@@ -4,6 +4,7 @@ var flexptp__options__stm32h743__etherlib_8h =
     [ "CLILOG", "flexptp__options__stm32h743__etherlib_8h.html#a916dcd9d22af4bd2d5c7c90958bf011a", null ],
     [ "ETHLIB", "flexptp__options__stm32h743__etherlib_8h.html#a1434e632edabd6da30e4704e4d7b88f6", null ],
     [ "ONOFF", "flexptp__options__stm32h743__etherlib_8h.html#a29b0fd9a4543125ef9b311c3e01f7d1b", null ],
+    [ "PTP_ADDEND_INTERFACE", "flexptp__options__stm32h743__etherlib_8h.html#ac421b80fbd859a58e3751d5525a3df60", null ],
     [ "PTP_HW_GET_TIME", "flexptp__options__stm32h743__etherlib_8h.html#acf5d43bb87550622768a5fe6a210402d", null ],
     [ "PTP_HW_INIT", "flexptp__options__stm32h743__etherlib_8h.html#a45ea2e992dddae826985c1cfc4b9c8db", null ],
     [ "PTP_INCREMENT_NSEC", "flexptp__options__stm32h743__etherlib_8h.html#afe6fb0be9af930d13c30a164a096cffc", null ],
@@ -13,6 +14,5 @@ var flexptp__options__stm32h743__etherlib_8h =
     [ "PTP_SERVO_RESET", "flexptp__options__stm32h743__etherlib_8h.html#a9667a238d1a36cd467bbfd3eb691ec11", null ],
     [ "PTP_SERVO_RUN", "flexptp__options__stm32h743__etherlib_8h.html#af05581fcddec191de3f30b4a373c5a92", null ],
     [ "PTP_SET_ADDEND", "flexptp__options__stm32h743__etherlib_8h.html#a342eded57d8df50e4ec8697696b3f1ad", null ],
-    [ "PTP_SET_CLOCK", "flexptp__options__stm32h743__etherlib_8h.html#a0b6a510e0ed2770e0e9e6b0b96ab1f5c", null ],
-    [ "PTP_UPDATE_CLOCK", "flexptp__options__stm32h743__etherlib_8h.html#a7ee84fc7f59502349cbc7f910d92c0d6", null ]
+    [ "PTP_SET_CLOCK", "flexptp__options__stm32h743__etherlib_8h.html#a0b6a510e0ed2770e0e9e6b0b96ab1f5c", null ]
 ];

@@ -118,20 +118,20 @@ $(document).ready(function(){initNavTree('servo.html',''); initResizable(); });
   <div class="headertitle"><div class="title">Clock servo </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md73"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md79"></a>
 Clock servo</h1>
 <p>The flexPTP requires a clock servo to calculate how to tune the clock in steady state. A proper servo must define the following four functions:</p>
 <ol type="1">
 <li>A function that initializes the servo. No parameters are passed. (refer to <code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#adf6e86bdb39695261a826be45ee06001">PTP_SERVO_INIT()</a></code>)</li>
 </ol>
 <ol type="1">
-<li>A function that deinitializes the servo. No parameters are passed. (refer to <code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#a61bf41647b76c270fe5bb7079eada447">PTP_SERVO_DEINIT()</a></code>)</li>
+<li>A function that de-initializes the servo. No parameters are passed. (refer to <code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#a61bf41647b76c270fe5bb7079eada447">PTP_SERVO_DEINIT()</a></code>)</li>
 <li>A function that resets the servo. No parameters passed. (refer to <code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#a9667a238d1a36cd467bbfd3eb691ec11">PTP_SERVO_RESET()</a></code>)</li>
 <li>A function that runs the servo. Two parameters passed: the time error in nanoseconds and the synchronization cycle context (as a pointer to a <code><a class="el" href="struct_ptp_servo_aux_input.html" title="Data to perform a full synchronization.">PtpServoAuxInput</a></code> object). (refer to <code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#af05581fcddec191de3f30b4a373c5a92">PTP_SERVO_RUN()</a></code>)</li>
 </ol>
 <p>Clock servo functions must be passed to the flexPTP core by filling the servo-related macros in the <code>flexptp_config.h</code> configuration file.</p>
-<p>Here we want to hightlight, that a servo init function is not constrained to only initialize the core of a controller. The developer is highly encouraged to include e.g. logging or debug functionality also in the controller.</p>
-<h2><a class="anchor" id="autotoc_md74"></a>
+<p>Here we want to highlight that a servo init function is not constrained to only initialize the core of a controller. The developer is highly encouraged to include e.g. logging or debug functionality also in the controller.</p>
+<h2><a class="anchor" id="autotoc_md80"></a>
 Examples</h2>
 <p>A PID-controller based servo is bundled to the flexPTP package: <a class="el" href="pid__controller_8c.html">pid_controller.c</a>, <a class="el" href="pid__controller_8h.html">pid_controller.h</a> </p>
 </div></div><!-- contents -->

@@ -1,6 +1,8 @@
 var flexptp__options__tm4c1294_8h =
 [
     [ "CLI_REG_CMD", "flexptp__options__tm4c1294_8h.html#a8f8a3ba07b96be3784ed3e774b955427", null ],
+    [ "LWIP", "flexptp__options__tm4c1294_8h.html#a0b16f7d87defe461f8b183936f294d58", null ],
+    [ "PTP_ADDEND_INTERFACE", "flexptp__options__tm4c1294_8h.html#ac421b80fbd859a58e3751d5525a3df60", null ],
     [ "PTP_HW_GET_TIME", "flexptp__options__tm4c1294_8h.html#acf5d43bb87550622768a5fe6a210402d", null ],
     [ "PTP_HW_INIT", "flexptp__options__tm4c1294_8h.html#a45ea2e992dddae826985c1cfc4b9c8db", null ],
     [ "PTP_INCREMENT_NSEC", "flexptp__options__tm4c1294_8h.html#afe6fb0be9af930d13c30a164a096cffc", null ],

@@ -118,31 +118,31 @@ $(document).ready(function(){initNavTree('project_organization.html',''); initRe
   <div class="headertitle"><div class="title">Project organization </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md65"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md71"></a>
 Modules</h1>
 <p>The flexPTP project is decomposed into smaller sections, modules that can be grouped based on their purpose. Almost each separate file represents a freestanding module.</p>
-<h2><a class="anchor" id="autotoc_md66"></a>
+<h2><a class="anchor" id="autotoc_md72"></a>
 Types, constants and definitions</h2>
 <ul>
-<li><a class="el" href="ptp__defs_8h.html">ptp_defs.h</a>, <a class="el" href="ptp__defs_8c.html">ptp_defs.c</a> : Fundamental constants and definitions, like IGMP-groups, Ethernet addresses, ports, PTP header and message lengths, autocalculated values.</li>
-<li><a class="el" href="ptp__types_8h.html">ptp_types.h</a> : Fundamental PTP types, PTP message types, PTP message bitfields, PTP value enumerations. The types for the core and BMC-algorithm's state machines are also defined here.</li>
+<li><a class="el" href="ptp__defs_8h.html">ptp_defs.h</a>, <a class="el" href="ptp__defs_8c.html">ptp_defs.c</a> : Fundamental constants and definitions, like IGMP-groups, Ethernet addresses, ports, PTP header and message lengths, auto-calculated values.</li>
+<li><a class="el" href="ptp__types_8h.html">ptp_types.h</a> : Fundamental PTP types, PTP message types, PTP message bit fields, PTP value enumerations. The types for the core and BMC-algorithm's state machines are also defined here.</li>
 <li><a class="el" href="ptp__servo__types_8h.html">ptp_servo_types.h</a> : Definition of basic servo types.</li>
 <li><a class="el" href="ptp__sync__cycle__data_8h.html">ptp_sync_cycle_data.h</a> : Definition of the PTP synchronization cycle context type.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md67"></a>
+<h2><a class="anchor" id="autotoc_md73"></a>
 Settings</h2>
 <ul>
 <li><a class="el" href="settings__interface_8h.html">settings_interface.h</a>, <a class="el" href="settings__interface_8c.html">settings_interface.c</a> : Interface to control all the aspects of the PTP-engine, like profile settings (transport type, delay mechanism, domain, message period etc.), clock settings.</li>
 <li><a class="el" href="profiles_8h.html">profiles.h</a>, <a class="el" href="profiles_8c.html">profiles.c</a> : Separated definition for reporting current profile. Also global hints for identifying various aspects of a profile are declared and defined here.</li>
 <li><a class="el" href="tlv_8h.html">tlv.h</a>, <a class="el" href="tlv_8c.html">tlv.c</a> : Simple TLV handling functions.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md68"></a>
+<h2><a class="anchor" id="autotoc_md74"></a>
 Logging and statistics</h2>
 <ul>
 <li><a class="el" href="logging_8h.html">logging.h</a>, <a class="el" href="logging_8c.html">logging.c</a> : Logging options, which log to enable, or defined new logs.</li>
 <li><a class="el" href="stats_8h.html">stats.h</a>, <a class="el" href="stats_8c.html">stats.c</a> : Runtime statistics collection and aggregation.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md69"></a>
+<h2><a class="anchor" id="autotoc_md75"></a>
 Utilities</h2>
 <ul>
 <li><a class="el" href="timeutils_8c.html">timeutils.c</a>, <a class="el" href="timeutils_8h.html">timeutils.h</a> : Storage class definitions for timestamps and operations on time values. Time printing is also defined in here.</li>
@@ -150,17 +150,17 @@ Utilities</h2>
 <li><a class="el" href="format__utils_8c.html">format_utils.c</a>, <a class="el" href="format__utils_8h.html">format_utils.h</a> : Format conversion functions between network and host byte order and conversion functions between PTP logarithmic interval designator and time duration value.</li>
 <li><a class="el" href="clock__utils_8c.html">clock_utils.c</a>, <a class="el" href="clock__utils_8h.html">clock_utils.h</a> : Clock identity related operations and PPS offset management.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md70"></a>
+<h2><a class="anchor" id="autotoc_md76"></a>
 Messaging</h2>
 <ul>
 <li><a class="el" href="ptp__raw__msg__circbuf_8c.html">ptp_raw_msg_circbuf.c</a>, <a class="el" href="ptp__raw__msg__circbuf_8h.html">ptp_raw_msg_circbuf.h</a> : Circular buffer for accepting and omitting PTP messages.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md71"></a>
+<h2><a class="anchor" id="autotoc_md77"></a>
 Events</h2>
 <ul>
 <li><a class="el" href="event_8c.html">event.c</a>, <a class="el" href="event_8h.html" title="In this module are the core and user events defined.">event.h</a> : Core and user events.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md72"></a>
+<h2><a class="anchor" id="autotoc_md78"></a>
 Core:</h2>
 <ul>
 <li><a class="el" href="ptp__core_8c.html">ptp_core.c</a>, <a class="el" href="ptp__core_8h.html" title="Core of the PTP implementation. Defines functions for message processing, clock tuning,...">ptp_core.h</a> : Core of the PTP engine, storing and loading configurations.</li>

@@ -127,10 +127,10 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div>
     <p><b>flexPTP has been designed with low resource utilization in mind. The library can easily fit into 20K program and 10K data memory space with all features enabled. The library has been ported to and tested on ARM Cortex-M4 and Cortex-M7 based microcontrollers from several manufacturers (e.g. STM32F4xx, STM32F7xx, STM32H7xx, TM4C1294 etc.). According to simple measurements published in several papers of ours, with the help of the library even low-power systems achieved a synchronization precision of tens of nanoseconds.</b></p>
 <p><em>The library is released under the MIT license with the endeavour to provide quick and compact solution for embedded time synchronization.</em></p>
-<h2><a class="anchor" id="autotoc_md14"></a>
+<h2><a class="anchor" id="autotoc_md15"></a>
 Quick intro</h2>
 <p>Clueless where to start first? We recommend newcomers to start playing around with some complete <a class="el" href="examples.html">Examples</a>, then continue with the <a class="el" href="swoperation.html">Software structure</a> chapter and finally read <a class="el" href="porting.html">Porting and configuration</a> guide.</p>
-<h2><a class="anchor" id="autotoc_md15"></a>
+<h2><a class="anchor" id="autotoc_md16"></a>
 Features</h2>
 <p>flexPTP offers the following capabilities:</p>
 <ul>
@@ -148,7 +148,7 @@ Features</h2>
 <li>provides a simple servo (controller) interface</li>
 <li>automatically cooperates with certain CLI terminals</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md16"></a>
+<h2><a class="anchor" id="autotoc_md17"></a>
 Platforms and examples</h2>
 <p>The library package ships with hardware ports for several platforms, including:</p>
 <ul>
@@ -168,24 +168,28 @@ Platforms and examples</h2>
 <li>Example: <a href="https://github.com/epagris/flexPTP-demo-NUCLEO-H743ZI">STM32 NUCLEO-H743ZI flexPTP demo</a>, <a href="https://github.com/epagris/flexPTP-demo-NUCLEO-H745ZI-Q/">STM32 <b>dual-core</b> NUCLEO-H745ZI-Q flexPTP demo</a></li>
 </ul>
 </li>
+<li><b>MK64F</b>: (<em>lwip</em>)<ul>
+<li>Example: <a href="https://github.com/epagris/flexPTP-demo-FRDM-K64F">NXP FRDM-K64F flexPTP demo</a></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md17"></a>
+</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md18"></a>
 Requirements</h2>
 <p>Apart from the access to a working C compiler, only the following two criteria must be met to compile flexPTP:</p>
 <ul>
 <li>The library relies on the services of the <a href="https://www.freertos.org/">FreeRTOS</a> embedded operating system thus it is required to integrate the library.</li>
 <li>A compatible network stack library and target platform Ethernet driver is required. Currently <a href="https://github.com/lwip-tcpip/lwip">Lightweight IP</a> (lwip) and <a href="https://gitea.epagris.com/epagris/EtherLib">EtherLib</a> are supported.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md18"></a>
+<h2><a class="anchor" id="autotoc_md19"></a>
 Porting and options</h2>
 <p>For elaborate information on porting and options refer to <a class="el" href="porting.html">Porting and configuration</a>.</p>
-<h3><a class="anchor" id="autotoc_md19"></a>
+<h3><a class="anchor" id="autotoc_md20"></a>
 Network stack requirements</h3>
 <p>The network stack (lwIP or EtherLib) must provide tools to communicate receive and transmit timestamps along the PTP messages. It's the developers responsibility to make the timestamps captured in the hardware available to the flexPTP module.</p>
 <p>For better understanding how timestamps are fed into flexPTP, refer to <a class="el" href="task__ptp_8c.html#a1409be7128c102f50cc590ec0aa817e0">ptp_receive_enqueue()</a> in <a class="el" href="task__ptp_8c.html">task_ptp.c</a>.</p>
-<h4><a class="anchor" id="autotoc_md20"></a>
+<h4><a class="anchor" id="autotoc_md21"></a>
 lwIP</h4>
-<p>The lwIP (up to v2.2.0) is not designed for support timestamp propagation right away. A possible workaround is the extension of the <code>pbuf</code> structure so that it can carry the timestamps and the usual packet data as well through defining the <code>LWIP_PBUF_CUSTOM_DATA</code> macro.</p>
+<p>The lwIP (up to v2.2.0) has not been designed to support timestamp propagation right away. A possible workaround is by extending the <code>pbuf</code> structure so that it can carry the timestamps and the usual packet data as well through defining the <code>LWIP_PBUF_CUSTOM_DATA</code> macro.</p>
 <div class="fragment"><div class="line"><span class="comment">// Main packet buffer struct</span></div>
 <div class="line"><span class="keyword">struct </span>pbuf {</div>
 <div class="line">  <span class="comment">/* ... */</span></div>
@@ -199,21 +203,21 @@ lwIP</h4>
 <div class="line">  <span class="comment">// &lt;&lt;Contents of LWIP_PBUF_CUSTOM_DATA</span></div>
 <div class="line">};</div>
 </div><!-- fragment --><p>The low level lwIP-Ethernet driver must be instrumented to communicate receive and transmit timestamps. Fortunately, developing such an extension is not that difficult, at all. As an example you can find a guide <a class="el" href="_h743_ethernetif_modifications.html">here</a> that showcases our amendments to the vendor-provided <code>ethernetif.c</code> low level lwIP Ethernet driver file for the STM32H743 platform. You can also find examples on PTP-compatible lwip low-level drivers among the <a class="el" href="examples.html">example projects</a>.</p>
-<h4><a class="anchor" id="autotoc_md21"></a>
+<h4><a class="anchor" id="autotoc_md22"></a>
 EtherLib</h4>
 <p>EtherLib provides immediate support for passing timestamp with packet data. For more information, visit the <a href="https://gitea.epagris.com/epagris/EtherLib">EtherLib repository</a>.</p>
-<h3><a class="anchor" id="autotoc_md22"></a>
+<h3><a class="anchor" id="autotoc_md23"></a>
 Compile-time options</h3>
 <p>The flexPTP library expects hardware constants and parameters as well as default settings passed in a <code>flexptp_options.h</code> header file.</p>
-<h2><a class="anchor" id="autotoc_md23"></a>
+<h2><a class="anchor" id="autotoc_md24"></a>
 Building</h2>
 <p>The preferred and encouraged way to compile the library is to harness the built-in CMake support, although, building using any IDE is possible. The only requirement is a working a C (cross-)compiler (e.g. <code>arm-none-eabi-gcc</code>). More, detailed description on this topic: <a class="el" href="building.html">Compiling the library</a>.</p>
-<h2><a class="anchor" id="autotoc_md24"></a>
+<h2><a class="anchor" id="autotoc_md25"></a>
 Usage</h2>
-<h3><a class="anchor" id="autotoc_md25"></a>
+<h3><a class="anchor" id="autotoc_md26"></a>
 Startup and shutdown</h3>
 <p>The flexPTP module can be started/stopped by calling <a class="el" href="task__ptp_8c.html#a2d483d3c32b3890d8c699018e48e45cd">reg_task_ptp()</a> and <a class="el" href="task__ptp_8c.html#a5fd98059e4c2ec1004c74064e17cbe4c">unreg_task_ptp()</a>.</p>
-<h3><a class="anchor" id="autotoc_md26"></a>
+<h3><a class="anchor" id="autotoc_md27"></a>
 Runtime operation</h3>
 <p>The library has an extensive interface for manipulating the PTP operation mode during runtime (e.g. change profile, enable logging etc.), learn more <a class="el" href="project_organization.html">here</a>. The flexPTP includes a CLI interface as well, if a suitable CLI library is given, flexPTP offers the following multitude of CLI commands:</p>
 <div class="fragment"><div class="line">ptp servo params [Kp Kd]                           Set or query K_p and K_d servo parameters</div>
@@ -225,7 +229,8 @@ Runtime operation</h3>
 <div class="line">ptp master [[un]prefer] [clockid]                  Master clock settings</div>
 <div class="line">ptp info                                           Print PTP info</div>
 <div class="line">ptp domain [domain]                                Print or set PTP domain</div>
-<div class="line">ptp addend [addend]                                Print or set addend</div>
+<div class="line">ptp addend [addend]                                Print or set addend   &lt;--- ADDEND <span class="keyword">interface </span>ONLY</div>
+<div class="line">ptp tuning [tuning]                                Print or set tuning   &lt;--- HLT interface ONLY</div>
 <div class="line">ptp transport [{ipv4|802.3}]                       Set or get PTP transport layer</div>
 <div class="line">ptp delmech [{e2e|p2p}]                            Set or get PTP delay mechanism</div>
 <div class="line">ptp transpec [{def|gPTP}]                          Set or get PTP transportSpecific field (majorSdoId)</div>
@@ -236,7 +241,7 @@ Runtime operation</h3>
 <div class="line">ptp coarse [threshold]                             Print or set coarse correction threshold</div>
 <div class="line">ptp priority [&lt;p1&gt; &lt;p2&gt;]                           Print or set clock priority fields</div>
 </div><!-- fragment --><p> The library can load a previously stored or save the current configuration from and to a non-volatile storage with the help of some glue code.</p>
-<h2><a class="anchor" id="autotoc_md27"></a>
+<h2><a class="anchor" id="autotoc_md28"></a>
 Performance measurements</h2>
 <p>Our library achieves decent synchronization performance, usually <b>better than 100ns timing precision</b> even on low-power microcontrollers. The below measurements were made using the nowadays common gPTP (802.1AS) profile. Logs corresponding to each plot are located in the "manual/dumps/" folder.</p>
 <table class="markdownTable">
@@ -245,23 +250,23 @@ Performance measurements</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyCenter"><img src="tm4c1294-gPTP.svg" alt="" style="pointer-events: none;" class="inline" title="TM4C1294-gPTP"/>      </td><td class="markdownTableBodyCenter"><img src="stm32f407-gPTP.svg" alt="" style="pointer-events: none;" class="inline" title="STM32F407-gPTP"/>      </td><td class="markdownTableBodyCenter"><img src="stm32h743-gPTP.svg" alt="" style="pointer-events: none;" class="inline" title="STM32H743-gPTP"/>      </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md28"></a>
+<h2><a class="anchor" id="autotoc_md29"></a>
 Related papers</h2>
 <p><a href="https://ieeexplore.ieee.org/document/10747727">Time Synchronization Extension for the IO-Link Industrial Communication Protocol</a></p>
 <p><a href="https://ieeexplore.ieee.org/document/9805958/">Distributed Measurement System for Performance Evaluation of Embedded Clock Synchronization Solutions</a></p>
 <p><a href="https://ieeexplore.ieee.org/document/9615250">Portable, PTP-based Clock Synchronization Implementation for Microcontroller-based Systems and its Performance Evaluation</a></p>
 <p><a href="https://ieeexplore.ieee.org/document/9918455/">Synchronization of Sampling in a Distributed Audio Frequency Range Data Acquisition System Utilizing Microcontrollers</a></p>
 <p><a href="https://ieeexplore.ieee.org/document/10178979/">Methods of Peripheral Synchronization in Real-Time Cyber-Physical Systems</a></p>
-<h2><a class="anchor" id="autotoc_md29"></a>
+<h2><a class="anchor" id="autotoc_md30"></a>
 Maintainers, contributors</h2>
 <ul>
 <li>András Wiesner (<a href="https://github.com/epagris">Epagris</a>)</li>
 <li>Tamás Kovácsházy (<a href="https://github.com/khazy">khazy</a>)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md30"></a>
+<h2><a class="anchor" id="autotoc_md31"></a>
 Licensing</h2>
 <p>The flexPTP library is release under the MIT license.</p>
-<h2><a class="anchor" id="autotoc_md31"></a>
+<h2><a class="anchor" id="autotoc_md32"></a>
 See also</h2>
 <p><a class="el" href="examples.html">Examples</a>, <a class="el" href="project_organization.html">Project organization</a></p>
 <p>Documentation style: <a href="https://github.com/jothepro/doxygen-awesome-css/tree/main">doxygen-awesome-css</a> by jothepro</p>

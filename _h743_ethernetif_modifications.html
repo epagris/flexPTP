@@ -118,11 +118,11 @@ $(document).ready(function(){initNavTree('_h743_ethernetif_modifications.html','
   <div class="headertitle"><div class="title">STM32H743 low level lwIP driver modifications to support timestamp communication </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md6"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md7"></a>
 lwIP low level driver modifications</h1>
 <p>In the following you will find a modified version of the vendor-provided STM32H743 low level lwIP Ethernet driver. Both RX and TX functions have been modified so that timestamp capture upon reception and transmission are also supported.</p>
 <p>The complete file is accessible is included at the end of this page.</p>
-<h2><a class="anchor" id="autotoc_md7"></a>
+<h2><a class="anchor" id="autotoc_md8"></a>
 Reception timestamps</h2>
 <p>Into the function <code>pbuf_low_level_input()</code> we have inserted a small portion of code that copies the reception timestamp into the <code>pbuf</code>.</p>
 <p>Inserted lines:</p>
@@ -171,14 +171,14 @@ Reception timestamps</h2>
 <div class="line">  <span class="keywordflow">return</span> p;</div>
 <div class="line">}</div>
 <div class="ttc" id="aflexptp__options__stm32h743_8h_html_a6d05c58b62fafdaf1d107abfc39ab8cf"><div class="ttname"><a href="flexptp__options__stm32h743_8h.html#a6d05c58b62fafdaf1d107abfc39ab8cf">EthHandle</a></div><div class="ttdeci">ETH_HandleTypeDef EthHandle</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md8"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md9"></a>
 Transmission timestamps</h2>
 <p>Several functions were modified and variables were declared in order to pass transmission timestamp back to the application through invoking callbacks.</p>
-<h3><a class="anchor" id="autotoc_md9"></a>
+<h3><a class="anchor" id="autotoc_md10"></a>
 Array for timestamp write back addresses</h3>
 <p>An array was declared to temporarily hold the addresses where the transmit timestamps will be saved right after the packet transmission has completed.</p>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>pbuf *ppWriteBackPBufs[ETH_TX_DESC_CNT]; <span class="comment">/* pBuf array for timestamp writeback */</span></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md10"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md11"></a>
 Procedure to save transmit timestamps</h3>
 <p>A procedure was added that writes the transmit timestamp to their designated place. The routine is invoked whenever a frame transmission is done.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> ethernetif_write_back_tx_timestamps() {</div>
@@ -241,7 +241,7 @@ Procedure to save transmit timestamps</h3>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md11"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md12"></a>
 Complete file</h2>
 <div class="fragment"><div class="line"> </div>
 <div class="line"><span class="comment">/* Includes ------------------------------------------------------------------*/</span></div>

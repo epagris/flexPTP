@@ -10,7 +10,7 @@ var searchData=
   ['max_7',['MAX',['../slave_8c.html#afa99ec4acc4ecb2dc3c2d05da15d0e3f',1,'MAX():&#160;slave.c'],['../master_8c.html#afa99ec4acc4ecb2dc3c2d05da15d0e3f',1,'MAX():&#160;master.c'],['../cli__cmds_8c.html#afa99ec4acc4ecb2dc3c2d05da15d0e3f',1,'MAX():&#160;cli_cmds.c']]],
   ['max_5fptp_5fmsg_5fsize_8',['MAX_PTP_MSG_SIZE',['../ptp__types_8h.html#ab9a5b1004564a82c7f0aab1069fcc2ba',1,'ptp_types.h']]],
   ['meanpathdelay_9',['meanPathDelay',['../struct_ptp_network_state.html#a2ae0b832acff47cedcbccf2f35f12a81',1,'PtpNetworkState']]],
-  ['meassyncperiodns_10',['measSyncPeriodNs',['../struct_ptp_servo_aux_input.html#a1bdd9e936d23e7b2832a51bfeeff7f90',1,'PtpServoAuxInput']]],
+  ['meassyncperiodns_10',['measSyncPeriodNs',['../struct_ptp_servo_aux_input.html#aa18b485aff49fdbb83d5b74773e5def5',1,'PtpServoAuxInput']]],
   ['messagelength_11',['messageLength',['../struct_ptp_header.html#a6c490faee54bca860c4d897aae50990f',1,'PtpHeader']]],
   ['messagetype_12',['messageType',['../struct_ptp_header.html#a44caf8194092997af90907c8b39f9844',1,'PtpHeader']]],
   ['messaging_13',['messaging',['../struct_ptp_core_state.html#a812483688f200bc143072fd745f8d00b',1,'PtpCoreState::messaging()'],['../struct_ptp_core_state.html#a7378b214d9a36da8c3d69fbf23168cc6',1,'PtpCoreState::messaging()']]],

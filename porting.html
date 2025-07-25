@@ -128,7 +128,7 @@ Porting</h1>
 <li>a (simple) <b>hardware clock driver</b>, through which flexPTP can set or tune the hardware clock and query time.</li>
 </ul>
 <p>In the sections below you'll see samples for all three configuration module types.</p>
-<h2><a class="anchor" id="autotoc_md57"></a>
+<h2><a class="anchor" id="autotoc_md58"></a>
 Port option file</h2>
 <p>Each project that includes flexPTP must provide a <code>flexptp_options.h</code> header file. This file has the purpose to tell flexPTP the basic hardware features (e.g. oscillator frequency), and to define bindings to hardware clock and servo management routines.</p>
 <p>Our experience with embedded development shows that a newcomer might run into difficulties on creating a port to a software to be learned. We recommend you to open an example <code>flexptp_options_XXX.h</code> file from the <code>port/example_options</code> location before reading the following. Taking a quick look into a pre-made configuration file might make the interpretation of the section below much easier.</p>
@@ -140,16 +140,25 @@ Port option file</h2>
 <li><code>SPRINTF(str,n,...)</code>: a basic <code>snprintf()</code> implementation, that supports at least the same set of formatting marks as <code>MSG(...)</code> does</li>
 </ul>
 </li>
-<li>Define hardware clock <b>tick frequency and increment</b>:<ul>
-<li><code>PTP_MAIN_OSCILLATOR_FREQ_HZ</code>: clock frequency that drives the hardware clock in Hz</li>
-<li><code>PTP_INCREMENT_NSEC</code>: amount of time the clock gets incremented each tick expressed in nanoseconds (refer to: <a class="el" href="porting.html#hardware-clock-driver">Hardware Clock Driver</a>)</li>
-</ul>
-</li>
-<li>Define hardware <b>clock management functions</b>:<ul>
+<li>Define hardware <b>clock management functions</b>: Two different clock management interface are supported, the ADDEND-based and the HLT interface. More on this in <a class="el" href="porting.html#hardware-clock-driver">Hardware Clock Driver</a>.<ul>
+<li><em>ADDEND interface</em><ul>
+<li><b>define the <code>PTP_ADDEND_INTERFACE</code></b> macro to select this interface</li>
 <li><code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#a45ea2e992dddae826985c1cfc4b9c8db">PTP_HW_INIT(increment, addend)</a></code>: a method that initializes the hardware clock. <code>increment</code>: clock increment, <code>addend</code>: initial frequency tuning</li>
 <li><code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#a0b6a510e0ed2770e0e9e6b0b96ab1f5c">PTP_SET_CLOCK(s, ns)</a></code>: a method that sets the hardware clock. <code>s</code>: seconds part of the UNIX time, <code>ns</code>: nanoseconds of the UNIX time</li>
 <li><code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#a342eded57d8df50e4ec8697696b3f1ad">PTP_SET_ADDEND(addend)</a></code>: a method that sets the hardware clock frequency tuning word. <code>addend</code>: 32-bit tuning value (0x00000000..0xFFFFFFFF)</li>
-<li><code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#acf5d43bb87550622768a5fe6a210402d">PTP_HW_GET_TIME(pt)</a></code>: a method that fetches the time right from the hardware clock. <code>pt</code>: time of type <code><a class="el" href="struct_timestamp_i.html" title="Timestamp (signed)">TimestampI</a> *</code>; time is stored to <code>*pt</code> (refer to: <a class="el" href="porting.html#hardware-clock-driver">Hardware Clock Driver</a>)</li>
+<li><code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#acf5d43bb87550622768a5fe6a210402d">PTP_HW_GET_TIME(pt)</a></code>: a method that fetches the time right from the hardware clock. <code>pt</code>: time of type <code><a class="el" href="struct_timestamp_i.html" title="Timestamp (signed)">TimestampI</a> *</code>; time is stored to <code>*pt</code></li>
+<li><code>PTP_MAIN_OSCILLATOR_FREQ_HZ</code>: clock frequency that drives the hardware clock in Hz</li>
+<li><code>PTP_INCREMENT_NSEC</code>: amount of time the clock gets incremented each tick expressed in nanoseconds</li>
+</ul>
+</li>
+<li><em>HLT interface</em><ul>
+<li><b>define the <code>PTP_HLT_INTERFACE</code></b> macro to select this interface</li>
+<li><code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#a45ea2e992dddae826985c1cfc4b9c8db">PTP_HW_INIT()</a></code>: a method that initializes the hardware clock.</li>
+<li><code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#a0b6a510e0ed2770e0e9e6b0b96ab1f5c">PTP_SET_CLOCK(s, ns)</a></code>: a method that sets the hardware clock. <code>s</code>: seconds part of the UNIX time, <code>ns</code>: nanoseconds of the UNIX time</li>
+<li><code><a class="el" href="flexptp__options__mk64f_8h.html#a25bf36c86ef05d1102b5cb42bb39a47b">PTP_SET_TUNING(tuning)</a></code>: a method that sets the hardware clock tuning. <code>tuning</code>: tuning in PPB</li>
+<li><code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#acf5d43bb87550622768a5fe6a210402d">PTP_HW_GET_TIME(pt)</a></code>: a method that fetches the time right from the hardware clock. <code>pt</code>: time of type <code><a class="el" href="struct_timestamp_i.html" title="Timestamp (signed)">TimestampI</a> *</code>; time is stored to <code>*pt</code></li>
+</ul>
+</li>
 </ul>
 </li>
 <li>Define <b>servo management functions</b>:<ul>
@@ -179,12 +188,12 @@ Port option file</h2>
 </ol>
 <p>We emphasize, that many examples can be found on configuration files in the <code>port/example_options</code> directory.</p>
 <p>Throughout the assembling of a new the options file you might find that the Ethernet driver, that came along the target platform lacks routines handling PTP functionality. In that case you it's your duty to extend the driver with the proper features. Many examples on such extensions can be found in the <code>port/example_ports</code> directory.</p>
-<h3><a class="anchor" id="autotoc_md58"></a>
+<h3><a class="anchor" id="autotoc_md59"></a>
 Example option files</h3>
-<p><a class="el" href="flexptp__options__stm32f407__etherlib_8h.html">flexptp_options_stm32f407_etherlib.h</a>, <a class="el" href="flexptp__options__stm32h743__etherlib_8h.html">flexptp_options_stm32h743_etherlib.h</a>, <a class="el" href="flexptp__options__stm32h743_8h.html">flexptp_options_stm32h743.h</a>, <a class="el" href="flexptp__options__tm4c1294_8h.html">flexptp_options_tm4c1294.h</a></p>
+<p><a class="el" href="flexptp__options__stm32f407__etherlib_8h.html">flexptp_options_stm32f407_etherlib.h</a>, <a class="el" href="flexptp__options__stm32h743__etherlib_8h.html">flexptp_options_stm32h743_etherlib.h</a>, <a class="el" href="flexptp__options__stm32h743_8h.html">flexptp_options_stm32h743.h</a>, <a class="el" href="flexptp__options__tm4c1294_8h.html">flexptp_options_tm4c1294.h</a>, <a class="el" href="flexptp__options__mk64f_8h.html">flexptp_options_mk64f.h</a></p>
 <h2><a class="anchor" id="network-stack-driver"></a>
 Network Stack Driver (NSD)</h2>
-<p>The flexPTP library expects (only!) the below message transception related functions given. These are the functions, that are declared in <a class="el" href="network__stack__driver_8h.html" title="This file is a header for the employed Network Stack Driver (NSD). A NSD must define ALL four functio...">network_stack_driver.h</a>. During the porting work, these functions must be implented.</p>
+<p>The flexPTP library expects (only!) the below message transception related functions given. These are the functions, that are declared in <a class="el" href="network__stack__driver_8h.html" title="This file is a header for the employed Network Stack Driver (NSD). A NSD must define ALL four functio...">network_stack_driver.h</a>. During the porting work, these functions must be implemennted.</p>
 <ul>
 <li><code>void <a class="el" href="network__stack__driver_8h.html#a448d70ee83a66f7dd5f5e602c7f41b8d">ptp_nsd_init(PtpTransportType tp, PtpDelayMechanism dm)</a></code>: This function initializes (opens and closes) the network connections based on the profile settings passed in the <code>tp</code> and <code>dm</code> parameters. <code>tp</code> and <code>dm</code> can take on any value from <code>PtpTransportType</code> and <code>PtpDelayMechanism</code>, respectively. Passing <code>-1</code> in either parameter signals that the flexPTP wants the network layer to close all connections. In other words, by passing <code>-1</code> the flexPTP does not defined a valid profile. It is expected that this function gets called multiple times. On subsequent calls, the function first informs the network that we are leaving the IGMP-group of the profile we abandon and closes connection associated with the profile we are leaving. Then, it takes on the new profile, opens the new connection and joins the new IGMP-groups. Joining and leaving of the IGMP-groups is performed by invoking the <code><a class="el" href="network__stack__driver_8h.html#a403275d7e5b31f6714a93ebd28d1c2e4">ptp_nsd_igmp_join_leave()</a></code> method.</li>
 <li><code>void <a class="el" href="network__stack__driver_8h.html#a06c3b6dbcec5f68576cd1a48bf8755b2">ptp_nsd_transmit_msg(RawPtpMessage *pMsg)</a></code>: The flexPTP engine calls this function to dispatch a PTP message. The NSD can safely anticipate that fields of the message passed from the PTP engine carry fields reflecting the profile that was set by the latest <code><a class="el" href="network__stack__driver_8h.html#a448d70ee83a66f7dd5f5e602c7f41b8d">ptp_nsd_init()</a></code> call. The function must only fetch the PTP message class from the message passed to determine through which connection it has to be sent.</li>
@@ -192,37 +201,63 @@ Network Stack Driver (NSD)</h2>
 <li><code>void <a class="el" href="network__stack__driver_8h.html#a8084e66715ef332fa46c677421f6b20f">ptp_nsd_get_interface_address(uint8_t * hwa)</a></code>: This function returns with the hardware address of the associated Ethernet interface. Parameter <code>hwa</code> is expected to be able to hold (at least) 6-bytes (the size of an Ethernet Hardware Address).</li>
 </ul>
 <p>Finally, it's also the job of the NSD module to make the received messages available to the flexPTP core. This is done by calling the <code><a class="el" href="task__ptp_8c.html#a1409be7128c102f50cc590ec0aa817e0">ptp_receive_enqueue()</a></code> function with the proper parameters: data, size and ingress timestamp split into seconds and nanoseconds field.</p>
-<p>Inherently, the fetching and exchangeing of the ingress and egress timestamps with the flexPTP core fall also in the scope of the NSD module.</p>
-<h3><a class="anchor" id="autotoc_md59"></a>
+<p>Inherently, the fetching and exchanging of the ingress and egress timestamps with the flexPTP core fall also in the scope of the NSD module.</p>
+<h3><a class="anchor" id="autotoc_md60"></a>
 NSD examples</h3>
 <p><a class="el" href="nsd__lwip_8c.html">nsd_lwip.c</a>, <a class="el" href="nsd__etherlib_8c.html">nsd_etherlib.c</a> : Sample NSD implementations for lwIP and EtherLib network stacks.</p>
 <h2><a class="anchor" id="hardware-clock-driver"></a>
 Hardware Clock Driver</h2>
+<p>The library supports two different, mutually exclusive clock management interfaces: the old-style <b>ADDEND-based</b> tuning interface and the newly introduced <b>High-Level Tuning (HLT)</b> interface. The user should implement the one better matched to the underlying hardware.</p>
+<h3><a class="anchor" id="autotoc_md61"></a>
+ADDEND-interface</h3>
 <div class="image">
 <img src="tuneable_hardware_clock.png" alt=""/>
 <div class="caption">
-General structure of a PTP hardware clock with distinguished high precesion frequency divider and counter</div></div>
-    <p>This is the low level driver that controls the hardware clock. We found that in general, hardware clocks can be tuned by altering a so called frequency tuning code word. Usually the code word is an addend of a high-precision frequency divider in the clock's core. The code word is directly proportional with the output frequency. That's why we decided to represent 0 frequency with a zero and the maximum frequency with a <code>0xFFFFFFFF</code> ( \(2^{32}-1\)) 32 bits code word. The former phrase in the form of a function:</p>
+General structure of a PTP hardware clock with distinguished high precision frequency divider and counter</div></div>
+    <p>This interface assumes the above hardware clock model. In the majority of the microcontrollers with PTP support the structure of the PTP hardware clock follows this scheme.</p>
+<p>Such hardware clocks can be tuned by altering a so called frequency tuning code word. The actual tuning value, a code word is an addend of a high-precision frequency divider in the clock's core. The code word is directly proportional with the output frequency. That's why we decided to represent 0 frequency with a zero and the maximum frequency with a <code>0xFFFFFFFF</code> ( \(2^{32}-1\)) 32 bits code word. The former phrase in the form of a function:</p>
 <p class="formulaDsp">
 \[
     f_\text{clock} = f_\text{osc} \frac{\texttt{CODE WORD}}{2^{32}}
 \]
 </p>
-<p>Hardware clocks keep time by increasing their stored time value with an <code>increment</code> in every clock cycle (i.e. clock cycle of the divided clock). The <code>increment</code> is usually constant and is set during the initialization. (It is mostly expressed in nanoseconds.)</p>
-<p><em>Addend</em> and <em>increment</em> are the two basic idea that are supported by all hardware clocks, in some forms. These are the fields that the hardware clock driver must be able to control, at least.</p>
+<p>Hardware clocks keep time by increasing their stored time value with an <code>increment</code> in every clock cycle (i.e. clock cycle of the divided clock). The <code>increment</code> is usually constant and is set during the initialization. (It is usually expressed in nanoseconds.)</p>
+<p><em>Addend</em> and <em>increment</em> are the two basic idea that are supported by all such hardware clocks. The hardware clock driver must be able to control at least these two fields. By nature, clock drivers implementing the ADDEND-interface are low-level drivers.</p>
 <p>More general, the hardware clock driver must provide solutions for:</p><ul>
-<li>initialize the hardware with</li>
-<li>setting the clock's time,</li>
-<li>tuning the clock's frequency using a code word introduced formerly,</li>
-<li>obtaining the time from the clock.</li>
+<li>initializing the hardware (<code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#a45ea2e992dddae826985c1cfc4b9c8db">PTP_HW_INIT(increment, addend)</a></code>),</li>
+<li>setting the clock's time (<code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#a0b6a510e0ed2770e0e9e6b0b96ab1f5c">PTP_SET_CLOCK(s, ns)</a></code>),</li>
+<li>tuning the clock's frequency using a code word (<code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#a342eded57d8df50e4ec8697696b3f1ad">PTP_SET_ADDEND(addend)</a></code>),</li>
+<li>obtaining the time from the clock (<code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#acf5d43bb87550622768a5fe6a210402d">PTP_HW_GET_TIME(pt)</a></code>).</li>
 </ul>
+<p>To maintain backward-compatibility this interface is auto-selected if no interface selection macro was defined. The best practice is to define the <code>PTP_ADDEND_INTERFACE</code> macro to explicitly select this interface.</p>
+<p>Additionally, the frequency of the PTP clock input and the increment must also be defined: <code>PTP_MAIN_OSCILLATOR_FREQ_HZ</code>, <code>PTP_INCREMENT_NSEC</code></p>
 <p>Usually the hardware clock driver also implements further miscellaneous functionality, like the controlling of the PPS output signal.</p>
-<h2><a class="anchor" id="autotoc_md60"></a>
-Example Hardware Clock Driver files</h2>
-<p><a class="el" href="ptp__port__stm32f407__etherlib_8c.html">ptp_port_stm32f407_etherlib.c</a>, <a class="el" href="ptp__port__stm32f407__lwip_8c.html">ptp_port_stm32f407_lwip.c</a>, <a class="el" href="ptp__port__stm32h743__etherlib_8c.html">ptp_port_stm32h743_etherlib.c</a>, ptp_port_stm32h743.c, <a class="el" href="ptp__port__tiva__tm4c1294_8c.html">ptp_port_tiva_tm4c1294.c</a></p>
+<h4><a class="anchor" id="autotoc_md62"></a>
+Example option files</h4>
+<p><a class="el" href="flexptp__options__stm32f407__etherlib_8h.html">flexptp_options_stm32f407_etherlib.h</a>, <a class="el" href="flexptp__options__stm32h743__etherlib_8h.html">flexptp_options_stm32h743_etherlib.h</a>, <a class="el" href="flexptp__options__stm32h743_8h.html">flexptp_options_stm32h743.h</a>, <a class="el" href="flexptp__options__tm4c1294_8h.html">flexptp_options_tm4c1294.h</a></p>
+<h4><a class="anchor" id="autotoc_md63"></a>
+Example Hardware Clock Driver files</h4>
+<p><a class="el" href="ptp__port__stm32f407__etherlib_8c.html">ptp_port_stm32f407_etherlib.c</a>, <a class="el" href="ptp__port__stm32f407__lwip_8c.html">ptp_port_stm32f407_lwip.c</a>, <a class="el" href="ptp__port__stm32h743__etherlib_8c.html">ptp_port_stm32h743_etherlib.c</a>, <a class="el" href="ptp__port__stm32h743__lwip_8c.html">ptp_port_stm32h743_lwip.c</a>, <a class="el" href="ptp__port__tiva__tm4c1294_8c.html">ptp_port_tiva_tm4c1294.c</a></p>
+<h3><a class="anchor" id="autotoc_md64"></a>
+High-Level Tuning (HLT) interface</h3>
+<p>This interface enables flexPTP to operate hardware clocks regardless of the clock's inner structure considering the clock as a black-box device. This interface is provided to extend flexPTP support to devices with hardware clocks differing from the formerly introduced one.</p>
+<p>The interface consists of the following few methods:</p><ul>
+<li>hardware initialization (<code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#a45ea2e992dddae826985c1cfc4b9c8db">PTP_HW_INIT()</a></code>),</li>
+<li>clock setting (<code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#a0b6a510e0ed2770e0e9e6b0b96ab1f5c">PTP_SET_CLOCK(s, ns)</a></code>),</li>
+<li>clock tuning in PPB (<code><a class="el" href="flexptp__options__mk64f_8h.html#a25bf36c86ef05d1102b5cb42bb39a47b">PTP_SET_TUNING(tuning)</a></code>),</li>
+<li>querying the clock (<code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#acf5d43bb87550622768a5fe6a210402d">PTP_HW_GET_TIME(pt)</a></code>).</li>
+</ul>
+<p>To select this interface, defined the <code>PTP_HLT_INTERFACE</code> macro.</p>
+<p>Usually the hardware clock driver also implements further miscellaneous functionality, like the controlling of the PPS output signal.</p>
+<h4><a class="anchor" id="autotoc_md65"></a>
+Example option files</h4>
+<p><a class="el" href="flexptp__options__mk64f_8h.html">flexptp_options_mk64f.h</a></p>
+<h4><a class="anchor" id="autotoc_md66"></a>
+Example Hardware Clock Driver files</h4>
+<p><a class="el" href="ptp__port__mk64f__lwip_8c.html">ptp_port_mk64f_lwip.c</a></p>
 <h1><a class="anchor" id="port-config-configuration"></a>
 Configuration</h1>
-<h2><a class="anchor" id="autotoc_md61"></a>
+<h2><a class="anchor" id="autotoc_md67"></a>
 Initial configuration</h2>
 <p>List of definitions, part of the initial configuration, with default values. Default values are used if macros are not defined in <code>flexptp_options.h</code>.</p>
 <h3><a class="anchor" id="port-config-opmode-params"></a>
@@ -240,9 +275,9 @@ Operation mode parameters</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>PTP_DEFAULT_COARSE_TRIGGER_NS</code>   </td><td class="markdownTableBodyNone">20000000   </td><td class="markdownTableBodyNone">Coarse correction kick-in threshold (ns) (can be changed in runtime)   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md62"></a>
+<h3><a class="anchor" id="autotoc_md68"></a>
 PTP definitions</h3>
-<h4><a class="anchor" id="autotoc_md63"></a>
+<h4><a class="anchor" id="autotoc_md69"></a>
 Common</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -292,28 +327,11 @@ Clock dataset</h4>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>PTP_TIME_SOURCE</code>   </td><td class="markdownTableBodyNone"><code>PTP_TSRC_INTERNAL_OSCILLATOR</code>   </td><td class="markdownTableBodyNone">Time source of this device (PtpTimeSource)   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md64"></a>
+<h2><a class="anchor" id="autotoc_md70"></a>
 Runtime configuration</h2>
 <p>Runtime configuration is done through the <em>Settings interface</em> (<a class="el" href="settings__interface_8h.html" title="This module features functions to tweak around the PTP engine&#39;s almost every property.">settings_interface.h</a>).</p>
-<p>Also, the same configuration options are available through the CLI interface:</p>
-<div class="fragment"><div class="line">ptp reset                                          Reset PTP subsystem</div>
-<div class="line">ptp servo offset [offset_ns]                       Set or query clock offset</div>
-<div class="line">ptp log {def|corr|ts|info|locked|bmca} {on|off}    Turn on or off logging</div>
-<div class="line">ptp master [[un]prefer] [clockid]                  Master clock settings</div>
-<div class="line">ptp info                                           Print PTP info</div>
-<div class="line">ptp domain [domain]                                Print or get PTP domain</div>
-<div class="line">ptp addend [addend]                                Print or set addend</div>
-<div class="line">ptp transport [{ipv4|802.3}]                       Set or get PTP transport layer</div>
-<div class="line">ptp delmech [{e2e|p2p}]                            Set or get PTP delay mechanism</div>
-<div class="line">ptp transpec [{def|gPTP}]                          Set or get PTP transportSpecific field (majorSdoId)</div>
-<div class="line">ptp profile [preset [&lt;name&gt;]]                      Print or set PTP profile, or list available presets</div>
-<div class="line">ptp tlv [preset [name]|unload]                     Print or set TLV-chain, or list available TLV presets</div>
-<div class="line">ptp pflags [&lt;flags&gt;]                               Print or set profile flags</div>
-<div class="line">ptp period &lt;delreq|sync|ann&gt; [&lt;lp&gt;|matched]        Print or set log. periods</div>
-<div class="line">ptp coarse [threshold]                             Print or set coarse correction threshold</div>
-<div class="line">ptp priority [&lt;p1&gt; &lt;p2&gt;]                           Print or set clock priority fields</div>
-<div class="line">time [ns]                                          Print time</div>
-</div><!-- fragment --> </div></div><!-- contents -->
+<p>Also, the same configuration options are available through the <a class="el" href="cli.html">CLI interface</a>. </p>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->

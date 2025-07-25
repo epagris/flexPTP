@@ -134,6 +134,8 @@ $(document).ready(function(){initNavTree('flexptp__options__stm32f407__etherlib_
 Macros</h2></td></tr>
 <tr class="memitem:a1434e632edabd6da30e4704e4d7b88f6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="flexptp__options__stm32f407__etherlib_8h.html#a1434e632edabd6da30e4704e4d7b88f6">ETHLIB</a></td></tr>
 <tr class="separator:a1434e632edabd6da30e4704e4d7b88f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac421b80fbd859a58e3751d5525a3df60"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="flexptp__options__stm32f407__etherlib_8h.html#ac421b80fbd859a58e3751d5525a3df60">PTP_ADDEND_INTERFACE</a></td></tr>
+<tr class="separator:ac421b80fbd859a58e3751d5525a3df60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac41d939c769f42191cfc56091f8b40df"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="flexptp__options__stm32f407__etherlib_8h.html#ac41d939c769f42191cfc56091f8b40df">ANNOUNCE_COLLECTION_WINDOW</a>&#160;&#160;&#160;(2)</td></tr>
 <tr class="separator:ac41d939c769f42191cfc56091f8b40df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae315c462a3f489df2df4b5e8b71a859"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="flexptp__options__stm32f407__etherlib_8h.html#aae315c462a3f489df2df4b5e8b71a859">PTP_MAIN_OSCILLATOR_FREQ_HZ</a>&#160;&#160;&#160;(168000000)</td></tr>
@@ -142,8 +144,6 @@ Macros</h2></td></tr>
 <tr class="separator:afe6fb0be9af930d13c30a164a096cffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45ea2e992dddae826985c1cfc4b9c8db"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="flexptp__options__stm32f407__etherlib_8h.html#a45ea2e992dddae826985c1cfc4b9c8db">PTP_HW_INIT</a>(increment,  addend)&#160;&#160;&#160;<a class="el" href="ptp__port__ch32f207__etherlib_8c.html#ae5c52ea21bb7b4e487e7894960d2e430">ptphw_init</a>(increment, addend)</td></tr>
 <tr class="separator:a45ea2e992dddae826985c1cfc4b9c8db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ee84fc7f59502349cbc7f910d92c0d6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="flexptp__options__stm32f407__etherlib_8h.html#a7ee84fc7f59502349cbc7f910d92c0d6">PTP_UPDATE_CLOCK</a>(s,  ns)&#160;&#160;&#160;ETHHW_UpdatePTPTime(ETH, labs(s), abs(ns), (s * <a class="el" href="timeutils_8h.html#a3f1da138f378b2092504d6a0ae62a662">NANO_PREFIX</a> + ns) &lt; 0)</td></tr>
-<tr class="separator:a7ee84fc7f59502349cbc7f910d92c0d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b6a510e0ed2770e0e9e6b0b96ab1f5c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="flexptp__options__stm32f407__etherlib_8h.html#a0b6a510e0ed2770e0e9e6b0b96ab1f5c">PTP_SET_CLOCK</a>(s,  ns)&#160;&#160;&#160;ETHHW_InitPTPTime(ETH, labs(s), abs(ns))</td></tr>
 <tr class="separator:a0b6a510e0ed2770e0e9e6b0b96ab1f5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a342eded57d8df50e4ec8697696b3f1ad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="flexptp__options__stm32f407__etherlib_8h.html#a342eded57d8df50e4ec8697696b3f1ad">PTP_SET_ADDEND</a>(addend)&#160;&#160;&#160;ETHHW_SetPTPAddend(ETH, addend)</td></tr>
@@ -183,7 +183,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html#l00010">10</a> of file <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html">flexptp_options_stm32f407_etherlib.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html#l00011">11</a> of file <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html">flexptp_options_stm32f407_etherlib.h</a>.</p>
 
 </div>
 </div>
@@ -275,6 +275,22 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ac421b80fbd859a58e3751d5525a3df60" name="ac421b80fbd859a58e3751d5525a3df60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac421b80fbd859a58e3751d5525a3df60">&#9670;&#160;</a></span>PTP_ADDEND_INTERFACE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTP_ADDEND_INTERFACE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html#l00005">5</a> of file <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html">flexptp_options_stm32f407_etherlib.h</a>.</p>
+
+</div>
+</div>
 <a id="a5c9b2fe63ca003636c787f4eefa5416c" name="a5c9b2fe63ca003636c787f4eefa5416c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5c9b2fe63ca003636c787f4eefa5416c">&#9670;&#160;</a></span>PTP_CONFIG_PTR</h2>
 
@@ -340,7 +356,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html#l00041">41</a> of file <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html">flexptp_options_stm32f407_etherlib.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html#l00042">42</a> of file <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html">flexptp_options_stm32f407_etherlib.h</a>.</p>
 
 </div>
 </div>
@@ -356,7 +372,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html#l00037">37</a> of file <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html">flexptp_options_stm32f407_etherlib.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html#l00038">38</a> of file <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html">flexptp_options_stm32f407_etherlib.h</a>.</p>
 
 </div>
 </div>
@@ -372,7 +388,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html#l00036">36</a> of file <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html">flexptp_options_stm32f407_etherlib.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html#l00037">37</a> of file <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html">flexptp_options_stm32f407_etherlib.h</a>.</p>
 
 </div>
 </div>
@@ -510,36 +526,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html#l00043">43</a> of file <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html">flexptp_options_stm32f407_etherlib.h</a>.</p>
-
-</div>
-</div>
-<a id="a7ee84fc7f59502349cbc7f910d92c0d6" name="a7ee84fc7f59502349cbc7f910d92c0d6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ee84fc7f59502349cbc7f910d92c0d6">&#9670;&#160;</a></span>PTP_UPDATE_CLOCK</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PTP_UPDATE_CLOCK</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">s, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">ns&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;ETHHW_UpdatePTPTime(ETH, labs(s), abs(ns), (s * <a class="el" href="timeutils_8h.html#a3f1da138f378b2092504d6a0ae62a662">NANO_PREFIX</a> + ns) &lt; 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html#l00042">42</a> of file <a class="el" href="flexptp__options__stm32f407__etherlib_8h_source.html">flexptp_options_stm32f407_etherlib.h</a>.</p>
 
 </div>
 </div>

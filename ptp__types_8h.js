@@ -86,6 +86,12 @@ var ptp__types_8h =
       [ "PTP_DM_E2E", "ptp__types_8h.html#aa353086afe318bec4ec7ce3757ba478ea158f3d6c09c384726ffa8a36562cde6a", null ],
       [ "PTP_DM_P2P", "ptp__types_8h.html#aa353086afe318bec4ec7ce3757ba478ea32cfbd5559afa86a42b55676491a024f", null ]
     ] ],
+    [ "PtpFastCompState", "ptp__types_8h.html#a8eb694373758507149a9b074ec1003b1", [
+      [ "PTP_FC_IDLE", "ptp__types_8h.html#a8eb694373758507149a9b074ec1003b1ab2f800f98b76254fc79e5866e4bf4a6e", null ],
+      [ "PTP_FC_SKEW_CORRECTION", "ptp__types_8h.html#a8eb694373758507149a9b074ec1003b1a6607bdd6c525537c064efd59ce008086", null ],
+      [ "PTP_FC_TIME_CORRECTION", "ptp__types_8h.html#a8eb694373758507149a9b074ec1003b1a95416ba42cfb4a0d04fa3264b6fb162c", null ],
+      [ "PTP_FC_TIME_CORRECTION_PROPAGATION", "ptp__types_8h.html#a8eb694373758507149a9b074ec1003b1a0b73474d2ca31643656984a277fb2315", null ]
+    ] ],
     [ "PtpLogMsgPeriods", "ptp__types_8h.html#a3f2d7e7b45322fb28732f5734365b2d3", [
       [ "PTP_LOGPER_MIN", "ptp__types_8h.html#a3f2d7e7b45322fb28732f5734365b2d3a34f4ccd3f633f863e6972c5a00859827", null ],
       [ "PTP_LOGPER_MAX", "ptp__types_8h.html#a3f2d7e7b45322fb28732f5734365b2d3a2a570cf4d31047f27c5a28ed5de85b73", null ],

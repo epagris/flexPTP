@@ -385,6 +385,12 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ae4104fe8cfc83cb1b1acad40e0c7efb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">PTP P2P slave state viewed from the MASTER.  <a href="ptp__types_8h.html#ae4104fe8cfc83cb1b1acad40e0c7efb2">More...</a><br /></td></tr>
 <tr class="separator:ae4104fe8cfc83cb1b1acad40e0c7efb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8eb694373758507149a9b074ec1003b1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__types_8h.html#a8eb694373758507149a9b074ec1003b1">PtpFastCompState</a> { <a class="el" href="ptp__types_8h.html#a8eb694373758507149a9b074ec1003b1ab2f800f98b76254fc79e5866e4bf4a6e">PTP_FC_IDLE</a> = 0
+, <a class="el" href="ptp__types_8h.html#a8eb694373758507149a9b074ec1003b1a6607bdd6c525537c064efd59ce008086">PTP_FC_SKEW_CORRECTION</a>
+, <a class="el" href="ptp__types_8h.html#a8eb694373758507149a9b074ec1003b1a95416ba42cfb4a0d04fa3264b6fb162c">PTP_FC_TIME_CORRECTION</a>
+, <a class="el" href="ptp__types_8h.html#a8eb694373758507149a9b074ec1003b1a0b73474d2ca31643656984a277fb2315">PTP_FC_TIME_CORRECTION_PROPAGATION</a>
+ }</td></tr>
+<tr class="separator:a8eb694373758507149a9b074ec1003b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This module defines the fundamental PTP message and state machine type, flags, bitfields and the PTP engine's internal state types. </p>
@@ -475,7 +481,7 @@ Enumerations</h2></td></tr>
 </div><div class="memdoc">
 <p>Sync callback type prototype. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00447">447</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00451">451</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -492,7 +498,7 @@ Enumerations</h2></td></tr>
 </div><div class="memdoc">
 <p>User event callback prototype. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00452">452</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00462">462</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -723,6 +729,33 @@ Enumerations</h2></td></tr>
 </table>
 
 <p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00136">136</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+
+</div>
+</div>
+<a id="a8eb694373758507149a9b074ec1003b1" name="a8eb694373758507149a9b074ec1003b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8eb694373758507149a9b074ec1003b1">&#9670;&#160;</a></span>PtpFastCompState</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="ptp__types_8h.html#a8eb694373758507149a9b074ec1003b1">PtpFastCompState</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Fast compensation states. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a8eb694373758507149a9b074ec1003b1ab2f800f98b76254fc79e5866e4bf4a6e" name="a8eb694373758507149a9b074ec1003b1ab2f800f98b76254fc79e5866e4bf4a6e"></a>PTP_FC_IDLE&#160;</td><td class="fielddoc"><p>Fast correction algorithm is IDLE. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a8eb694373758507149a9b074ec1003b1a6607bdd6c525537c064efd59ce008086" name="a8eb694373758507149a9b074ec1003b1a6607bdd6c525537c064efd59ce008086"></a>PTP_FC_SKEW_CORRECTION&#160;</td><td class="fielddoc"><p>Skew correction is running. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a8eb694373758507149a9b074ec1003b1a95416ba42cfb4a0d04fa3264b6fb162c" name="a8eb694373758507149a9b074ec1003b1a95416ba42cfb4a0d04fa3264b6fb162c"></a>PTP_FC_TIME_CORRECTION&#160;</td><td class="fielddoc"><p>Time correction is running. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a8eb694373758507149a9b074ec1003b1a0b73474d2ca31643656984a277fb2315" name="a8eb694373758507149a9b074ec1003b1a0b73474d2ca31643656984a277fb2315"></a>PTP_FC_TIME_CORRECTION_PROPAGATION&#160;</td><td class="fielddoc"><p>Waiting for the effects of time correction to propagate. </p>
+</td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00467">467</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>

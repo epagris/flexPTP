@@ -120,7 +120,7 @@ $(document).ready(function(){initNavTree('cli.html',''); initResizable(); });
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="autotoc_md5"></a>
 Command Line Interface</h1>
-<p>If a suitable Command Line Interface is defined in <a class="el" href="porting.html">compile time</a>, the following commands are available:</p>
+<p>If a <a class="el" href="cli.html#cli-registering-commands">suitable</a> Command Line Interface is defined in <a class="el" href="porting.html">compile time</a>, the following commands are available:</p>
 <ul>
 <li><code>ptp reset</code><ul>
 <li>Resets flexPTP's internal state machines and statistics, but does not clear the PTP profile, clock offset and priority settings.</li>
@@ -149,7 +149,11 @@ Command Line Interface</h1>
 </ul>
 </li>
 <li><code>ptp addend [addend]</code><ul>
-<li>Print or set the addend, the hardware clock tuning word. Setting this directly influences the clock. If manual control over the clock was desired, disable the servo before.</li>
+<li>Print or set the addend, the hardware clock tuning word. Setting this directly influences the clock. If manual control over the clock was desired, disable the servo before. <em>This option in only available with the ADDEND-interface.</em></li>
+</ul>
+</li>
+<li><code>ptp tuning [tuning]</code><ul>
+<li>Print or set the clock tuning in PPB. Setting this directly influences the clock. If manual control over the clock was desired, disable the servo before. <em>This option in only available with the HLT-interface.</em></li>
 </ul>
 </li>
 <li><code>ptp transport [{ipv4|802.3}]</code><ul>
@@ -190,10 +194,29 @@ Command Line Interface</h1>
 </ul>
 </li>
 <li><code>time [ns]</code><ul>
-<li>Print datetime, if <code>ns</code> is specified, time is returned in UNIX format </li>
+<li>Print datetime, if <code>ns</code> is specified, time is returned in UNIX format</li>
 </ul>
 </li>
 </ul>
+<h2><a class="anchor" id="cli-registering-commands"></a>
+Registering commands</h2>
+<p><em>The following command is used for illustration:</em> <code>ptp priority [&lt;p1&gt; &lt;p2&gt;] Print or set clock priority fields</code></p>
+<p>The flexPTP expects a <code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#a8f8a3ba07b96be3784ed3e774b955427">CLI_REG_CMD(cmd_hintline, n_cmd, n_min_arg, cb)</a></code> macro with the below parameters. The function should return an <code>int</code> value. The returned value can be optionally used later to identify the registered commands.</p><ul>
+<li><code>cmd_hintline</code>: a joint string with the command and the hint separated by <em>at least</em> one tabulator (<code>\t</code>) character (e.g. <code>ptp priority [&lt;p1&gt; &lt;p2&gt;]\tPrint or set clock priority fields</code>),</li>
+<li><code>n_cmd</code>: number of words in the command section (2 in this case: <code>ptp</code> and <code>priority</code>),</li>
+<li><code>n_min_arg</code>: minimum required number of arguments (0 in this case, since both parameters are optional)</li>
+<li><code>cb</code>: the callback function with the following signature: <code>int cb(const char ** ppArgs, uint8_t argc)</code>. The return value should be negative if the command execution fails, and 0 at successful processing.<ul>
+<li><code>ppArgs</code>: array of command parameters. If <code>char **</code> typing is not viable with the first parameter, then use any equivalent, like <code>char[N]*</code>, etc.</li>
+<li><code>argc</code>: number of parameters.</li>
+</ul>
+</li>
+</ul>
+<p>The library also expects a <code>CMD_FUNCTION(name)</code> macro to construct the command callback functions, e.g. </p><div class="fragment"><div class="line"><span class="preprocessor">#define CMD_FUNCTION(name) int (name) (const char ** ppArgs, uint8_t argc)</span></div>
+</div><!-- fragment --><p>Using the two macro above, the command registration can be easily adapted to any type of CLI management system.</p>
+<p>To learn more about flexPTP's CLI command registration, refer to: <a class="el" href="cli__cmds_8c.html">cli_cmds.c</a>.</p>
+<h3><a class="anchor" id="autotoc_md6"></a>
+Removing commands</h3>
+<p>Optionally, define the <code>CLI_REMOVE_CMD(id)</code> macro that removes a CLI command. It will be invoked during the de-initialization of the library. The <code>id</code> is the numeric value returned by the <code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#a8f8a3ba07b96be3784ed3e774b955427">CLI_REG_CMD()</a></code> call. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
