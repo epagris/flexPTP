@@ -69,18 +69,32 @@ void ptp_set_domain(uint8_t domain);
 uint8_t ptp_get_domain();
 
 /**
- * Set addend, the frequency tuning word.
+ * Set addend, the frequency tuning word. Only available when using the ADDEND interface.
  * 
  * @param addend addend
  */
 void ptp_set_addend(uint32_t addend);
 
 /**
- * Get addend.
+ * Get addend. Only available when using the ADDEND interface.
  * 
  * @return addend
  */
 uint32_t ptp_get_addend();
+
+/**
+ * Set the tuning directly, the frequency tuning word. Only available when using the HLT interface.
+ * 
+ * @param tuning_ppb tuning in PPB
+ */
+void ptp_set_tuning(float tuning_ppb);
+
+/**
+ * Get tuning directly. Only available when using the HLT interface.
+ * 
+ * @return tuning in PPB
+ */
+float ptp_get_tuning();
 
 /**
  * Get PTP transport type.

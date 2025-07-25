@@ -44,6 +44,8 @@ The library package ships with hardware ports for several platforms, including:
   - Example: [STM32 NUCLEO-F746ZG flexPTP demo](https://github.com/epagris/flexPTP-demo-NUCLEO-F746ZG)
 - **STM32H7xx** (_EtherLib_/_lwip_)
   - Example: [STM32 NUCLEO-H743ZI flexPTP demo](https://github.com/epagris/flexPTP-demo-NUCLEO-H743ZI), [STM32 **dual-core** NUCLEO-H745ZI-Q flexPTP demo](https://github.com/epagris/flexPTP-demo-NUCLEO-H745ZI-Q/)
+- **MK64F**: (_lwip_)
+  - Example: [NXP FRDM-K64F flexPTP demo](https://github.com/epagris/flexPTP-demo-FRDM-K64F)
 
 ## Requirements
 
@@ -64,7 +66,7 @@ For better understanding how timestamps are fed into flexPTP, refer to ptp_recei
 
 #### lwIP
 
-The lwIP (up to v2.2.0) is not designed for support timestamp propagation right away. A possible workaround is the extension of the `pbuf` structure so that it can carry the timestamps and the usual packet data as well through defining the `LWIP_PBUF_CUSTOM_DATA` macro.
+The lwIP (up to v2.2.0) has not been designed to support timestamp propagation right away. A possible workaround is by extending the `pbuf` structure so that it can carry the timestamps and the usual packet data as well through defining the `LWIP_PBUF_CUSTOM_DATA` macro.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{c}
 // Main packet buffer struct
@@ -116,7 +118,8 @@ time [ns]                                          Print time
 ptp master [[un]prefer] [clockid]                  Master clock settings
 ptp info                                           Print PTP info
 ptp domain [domain]                                Print or set PTP domain
-ptp addend [addend]                                Print or set addend
+ptp addend [addend]                                Print or set addend   <--- ADDEND interface ONLY
+ptp tuning [tuning]                                Print or set tuning   <--- HLT interface ONLY
 ptp transport [{ipv4|802.3}]                       Set or get PTP transport layer
 ptp delmech [{e2e|p2p}]                            Set or get PTP delay mechanism
 ptp transpec [{def|gPTP}]                          Set or get PTP transportSpecific field (majorSdoId)

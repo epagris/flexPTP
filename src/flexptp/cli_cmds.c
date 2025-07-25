@@ -29,13 +29,17 @@
 
 #ifdef CLI_REG_CMD
 
-static int CB_reset(const CliToken_Type *ppArgs, uint8_t argc) {
+#ifndef CMD_FUNCTION
+#error "No CMD_FUNCTION macro has been defined, cannot register CLI functions!"
+#endif
+
+static CMD_FUNCTION(CB_reset) {
     ptp_reset();
     MSG("> PTP reset!\n");
     return 0;
 }
 
-static int CB_offset(const CliToken_Type *ppArgs, uint8_t argc) {
+static CMD_FUNCTION(CB_offset) {
     if (argc > 0) {
         ptp_set_clock_offset(atoi(ppArgs[0]));
     }
@@ -44,7 +48,7 @@ static int CB_offset(const CliToken_Type *ppArgs, uint8_t argc) {
     return 0;
 }
 
-static int CB_log(const CliToken_Type *ppArgs, uint8_t argc) {
+static CMD_FUNCTION(CB_log) {
     bool logEn = false;
 
     if (argc > 1) {
@@ -79,7 +83,7 @@ static int CB_log(const CliToken_Type *ppArgs, uint8_t argc) {
     return 0;
 }
 
-static int CB_time(const CliToken_Type *ppArgs, uint8_t argc) {
+static CMD_FUNCTION(CB_time) {
     char datetime[24];
     TimestampU t;
     ptp_time(&t);
@@ -94,7 +98,7 @@ static int CB_time(const CliToken_Type *ppArgs, uint8_t argc) {
     return 0;
 }
 
-static int CB_master(const CliToken_Type *ppArgs, uint8_t argc) {
+static CMD_FUNCTION(CB_master) {
     if (argc > 0) {
         if (!strcmp(ppArgs[0], "prefer")) {
             uint64_t idM = ptp_get_current_master_clock_identity();
@@ -113,7 +117,7 @@ static int CB_master(const CliToken_Type *ppArgs, uint8_t argc) {
     return 0;
 }
 
-static int CB_ptpinfo(const CliToken_Type *ppArgs, uint8_t argc) {
+static CMD_FUNCTION(CB_ptpinfo) {
     MSG("Own clock ID: ");
     ptp_print_clock_identity(ptp_get_own_clock_identity());
     MSG("\nMaster clock ID: ");
@@ -122,7 +126,7 @@ static int CB_ptpinfo(const CliToken_Type *ppArgs, uint8_t argc) {
     return 0;
 }
 
-static int CB_ptpdomain(const CliToken_Type *ppArgs, uint8_t argc) {
+static CMD_FUNCTION(CB_ptpdomain) {
     if (argc > 0) {
         ptp_set_domain(atoi(ppArgs[0]));
     }
@@ -130,15 +134,25 @@ static int CB_ptpdomain(const CliToken_Type *ppArgs, uint8_t argc) {
     return 0;
 }
 
-static int CB_addend(const CliToken_Type *ppArgs, uint8_t argc) {
+#ifdef PTP_ADDEND_INTERFACE
+static CMD_FUNCTION(CB_addend) {
     if (argc > 0) {
         ptp_set_addend((uint32_t)atol(ppArgs[0]));
     }
     MSG("Addend: %u\n", ptp_get_addend());
     return 0;
 }
+#elif defined(PTP_HLT_INTERFACE)
+static CMD_FUNCTION(CB_tuning) {
+    if (argc > 0) {
+        ptp_set_tuning((uint32_t)atof(ppArgs[0]));
+    }
+    MSG("Tuning: %.4f\n", ptp_get_tuning());
+    return 0;
+}
+#endif
 
-static int CB_transportType(const CliToken_Type *ppArgs, uint8_t argc) {
+static CMD_FUNCTION(CB_transportType) {
     if (argc > 0) {
         if (!strcmp(ppArgs[0], "ipv4")) {
             ptp_set_transport_type(PTP_TP_IPv4);
@@ -151,7 +165,7 @@ static int CB_transportType(const CliToken_Type *ppArgs, uint8_t argc) {
     return 0;
 }
 
-static int CB_delayMechanism(const CliToken_Type *ppArgs, uint8_t argc) {
+static CMD_FUNCTION(CB_delayMechanism) {
     if (argc > 0) { // If changing delay mechanism, PTP will be inherently reset!
         if (!strcmp(ppArgs[0], "e2e")) {
             ptp_set_delay_mechanism(PTP_DM_E2E);
@@ -164,7 +178,7 @@ static int CB_delayMechanism(const CliToken_Type *ppArgs, uint8_t argc) {
     return 0;
 }
 
-static int CB_transpec(const CliToken_Type *ppArgs, uint8_t argc) {
+static CMD_FUNCTION(CB_transpec) {
     if (argc > 0) { // ...inherent reset!
         if (!strcmp(ppArgs[0], "def") || !strcmp(ppArgs[0], "unknown")) {
             ptp_set_transport_specific(PTP_TSPEC_UNKNOWN_DEF);
@@ -177,7 +191,7 @@ static int CB_transpec(const CliToken_Type *ppArgs, uint8_t argc) {
     return 0;
 }
 
-static int CB_profile(const CliToken_Type *ppArgs, uint8_t argc) {
+static CMD_FUNCTION(CB_profile) {
     bool printProfileSummary = true;
     if (argc > 0 && !strcmp(ppArgs[0], "preset")) {
         if (argc > 1) {
@@ -209,7 +223,7 @@ static int CB_profile(const CliToken_Type *ppArgs, uint8_t argc) {
     return 0;
 }
 
-static int CB_tlv(const CliToken_Type *ppArgs, uint8_t argc) {
+static CMD_FUNCTION(CB_tlv) {
     bool printLoadedTlvPresetChain = true;
     if (argc > 0) {
         if (!strcmp(ppArgs[0], "preset")) {
@@ -257,7 +271,7 @@ static int CB_tlv(const CliToken_Type *ppArgs, uint8_t argc) {
     return 0;
 }
 
-static int CB_profile_flags(const CliToken_Type *ppArgs, uint8_t argc) {
+static CMD_FUNCTION(CB_profile_flags) {
     if (argc > 0) { // set profile flags
         uint8_t pf = atoi(ppArgs[0]);
         ptp_set_profile_flags(pf);
@@ -268,7 +282,7 @@ static int CB_profile_flags(const CliToken_Type *ppArgs, uint8_t argc) {
     return 0;
 }
 
-static int CB_logPeriod(const CliToken_Type *ppArgs, uint8_t argc) {
+static CMD_FUNCTION(CB_logPeriod) {
     if (argc > 1) {
         if (!strcmp(ppArgs[0], "delreq")) {
             if (!strcmp(ppArgs[1], "match")) {
@@ -303,7 +317,7 @@ static int CB_logPeriod(const CliToken_Type *ppArgs, uint8_t argc) {
     return 0;
 }
 
-static int CB_coarseThreshold(const CliToken_Type *ppArgs, uint8_t argc) {
+static CMD_FUNCTION(CB_coarseThreshold) {
     if (argc > 0) {
         ptp_set_coarse_threshold(atoi(ppArgs[0]));
     }
@@ -312,7 +326,7 @@ static int CB_coarseThreshold(const CliToken_Type *ppArgs, uint8_t argc) {
     return 0;
 }
 
-static int CB_priority(const CliToken_Type *ppArgs, uint8_t argc) {
+static CMD_FUNCTION(CB_priority) {
     if (argc >= 2) {
         ptp_set_priority1(atoi(ppArgs[0]));
         ptp_set_priority2(atoi(ppArgs[1]));
@@ -331,7 +345,7 @@ enum PTP_CMD_IDS {
     CMD_MASTER,
     CMD_PTPINFO,
     CMD_PTPDOMAIN,
-    CMD_ADDEND,
+    CMD_ADDEND_TUNING,
     CMD_TRANSPORTTYPE,
     CMD_DELAYMECH,
     CMD_TRANSPEC,
@@ -359,7 +373,11 @@ void ptp_register_cli_commands() {
     sCmds[CMD_MASTER] = CLI_REG_CMD("ptp master [[un]prefer] [clockid] \t\t\tMaster clock settings", 2, 0, CB_master);
     sCmds[CMD_PTPINFO] = CLI_REG_CMD("ptp info \t\t\tPrint PTP info", 2, 0, CB_ptpinfo);
     sCmds[CMD_PTPDOMAIN] = CLI_REG_CMD("ptp domain [domain]\t\t\tPrint or set PTP domain", 2, 0, CB_ptpdomain);
-    sCmds[CMD_ADDEND] = CLI_REG_CMD("ptp addend [addend]\t\t\tPrint or set addend", 2, 0, CB_addend);
+#ifdef PTP_ADDEND_INTERFACE
+    sCmds[CMD_ADDEND_TUNING] = CLI_REG_CMD("ptp addend [addend]\t\t\tPrint or set addend", 2, 0, CB_addend);
+#elif defined(PTP_HLT_INTERFACE)
+    sCmds[CMD_ADDEND_TUNING] = CLI_REG_CMD("ptp tuning [tuning]\t\t\tPrint or set tuning", 2, 0, CB_tuning);
+#endif
     sCmds[CMD_TRANSPORTTYPE] = CLI_REG_CMD("ptp transport [{ipv4|802.3}]\t\t\tSet or get PTP transport layer", 2, 0, CB_transportType);
     sCmds[CMD_DELAYMECH] = CLI_REG_CMD("ptp delmech [{e2e|p2p}]\t\t\tSet or get PTP delay mechanism", 2, 0, CB_delayMechanism);
     sCmds[CMD_TRANSPEC] = CLI_REG_CMD("ptp transpec [{def|gPTP}]\t\t\tSet or get PTP transportSpecific field (majorSdoId)", 2, 0, CB_transpec);
@@ -374,7 +392,9 @@ void ptp_register_cli_commands() {
 }
 
 void ptp_remove_cli_commands() {
-#ifdef CLI_REG_CMD
-    cli_remove_command_array(sCmds);
-#endif // CLI_REG_CMD
+#ifdef CLI_REMOVE_CMD
+    for (uint8_t i = 0; i < CMD_N; i++) {
+        CLI_REMOVE_CMD(i);
+    }
+#endif // CLI_REMOVE_CMD
 }

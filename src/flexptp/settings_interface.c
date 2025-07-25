@@ -43,6 +43,7 @@ uint8_t ptp_get_domain() {
     return S.profile.domainNumber;
 }
 
+#ifdef PTP_ADDEND_INTERFACE
 void ptp_set_addend(uint32_t addend) {
     S.hwclock.addend = addend;
 }
@@ -50,6 +51,15 @@ void ptp_set_addend(uint32_t addend) {
 uint32_t ptp_get_addend() {
     return S.hwclock.addend;
 }
+#elif defined(PTP_HLT_INTERFACE)
+void ptp_set_tuning(float tuning_ppb) {
+    S.hwclock.tuning_ppb = tuning_ppb;
+}
+
+float ptp_get_tuning() {
+    return S.hwclock.tuning_ppb;
+}
+#endif
 
 PtpTransportType ptp_get_transport_type() {
     return S.profile.transportType;

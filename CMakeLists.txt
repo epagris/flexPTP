@@ -4,7 +4,6 @@ set(FLEXPTP_SRC_DIR ${CMAKE_CURRENT_LIST_DIR}/src/flexptp)
 
 # Hardware port selection
 set(FLEXPTP_HWPORT_OK 1)
-set(FLEXPTP_HWPORTBASM "")
 
 if (FLEXPTP_HWPORT MATCHES "^H74[35]_LWIP$")
     set(FLEXPTP_HWPORT_SRC
@@ -52,13 +51,15 @@ if (FLEXPTP_HWPORT_OK)
     if (NOT FLEXPTP_HWPORT STREQUAL FLEXPTP_HWPORT_BASE)
         message("flexPTP: hardware port is automatically derived from '${FLEXPTP_HWPORT_BASE}'")
     endif()
+
+    list(TRANSFORM FLEXPTP_HWPORT_SRC PREPEND "${FLEXPTP_SRC_DIR}/")
 else()
     if (FLEXPTP_HWPORT_SRC)
         message("flexPTP: custom hardware port defined")
     else()
-        message("flexPTP: Unknown or undefined hardware port: '" ${FLEXPTP_HWPORT} "', \
-                 please populate FLEXPTP_HWPORT_SRC with the files of your custom \
-                 hardware port or pick a predefined one!")
+        message("flexPTP: Unknown or undefined hardware port: '" ${FLEXPTP_HWPORT} "', "
+                "please populate FLEXPTP_HWPORT_SRC with the files of your custom "
+                "hardware port or pick a predefined one!")
     endif()
 endif()
 
@@ -81,14 +82,15 @@ endif()
 
 if (FLEXPTP_NSD_OK)
     message("flexPTP: '" ${FLEXPTP_NSD} "' network stack driver selected")
+    list(TRANSFORM FLEXPTP_NSD_SRC PREPEND "${FLEXPTP_SRC_DIR}/")
 else()
     if (FLEXPTP_NSD_SRC)
         message("flexPTP: custom network stack driver defined")
     else()
-        message("flexPTP: Unknown or undefined network stack driver: '" ${FLEXPTP_NSD} "', \
-                please populate FLEXPTP_NSD_SRC with the files of your custom network stack \
-                driver and FLEXPTP_NETWORK_STACK with the name of the custom network stack \
-                library or pick a predefined one!")
+        message("flexPTP: Unknown or undefined network stack driver: '" ${FLEXPTP_NSD} "', "
+                "please populate FLEXPTP_NSD_SRC with the files of your custom network stack "
+                "driver and FLEXPTP_NETWORK_STACK with the name of the custom network stack "
+                "library or pick a predefined one!")
     endif()
 endif()
 
@@ -105,10 +107,11 @@ endif()
 
 if (FLEXPTP_SERVO_OK)
     message("flexPTP: '" ${FLEXPTP_SERVO} "' clock servo selected")
+    list(TRANSFORM FLEXPTP_SERVO_SRC PREPEND "${FLEXPTP_SRC_DIR}/")
 else()
-    if (NOT FLEXPTP_SRVO_SRC)
-        message("flexPTP: WARNING! No clock servo defined! If this is a mistake, then \
-                 populate FLEXPTP_SERVO_SRC with the list of the clock servo module.")
+    if (NOT FLEXPTP_SERVO_SRC)
+        message("flexPTP: WARNING! No clock servo defined! If this is a mistake, then "
+                "populate FLEXPTP_SERVO_SRC with the list of the clock servo module.")
     endif()
 endif()
 
@@ -120,11 +123,7 @@ if (FLEXPTP_TARGET_TAG)
     message("Custom flexPTP target: ${FLEXPTP_TARGET}")
 endif()
 
-set(FLEXPTP_SRC
-    ${FLEXPTP_HWPORT_SRC}
-    ${FLEXPTP_NSD_SRC}
-    ${FLEXPTP_SERVO_SRC}
-    
+set(FLEXPTP_SRC    
     cli_cmds.c
     cli_cmds.h
     clock_utils.c
@@ -173,8 +172,8 @@ set(FLEXPTP_SRC
     tlv.c
     tlv.h
 )
-
 list(TRANSFORM FLEXPTP_SRC PREPEND "${FLEXPTP_SRC_DIR}/")
+list(APPEND FLEXPTP_SRC ${FLEXPTP_HWPORT_SRC} ${FLEXPTP_NSD_SRC} ${FLEXPTP_SERVO_SRC})
 
 set(FLEXPTP_LOCAL_INCLUDES ${CMAKE_CURRENT_LIST_DIR}/src)
 set(FLEXPTP_INCLUDE_EXPORT ${FLEXPTP_LOCAL_INCLUDES} PARENT_SCOPE) # Export the location of the flexPTP headers
@@ -186,10 +185,12 @@ target_compile_definitions(${FLEXPTP_TARGET} PRIVATE ${FLEXPTP_COMPILE_DEFS})
 
 if (FLEXPTP_NETWORK_STACK)
     message("flexPTP: linking against '" ${FLEXPTP_NETWORK_STACK} "' network library")
-    target_link_libraries(${FLEXPTP_TARGET} ${FLEXPTP_NETWORK_STACK})
+    if (NOT FLEXPTP_DONT_LINK_NETWORK_LIB)
+        target_link_libraries(${FLEXPTP_TARGET} ${FLEXPTP_NETWORK_STACK})
+    endif()
 elseif()
-    message("flexPTP: No network stack defined to link agains! \
-             Please set FLEXPTP_NETWORK_STACK to a chosen network stack library!")
+    message("flexPTP: No network stack defined to link against! "
+            "Please set FLEXPTP_NETWORK_STACK to a chosen network stack library!")
 endif()
 
 add_custom_target(

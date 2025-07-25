@@ -32,7 +32,11 @@ static double integrator_value; ///< value stored in the integrator
 
 #ifdef CLI_REG_CMD
 
-static int CB_params(const CliToken_Type *ppArgs, uint8_t argc) {
+#ifndef CMD_FUNCTION
+#error "No CMD_FUNCTION macro has been defined, cannot register CLI functions!"
+#endif
+
+static CMD_FUNCTION(CB_params) {
     // set if parameters passed after command
     if (argc >= 3) {
         P_FACTOR = atof(ppArgs[0]);
@@ -45,7 +49,7 @@ static int CB_params(const CliToken_Type *ppArgs, uint8_t argc) {
     return 0;
 }
 
-static int CB_logInternals(const CliToken_Type *ppArgs, uint8_t argc) {
+static CMD_FUNCTION(CB_logInternals) {
     if (argc >= 1) {
         int en = ONOFF(ppArgs[0]);
         if (en >= 0) {
@@ -67,15 +71,19 @@ static struct {
     int internals;
 } sCliCmdIdx = {0};
 
+#ifdef CLI_REG_CMD
 static void pid_ctrl_register_cli_commands() {
     sCliCmdIdx.params = CLI_REG_CMD("ptp servo params [Kp Kd] \t\t\tSet or query K_p and K_d servo parameters", 3, 0, CB_params);
     sCliCmdIdx.internals = CLI_REG_CMD("ptp servo log internals {on|off} \t\t\tEnable or disable logging of servo internals", 4, 1, CB_logInternals);
 }
+#endif
 
+#ifdef CLI_REMOVE_CMD
 static void pid_ctrl_remove_cli_commands() {
-    cli_remove_command(sCliCmdIdx.params);
-    cli_remove_command(sCliCmdIdx.internals);
+    CLI_REMOVE_CMD(sCliCmdIdx.params);
+    CLI_REMOVE_CMD(sCliCmdIdx.internals);
 }
+#endif
 
 #endif // CLI_REG_CMD
 
@@ -88,9 +96,9 @@ void pid_ctrl_init() {
 }
 
 void pid_ctrl_deinit() {
-#ifdef CLI_REG_CMD
+#ifdef CLI_REMOVE_CMD
     pid_ctrl_remove_cli_commands();
-#endif // CLI_REG_CMD
+#endif // CLI_REMOVE_CMD
 }
 
 void pid_ctrl_reset() {

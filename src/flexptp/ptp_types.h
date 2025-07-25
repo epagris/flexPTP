@@ -423,7 +423,11 @@ typedef struct {
  * @brief Hardware clock state.
  */
 typedef struct {
+#ifdef PTP_ADDEND_INTERFACE
     uint32_t addend; ///< hardware clock addend value
+#elif defined(PTP_HLT_INTERFACE)
+    float tuning_ppb; ///< normalized hardware tuning
+#endif
 } PtpHWClockState;
 
 /**
@@ -444,12 +448,27 @@ typedef struct {
 /**
  * Sync callback type prototype.
  */
-typedef void (*PtpSyncCallback)(int64_t time_error, const PtpSyncCycleData *pSCD, uint32_t freqCodeWord);
+typedef void (*PtpSyncCallback)(int64_t time_error, const PtpSyncCycleData *pSCD,
+#ifdef PTP_ADDEND_INTERFACE
+                                uint32_t freqCodeWord
+#elif defined(PTP_HLT_INTERFACE)
+                                float tuning_ppb
+#endif
+);
 
 /**
  * User event callback prototype.
  */
 typedef void (*PtpUserEventCallback)(PtpUserEventCode uev);
+
+/**
+ * Fast compensation states.
+ */
+typedef enum { PTP_FC_IDLE = 0,                    ///< Fast correction algorithm is IDLE
+               PTP_FC_SKEW_CORRECTION,             ///< Skew correction is running
+               PTP_FC_TIME_CORRECTION,             ///< Time correction is running
+               PTP_FC_TIME_CORRECTION_PROPAGATION, ///< Waiting for the effects of time correction to propagate
+} PtpFastCompState;
 
 /**
  * @brief Giant PTP core state object.
@@ -492,7 +511,11 @@ typedef struct {
 
         PtpSlaveMessagingState messaging; ///< Messaging state
         PtpSyncCycleData scd;             ///< Sync cycle data
+        PtpFastCompState fastCompState;   ///< State of fast compensation
+        uint8_t fastCompCntr;             ///< Cycle counter for fast compensation
         TimestampI prevSyncMa;            ///< T1 from the previous cycle
+        TimestampI prevSyncSl;            ///< T2 from the previous cycle
+        TimestampI prevTimeError;         ///< Time error in the previous cycle
         uint64_t coarseLimit;             ///< time error limit above coarse correction is engaged
 
         uint32_t delReqTickPeriod; ///< ticks between Delay_Req transmissions

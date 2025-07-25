@@ -6,8 +6,8 @@ The flexPTP project is decomposed into smaller sections, modules that can be gro
 
 ## Types, constants and definitions
 
-- \ref ptp_defs.h, \ref ptp_defs.c : Fundamental constants and definitions, like IGMP-groups, Ethernet addresses, ports, PTP header and message lengths, autocalculated values.
-- \ref ptp_types.h : Fundamental PTP types, PTP message types, PTP message bitfields, PTP value enumerations. The types for the core and BMC-algorithm's state machines are also defined here.
+- \ref ptp_defs.h, \ref ptp_defs.c : Fundamental constants and definitions, like IGMP-groups, Ethernet addresses, ports, PTP header and message lengths, auto-calculated values.
+- \ref ptp_types.h : Fundamental PTP types, PTP message types, PTP message bit fields, PTP value enumerations. The types for the core and BMC-algorithm's state machines are also defined here.
 - \ref ptp_servo_types.h : Definition of basic servo types.
 - \ref ptp_sync_cycle_data.h : Definition of the PTP synchronization cycle context type.
 

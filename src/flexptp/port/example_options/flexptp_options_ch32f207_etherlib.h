@@ -2,6 +2,7 @@
 #define FLEXPTP_OPTIONS_CH32F207_H_
 
 #define ETHLIB
+#define PTP_ADDEND_INTERFACE
 
 // -------------------------------------------
 // ------ DEFINES FOR FLEXPTP SETTINGS -------
@@ -39,7 +40,6 @@
 #include <stdlib.h>
 
 #define PTP_HW_INIT(increment, addend) ptphw_init(increment, addend)
-#define PTP_UPDATE_CLOCK(s,ns) 	ETHHW_UpdatePTPTime(ETH, labs(s), abs(ns), (s * NANO_PREFIX + ns) < 0)
 #define PTP_SET_CLOCK(s,ns) ETHHW_InitPTPTime(ETH, labs(s), abs(ns))
 #define PTP_SET_ADDEND(addend) ETHHW_SetPTPAddend(ETH, addend)
 #define PTP_HW_GET_TIME(pt) ptphw_gettime(pt)
