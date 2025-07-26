@@ -101,6 +101,10 @@ if (FLEXPTP_SERVO STREQUAL "PID")
     set(FLEXPTP_SERVO_SRC
         servo/pid_controller.c
         servo/pid_controller.h)
+elseif (FLEXPTP_SERVO STREQUAL "SPID")
+    set(FLEXPTP_SERVO_SRC
+        servo/spid_controller.c
+        servo/spid_controller.h)
 else()
     set(FLEXPTP_SERVO_OK 0)
 endif()

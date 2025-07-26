@@ -8,22 +8,22 @@
 #include "../ptp_servo_types.h"
 
 /**
- * Initalize PD controller.
+ * Initialize PID controller.
  */
 void pid_ctrl_init();
 
 /**
- * Deinitialize PD controller.
+ * Deinitialize PID controller.
  */
 void pid_ctrl_deinit();
 
 /**
- * Reset PD controller.
+ * Reset PID controller.
  */
 void pid_ctrl_reset();
 
 /**
- * Run the PD controller.
+ * Run the PID controller.
  * 
  * @param dt time error in nanoseconds
  * @param pAux auxiliary synchronization cycle context data 

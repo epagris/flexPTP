@@ -137,7 +137,7 @@ static CMD_FUNCTION(CB_ptpdomain) {
 #ifdef PTP_ADDEND_INTERFACE
 static CMD_FUNCTION(CB_addend) {
     if (argc > 0) {
-        ptp_set_addend((uint32_t)atol(ppArgs[0]));
+        ptp_set_addend((uint32_t)atoll(ppArgs[0]));
     }
     MSG("Addend: %u\n", ptp_get_addend());
     return 0;
