@@ -39,7 +39,7 @@
  */
 static void ptp_tune_clock(float tuning_ppb) {
 #ifdef PTP_ADDEND_INTERFACE
-    int64_t compAddend = (int64_t)S.hwclock.addend + (int64_t)(corr_ppb * PTP_ADDEND_CORR_PER_PPB_F); // compute addend value
+    int64_t compAddend = (int64_t)S.hwclock.addend + (int64_t)(tuning_ppb * PTP_ADDEND_CORR_PER_PPB_F); // compute addend value
     S.hwclock.addend = MIN(compAddend, 0xFFFFFFFF);                                                   // limit to 32-bit range
     PTP_SET_ADDEND(S.hwclock.addend);                                                                 // write addend into hardware
 #elif defined(PTP_HLT_INTERFACE)
