@@ -10,6 +10,20 @@
 
 // ----------------------------------
 
+#ifndef K_P
+#define K_P (0.5 * 0.476) ///< Default Kp parameter value
+#endif
+
+#ifndef K_I
+#define K_I (0) ///< Default Ki parameters value
+#endif
+
+#ifndef K_D
+#define K_D (3.0) ///< Default Kd parameter value
+#endif
+
+// ----------------------------------
+
 static bool logInternals = false; ///< Decides if servo's internal operation shoud be reported or not
 static bool firstRun = true;      ///< Indicates if first run did not occur yet
 
@@ -19,9 +33,9 @@ static bool firstRun = true;      ///< Indicates if first run did not occur yet
 // static float D_FACTOR = 2.0 * 0.476;
 
 // PID servo coefficients
-static float P_FACTOR = 0.5 * 0.476; ///< Proportional factor
-static float I_FACTOR = 0;           ///< Integrating factor
-static float D_FACTOR = 3.0;         ///< Differentiating factor
+static float Kp = K_P; ///< Proportional factor
+static float Ki = K_I;           ///< Integrating factor
+static float Kd = K_D;         ///< Differentiating factor
 
 // ----------------------------------
 
@@ -39,12 +53,12 @@ static double integrator_value; ///< value stored in the integrator
 static CMD_FUNCTION(CB_params) {
     // set if parameters passed after command
     if (argc >= 3) {
-        P_FACTOR = atof(ppArgs[0]);
-        I_FACTOR = atof(ppArgs[1]);
-        D_FACTOR = atof(ppArgs[2]);
+        Kp = atof(ppArgs[0]);
+        Ki = atof(ppArgs[1]);
+        Kd = atof(ppArgs[2]);
     }
 
-    MSG("> PTP params: K_p = %.3f, K_i = %.3f, K_d = %.3f\n", P_FACTOR, I_FACTOR, D_FACTOR);
+    MSG("> PTP params: K_p = %.3f, K_i = %.3f, K_d = %.3f\n", Kp, Ki, Kd);
 
     return 0;
 }
@@ -73,7 +87,7 @@ static struct {
 
 #ifdef CLI_REG_CMD
 static void pid_ctrl_register_cli_commands() {
-    sCliCmdIdx.params = CLI_REG_CMD("ptp servo params [Kp Kd] \t\t\tSet or query K_p and K_d servo parameters", 3, 0, CB_params);
+    sCliCmdIdx.params = CLI_REG_CMD("ptp servo params [Kp Ki Kd] \t\t\tSet or query Kp, Ki, and Kd servo parameters", 3, 0, CB_params);
     sCliCmdIdx.internals = CLI_REG_CMD("ptp servo log internals {on|off} \t\t\tEnable or disable logging of servo internals", 4, 1, CB_logInternals);
 }
 #endif
@@ -114,18 +128,17 @@ float pid_ctrl_run(int32_t dt, PtpServoAuxInput *pAux) {
         return 0;
     }
 
-    // calculate relative frequency error
-    // double rd_ppb = ((double) dt) / (pAux->msgPeriodMs * 1E+06 + dt) * 1E+09;
-    double rd_ppb = ((double)dt) / (pAux->measSyncPeriodNs + dt) * 1E+09;
+    // calculate relative time error
+    double rd_ppb = ((double)dt) / (pAux->measSyncPeriodNs) * 1E+09;
 
     // calculate difference
-    double rd_D_ppb = D_FACTOR * (rd_ppb - rd_prev_ppb);
+    double rd_D_ppb = Kd * (rd_ppb - rd_prev_ppb);
 
     // calculate output (run the PD controller)
-    double corr_ppb = -(P_FACTOR * (rd_ppb + rd_D_ppb) + integrator_value) * exp((pAux->measSyncPeriodNs * 1E-09) - 1.0);
+    double corr_ppb = -(Kp * (rd_ppb + rd_D_ppb) + integrator_value) * exp((pAux->measSyncPeriodNs * 1E-09) - 1.0);
 
     // update integrator
-    integrator_value += I_FACTOR * rd_ppb;
+    integrator_value += Ki * rd_ppb;
 
     // store error value (time difference) for use in next iteration
     rd_prev_ppb = rd_ppb;

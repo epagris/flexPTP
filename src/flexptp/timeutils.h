@@ -51,6 +51,14 @@ typedef struct
 TimestampI *tsUToI(TimestampI *ti, const TimestampU *tu);
 
 /**
+ * Convert signed timestamp to unsigned.
+ *
+ * @param tu destination (signed) timestamp
+ * @param ti source (unsigned) timestamp
+ */
+TimestampU *tsIToU(TimestampU *tu, const TimestampI *ti);
+
+/**
  * Add up timestamps.
  * r = a + b;
  *

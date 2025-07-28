@@ -17,6 +17,7 @@ flexPTP offers the following capabilities:
 - supports **L2** and **L4** transport mechanisms
 - supports **one-step** and **two-step** signaling modes
 - can operate as a **IEEE 802.1AS** clock (slave or master)
+- offers **PID** and **Kalman-filter** servos
 - supports lwIP and EtherLib as underlying network stack
 - features a rich set of runtime-configurable options
 - features numerous logging features

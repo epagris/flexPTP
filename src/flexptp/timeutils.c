@@ -12,6 +12,14 @@ TimestampI *tsUToI(TimestampI *ti, const TimestampU *tu)
     return ti;
 }
 
+TimestampU *tsIToU(TimestampU *tu, const TimestampI *ti)
+{
+    tu->sec = (uint64_t)ti->sec;
+    tu->nanosec = (uint32_t)ti->nanosec;
+    return tu;
+}
+
+
 // r = a + b;
 TimestampI *addTime(TimestampI *r, const TimestampI *a, const TimestampI *b)
 {
