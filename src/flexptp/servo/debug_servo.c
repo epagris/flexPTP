@@ -1,7 +1,5 @@
 #include "debug_servo.h"
-#include "cliutils/cli.h"
-#include "flexptp/ptp_defs.h"
-#include "standard_output/standard_output.h"
+#include "../ptp_defs.h"
 
 #include <flexptp_options.h>
 #include <stdlib.h>

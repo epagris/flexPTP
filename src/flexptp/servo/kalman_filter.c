@@ -4,8 +4,7 @@
  */
 
 #include "kalman_filter.h"
-#include "cliutils/cli.h"
-#include "flexptp/ptp_defs.h"
+#include "../ptp_defs.h"
 
 #include <math.h>
 #include <stdint.h>
