@@ -120,6 +120,8 @@ $(document).ready(function(){initNavTree('servo.html',''); initResizable(); });
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="autotoc_md79"></a>
 Clock servo</h1>
+<h2><a class="anchor" id="autotoc_md80"></a>
+Interface</h2>
 <p>The flexPTP requires a clock servo to calculate how to tune the clock in steady state. A proper servo must define the following four functions:</p>
 <ol type="1">
 <li>A function that initializes the servo. No parameters are passed. (refer to <code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#adf6e86bdb39695261a826be45ee06001">PTP_SERVO_INIT()</a></code>)</li>
@@ -131,10 +133,100 @@ Clock servo</h1>
 </ol>
 <p>Clock servo functions must be passed to the flexPTP core by filling the servo-related macros in the <code>flexptp_config.h</code> configuration file.</p>
 <p>Here we want to highlight that a servo init function is not constrained to only initialize the core of a controller. The developer is highly encouraged to include e.g. logging or debug functionality also in the controller.</p>
-<h2><a class="anchor" id="autotoc_md80"></a>
-Examples</h2>
-<p>A PID-controller based servo is bundled to the flexPTP package: <a class="el" href="pid__controller_8c.html">pid_controller.c</a>, <a class="el" href="pid__controller_8h.html">pid_controller.h</a> </p>
-</div></div><!-- contents -->
+<h2><a class="anchor" id="autotoc_md81"></a>
+Bundled controllers</h2>
+<p>Currently, the library ships with two (plus one) different, predefined servos.</p>
+<h3><a class="anchor" id="autotoc_md82"></a>
+PID-controller</h3>
+<p><em>CMake: <code>set(FLEXPTP_SERVO "PID")</code></em></p>
+<p>A simple PID-controller is implemented in the following sources: <a class="el" href="pid__controller_8c.html">pid_controller.c</a>, <a class="el" href="pid__controller_8h.html">pid_controller.h</a></p>
+<p>Parameters and default values (all parameters are unit-less):</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Name   </th><th class="markdownTableHeadNone">Value    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>K_P</code>   </td><td class="markdownTableBodyNone">0.238    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>K_I</code>   </td><td class="markdownTableBodyNone">0    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>K_D</code>   </td><td class="markdownTableBodyNone">3.0   </td></tr>
+</table>
+<p>Custom parameter values can be set in the <code>flexptp_options.h</code> by redefining each macro.</p>
+<h4><a class="anchor" id="autotoc_md83"></a>
+CLI commands</h4>
+<p>This servo defines the following CLI commands:</p>
+<div class="fragment"><div class="line">ptp servo params [<a class="code hl_variable" href="pid__controller_8c.html#a09cfc766a233ad617270562cc4146d07">Kp</a> <a class="code hl_variable" href="pid__controller_8c.html#a59fac16f568541187ff485c4c47b0ec5">Ki</a> <a class="code hl_variable" href="pid__controller_8c.html#a98268d71502ba080d88a9b1f50fdbe80">Kd</a>]         Set or query <a class="code hl_variable" href="pid__controller_8c.html#a09cfc766a233ad617270562cc4146d07">Kp</a>, <a class="code hl_variable" href="pid__controller_8c.html#a59fac16f568541187ff485c4c47b0ec5">Ki</a>, and <a class="code hl_variable" href="pid__controller_8c.html#a98268d71502ba080d88a9b1f50fdbe80">Kd</a> servo parameters</div>
+<div class="line">ptp servo log internals {on|off}    Enable or disable logging of servo internals</div>
+<div class="ttc" id="apid__controller_8c_html_a09cfc766a233ad617270562cc4146d07"><div class="ttname"><a href="pid__controller_8c.html#a09cfc766a233ad617270562cc4146d07">Kp</a></div><div class="ttdeci">static float Kp</div><div class="ttdoc">Proportional factor.</div><div class="ttdef"><b>Definition:</b> <a href="pid__controller_8c_source.html#l00036">pid_controller.c:36</a></div></div>
+<div class="ttc" id="apid__controller_8c_html_a59fac16f568541187ff485c4c47b0ec5"><div class="ttname"><a href="pid__controller_8c.html#a59fac16f568541187ff485c4c47b0ec5">Ki</a></div><div class="ttdeci">static float Ki</div><div class="ttdoc">Integrating factor.</div><div class="ttdef"><b>Definition:</b> <a href="pid__controller_8c_source.html#l00037">pid_controller.c:37</a></div></div>
+<div class="ttc" id="apid__controller_8c_html_a98268d71502ba080d88a9b1f50fdbe80"><div class="ttname"><a href="pid__controller_8c.html#a98268d71502ba080d88a9b1f50fdbe80">Kd</a></div><div class="ttdeci">static float Kd</div><div class="ttdoc">Differentiating factor.</div><div class="ttdef"><b>Definition:</b> <a href="pid__controller_8c_source.html#l00038">pid_controller.c:38</a></div></div>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md84"></a>
+Example usage definitions</h4>
+<p>To use this servo, set the servo definition macros the following way:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="pid__controller_8h.html">flexptp/servo/pid_controller.h</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#define PTP_SERVO_INIT() pid_ctrl_init()</span></div>
+<div class="line"><span class="preprocessor">#define PTP_SERVO_DEINIT() pid_ctrl_deinit()</span></div>
+<div class="line"><span class="preprocessor">#define PTP_SERVO_RESET() pid_ctrl_reset()</span></div>
+<div class="line"><span class="preprocessor">#define PTP_SERVO_RUN(d, pscd) pid_ctrl_run(d, pscd)</span></div>
+<div class="ttc" id="apid__controller_8h_html"><div class="ttname"><a href="pid__controller_8h.html">pid_controller.h</a></div></div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md85"></a>
+Kalman-filter</h3>
+<p><em>CMake: <code>set(FLEXPTP_SERVO "KALMAN")</code></em></p>
+<p>The library offers a robust Kalman-filter-based servo as well defined in the following sources: <a class="el" href="kalman__filter_8c.html">kalman_filter.c</a>, <a class="el" href="kalman__filter_8h.html">kalman_filter.h</a>. This implementation is based on the paper <a href="https://ieeexplore.ieee.org/document/5934411">Performance Analysis of Kalman-Filter-Based Clock Synchronization in IEEE 1588 Networks</a> by Giada Giorgi and Claudio Narduzzi.</p>
+<p>The controller can be tuned along three parameters ( \(\sigma_{\theta}\), \(\sigma_{\gamma}\), \(\sigma_{C(t)}\)) that are described in the paper.</p>
+<p>Parameters and default values:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Name   </th><th class="markdownTableHeadNone">Value   </th><th class="markdownTableHeadNone">Unit    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>SIGMA_THETA_SQUARED</code>   </td><td class="markdownTableBodyNone">1E-16   </td><td class="markdownTableBodyNone">\(s^2\)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>SIGMA_GAMMA_SQUARED</code>   </td><td class="markdownTableBodyNone">1E-12   </td><td class="markdownTableBodyNone">\(s^2\)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>SIGMA_CT_SQUARED</code>   </td><td class="markdownTableBodyNone">1E-10   </td><td class="markdownTableBodyNone">\(s^2\)   </td></tr>
+</table>
+<p>Custom parameter values can be set in the <code>flexptp_options.h</code> by redefining each macro.</p>
+<h4><a class="anchor" id="autotoc_md86"></a>
+CLI commands</h4>
+<p>This servo defines the following CLI commands:</p>
+<div class="fragment"><div class="line">ptp servo st [var|<span class="keywordflow">default</span>]      Set or get sigma_theta^2 (s^2)</div>
+<div class="line">ptp servo sg [var|<span class="keywordflow">default</span>]      Set or get sigma_gamma^2 (s^2)</div>
+<div class="line">ptp servo stm [var|<span class="keywordflow">default</span>]     Set or get sigma_theta_m^2 (s^2)</div>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md87"></a>
+Example usage definitions</h4>
+<p>To use this servo, set the servo definition macros the following way:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="kalman__filter_8h.html">flexptp/servo/kalman_filter.h</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#define PTP_SERVO_INIT() kalman_filter_init()</span></div>
+<div class="line"><span class="preprocessor">#define PTP_SERVO_DEINIT() kalman_filter_deinit()</span></div>
+<div class="line"><span class="preprocessor">#define PTP_SERVO_RESET() kalman_filter_reset()</span></div>
+<div class="line"><span class="preprocessor">#define PTP_SERVO_RUN(d, pscd) kalman_filter_run(d, pscd)</span></div>
+<div class="ttc" id="akalman__filter_8h_html"><div class="ttname"><a href="kalman__filter_8h.html">kalman_filter.h</a></div></div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md88"></a>
+Debug servo</h3>
+<p><em>CMake: <code>set(FLEXPTP_SERVO "DEBUG")</code></em></p>
+<p>This servo can be used to monitor and manually tune the hardware clock. It produces a verbose, colorized logging of the clock state.</p>
+<h4><a class="anchor" id="autotoc_md89"></a>
+CLI commands</h4>
+<p>This servo defines the following CLI commands:</p>
+<div class="fragment"><div class="line">ptp servo tune &lt;tuning&gt;        Set relative tuning effective in next <a class="code hl_variable" href="debug__servo_8c.html#a3e53e3b1e9d9b27da1e8c0c09e474ffc">cycle</a></div>
+<div class="line">ptp servo <a class="code hl_variable" href="debug__servo_8c.html#a5047075f96a62c1581a5864a521e7c90">skew0</a> [skew|last]    Set or get skew offset (ppb)</div>
+<div class="line">ptp servo <a class="code hl_variable" href="debug__servo_8c.html#ae63f8f2a8a8320706501c786e7820519">dt0</a> [dt|last]        Set or get time offset (ns)</div>
+<div class="ttc" id="adebug__servo_8c_html_a3e53e3b1e9d9b27da1e8c0c09e474ffc"><div class="ttname"><a href="debug__servo_8c.html#a3e53e3b1e9d9b27da1e8c0c09e474ffc">cycle</a></div><div class="ttdeci">static uint64_t cycle</div><div class="ttdef"><b>Definition:</b> <a href="debug__servo_8c_source.html#l00018">debug_servo.c:18</a></div></div>
+<div class="ttc" id="adebug__servo_8c_html_a5047075f96a62c1581a5864a521e7c90"><div class="ttname"><a href="debug__servo_8c.html#a5047075f96a62c1581a5864a521e7c90">skew0</a></div><div class="ttdeci">static double skew0</div><div class="ttdef"><b>Definition:</b> <a href="debug__servo_8c_source.html#l00012">debug_servo.c:12</a></div></div>
+<div class="ttc" id="adebug__servo_8c_html_ae63f8f2a8a8320706501c786e7820519"><div class="ttname"><a href="debug__servo_8c.html#ae63f8f2a8a8320706501c786e7820519">dt0</a></div><div class="ttdeci">static int32_t dt0</div><div class="ttdef"><b>Definition:</b> <a href="debug__servo_8c_source.html#l00014">debug_servo.c:14</a></div></div>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md90"></a>
+Example usage definitions</h4>
+<p>To use this servo, set the servo definition macros the following way:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="debug__servo_8h.html">flexptp/servo/debug_servo.h</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#define PTP_SERVO_INIT() debug_servo_init()</span></div>
+<div class="line"><span class="preprocessor">#define PTP_SERVO_DEINIT() debug_servo_deinit()</span></div>
+<div class="line"><span class="preprocessor">#define PTP_SERVO_RESET() debug_servo_reset()</span></div>
+<div class="line"><span class="preprocessor">#define PTP_SERVO_RUN(d, pscd) debug_servo_run(d, pscd)</span></div>
+<div class="ttc" id="adebug__servo_8h_html"><div class="ttname"><a href="debug__servo_8h.html">debug_servo.h</a></div></div>
+</div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->

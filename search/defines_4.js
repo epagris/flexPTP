@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['log_5finterval_5flookup_5foffset_0',['LOG_INTERVAL_LOOKUP_OFFSET',['../format__utils_8c.html#a3c4b37ddb0a5c490eb4fb86549c73cdf',1,'format_utils.c']]],
-  ['lwip_1',['LWIP',['../flexptp__options__mk64f_8h.html#a0b16f7d87defe461f8b183936f294d58',1,'LWIP():&#160;flexptp_options_mk64f.h'],['../flexptp__options__stm32h743_8h.html#a0b16f7d87defe461f8b183936f294d58',1,'LWIP():&#160;flexptp_options_stm32h743.h'],['../flexptp__options__tm4c1294_8h.html#a0b16f7d87defe461f8b183936f294d58',1,'LWIP():&#160;flexptp_options_tm4c1294.h']]]
+  ['k_5fd_0',['K_D',['../pid__controller_8c.html#a0b9e481775b5a7ecdd0dbb43cacc1a09',1,'pid_controller.c']]],
+  ['k_5fi_1',['K_I',['../pid__controller_8c.html#a5e606c8dc6de900bea3cd7740ac1bd4d',1,'pid_controller.c']]],
+  ['k_5fp_2',['K_P',['../pid__controller_8c.html#acfc98b8c69707c30ac9a96bb12f2a0ab',1,'pid_controller.c']]]
 ];

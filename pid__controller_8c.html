@@ -116,6 +116,7 @@ $(document).ready(function(){initNavTree('pid__controller_8c.html',''); initResi
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">pid_controller.c File Reference</div></div>
@@ -129,6 +130,18 @@ $(document).ready(function(){initNavTree('pid__controller_8c.html',''); initResi
 </div>
 <p><a href="pid__controller_8c_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:acfc98b8c69707c30ac9a96bb12f2a0ab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pid__controller_8c.html#acfc98b8c69707c30ac9a96bb12f2a0ab">K_P</a>&#160;&#160;&#160;(0.5 * 0.476)</td></tr>
+<tr class="memdesc:acfc98b8c69707c30ac9a96bb12f2a0ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Kp parameter value.  <br /></td></tr>
+<tr class="separator:acfc98b8c69707c30ac9a96bb12f2a0ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e606c8dc6de900bea3cd7740ac1bd4d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pid__controller_8c.html#a5e606c8dc6de900bea3cd7740ac1bd4d">K_I</a>&#160;&#160;&#160;(0)</td></tr>
+<tr class="memdesc:a5e606c8dc6de900bea3cd7740ac1bd4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Ki parameters value.  <br /></td></tr>
+<tr class="separator:a5e606c8dc6de900bea3cd7740ac1bd4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b9e481775b5a7ecdd0dbb43cacc1a09"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pid__controller_8c.html#a0b9e481775b5a7ecdd0dbb43cacc1a09">K_D</a>&#160;&#160;&#160;(3.0)</td></tr>
+<tr class="memdesc:a0b9e481775b5a7ecdd0dbb43cacc1a09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Kd parameter value.  <br /></td></tr>
+<tr class="separator:a0b9e481775b5a7ecdd0dbb43cacc1a09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a59c7cb44e8905a54b548de4a0dd5d572"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pid__controller_8c.html#a59c7cb44e8905a54b548de4a0dd5d572">pid_ctrl_init</a> ()</td></tr>
@@ -148,15 +161,15 @@ Variables</h2></td></tr>
 <tr class="memitem:a714f1ca4d0b766c27006639b8cad4b70"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pid__controller_8c.html#a714f1ca4d0b766c27006639b8cad4b70">firstRun</a> = true</td></tr>
 <tr class="memdesc:a714f1ca4d0b766c27006639b8cad4b70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if first run did not occur yet.  <br /></td></tr>
 <tr class="separator:a714f1ca4d0b766c27006639b8cad4b70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2354186dea377445e7a1bc1bd4a3e701"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pid__controller_8c.html#a2354186dea377445e7a1bc1bd4a3e701">P_FACTOR</a> = 0.5 * 0.476</td></tr>
-<tr class="memdesc:a2354186dea377445e7a1bc1bd4a3e701"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proportional factor.  <br /></td></tr>
-<tr class="separator:a2354186dea377445e7a1bc1bd4a3e701"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1ec3337605a2a8bf78082467065907f"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pid__controller_8c.html#aa1ec3337605a2a8bf78082467065907f">I_FACTOR</a> = 0</td></tr>
-<tr class="memdesc:aa1ec3337605a2a8bf78082467065907f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integrating factor.  <br /></td></tr>
-<tr class="separator:aa1ec3337605a2a8bf78082467065907f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63959621d82350517ff31a096def865e"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pid__controller_8c.html#a63959621d82350517ff31a096def865e">D_FACTOR</a> = 3.0</td></tr>
-<tr class="memdesc:a63959621d82350517ff31a096def865e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Differentiating factor.  <br /></td></tr>
-<tr class="separator:a63959621d82350517ff31a096def865e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09cfc766a233ad617270562cc4146d07"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pid__controller_8c.html#a09cfc766a233ad617270562cc4146d07">Kp</a> = (0.5 * 0.476)</td></tr>
+<tr class="memdesc:a09cfc766a233ad617270562cc4146d07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Proportional factor.  <br /></td></tr>
+<tr class="separator:a09cfc766a233ad617270562cc4146d07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59fac16f568541187ff485c4c47b0ec5"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pid__controller_8c.html#a59fac16f568541187ff485c4c47b0ec5">Ki</a> = (0)</td></tr>
+<tr class="memdesc:a59fac16f568541187ff485c4c47b0ec5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integrating factor.  <br /></td></tr>
+<tr class="separator:a59fac16f568541187ff485c4c47b0ec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98268d71502ba080d88a9b1f50fdbe80"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pid__controller_8c.html#a98268d71502ba080d88a9b1f50fdbe80">Kd</a> = (3.0)</td></tr>
+<tr class="memdesc:a98268d71502ba080d88a9b1f50fdbe80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Differentiating factor.  <br /></td></tr>
+<tr class="separator:a98268d71502ba080d88a9b1f50fdbe80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a151d0085b10b2d1f43f67724b42cd710"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pid__controller_8c.html#a151d0085b10b2d1f43f67724b42cd710">rd_prev_ppb</a></td></tr>
 <tr class="memdesc:a151d0085b10b2d1f43f67724b42cd710"><td class="mdescLeft">&#160;</td><td class="mdescRight">relative frequency error measured in previous iteration  <br /></td></tr>
 <tr class="separator:a151d0085b10b2d1f43f67724b42cd710"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,6 +177,61 @@ Variables</h2></td></tr>
 <tr class="memdesc:a7acbc869a0ca1e0f3655a18398d2eb15"><td class="mdescLeft">&#160;</td><td class="mdescRight">value stored in the integrator  <br /></td></tr>
 <tr class="separator:a7acbc869a0ca1e0f3655a18398d2eb15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a0b9e481775b5a7ecdd0dbb43cacc1a09" name="a0b9e481775b5a7ecdd0dbb43cacc1a09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b9e481775b5a7ecdd0dbb43cacc1a09">&#9670;&#160;</a></span>K_D</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define K_D&#160;&#160;&#160;(3.0)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Default Kd parameter value. </p>
+
+<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00022">22</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
+
+</div>
+</div>
+<a id="a5e606c8dc6de900bea3cd7740ac1bd4d" name="a5e606c8dc6de900bea3cd7740ac1bd4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e606c8dc6de900bea3cd7740ac1bd4d">&#9670;&#160;</a></span>K_I</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define K_I&#160;&#160;&#160;(0)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Default Ki parameters value. </p>
+
+<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00018">18</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
+
+</div>
+</div>
+<a id="acfc98b8c69707c30ac9a96bb12f2a0ab" name="acfc98b8c69707c30ac9a96bb12f2a0ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfc98b8c69707c30ac9a96bb12f2a0ab">&#9670;&#160;</a></span>K_P</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define K_P&#160;&#160;&#160;(0.5 * 0.476)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Default Kp parameter value. </p>
+
+<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00014">14</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a568ae85223df73427631e1db34f4dc51" name="a568ae85223df73427631e1db34f4dc51"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a568ae85223df73427631e1db34f4dc51">&#9670;&#160;</a></span>pid_ctrl_deinit()</h2>
@@ -179,9 +247,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Deinitialize PD controller. </p>
+<p>Deinitialize PID controller. </p>
 
-<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00098">98</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00112">112</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
 
 </div>
 </div>
@@ -199,9 +267,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initalize PD controller. </p>
+<p>Initialize PID controller. </p>
 
-<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00090">90</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00104">104</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
 
 </div>
 </div>
@@ -219,9 +287,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Reset PD controller. </p>
+<p>Reset PID controller. </p>
 
-<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00104">104</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00118">118</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
 
 </div>
 </div>
@@ -250,7 +318,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Run the PD controller.</p>
+<p>Run the PID controller.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">dt</td><td>time error in nanoseconds </td></tr>
@@ -259,37 +327,11 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00109">109</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00123">123</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="a63959621d82350517ff31a096def865e" name="a63959621d82350517ff31a096def865e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a63959621d82350517ff31a096def865e">&#9670;&#160;</a></span>D_FACTOR</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">float D_FACTOR = 3.0</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Differentiating factor. </p>
-
-<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00024">24</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
-
-</div>
-</div>
 <a id="a714f1ca4d0b766c27006639b8cad4b70" name="a714f1ca4d0b766c27006639b8cad4b70"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a714f1ca4d0b766c27006639b8cad4b70">&#9670;&#160;</a></span>firstRun</h2>
 
@@ -312,33 +354,7 @@ Variables</h2></td></tr>
 
 <p>Indicates if first run did not occur yet. </p>
 
-<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00014">14</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
-
-</div>
-</div>
-<a id="aa1ec3337605a2a8bf78082467065907f" name="aa1ec3337605a2a8bf78082467065907f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1ec3337605a2a8bf78082467065907f">&#9670;&#160;</a></span>I_FACTOR</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">float I_FACTOR = 0</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Integrating factor. </p>
-
-<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00023">23</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00028">28</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
 
 </div>
 </div>
@@ -364,7 +380,85 @@ Variables</h2></td></tr>
 
 <p>value stored in the integrator </p>
 
-<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00029">29</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00043">43</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
+
+</div>
+</div>
+<a id="a98268d71502ba080d88a9b1f50fdbe80" name="a98268d71502ba080d88a9b1f50fdbe80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98268d71502ba080d88a9b1f50fdbe80">&#9670;&#160;</a></span>Kd</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Kd = (3.0)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Differentiating factor. </p>
+
+<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00038">38</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
+
+</div>
+</div>
+<a id="a59fac16f568541187ff485c4c47b0ec5" name="a59fac16f568541187ff485c4c47b0ec5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59fac16f568541187ff485c4c47b0ec5">&#9670;&#160;</a></span>Ki</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Ki = (0)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Integrating factor. </p>
+
+<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00037">37</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
+
+</div>
+</div>
+<a id="a09cfc766a233ad617270562cc4146d07" name="a09cfc766a233ad617270562cc4146d07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09cfc766a233ad617270562cc4146d07">&#9670;&#160;</a></span>Kp</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Kp = (0.5 * 0.476)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Proportional factor. </p>
+
+<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00036">36</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
 
 </div>
 </div>
@@ -390,33 +484,7 @@ Variables</h2></td></tr>
 
 <p>Decides if servo's internal operation shoud be reported or not. </p>
 
-<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00013">13</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
-
-</div>
-</div>
-<a id="a2354186dea377445e7a1bc1bd4a3e701" name="a2354186dea377445e7a1bc1bd4a3e701"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2354186dea377445e7a1bc1bd4a3e701">&#9670;&#160;</a></span>P_FACTOR</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">float P_FACTOR = 0.5 * 0.476</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Proportional factor. </p>
-
-<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00022">22</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00027">27</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
 
 </div>
 </div>
@@ -442,7 +510,7 @@ Variables</h2></td></tr>
 
 <p>relative frequency error measured in previous iteration </p>
 
-<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00028">28</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="pid__controller_8c_source.html#l00042">42</a> of file <a class="el" href="pid__controller_8c_source.html">pid_controller.c</a>.</p>
 
 </div>
 </div>

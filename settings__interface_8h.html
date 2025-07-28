@@ -124,6 +124,7 @@ $(document).ready(function(){initNavTree('settings__interface_8h.html',''); init
 <p>This module features functions to tweak around the PTP engine's almost every property.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="timeutils_8h_source.html">timeutils.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>&quot;</code><br />
 </div>
 <p><a href="settings__interface_8h_source.html">Go to the source code of this file.</a></p>
@@ -218,6 +219,10 @@ Functions</h2></td></tr>
 <tr class="separator:a01330f414c2ecd9dddf00069bfc5a412"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00bf0b3ac4a3f3bdbacf232dd5ba0a52"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="settings__interface_8h.html#a00bf0b3ac4a3f3bdbacf232dd5ba0a52">ptp_time</a> (<a class="el" href="struct_timestamp_u.html">TimestampU</a> *pT)</td></tr>
 <tr class="separator:a00bf0b3ac4a3f3bdbacf232dd5ba0a52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37f247f4ad4396a083c848b1cf2740c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="settings__interface_8h.html#a37f247f4ad4396a083c848b1cf2740c5">ptp_set_time</a> (<a class="el" href="struct_timestamp_u.html">TimestampU</a> *pT)</td></tr>
+<tr class="separator:a37f247f4ad4396a083c848b1cf2740c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad104179da607f3ae8528ff1bb73ab3ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="settings__interface_8h.html#ad104179da607f3ae8528ff1bb73ab3ec">ptp_update_time</a> (<a class="el" href="struct_timestamp_i.html">TimestampI</a> *dt)</td></tr>
+<tr class="separator:ad104179da607f3ae8528ff1bb73ab3ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This module features functions to tweak around the PTP engine's almost every property. </p>
@@ -242,7 +247,7 @@ Functions</h2></td></tr>
 <p>Get addend. Only available when using the ADDEND interface.</p>
 <dl class="section return"><dt>Returns</dt><dd>addend </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00051">51</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00054">54</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -263,7 +268,7 @@ Functions</h2></td></tr>
 <p>Get the logarithmic Announce period code.</p>
 <dl class="section return"><dt>Returns</dt><dd>logarithmic period code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00131">131</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00134">134</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -284,7 +289,7 @@ Functions</h2></td></tr>
 <p>Get clock accuracy.</p>
 <dl class="section return"><dt>Returns</dt><dd>accuracy class of the clock </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00178">178</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00181">181</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -305,7 +310,7 @@ Functions</h2></td></tr>
 <p>Get device clock class.</p>
 <dl class="section return"><dt>Returns</dt><dd>device clock class </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00170">170</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00173">173</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -326,7 +331,7 @@ Functions</h2></td></tr>
 <p>Get clock offset in nanoseconds.</p>
 <dl class="section return"><dt>Returns</dt><dd>clock offset in nanoseconds </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00017">17</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00020">20</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -347,7 +352,7 @@ Functions</h2></td></tr>
 <p>Get clock variance.</p>
 <dl class="section return"><dt>Returns</dt><dd>clock variance OR 0xFFFF indicating no calculation took place </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00186">186</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00189">189</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -368,7 +373,7 @@ Functions</h2></td></tr>
 <p>Get PTP coarse correction time error tigger value.</p>
 <dl class="section return"><dt>Returns</dt><dd>coarse correction kick-in theshold in nanosconds </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00144">144</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00147">147</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -389,7 +394,7 @@ Functions</h2></td></tr>
 <p>Get clock ID of the master that the PTP engine currently follows.</p>
 <dl class="section return"><dt>Returns</dt><dd>clock ID of the followed master </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00030">30</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00033">33</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -410,7 +415,7 @@ Functions</h2></td></tr>
 <p>Get the PTP delay mechanism.</p>
 <dl class="section return"><dt>Returns</dt><dd>delay mechanism (E2E/P2P) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00077">77</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00080">80</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -431,7 +436,7 @@ Functions</h2></td></tr>
 <p>Get logarithmic PTP message period designator code of Delay_Request queries.</p>
 <dl class="section return"><dt>Returns</dt><dd>logarithmic period code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00113">113</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00116">116</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -452,7 +457,7 @@ Functions</h2></td></tr>
 <p>Get the PTP domain the engine operates in.</p>
 <dl class="section return"><dt>Returns</dt><dd>PTP domain </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00042">42</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00045">45</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -473,7 +478,7 @@ Functions</h2></td></tr>
 <p>Get the name of the loaded TLV-chain preset.</p>
 <dl class="section return"><dt>Returns</dt><dd>name of the current TLV-chain preset OR an empty ("") string if nothing was loaded before </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00104">104</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00107">107</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -494,7 +499,7 @@ Functions</h2></td></tr>
 <p>Get number of local steps removed.</p>
 <dl class="section return"><dt>Returns</dt><dd>number of local steps removed </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00194">194</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00197">197</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -515,7 +520,7 @@ Functions</h2></td></tr>
 <p>Get our own clock identity.</p>
 <dl class="section return"><dt>Returns</dt><dd>our own clock identity </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00034">34</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00037">37</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -536,7 +541,7 @@ Functions</h2></td></tr>
 <p>Get master dataset Priority1 field.</p>
 <dl class="section return"><dt>Returns</dt><dd>Priority1 field </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00153">153</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00156">156</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -557,7 +562,7 @@ Functions</h2></td></tr>
 <p>Get master dataset Priority2 field.</p>
 <dl class="section return"><dt>Returns</dt><dd>Priority2 field </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00162">162</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00165">165</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -578,7 +583,7 @@ Functions</h2></td></tr>
 <p>Get profile flags.</p>
 <dl class="section return"><dt>Returns</dt><dd>combination of PtpProfileFlags </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00095">95</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00098">98</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -599,7 +604,7 @@ Functions</h2></td></tr>
 <p>Get the logarithmic Sync period code.</p>
 <dl class="section return"><dt>Returns</dt><dd>logarithmic period code </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00122">122</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00125">125</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -620,7 +625,7 @@ Functions</h2></td></tr>
 <p>Get the transport specific field.</p>
 <dl class="section return"><dt>Returns</dt><dd>value of transport specific field </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00086">86</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00089">89</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -641,7 +646,7 @@ Functions</h2></td></tr>
 <p>Get PTP transport type.</p>
 <dl class="section return"><dt>Returns</dt><dd>PTP transport type (L2/L4). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00064">64</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00067">67</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -687,7 +692,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00109">109</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00112">112</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -714,7 +719,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00021">21</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00024">24</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -741,7 +746,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00047">47</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00050">50</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -768,7 +773,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00135">135</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00138">138</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -789,7 +794,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Set clock accuracy. </p>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00174">174</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00177">177</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -810,7 +815,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Set device clock class. </p>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00166">166</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00169">169</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -837,7 +842,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00013">13</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00016">16</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -858,7 +863,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Set clock variance. </p>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00182">182</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00185">185</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -885,7 +890,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00140">140</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00143">143</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -912,7 +917,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00072">72</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00075">75</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -939,7 +944,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00117">117</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00120">120</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -966,7 +971,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00038">38</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00041">41</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -987,7 +992,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Set number of local steps removed. </p>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00190">190</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00193">193</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -1008,7 +1013,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Set master dataset Priority1 field. </p>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00148">148</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00151">151</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -1029,7 +1034,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Set master dataset Priority2 field. </p>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00157">157</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00160">160</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -1056,7 +1061,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00090">90</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00093">93</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -1083,7 +1088,34 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00126">126</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00129">129</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+
+</div>
+</div>
+<a id="a37f247f4ad4396a083c848b1cf2740c5" name="a37f247f4ad4396a083c848b1cf2740c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37f247f4ad4396a083c848b1cf2740c5">&#9670;&#160;</a></span>ptp_set_time()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ptp_set_time </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_timestamp_u.html">TimestampU</a> *&#160;</td>
+          <td class="paramname"><em>pT</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set PTP time.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pT</td><td>pointer to a <a class="el" href="struct_timestamp_u.html" title="Timestamp (unsigned)">TimestampU</a> object </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00205">205</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -1110,7 +1142,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00099">99</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00102">102</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -1137,7 +1169,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00081">81</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00084">84</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -1164,7 +1196,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00068">68</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00071">71</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -1216,7 +1248,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00198">198</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00201">201</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>
@@ -1236,7 +1268,34 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Allow the PTP engine to follow the best master on the network. </p>
 
-<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00026">26</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00029">29</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
+
+</div>
+</div>
+<a id="ad104179da607f3ae8528ff1bb73ab3ec" name="ad104179da607f3ae8528ff1bb73ab3ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad104179da607f3ae8528ff1bb73ab3ec">&#9670;&#160;</a></span>ptp_update_time()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ptp_update_time </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_timestamp_i.html">TimestampI</a> *&#160;</td>
+          <td class="paramname"><em>dt</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Roughly update time. CAUTION: Update will not be accurate, some software processing is involved!</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dt</td><td>pointer to a <a class="el" href="struct_timestamp_i.html" title="Timestamp (signed)">TimestampI</a> object holding the time offset </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="settings__interface_8c_source.html#l00209">209</a> of file <a class="el" href="settings__interface_8c_source.html">settings_interface.c</a>.</p>
 
 </div>
 </div>

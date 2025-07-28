@@ -128,28 +128,42 @@ var NAVTREE =
     ] ],
     [ "Clock servo", "servo.html", [
       [ "Clock servo", "servo.html#autotoc_md79", [
-        [ "Examples", "servo.html#autotoc_md80", null ]
+        [ "Interface", "servo.html#autotoc_md80", null ],
+        [ "Bundled controllers", "servo.html#autotoc_md81", [
+          [ "PID-controller", "servo.html#autotoc_md82", [
+            [ "CLI commands", "servo.html#autotoc_md83", null ],
+            [ "Example usage definitions", "servo.html#autotoc_md84", null ]
+          ] ],
+          [ "Kalman-filter", "servo.html#autotoc_md85", [
+            [ "CLI commands", "servo.html#autotoc_md86", null ],
+            [ "Example usage definitions", "servo.html#autotoc_md87", null ]
+          ] ],
+          [ "Debug servo", "servo.html#autotoc_md88", [
+            [ "CLI commands", "servo.html#autotoc_md89", null ],
+            [ "Example usage definitions", "servo.html#autotoc_md90", null ]
+          ] ]
+        ] ]
       ] ]
     ] ],
     [ "Software structure", "swoperation.html", [
-      [ "Internal modules", "swoperation.html#autotoc_md81", [
+      [ "Internal modules", "swoperation.html#autotoc_md91", [
         [ "Core", "swoperation.html#core", [
-          [ "Initialization", "swoperation.html#autotoc_md82", null ],
-          [ "Reset", "swoperation.html#autotoc_md83", null ]
+          [ "Initialization", "swoperation.html#autotoc_md92", null ],
+          [ "Reset", "swoperation.html#autotoc_md93", null ]
         ] ],
         [ "Best Master Clock Algorithm", "swoperation.html#best-master-clock-algorithm", null ],
         [ "Master", "swoperation.html#master", [
-          [ "Compliant peer", "swoperation.html#autotoc_md84", null ],
-          [ "P2P Mean Path Delay", "swoperation.html#autotoc_md85", [
-            [ "Two-step clock mode", "swoperation.html#autotoc_md86", null ],
-            [ "One-step clock mode", "swoperation.html#autotoc_md87", null ]
+          [ "Compliant peer", "swoperation.html#autotoc_md94", null ],
+          [ "P2P Mean Path Delay", "swoperation.html#autotoc_md95", [
+            [ "Two-step clock mode", "swoperation.html#autotoc_md96", null ],
+            [ "One-step clock mode", "swoperation.html#autotoc_md97", null ]
           ] ]
         ] ],
         [ "Slave", "swoperation.html#slave", [
-          [ "Time error", "swoperation.html#autotoc_md88", null ],
-          [ "Mean Path Delay", "swoperation.html#autotoc_md89", [
-            [ "Two-step clock mode", "swoperation.html#autotoc_md90", null ],
-            [ "One-step clock mode", "swoperation.html#autotoc_md91", null ]
+          [ "Time error", "swoperation.html#autotoc_md98", null ],
+          [ "Mean Path Delay", "swoperation.html#autotoc_md99", [
+            [ "Two-step clock mode", "swoperation.html#autotoc_md100", null ],
+            [ "One-step clock mode", "swoperation.html#autotoc_md101", null ]
           ] ]
         ] ]
       ] ],
@@ -172,7 +186,7 @@ var NAVTREE =
         [ "Typedefs", "globals_type.html", null ],
         [ "Enumerations", "globals_enum.html", null ],
         [ "Enumerator", "globals_eval.html", null ],
-        [ "Macros", "globals_defs.html", null ]
+        [ "Macros", "globals_defs.html", "globals_defs" ]
       ] ]
     ] ]
   ] ]
@@ -181,11 +195,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_h743_ethernetif_modifications.html",
-"format__utils_8c.html#a3ef889a0ec7ba30bb179ef65e7b7f3fe",
-"porting.html#port-config-master",
-"ptp__types_8h.html#a2964210d435f30e9125953c23045ea0ba0d18b938a553d2c2eddb2113b1aca22c",
-"struct_ptp_announce_body.html#a719b19d0a13e88d423f2faa8f823c461",
-"timeutils_8h.html#abce1ca9bade63e8adae571434a3e628c"
+"flexptp__options__stm32h743__etherlib_8h.html#af05581fcddec191de3f30b4a373c5a92",
+"msg__utils_8c.html#a4d7914a620c970aec568859f651f8087",
+"ptp__port__stm32f407__lwip_8c.html#a8b3a4843168aac4019da37e18ab6b952",
+"settings__interface_8c.html#a532a314efa0d04eabeb9adc8218b5a07",
+"struct_ptp_profile.html#aa2585d779da0ab21273a8d92de9a0ebe"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

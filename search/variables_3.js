@@ -9,5 +9,6 @@ var searchData=
   ['corr_6',['corr',['../struct_ptp_core_state.html#a8efbe5e95b94897a1518737e5f81e1bf',1,'PtpCoreState']]],
   ['correction_5fns_7',['correction_ns',['../struct_ptp_header.html#ae1211043f4c4f80dd4c652dc98a8ac3e',1,'PtpHeader']]],
   ['correction_5fsubns_8',['correction_subns',['../struct_ptp_header.html#af6427e8df3564917f1d48d33cd334ba6',1,'PtpHeader']]],
-  ['currentutcoffset_9',['currentUTCOffset',['../struct_ptp_announce_body.html#a19c0261c7d3bb1c4c97037e49f9fdf48',1,'PtpAnnounceBody']]]
+  ['currentutcoffset_9',['currentUTCOffset',['../struct_ptp_announce_body.html#a19c0261c7d3bb1c4c97037e49f9fdf48',1,'PtpAnnounceBody']]],
+  ['cycle_10',['cycle',['../debug__servo_8c.html#a3e53e3b1e9d9b27da1e8c0c09e474ffc',1,'cycle():&#160;debug_servo.c'],['../kalman__filter_8c.html#a3e53e3b1e9d9b27da1e8c0c09e474ffc',1,'cycle():&#160;kalman_filter.c']]]
 ];

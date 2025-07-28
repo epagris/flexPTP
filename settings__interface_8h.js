@@ -38,10 +38,12 @@ var settings__interface_8h =
     [ "ptp_set_priority2", "settings__interface_8h.html#a7081d4d794c633908f66103a12717a54", null ],
     [ "ptp_set_profile_flags", "settings__interface_8h.html#ac92a7712bf949a959b9380f5ced12476", null ],
     [ "ptp_set_sync_log_period", "settings__interface_8h.html#a84a86229ac0b41e8b33986a5fe873bdc", null ],
+    [ "ptp_set_time", "settings__interface_8h.html#a37f247f4ad4396a083c848b1cf2740c5", null ],
     [ "ptp_set_tlv_chain_by_name", "settings__interface_8h.html#aafa9068f43a6eaefe7e63514edf9803b", null ],
     [ "ptp_set_transport_specific", "settings__interface_8h.html#a89bd11489f4b129f39f824a88540abe7", null ],
     [ "ptp_set_transport_type", "settings__interface_8h.html#a364fd66b05789f84c7325764b51de64f", null ],
     [ "ptp_set_tuning", "settings__interface_8h.html#aae1dda5abfaadb5e9ec043d1f4a0fff3", null ],
     [ "ptp_time", "settings__interface_8h.html#a00bf0b3ac4a3f3bdbacf232dd5ba0a52", null ],
-    [ "ptp_unprefer_master_clock", "settings__interface_8h.html#a98eb9d7b8d858101ce6ec90254cdb95f", null ]
+    [ "ptp_unprefer_master_clock", "settings__interface_8h.html#a98eb9d7b8d858101ce6ec90254cdb95f", null ],
+    [ "ptp_update_time", "settings__interface_8h.html#ad104179da607f3ae8528ff1bb73ab3ec", null ]
 ];

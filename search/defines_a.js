@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sbmc_5fprint_5flog_0',['SBMC_PRINT_LOG',['../bmca_8c.html#a656e08271c88df6642947d8b418d69fb',1,'bmca.c']]]
+  ['rx_5fpacket_5ffifo_5flength_0',['RX_PACKET_FIFO_LENGTH',['../task__ptp_8c.html#ace2de45925d7f22db605219809d77b7a',1,'task_ptp.c']]]
 ];

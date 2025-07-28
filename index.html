@@ -139,6 +139,7 @@ Features</h2>
 <li>supports <b>L2</b> and <b>L4</b> transport mechanisms</li>
 <li>supports <b>one-step</b> and <b>two-step</b> signaling modes</li>
 <li>can operate as a <b>IEEE 802.1AS</b> clock (slave or master)</li>
+<li>offers <b>PID</b> and <b>Kalman-filter</b> servos</li>
 <li>supports lwIP and EtherLib as underlying network stack</li>
 <li>features a rich set of runtime-configurable options</li>
 <li>features numerous logging features</li>
@@ -220,7 +221,7 @@ Startup and shutdown</h3>
 <h3><a class="anchor" id="autotoc_md27"></a>
 Runtime operation</h3>
 <p>The library has an extensive interface for manipulating the PTP operation mode during runtime (e.g. change profile, enable logging etc.), learn more <a class="el" href="project_organization.html">here</a>. The flexPTP includes a CLI interface as well, if a suitable CLI library is given, flexPTP offers the following multitude of CLI commands:</p>
-<div class="fragment"><div class="line">ptp servo params [Kp Kd]                           Set or query K_p and K_d servo parameters</div>
+<div class="fragment"><div class="line">ptp servo params [<a class="code hl_variable" href="pid__controller_8c.html#a09cfc766a233ad617270562cc4146d07">Kp</a> <a class="code hl_variable" href="pid__controller_8c.html#a98268d71502ba080d88a9b1f50fdbe80">Kd</a>]                           Set or query K_p and K_d servo parameters</div>
 <div class="line">ptp servo log internals {on|off}                   Enable or disable logging of servo internals</div>
 <div class="line">ptp reset                                          Reset PTP subsystem</div>
 <div class="line">ptp servo offset [offset_ns]                       Set or query clock offset</div>
@@ -240,6 +241,8 @@ Runtime operation</h3>
 <div class="line">ptp period &lt;delreq|sync|ann&gt; [&lt;lp&gt;|matched]        Print or set log. periods</div>
 <div class="line">ptp coarse [threshold]                             Print or set coarse correction threshold</div>
 <div class="line">ptp priority [&lt;p1&gt; &lt;p2&gt;]                           Print or set clock priority fields</div>
+<div class="ttc" id="apid__controller_8c_html_a09cfc766a233ad617270562cc4146d07"><div class="ttname"><a href="pid__controller_8c.html#a09cfc766a233ad617270562cc4146d07">Kp</a></div><div class="ttdeci">static float Kp</div><div class="ttdoc">Proportional factor.</div><div class="ttdef"><b>Definition:</b> <a href="pid__controller_8c_source.html#l00036">pid_controller.c:36</a></div></div>
+<div class="ttc" id="apid__controller_8c_html_a98268d71502ba080d88a9b1f50fdbe80"><div class="ttname"><a href="pid__controller_8c.html#a98268d71502ba080d88a9b1f50fdbe80">Kd</a></div><div class="ttdeci">static float Kd</div><div class="ttdoc">Differentiating factor.</div><div class="ttdef"><b>Definition:</b> <a href="pid__controller_8c_source.html#l00038">pid_controller.c:38</a></div></div>
 </div><!-- fragment --><p> The library can load a previously stored or save the current configuration from and to a non-volatile storage with the help of some glue code.</p>
 <h2><a class="anchor" id="autotoc_md28"></a>
 Performance measurements</h2>

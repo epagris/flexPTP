@@ -18,6 +18,7 @@ var timeutils_8h =
     [ "nsToTsI", "timeutils_8h.html#a68a4c95e41c12a7c5571429724eab641", null ],
     [ "nsU", "timeutils_8h.html#a01f0cfff16dabb344cf49fd17f852ca2", null ],
     [ "subTime", "timeutils_8h.html#a96f3830db59fe5144e1252cbf2bae1b7", null ],
+    [ "tsIToU", "timeutils_8h.html#a01f3d35a79927d57e85933bcbfb1c060", null ],
     [ "tsPrint", "timeutils_8h.html#ad1456a6e3c8686d0e211ce0fbafd41c2", null ],
     [ "tsToTick", "timeutils_8h.html#a579cfbe0e9581ae0acb154e7bf15c76c", null ],
     [ "tsUToI", "timeutils_8h.html#a8a0222a06707d3a6c391ec185b7ed63b", null ]
