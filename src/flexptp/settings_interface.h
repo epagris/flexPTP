@@ -12,6 +12,7 @@
 
 #include <stdint.h>
 
+#include "timeutils.h"
 #include "ptp_types.h"
 
 /**
@@ -307,5 +308,20 @@ uint16_t ptp_get_local_steps_removed();
  * @param pT pointer to an existing TimestampU object, that is going to be overwritten with the current time
  */
 void ptp_time(TimestampU * pT); 
+
+/**
+ * Set PTP time.
+ * 
+ * @param pT pointer to a TimestampU object
+ */
+void ptp_set_time(TimestampU * pT);
+
+/**
+ * Roughly update time.
+ * CAUTION: Update will not be accurate, some software processing is involved!
+ * 
+ * @param dt pointer to a TimestampI object holding the time offset
+ */
+void ptp_update_time(TimestampI * dt);
 
 #endif /* FLEXPTP_SETTINGS_INTERFACE_H_ */

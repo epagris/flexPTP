@@ -2,6 +2,8 @@
 
 # Clock servo
 
+## Interface
+
 The flexPTP requires a clock servo to calculate how to tune the clock in steady state. A proper servo must define the following four functions:
 
 1. A function that initializes the servo. No parameters are passed. (refer to `PTP_SERVO_INIT()`)
@@ -13,8 +15,118 @@ Clock servo functions must be passed to the flexPTP core by filling the servo-re
 
 Here we want to highlight that a servo init function is not constrained to only initialize the core of a controller. The developer is highly encouraged to include e.g. logging or debug functionality also in the controller.
 
-## Examples
+## Bundled controllers
 
-A PID-controller based servo is bundled to the flexPTP package: pid_controller.c, pid_controller.h
+Currently, the library ships with two (plus one) different, predefined servos.
+
+### PID-controller
+
+_CMake: `set(FLEXPTP_SERVO "PID")`_
+
+A simple PID-controller is implemented in the following sources: pid_controller.c, pid_controller.h
+
+Parameters and default values (all parameters are unit-less):
+
+| Name  | Value |
+| ----- | ----- |
+| `K_P` | 0.238 |
+| `K_I` | 0     |
+| `K_D` | 3.0   |
+
+Custom parameter values can be set in the `flexptp_options.h` by redefining each macro.
+
+#### CLI commands
+
+This servo defines the following CLI commands:
+
+```
+ptp servo params [Kp Ki Kd]         Set or query Kp, Ki, and Kd servo parameters
+ptp servo log internals {on|off}    Enable or disable logging of servo internals
+```
+
+#### Example usage definitions
+
+To use this servo, set the servo definition macros the following way:
+
+```
+#include <flexptp/servo/pid_controller.h>
+
+#define PTP_SERVO_INIT() pid_ctrl_init()
+#define PTP_SERVO_DEINIT() pid_ctrl_deinit()
+#define PTP_SERVO_RESET() pid_ctrl_reset()
+#define PTP_SERVO_RUN(d, pscd) pid_ctrl_run(d, pscd)
+```
+
+### Kalman-filter
+
+_CMake: `set(FLEXPTP_SERVO "KALMAN")`_
+
+The library offers a robust Kalman-filter-based servo as well defined in the following sources: kalman_filter.c, kalman_filter.h. This implementation is based on the paper [Performance Analysis of Kalman-Filter-Based Clock Synchronization in IEEE 1588 Networks](https://ieeexplore.ieee.org/document/5934411) by Giada Giorgi and Claudio Narduzzi.
+
+The controller can be tuned along three parameters (\f$\sigma_{\theta}\f$, \f$\sigma_{\gamma}\f$, \f$\sigma_{C(t)}\f$) that are described in the paper.
+
+Parameters and default values:
+
+| Name                  | Value | Unit      |
+| --------------------- | ----- | --------- |
+| `SIGMA_THETA_SQUARED` | 1E-16 | \f$s^2\f$ |
+| `SIGMA_GAMMA_SQUARED` | 1E-12 | \f$s^2\f$ |
+| `SIGMA_CT_SQUARED`    | 1E-10 | \f$s^2\f$ |
+
+Custom parameter values can be set in the `flexptp_options.h` by redefining each macro.
+
+#### CLI commands
+
+This servo defines the following CLI commands:
+
+```
+ptp servo st [var|default]      Set or get sigma_theta^2 (s^2)
+ptp servo sg [var|default]      Set or get sigma_gamma^2 (s^2)
+ptp servo stm [var|default]     Set or get sigma_theta_m^2 (s^2)
+```
+
+#### Example usage definitions
+
+To use this servo, set the servo definition macros the following way:
+
+```
+#include <flexptp/servo/kalman_filter.h>
+
+#define PTP_SERVO_INIT() kalman_filter_init()
+#define PTP_SERVO_DEINIT() kalman_filter_deinit()
+#define PTP_SERVO_RESET() kalman_filter_reset()
+#define PTP_SERVO_RUN(d, pscd) kalman_filter_run(d, pscd)
+```
+
+### Debug servo
+
+_CMake: `set(FLEXPTP_SERVO "DEBUG")`_
+
+This servo can be used to monitor and manually tune the hardware clock. It produces a verbose, colorized logging of the clock state.
+
+#### CLI commands
+
+This servo defines the following CLI commands:
+
+```
+ptp servo tune <tuning>        Set relative tuning effective in next cycle
+ptp servo skew0 [skew|last]    Set or get skew offset (ppb)
+ptp servo dt0 [dt|last]        Set or get time offset (ns)
+```
+
+#### Example usage definitions
+
+To use this servo, set the servo definition macros the following way:
+
+```
+#include <flexptp/servo/debug_servo.h>
+
+#define PTP_SERVO_INIT() debug_servo_init()
+#define PTP_SERVO_DEINIT() debug_servo_deinit()
+#define PTP_SERVO_RESET() debug_servo_reset()
+#define PTP_SERVO_RUN(d, pscd) debug_servo_run(d, pscd)
+```
+
+
 
 */

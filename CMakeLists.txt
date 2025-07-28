@@ -101,10 +101,14 @@ if (FLEXPTP_SERVO STREQUAL "PID")
     set(FLEXPTP_SERVO_SRC
         servo/pid_controller.c
         servo/pid_controller.h)
-elseif (FLEXPTP_SERVO STREQUAL "SPID")
+elseif (FLEXPTP_SERVO STREQUAL "KALMAN")
     set(FLEXPTP_SERVO_SRC
-        servo/spid_controller.c
-        servo/spid_controller.h)
+        servo/kalman_filter.c
+        servo/kalman_filter.h)        
+elseif (FLEXPTP_SERVO STREQUAL "DEBUG")
+    set(FLEXPTP_SERVO_SRC
+        servo/debug_servo.c
+        servo/debug_servo.h)   
 else()
     set(FLEXPTP_SERVO_OK 0)
 endif()

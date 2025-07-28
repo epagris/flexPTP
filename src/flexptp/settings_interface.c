@@ -1,9 +1,12 @@
 #include "settings_interface.h"
 
-#include "flexptp/ptp_defs.h"
+#include "ptp_defs.h"
+#include "timeutils.h"
 #include "ptp_types.h"
 #include "ptp_core.h"
 #include <string.h>
+
+#include <flexptp_options.h>
 
 ///\cond 0
 extern PtpCoreState gPtpCoreState;
@@ -199,3 +202,16 @@ void ptp_time(TimestampU * pT) {
     PTP_HW_GET_TIME(pT);
 }
 
+void ptp_set_time(TimestampU * pT) {
+    PTP_SET_CLOCK(pT->sec, pT->nanosec);
+}
+
+void ptp_update_time(TimestampI * dt) {
+    TimestampU tu;
+    ptp_time(&tu);
+    TimestampI ti;
+    tsUToI(&ti, &tu);
+    addTime(&ti, &ti, dt);
+    tsIToU(&tu, &ti);
+    ptp_set_time(&tu);
+}
