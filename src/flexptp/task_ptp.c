@@ -5,29 +5,24 @@
 #include "config.h"
 #include "event.h"
 #include "network_stack_driver.h"
-#include "portmacro.h"
 #include "profiles.h"
-#include "projdefs.h"
 #include "ptp_core.h"
+#include "ptp_types.h"
+#include "ptp_defs.h"
 #include "ptp_raw_msg_circbuf.h"
 #include "settings_interface.h"
 
-#include "FreeRTOS.h"
-#include "queue.h"
-#include "task.h"
-
 #include <flexptp_options.h>
 
-// provide own MIN implementation
-#ifdef MIN
-#undef MIN
-#endif 
-
-#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+#include "minmax.h"
 
 ///\cond 0
 // ----- TASK PROPERTIES -----
-static TaskHandle_t sTH;                      // task handle
+#ifdef FLEXPTP_FREERTOS
+static TaskHandle_t sTH; // task handle in direct FreeRTOS mode
+#elif defined(FLEXPTP_CMSIS_OS2)
+static osThreadId_t sTH; // task handle in CMSIS OS2 mode
+#endif
 static uint8_t sPrio = FLEXPTP_TASK_PRIORITY; // priority
 static uint16_t sStkSize = 2048;              // stack size
 static void task_ptp(void *pParam);           // task routine function
@@ -40,15 +35,31 @@ static bool sPTP_operating = false; // does the PTP subsystem operate?
 ///\endcond
 
 // FIFO for incoming packets
-#define RX_PACKET_FIFO_LENGTH (32) ///< Receive packet FIFO length
-#define TX_PACKET_FIFO_LENGTH (16) ///< Transmit packet FIFO length
-#define EVENT_FIFO_LENGTH (32)     ///< Event FIFO length
+#define RX_PACKET_FIFO_LENGTH (32)    ///< Receive packet FIFO length
+#define TX_PACKET_FIFO_LENGTH (16)    ///< Transmit packet FIFO length
+#define EVENT_FIFO_LENGTH (32)        ///< Event FIFO length
+#define NOTIFICATION_FIFO_LENGTH (16) ///< Notification FIFO length
+
+/**
+ * Notifications for the processing thread.
+ */
+typedef enum {
+    PTN_RECEIVE,  ///< A message has been received
+    PTN_TRANSMIT, ///< A message waits transmission
+    PTN_EVENT     ///< An event has occurred
+} ProcThreadNotification;
 
 ///\cond 0
 // queues for message reception and transmission
+#ifdef FLEXPTP_FREERTOS
 static QueueHandle_t sRxPacketFIFO, sEventFIFO;
-QueueHandle_t gTxPacketFIFO;
-static QueueSetHandle_t sRxTxEvFIFOSet;
+static QueueHandle_t gTxPacketFIFO;
+static QueueHandle_t sNotificationFIFO;
+#elif defined(FLEXPTP_CMSIS_OS2)
+static osMessageQueueId_t sRxPacketFIFO, sEventFIFO;
+static osMessageQueueId_t gTxPacketFIFO;
+static osMessageQueueId_t sNotificationFIFO;
+#endif
 
 // "ring" buffer for PTP-messages
 PtpCircBuf gRawRxMsgBuf, gRawTxMsgBuf;
@@ -59,13 +70,17 @@ static RawPtpMessage sRawTxMsgBufPool[TX_PACKET_FIFO_LENGTH];
 // create message queues
 static void ptp_create_message_queues() {
     // create packet FIFO
+#ifdef FLEXPTP_FREERTOS
     sRxPacketFIFO = xQueueCreate(RX_PACKET_FIFO_LENGTH, sizeof(uint8_t));
     gTxPacketFIFO = xQueueCreate(TX_PACKET_FIFO_LENGTH, sizeof(uint8_t));
     sEventFIFO = xQueueCreate(EVENT_FIFO_LENGTH, sizeof(PtpCoreEvent));
-    sRxTxEvFIFOSet = xQueueCreateSet(RX_PACKET_FIFO_LENGTH + TX_PACKET_FIFO_LENGTH);
-    xQueueAddToSet(sRxPacketFIFO, sRxTxEvFIFOSet);
-    xQueueAddToSet(gTxPacketFIFO, sRxTxEvFIFOSet);
-    xQueueAddToSet(sEventFIFO, sRxTxEvFIFOSet);
+    sNotificationFIFO = xQueueCreate(NOTIFICATION_FIFO_LENGTH, sizeof(ProcThreadNotification));
+#elif defined(FLEXPTP_CMSIS_OS2)
+    sRxPacketFIFO = osMessageQueueNew(RX_PACKET_FIFO_LENGTH, sizeof(uint8_t), NULL);
+    gTxPacketFIFO = osMessageQueueNew(TX_PACKET_FIFO_LENGTH, sizeof(uint8_t), NULL);
+    sEventFIFO = osMessageQueueNew(EVENT_FIFO_LENGTH, sizeof(PtpCoreEvent), NULL);
+    sNotificationFIFO = osMessageQueueNew(NOTIFICATION_FIFO_LENGTH, sizeof(ProcThreadNotification), NULL);
+#endif
 
     // initalize packet buffers
     ptp_circ_buf_init(&gRawRxMsgBuf, sRawRxMsgBufPool, RX_PACKET_FIFO_LENGTH);
@@ -75,15 +90,19 @@ static void ptp_create_message_queues() {
 // destroy message queues
 static void ptp_destroy_message_queues() {
     // destroy packet FIFO
-    xQueueRemoveFromSet(sRxPacketFIFO, sRxTxEvFIFOSet);
-    xQueueRemoveFromSet(gTxPacketFIFO, sRxTxEvFIFOSet);
-    xQueueRemoveFromSet(sEventFIFO, sRxTxEvFIFOSet);
+#ifdef FLEXPTP_FREERTOS
     vQueueDelete(sRxPacketFIFO);
     vQueueDelete(gTxPacketFIFO);
     vQueueDelete(sEventFIFO);
-    vQueueDelete(sRxTxEvFIFOSet);
+    vQueueDelete(sNotificationFIFO);
+#elif defined(FLEXPTP_CMSIS_OS2)
+    osMessageQueueDelete(sRxPacketFIFO);
+    osMessageQueueDelete(gTxPacketFIFO);
+    osMessageQueueDelete(sEventFIFO);
+    osMessageQueueDelete(sNotificationFIFO);
+#endif
 
-    // packet buffers cannot be released since nothing has been allocated for them
+    // packet buffers cannot be released since nothing had been allocated for them
 }
 
 // register PTP task and initialize
@@ -114,27 +133,60 @@ void reg_task_ptp() {
     ptp_nsd_init(ptp_get_transport_type(), ptp_get_delay_mechanism());
 
     // create task
-    BaseType_t result = xTaskCreate(task_ptp, "ptp", sStkSize / 4, NULL, sPrio, &sTH);
+    sTH = NULL;
+#ifdef FLEXPTP_FREERTOS
+    BaseType_t result = xTaskCreate(task_ptp, "ptp", sStkSize / sizeof(BaseType_t), NULL, sPrio, &sTH);
     if (result != pdPASS) {
         MSG("Failed to create PTP task! (errcode: %d)\n", result);
         unreg_task_ptp();
         return;
     }
+#elif defined(FLEXPTP_CMSIS_OS2)
+    osThreadAttr_t attr;
+    memset(&attr, 0, sizeof(osThreadAttr_t));
+    attr.name = "ptp";
+    attr.stack_size = sStkSize;
+    attr.priority = sPrio;
+    sTH = osThreadNew(task_ptp, NULL, &attr);
+    if (sTH == NULL) {
+        MSG("Failed to create PTP task!\n");
+        unreg_task_ptp();
+        return;
+    }
+#endif
 
     sPTP_operating = true; // the PTP subsystem is operating
 }
 
 // unregister PTP task
 void unreg_task_ptp() {
-    ptp_nsd_init(-1, -1);         // de-initialize the network stack driver
-    vTaskDelete(sTH);             // delete task
+    ptp_nsd_init(-1, -1); // de-initialize the network stack driver
+    if (sTH != NULL) {
+#ifdef FLEXPTP_FREERTOS
+        vTaskDelete(sTH); // delete task
+#elif defined(FLEXPTP_CMSIS_OS2)
+        osThreadTerminate(sTH);
+#endif
+    }
+    sTH = NULL;
     ptp_deinit();                 // ptp subsystem de-initialization
     ptp_destroy_message_queues(); // destroy message queues and buffers
     sPTP_operating = false;       // the PTP subsystem is NOT operating anymore
 }
 
-bool ptp_event_enqueue(const PtpCoreEvent * event) {
-    return xQueueSend(sEventFIFO, event, portMAX_DELAY) == pdPASS;
+bool ptp_event_enqueue(const PtpCoreEvent *event) {
+    ProcThreadNotification notif = PTN_EVENT;
+
+    bool ok;
+#ifdef FLEXPTP_FREERTOS
+    ok = xQueueSend(sEventFIFO, event, portMAX_DELAY) == pdPASS;
+    if (ok) {
+        xQueueSend(sNotificationFIFO, &notif, portMAX_DELAY);
+    }
+#elif defined(FLEXPTP_CMSIS_OS2)
+    ok = osMessageQueuePut(sEventFIFO, &notif, 0, osWaitForever) == osOK;
+#endif
+    return ok;
 }
 
 // put ptp message onto processing queue
@@ -158,9 +210,16 @@ void ptp_receive_enqueue(const void *pPayload, uint32_t len, uint32_t ts_sec, ui
 
         uint8_t idx = ptp_circ_buf_commit(&gRawRxMsgBuf);
 
-        xQueueSend(sRxPacketFIFO, &idx, portMAX_DELAY); // send index
+        ProcThreadNotification notif = PTN_RECEIVE;
+#ifdef FLEXPTP_FREERTOS
+        xQueueSend(sRxPacketFIFO, &idx, portMAX_DELAY);       // send index
+        xQueueSend(sNotificationFIFO, &notif, portMAX_DELAY); // send notification
+#elif defined(FLEXPTP_CMSIS_OS2)
+        osMessageQueuePut(sRxPacketFIFO, &idx, 0, osWaitForever);
+        osMessageQueuePut(sNotificationFIFO, &notif, 0, osWaitForever);
+#endif
     } else {
-        MSG("PTP-packet buffer full, a packet has been dropped!\n");
+        MSG("The PTP receive packet buffer is full, a packet was lost!\n");
     }
 
     // MSG("TS: %u.%09u\n", (uint32_t)ts_sec, (uint32_t)ts_ns);
@@ -169,18 +228,24 @@ void ptp_receive_enqueue(const void *pPayload, uint32_t len, uint32_t ts_sec, ui
 }
 
 bool ptp_transmit_enqueue(const RawPtpMessage *pMsg) {
-    extern PtpCircBuf gRawTxMsgBuf;
-    extern QueueHandle_t gTxPacketFIFO;
     RawPtpMessage *pMsgAlloc = ptp_circ_buf_alloc(&gRawTxMsgBuf);
     if (pMsgAlloc) {
         *pMsgAlloc = *pMsg;
         uint8_t idx = ptp_circ_buf_commit(&gRawTxMsgBuf);
+        ProcThreadNotification notif = PTN_TRANSMIT;
+#ifdef FLEXPTP_FREERTOS
         BaseType_t hptWoken = false;
         if (xPortIsInsideInterrupt()) {
             xQueueSendFromISR(gTxPacketFIFO, &idx, (BaseType_t *)&hptWoken);
+            xQueueSendFromISR(sNotificationFIFO, &notif, (BaseType_t *)&hptWoken);
         } else {
             xQueueSend(gTxPacketFIFO, &idx, portMAX_DELAY);
+            xQueueSend(sNotificationFIFO, &notif, portMAX_DELAY);
         }
+#elif defined(FLEXPTP_CMSIS_OS2)
+        osMessageQueuePut(gTxPacketFIFO, &idx, 0, osWaitForever);
+        osMessageQueuePut(sNotificationFIFO, &notif, 0, osWaitForever);
+#endif
         return true;
     } else {
         MSG("PTP TX Enqueue failed!\n");
@@ -193,13 +258,22 @@ bool ptp_transmit_enqueue(const RawPtpMessage *pMsg) {
 static void task_ptp(void *pParam) {
     while (1) {
         // wait for received packet or packet to transfer
-        QueueHandle_t activeQueue = xQueueSelectFromSet(sRxTxEvFIFOSet, pdMS_TO_TICKS(200));
-
+        ProcThreadNotification notification;
+#ifdef FLEXPTP_FREERTOS
+        xQueueReceive(sNotificationFIFO, &notification, portMAX_DELAY);
+#elif defined(FLEXPTP_CMSIS_OS2)
+        osMessageQueueGet(sNotificationFIFO, &notification, NULL, osWaitForever);
+#endif
         // if packet is on the RX queue
-        if (activeQueue == sRxPacketFIFO) {
+        if (notification == PTN_RECEIVE) { /* ---- RECIEVE ----- */
             // pop packet from FIFO
             uint8_t bufIdx;
+
+#ifdef FLEXPTP_FREERTOS
             xQueueReceive(sRxPacketFIFO, &bufIdx, portMAX_DELAY);
+#elif defined(FLEXPTP_CMSIS_OS2)
+            osMessageQueueGet(sRxPacketFIFO, &bufIdx, NULL, osWaitForever);
+#endif
 
             // fetch buffer
             RawPtpMessage *pRawMsg = ptp_circ_buf_get(&gRawRxMsgBuf, bufIdx);
@@ -210,19 +284,25 @@ static void task_ptp(void *pParam) {
 
             // free buffer
             ptp_circ_buf_free(&gRawRxMsgBuf);
-        } else if (activeQueue == gTxPacketFIFO) {
+        } else if (notification == PTN_TRANSMIT) { /* ---- TRANSMIT ----- */
             // pop packet from FIFO
             uint8_t bufIdx;
+#ifdef FLEXPTP_FREERTOS
             xQueueReceive(gTxPacketFIFO, &bufIdx, portMAX_DELAY);
-
+#elif defined(FLEXPTP_CMSIS_OS2)
+            osMessageQueueGet(gTxPacketFIFO, &bufIdx, NULL, osWaitForever);
+#endif
             // fetch buffer
             RawPtpMessage *pRawMsg = ptp_circ_buf_get(&gRawTxMsgBuf, bufIdx);
             ptp_nsd_transmit_msg(pRawMsg);
-        } else if (activeQueue == sEventFIFO) {
+        } else if (notification == PTN_EVENT) { /* ---- EVENT ----- */
             // pop event from the FIFO
             PtpCoreEvent event;
+#ifdef FLEXPTP_FREERTOS
             xQueueReceive(sEventFIFO, &event, portMAX_DELAY);
-
+#elif defined(FLEXPTP_CMSIS_OS2)
+            osMessageQueueGet(sEventFIFO, &event, NULL, osWaitForever);
+#endif
             // process event
             ptp_process_event(&event);
         } else {
@@ -239,4 +319,3 @@ bool task_ptp_is_operating() {
 }
 
 // --------------------------
-

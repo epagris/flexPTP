@@ -15,17 +15,7 @@
 
 #include <string.h>
 
-#ifdef MIN
-#undef MIN
-#endif
-
-#define MIN(a, b) (((a) < (b)) ? (a) : (b))
-
-#ifdef MAX
-#undef MAX
-#endif
-
-#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+#include "minmax.h"
 
 ///\cond 0
 #define S (gPtpCoreState)

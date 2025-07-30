@@ -6,15 +6,11 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "FreeRTOS.h"
-
 #include "common.h"
 #include "event.h"
 #include "logging.h"
 #include "master.h"
-#include "portmacro.h"
 #include "slave.h"
-#include "timers.h"
 
 #include "bmca.h"
 #include "cli_cmds.h"
@@ -31,14 +27,7 @@
 
 #include <flexptp_options.h>
 
-// --------------------------------------
-
-// provide our own MIN implementation
-#ifdef MIN
-#undef MIN
-#endif
-
-#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+#include "minmax.h"
 
 ///\cond 0
 // global state
@@ -55,7 +44,13 @@ const TimestampI zeroTs = {0, 0}; // a zero timestamp
  *
  * @param timer timer handle
  */
-static void ptp_heartbeat_tmr_cb(TimerHandle_t timer) {
+static void ptp_heartbeat_tmr_cb(
+#ifdef FLEXPTP_FREERTOS
+    TimerType timer
+#elif defined(FLEXPTP_CMSIS_OS2)
+    void * arg
+#endif
+) {
     PtpCoreEvent event = {.code = PTP_CEV_HEARTBEAT, .w = 0, .dw = 0};
     ptp_event_enqueue(&event);
 }
@@ -65,26 +60,44 @@ static void ptp_heartbeat_tmr_cb(TimerHandle_t timer) {
  */
 static void ptp_create_heartbeat_tmr() {
     // create smbc timer
+    #if FLEXPTP_FREERTOS
     S.timers.heartbeat = xTimerCreate("ptp_heartbeat", pdMS_TO_TICKS(PTP_HEARTBEAT_TICKRATE_MS), // timeout
                                       true,                                                      // timer operates in repeat mode
                                       NULL,                                                      // ID
                                       ptp_heartbeat_tmr_cb);                                     // callback-function
+    #elif defined(FLEXPTP_CMSIS_OS2)
+    S.timers.heartbeat = osTimerNew(ptp_heartbeat_tmr_cb, osTimerPeriodic, NULL, NULL);
+    #endif
 }
 
 /**
  * Remove the heartbeat timer.
  */
 static void ptp_remove_heartbeat_tmr() {
+#ifdef FLEXPTP_FREERTOS
     xTimerStop(S.timers.heartbeat, 0);
     xTimerDelete(S.timers.heartbeat, 0);
+#elif defined(FLEXPTP_CMSIS_OS2)
+    osTimerStop(S.timers.heartbeat);
+    osTimerDelete(S.timers.heartbeat);
+#endif
+S.timers.heartbeat = NULL;
 }
 
 static void ptp_start_heartbeat_tmr() {
+#ifdef FLEXPTP_FREERTOS
     xTimerStart(S.timers.heartbeat, 0);
+#elif defined(FLEXPTP_CMSIS_OS2)
+    osTimerStart(S.timers.heartbeat, (PTP_HEARTBEAT_TICKRATE_MS * 1000) / osKernelGetTickFreq());
+#endif
 }
 
 static void ptp_stop_heartbeat_tmr() {
+#ifdef FLEXPTP_FREERTOS
     xTimerStop(S.timers.heartbeat, 0);
+#elif defined(FLEXPTP_CMSIS_OS2) 
+    osTimerStop(S.timers.heartbeat);
+#endif
 }
 
 // --------------------------------------

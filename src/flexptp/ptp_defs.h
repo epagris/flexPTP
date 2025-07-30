@@ -183,4 +183,13 @@ extern const uint8_t PTP_ETHERNET_PEER_DELAY[6]; ///< PTP's L2 Peer_Delay Ethern
 
 #define FLEXPTP_ntohs(a) FLEXPTP_htons((a))
 
+// ----------------
+
+// provide own MIN implementation
+#ifdef MIN
+#undef MIN
+#endif
+
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+
 #endif /* FLEXPTP_PTP_DEFS_H_ */

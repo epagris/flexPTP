@@ -10,17 +10,7 @@
 #include "ptp_types.h"
 #include "settings_interface.h"
 
-#ifdef MIN
-#undef MIN
-#endif
-
-#define MIN(a, b) (((a) < (b)) ? (a) : (b))
-
-#ifdef MAX
-#undef MAX
-#endif
-
-#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+#include "minmax.h"
 
 
 // #define S (gPtpCoreState)

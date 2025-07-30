@@ -14,10 +14,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "FreeRTOS.h"
 #include "event.h"
-#include "task.h"
-#include "timers.h"
 
 #include "ptp_types.h"
 

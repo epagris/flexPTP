@@ -20,13 +20,18 @@ Our experience with embedded development shows that a newcomer might run into di
 
 The assembling of a configuration file can be broken down into the following major steps:
 
-1. Define **printing routines or macros**:
+1. Choose an **OS interface**:
+    - define the `FLEXPTP_CMSIS_OS2` macro to use the [CMSIS OS2](https://arm-software.github.io/CMSIS_5/RTOS2/html/index.html) bindings **OR**
+    - define the `FLEXPTP_FREERTOS` macro to let the library call the [FreeRTOS](https://www.freertos.org/) API directly
+    OS headers must be available to the library (e.g. cmsis_os2.h, FreeRTOS.h, etc.).
+
+2. Define **printing routines or macros**:
 
    - `MSG(...)`: a basic formatted printing function that mimics `printf()` functionality (called with `printf()`-fashioned parameters). flexPTP uses the following formatting marks: `%%d`, `%%i`, `%%u`, `%%lu`, `%%f`, `%%x`, `%%X`, `%%s`, `%%c`, `%%`.
    - `CLILOG(en,...)`: a maskable printing function: if `en` is `true`, it behaves like `MSG(...)`
    - `SPRINTF(str,n,...)`: a basic `snprintf()` implementation, that supports at least the same set of formatting marks as `MSG(...)` does
 
-2. Define hardware **clock management functions**:
+3. Define hardware **clock management functions**:
     Two different clock management interface are supported, the ADDEND-based and the HLT interface. More on this in [Hardware Clock Driver](#hardware-clock-driver).
     - *ADDEND interface*
         - **define the `PTP_ADDEND_INTERFACE`** macro to select this interface

@@ -13,15 +13,26 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "FreeRTOS.h"
 #include "event.h"
 #include "ptp_defs.h"
-#include "timers.h"
 #include "timeutils.h"
 
 #include "ptp_sync_cycle_data.h"
 
 #include <flexptp_options.h>
+
+#if !defined(FLEXPTP_FREERTOS) && !defined(FLEXPTP_CMSIS_OS2)
+#define FLEXPTP_FREERTOS (1)
+#endif
+
+#ifdef FLEXPTP_FREERTOS
+#include "FreeRTOS.h"
+#include "queue.h"
+#include "task.h"
+#include "timers.h"
+#elif defined(FLEXPTP_CMSIS_OS2)
+#include <cmsis_os2.h>
+#endif
 
 /**
  * @brief PTP packet type enumeration.
@@ -470,6 +481,12 @@ typedef enum { PTP_FC_IDLE = 0,                    ///< Fast correction algorith
                PTP_FC_TIME_CORRECTION_PROPAGATION, ///< Waiting for the effects of time correction to propagate
 } PtpFastCompState;
 
+#ifdef FLEXPTP_FREERTOS
+typedef TimerHandle_t TimerType;
+#elif defined(FLEXPTP_CMSIS_OS2)
+typedef osTimerId_t TimerType;
+#endif
+
 /**
  * @brief Giant PTP core state object.
  */
@@ -501,7 +518,7 @@ typedef struct {
     PtpUserEventCallback userEventCb; ///< User event callback pointer
 
     struct {
-        TimerHandle_t heartbeat; ///< timer for managing SBMC operations
+        TimerType heartbeat; ///< timer for managing SBMC operations
     } timers;                    ///< Management timers
 
     /* ---- SLAVE ----- */

@@ -3,7 +3,6 @@
 
 #include "format_utils.h"
 #include "msg_utils.h"
-#include "portmacro.h"
 #include "ptp_types.h"
 #include "settings_interface.h"
 #include "stats.h"
@@ -14,17 +13,7 @@
 #include "ptp_defs.h"
 #include <math.h>
 
-#ifdef MIN
-#undef MIN
-#endif
-
-#define MIN(a, b) (((a) < (b)) ? (a) : (b))
-
-#ifdef MAX
-#undef MAX
-#endif
-
-#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+#include "minmax.h"
 
 ///\cond 0
 #define S (gPtpCoreState)
