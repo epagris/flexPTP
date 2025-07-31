@@ -1,7 +1,5 @@
 var master_8c =
 [
-    [ "MAX", "master_8c.html#afa99ec4acc4ecb2dc3c2d05da15d0e3f", null ],
-    [ "MIN", "master_8c.html#a3acffbd305ee72dcd4593c0d8af64a4f", null ],
     [ "PTP_MASTER_P2P_SLAVE_STATE_LOG", "master_8c.html#a50ba756ab7b29eb706f6faa4f7e56741", null ],
     [ "ptp_init_announce_header", "master_8c.html#ada40509ac51c02514e3f090c14094ddf", null ],
     [ "ptp_init_follow_up_message", "master_8c.html#a8140462037ae41a3bfc2d8e6187a376c", null ],

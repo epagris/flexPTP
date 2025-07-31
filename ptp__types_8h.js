@@ -16,12 +16,14 @@ var ptp__types_8h =
     [ "PtpNetworkState", "struct_ptp_network_state.html", "struct_ptp_network_state" ],
     [ "PtpStats", "struct_ptp_stats.html", "struct_ptp_stats" ],
     [ "PtpCoreState", "struct_ptp_core_state.html", "struct_ptp_core_state" ],
+    [ "FLEXPTP_FREERTOS", "ptp__types_8h.html#ad68f01211bcc2a5342a9d23ecfdcaa3b", null ],
     [ "MAX_PTP_MSG_SIZE", "ptp__types_8h.html#ab9a5b1004564a82c7f0aab1069fcc2ba", null ],
     [ "PTP_TLV_HEADER", "ptp__types_8h.html#a7f9a1eafe20e661bf08b831ea74a4f99", null ],
     [ "PTP_VARIANCE_HAS_NOT_BEEN_COMPUTED", "ptp__types_8h.html#ac8bbf4f548e8bad3306b48543d16b6b9", null ],
     [ "PtpMasterProperties", "ptp__types_8h.html#a8a829d9118e4062f301ae8539d9134ad", null ],
     [ "PtpSyncCallback", "ptp__types_8h.html#a46935577d0036742a30c9042d42a519e", null ],
     [ "PtpUserEventCallback", "ptp__types_8h.html#a45cabd2ea4c608b4b84ce719019cd8e0", null ],
+    [ "TimerType", "ptp__types_8h.html#a5a0e9e1971b37b7cf635ab8b75d03da6", null ],
     [ "BmcaCandidateState", "ptp__types_8h.html#a0f2deb690644fe2c5751684018fe84a6", [
       [ "BMCA_NO_CANDIDATE", "ptp__types_8h.html#a0f2deb690644fe2c5751684018fe84a6aa4dd92f7040358db83f64cff994d1524", null ],
       [ "BMCA_CANDIDATE_COLLECTION", "ptp__types_8h.html#a0f2deb690644fe2c5751684018fe84a6a247f93ab5be884d4744b0dd251dbd809", null ]

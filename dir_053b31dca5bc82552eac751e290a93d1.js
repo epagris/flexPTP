@@ -20,6 +20,7 @@ var dir_053b31dca5bc82552eac751e290a93d1 =
     [ "logging.h", "logging_8h.html", "logging_8h" ],
     [ "master.c", "master_8c.html", "master_8c" ],
     [ "master.h", "master_8h.html", "master_8h" ],
+    [ "minmax.h", "minmax_8h.html", "minmax_8h" ],
     [ "msg_utils.c", "msg__utils_8c.html", "msg__utils_8c" ],
     [ "msg_utils.h", "msg__utils_8h.html", "msg__utils_8h" ],
     [ "network_stack_driver.h", "network__stack__driver_8h.html", "network__stack__driver_8h" ],

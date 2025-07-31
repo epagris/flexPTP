@@ -134,6 +134,11 @@ Port option file</h2>
 <p>Our experience with embedded development shows that a newcomer might run into difficulties on creating a port to a software to be learned. We recommend you to open an example <code>flexptp_options_XXX.h</code> file from the <code>port/example_options</code> location before reading the following. Taking a quick look into a pre-made configuration file might make the interpretation of the section below much easier.</p>
 <p>The assembling of a configuration file can be broken down into the following major steps:</p>
 <ol type="1">
+<li>Choose an <b>OS interface</b>:<ul>
+<li>define the <code>FLEXPTP_CMSIS_OS2</code> macro to use the <a href="https://arm-software.github.io/CMSIS_5/RTOS2/html/index.html">CMSIS OS2</a> bindings <b>OR</b></li>
+<li>define the <code>FLEXPTP_FREERTOS</code> macro to let the library call the <a href="https://www.freertos.org/">FreeRTOS</a> API directly OS headers must be available to the library (e.g. cmsis_os2.h, FreeRTOS.h, etc.).</li>
+</ul>
+</li>
 <li>Define <b>printing routines or macros</b>:<ul>
 <li><code>MSG(...)</code>: a basic formatted printing function that mimics <code>printf()</code> functionality (called with <code>printf()</code>-fashioned parameters). flexPTP uses the following formatting marks: <code>%d</code>, <code>%i</code>, <code>%u</code>, <code>%lu</code>, <code>%f</code>, <code>%x</code>, <code>%X</code>, <code>%s</code>, <code>%c</code>, <code>%%</code>.</li>
 <li><code><a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#a916dcd9d22af4bd2d5c7c90958bf011a">CLILOG(en,...)</a></code>: a maskable printing function: if <code>en</code> is <code>true</code>, it behaves like <code>MSG(...)</code></li>

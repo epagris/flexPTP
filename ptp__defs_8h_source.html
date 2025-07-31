@@ -295,7 +295,16 @@ $(document).ready(function(){initNavTree('ptp__defs_8h_source.html',''); initRes
 <div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> </div>
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a6fcf18471c396e83f5a50675444b8258">  184</a></span><span class="preprocessor">#define FLEXPTP_ntohs(a) FLEXPTP_htons((a))</span></div>
 <div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span><span class="preprocessor">#endif </span><span class="comment">/* FLEXPTP_PTP_DEFS_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span><span class="comment">// ----------------</span></div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span><span class="comment">// provide own MIN implementation</span></div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span><span class="preprocessor">#ifdef MIN</span></div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span><span class="preprocessor">#undef MIN</span></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a3acffbd305ee72dcd4593c0d8af64a4f">  193</a></span><span class="preprocessor">#define MIN(a, b) (((a) &lt; (b)) ? (a) : (b))</span></div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span><span class="preprocessor">#endif </span><span class="comment">/* FLEXPTP_PTP_DEFS_H_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="aptp__defs_8h_html_a19f61a8981c67812a3504ce95219d3e2"><div class="ttname"><a href="ptp__defs_8h.html#a19f61a8981c67812a3504ce95219d3e2">PTP_IGMP_PRIMARY</a></div><div class="ttdeci">const ip_addr_t PTP_IGMP_PRIMARY</div><div class="ttdoc">Primary IGMP address.</div></div>
 <div class="ttc" id="aptp__defs_8h_html_a265c1b370ac13cc7ab0a7879cede2cdf"><div class="ttname"><a href="ptp__defs_8h.html#a265c1b370ac13cc7ab0a7879cede2cdf">PTP_ETHERNET_PEER_DELAY</a></div><div class="ttdeci">const uint8_t PTP_ETHERNET_PEER_DELAY[6]</div><div class="ttdoc">PTP's L2 Peer_Delay Ethernet address.</div><div class="ttdef"><b>Definition:</b> <a href="ptp__defs_8c_source.html#l00004">ptp_defs.c:4</a></div></div>
 <div class="ttc" id="aptp__defs_8h_html_a7e91a6219029b5fd9e7ce6798d8c8d43"><div class="ttname"><a href="ptp__defs_8h.html#a7e91a6219029b5fd9e7ce6798d8c8d43">PTP_ETHERNET_PRIMARY</a></div><div class="ttdeci">const uint8_t PTP_ETHERNET_PRIMARY[6]</div><div class="ttdoc">PTP's L2 Primary Ethernet address.</div><div class="ttdef"><b>Definition:</b> <a href="ptp__defs_8c_source.html#l00003">ptp_defs.c:3</a></div></div>

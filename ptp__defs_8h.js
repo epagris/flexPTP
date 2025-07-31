@@ -5,6 +5,7 @@ var ptp__defs_8h =
     [ "FLEXPTP_htons", "ptp__defs_8h.html#a867a1d7417963441047eab62d663ba05", null ],
     [ "FLEXPTP_ntohl", "ptp__defs_8h.html#a64e252c931e0c1035f34c36a783d53fd", null ],
     [ "FLEXPTP_ntohs", "ptp__defs_8h.html#a6fcf18471c396e83f5a50675444b8258", null ],
+    [ "MIN", "ptp__defs_8h.html#a3acffbd305ee72dcd4593c0d8af64a4f", null ],
     [ "PTP_ACCURACY_LIMIT_NS", "ptp__defs_8h.html#a1fa31ce795774a0904d3d059cee26213", null ],
     [ "PTP_ADDEND_CORR_PER_PPB_F", "ptp__defs_8h.html#a6a201ce3980eb809d9ab9262999858de", null ],
     [ "PTP_ADDEND_INIT", "ptp__defs_8h.html#aac46f9712d10db597b03ae556afede2d", null ],

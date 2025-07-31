@@ -1,7 +1,5 @@
 var slave_8c =
 [
-    [ "MAX", "slave_8c.html#afa99ec4acc4ecb2dc3c2d05da15d0e3f", null ],
-    [ "MIN", "slave_8c.html#a3acffbd305ee72dcd4593c0d8af64a4f", null ],
     [ "PTP_FC_SKEW_CORRECTION_CYCLES", "slave_8c.html#a7b669522da82867f37f0b0f86925c2f6", null ],
     [ "PTP_FC_TIME_CORRECTION_CYCLES", "slave_8c.html#a52709d1df6674b01a9667c7625128487", null ],
     [ "PTP_FC_TIME_PROPAGATION_CYCLES", "slave_8c.html#a90c30304bb43ea30fbcf04ab6fcd20a7", null ],

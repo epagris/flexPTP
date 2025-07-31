@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>flexPTP: Globals</title>
+<title>flexPTP: src/flexptp/minmax.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,7 +89,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('globals_f.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('minmax_8h_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -114,30 +114,32 @@ $(document).ready(function(){initNavTree('globals_f.html',''); initResizable(); 
 </div>
 </div>
 
+<div class="header">
+  <div class="headertitle"><div class="title">minmax.h</div></div>
+</div><!--header-->
 <div class="contents">
-<div class="textblock">Here is a list of all functions, variables, defines, enums, and typedefs with links to the files they belong to:</div>
-
-<h3><a id="index_f" name="index_f"></a>- f -</h3><ul>
-<li>FAST_TUNING_COEFFICIENT&#160;:&#160;<a class="el" href="kalman__filter_8c.html#a6300d6f5ac27a11aa73feb7e6a849392">kalman_filter.c</a></li>
-<li>FAST_TUNING_THRESHOLD&#160;:&#160;<a class="el" href="kalman__filter_8c.html#a92737a72b761478fadcfca54aece0b9a">kalman_filter.c</a></li>
-<li>FIRST_DAY_OF_MONTH&#160;:&#160;<a class="el" href="timeutils_8c.html#a13608bc34143b60f4d8583dec949676a">timeutils.c</a></li>
-<li>firstRun&#160;:&#160;<a class="el" href="pid__controller_8c.html#a714f1ca4d0b766c27006639b8cad4b70">pid_controller.c</a></li>
-<li>FLEXPTP_FREERTOS&#160;:&#160;<a class="el" href="ptp__types_8h.html#ad68f01211bcc2a5342a9d23ecfdcaa3b">ptp_types.h</a></li>
-<li>FLEXPTP_htonl&#160;:&#160;<a class="el" href="ptp__defs_8h.html#a269a398fab4b61d3955f84b30a0c5605">ptp_defs.h</a></li>
-<li>FLEXPTP_htonll()&#160;:&#160;<a class="el" href="format__utils_8c.html#a82dbbcb11c5d22db4fec1ddee4c1b45f">format_utils.c</a>, <a class="el" href="format__utils_8h.html#a82dbbcb11c5d22db4fec1ddee4c1b45f">format_utils.h</a></li>
-<li>FLEXPTP_htons&#160;:&#160;<a class="el" href="ptp__defs_8h.html#a867a1d7417963441047eab62d663ba05">ptp_defs.h</a></li>
-<li>FLEXPTP_ntohl&#160;:&#160;<a class="el" href="ptp__defs_8h.html#a64e252c931e0c1035f34c36a783d53fd">ptp_defs.h</a></li>
-<li>FLEXPTP_ntohll()&#160;:&#160;<a class="el" href="format__utils_8c.html#af08b07706ac19c48ad300ec8c5153621">format_utils.c</a>, <a class="el" href="format__utils_8h.html#af08b07706ac19c48ad300ec8c5153621">format_utils.h</a></li>
-<li>FLEXPTP_ntohs&#160;:&#160;<a class="el" href="ptp__defs_8h.html#a6fcf18471c396e83f5a50675444b8258">ptp_defs.h</a></li>
-<li>FLEXPTP_SNPRINTF&#160;:&#160;<a class="el" href="flexptp__options__mk64f_8h.html#a273ec2e5b991e57d93bbbb2d10db8f5e">flexptp_options_mk64f.h</a></li>
-<li>FLEXPTP_TASK_PRIORITY&#160;:&#160;<a class="el" href="flexptp__options__mk64f_8h.html#a53b8a0cd469673a510bc734d8d0dac94">flexptp_options_mk64f.h</a></li>
-<li>followUp&#160;:&#160;<a class="el" href="master_8c.html#a90e3d1eb7a74b3d8a6868c5dbe56be64">master.c</a></li>
-</ul>
-</div><!-- contents -->
+<a href="minmax_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef FLEXPTP_MINMAX</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define FLEXPTP_MINMAX</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#ifdef MIN</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#undef MIN</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="minmax_8h.html#a3acffbd305ee72dcd4593c0d8af64a4f">    8</a></span><span class="preprocessor">#define MIN(a, b) (((a) &lt; (b)) ? (a) : (b))</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#ifdef MAX</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#undef MAX</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="minmax_8h.html#afa99ec4acc4ecb2dc3c2d05da15d0e3f">   14</a></span><span class="preprocessor">#define MAX(a, b) (((a) &gt; (b)) ? (a) : (b))</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#endif </span><span class="comment">/* FLEXPTP_MINMAX */</span><span class="preprocessor"></span></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_053b31dca5bc82552eac751e290a93d1.html">flexptp</a></li><li class="navelem"><a class="el" href="minmax_8h.html">minmax.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

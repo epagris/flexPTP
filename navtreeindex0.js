@@ -40,10 +40,8 @@ var NAVTREEINDEX0 =
 "cli.html#autotoc_md6":[2,0,0,0],
 "cli.html#cli-registering-commands":[2,0,0],
 "cli__cmds_8c.html":[9,0,1,0,4],
-"cli__cmds_8c.html#a23f734e2da7f1b189cebadd59edd2594":[9,0,1,0,4,2],
-"cli__cmds_8c.html#a3acffbd305ee72dcd4593c0d8af64a4f":[9,0,1,0,4,1],
-"cli__cmds_8c.html#afa6131795f628e66b889e57f9d2835dc":[9,0,1,0,4,3],
-"cli__cmds_8c.html#afa99ec4acc4ecb2dc3c2d05da15d0e3f":[9,0,1,0,4,0],
+"cli__cmds_8c.html#a23f734e2da7f1b189cebadd59edd2594":[9,0,1,0,4,0],
+"cli__cmds_8c.html#afa6131795f628e66b889e57f9d2835dc":[9,0,1,0,4,1],
 "cli__cmds_8c_source.html":[9,0,1,0,4],
 "cli__cmds_8h.html":[9,0,1,0,5],
 "cli__cmds_8h.html#a23f734e2da7f1b189cebadd59edd2594":[9,0,1,0,5,0],
@@ -249,5 +247,7 @@ var NAVTREEINDEX0 =
 "flexptp__options__stm32h743__etherlib_8h.html#aae315c462a3f489df2df4b5e8b71a859":[9,0,1,0,0,1,4,8],
 "flexptp__options__stm32h743__etherlib_8h.html#ac421b80fbd859a58e3751d5525a3df60":[9,0,1,0,0,1,4,4],
 "flexptp__options__stm32h743__etherlib_8h.html#acf5d43bb87550622768a5fe6a210402d":[9,0,1,0,0,1,4,5],
-"flexptp__options__stm32h743__etherlib_8h.html#adf6e86bdb39695261a826be45ee06001":[9,0,1,0,0,1,4,10]
+"flexptp__options__stm32h743__etherlib_8h.html#adf6e86bdb39695261a826be45ee06001":[9,0,1,0,0,1,4,10],
+"flexptp__options__stm32h743__etherlib_8h.html#af05581fcddec191de3f30b4a373c5a92":[9,0,1,0,0,1,4,12],
+"flexptp__options__stm32h743__etherlib_8h.html#afe6fb0be9af930d13c30a164a096cffc":[9,0,1,0,0,1,4,7]
 };

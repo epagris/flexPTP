@@ -14,7 +14,7 @@ var struct_ptp_core_state =
     [ "enabled", "struct_ptp_core_state.html#a8740ba80e30dd75e71d09fa1dcf04f3d", null ],
     [ "fastCompCntr", "struct_ptp_core_state.html#af53afda4ad9148882540c7223144ce38", null ],
     [ "fastCompState", "struct_ptp_core_state.html#a4528c74e39fbc6a61e9fd0dda1c1922d", null ],
-    [ "heartbeat", "struct_ptp_core_state.html#af69761c17d2dc802f227a110e5bf062b", null ],
+    [ "heartbeat", "struct_ptp_core_state.html#adcdbfc1f90642b107ecb404e6c725c38", null ],
     [ "hwclock", "struct_ptp_core_state.html#a3ff07372385a725cd42b56d4fc35cb1e", null ],
     [ "hwoptions", "struct_ptp_core_state.html#ad7248dce972ca63e41366d025d7e6e12", null ],
     [ "info", "struct_ptp_core_state.html#ab3a88b183c8c84c0eafd43f2f40c7690", null ],

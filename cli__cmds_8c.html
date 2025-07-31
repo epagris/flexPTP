@@ -116,7 +116,6 @@ $(document).ready(function(){initNavTree('cli__cmds_8c.html',''); initResizable(
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">cli_cmds.c File Reference</div></div>
 </div><!--header-->
@@ -130,16 +129,10 @@ $(document).ready(function(){initNavTree('cli__cmds_8c.html',''); initResizable(
 <code>#include &quot;<a class="el" href="ptp__profile__presets_8h_source.html">ptp_profile_presets.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="settings__interface_8h_source.html">settings_interface.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="minmax_8h_source.html">minmax.h</a>&quot;</code><br />
 </div>
 <p><a href="cli__cmds_8c_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a3acffbd305ee72dcd4593c0d8af64a4f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cli__cmds_8c.html#a3acffbd305ee72dcd4593c0d8af64a4f">MIN</a>(a,  b)&#160;&#160;&#160;(((a) &lt; (b)) ? (a) : (b))</td></tr>
-<tr class="separator:a3acffbd305ee72dcd4593c0d8af64a4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa99ec4acc4ecb2dc3c2d05da15d0e3f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cli__cmds_8c.html#afa99ec4acc4ecb2dc3c2d05da15d0e3f">MAX</a>(a,  b)&#160;&#160;&#160;(((a) &gt; (b)) ? (a) : (b))</td></tr>
-<tr class="separator:afa99ec4acc4ecb2dc3c2d05da15d0e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a23f734e2da7f1b189cebadd59edd2594"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cli__cmds_8c.html#a23f734e2da7f1b189cebadd59edd2594">ptp_register_cli_commands</a> ()</td></tr>
@@ -147,67 +140,6 @@ Functions</h2></td></tr>
 <tr class="memitem:afa6131795f628e66b889e57f9d2835dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cli__cmds_8c.html#afa6131795f628e66b889e57f9d2835dc">ptp_remove_cli_commands</a> ()</td></tr>
 <tr class="separator:afa6131795f628e66b889e57f9d2835dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="afa99ec4acc4ecb2dc3c2d05da15d0e3f" name="afa99ec4acc4ecb2dc3c2d05da15d0e3f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa99ec4acc4ecb2dc3c2d05da15d0e3f">&#9670;&#160;</a></span>MAX</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MAX</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">a, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">b&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;(((a) &gt; (b)) ? (a) : (b))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="cli__cmds_8c_source.html#l00023">23</a> of file <a class="el" href="cli__cmds_8c_source.html">cli_cmds.c</a>.</p>
-
-</div>
-</div>
-<a id="a3acffbd305ee72dcd4593c0d8af64a4f" name="a3acffbd305ee72dcd4593c0d8af64a4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3acffbd305ee72dcd4593c0d8af64a4f">&#9670;&#160;</a></span>MIN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MIN</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">a, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">b&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;(((a) &lt; (b)) ? (a) : (b))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="cli__cmds_8c_source.html#l00017">17</a> of file <a class="el" href="cli__cmds_8c_source.html">cli_cmds.c</a>.</p>
-
-</div>
-</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a23f734e2da7f1b189cebadd59edd2594" name="a23f734e2da7f1b189cebadd59edd2594"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a23f734e2da7f1b189cebadd59edd2594">&#9670;&#160;</a></span>ptp_register_cli_commands()</h2>
@@ -225,7 +157,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Register flexPTP CLI commands. CLI_REG_CMD must be defined and operational to make this work. </p>
 
-<p class="definition">Definition at line <a class="el" href="cli__cmds_8c_source.html#l00367">367</a> of file <a class="el" href="cli__cmds_8c_source.html">cli_cmds.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="cli__cmds_8c_source.html#l00357">357</a> of file <a class="el" href="cli__cmds_8c_source.html">cli_cmds.c</a>.</p>
 
 </div>
 </div>
@@ -245,7 +177,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Remove flexPTP CLI commands. </p>
 
-<p class="definition">Definition at line <a class="el" href="cli__cmds_8c_source.html#l00394">394</a> of file <a class="el" href="cli__cmds_8c_source.html">cli_cmds.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="cli__cmds_8c_source.html#l00384">384</a> of file <a class="el" href="cli__cmds_8c_source.html">cli_cmds.c</a>.</p>
 
 </div>
 </div>

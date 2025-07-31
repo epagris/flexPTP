@@ -117,6 +117,7 @@ $(document).ready(function(){initNavTree('task__ptp_8c.html',''); initResizable(
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">task_ptp.c File Reference</div></div>
 </div><!--header-->
@@ -126,23 +127,19 @@ $(document).ready(function(){initNavTree('task__ptp_8c.html',''); initResizable(
 <code>#include &quot;<a class="el" href="config_8h_source.html">config.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="event_8h_source.html">event.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="network__stack__driver_8h_source.html">network_stack_driver.h</a>&quot;</code><br />
-<code>#include &quot;portmacro.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="profiles_8h_source.html">profiles.h</a>&quot;</code><br />
-<code>#include &quot;projdefs.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="ptp__core_8h_source.html">ptp_core.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="ptp__raw__msg__circbuf_8h_source.html">ptp_raw_msg_circbuf.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="settings__interface_8h_source.html">settings_interface.h</a>&quot;</code><br />
-<code>#include &quot;FreeRTOS.h&quot;</code><br />
-<code>#include &quot;queue.h&quot;</code><br />
-<code>#include &quot;task.h&quot;</code><br />
 <code>#include &lt;flexptp_options.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="minmax_8h_source.html">minmax.h</a>&quot;</code><br />
 </div>
 <p><a href="task__ptp_8c_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a3acffbd305ee72dcd4593c0d8af64a4f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task__ptp_8c.html#a3acffbd305ee72dcd4593c0d8af64a4f">MIN</a>(a,  b)&#160;&#160;&#160;(((a) &lt; (b)) ? (a) : (b))</td></tr>
-<tr class="separator:a3acffbd305ee72dcd4593c0d8af64a4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace2de45925d7f22db605219809d77b7a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task__ptp_8c.html#ace2de45925d7f22db605219809d77b7a">RX_PACKET_FIFO_LENGTH</a>&#160;&#160;&#160;(32)</td></tr>
 <tr class="memdesc:ace2de45925d7f22db605219809d77b7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive packet FIFO length.  <br /></td></tr>
 <tr class="separator:ace2de45925d7f22db605219809d77b7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,6 +149,17 @@ Macros</h2></td></tr>
 <tr class="memitem:a73703b12e7d6b67edd044c3d9306c55b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task__ptp_8c.html#a73703b12e7d6b67edd044c3d9306c55b">EVENT_FIFO_LENGTH</a>&#160;&#160;&#160;(32)</td></tr>
 <tr class="memdesc:a73703b12e7d6b67edd044c3d9306c55b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event FIFO length.  <br /></td></tr>
 <tr class="separator:a73703b12e7d6b67edd044c3d9306c55b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a761b896e14cf79b785ebe72bb5722863"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task__ptp_8c.html#a761b896e14cf79b785ebe72bb5722863">NOTIFICATION_FIFO_LENGTH</a>&#160;&#160;&#160;(16)</td></tr>
+<tr class="memdesc:a761b896e14cf79b785ebe72bb5722863"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notification FIFO length.  <br /></td></tr>
+<tr class="separator:a761b896e14cf79b785ebe72bb5722863"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a6b0faecf3a033e3f4ef87fb090a23330"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task__ptp_8c.html#a6b0faecf3a033e3f4ef87fb090a23330">ProcThreadNotification</a> { <a class="el" href="task__ptp_8c.html#a6b0faecf3a033e3f4ef87fb090a23330ae04813ff156081b95c9b2e2fd2f78fd8">PTN_RECEIVE</a>
+, <a class="el" href="task__ptp_8c.html#a6b0faecf3a033e3f4ef87fb090a23330aa943e121163737607bb4963a80a578d2">PTN_TRANSMIT</a>
+, <a class="el" href="task__ptp_8c.html#a6b0faecf3a033e3f4ef87fb090a23330a07424e63273263a13f002b06604c2ab4">PTN_EVENT</a>
+ }</td></tr>
+<tr class="separator:a6b0faecf3a033e3f4ef87fb090a23330"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -189,37 +197,25 @@ Functions</h2></td></tr>
 
 <p>Event FIFO length. </p>
 
-<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00045">45</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00040">40</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
 
 </div>
 </div>
-<a id="a3acffbd305ee72dcd4593c0d8af64a4f" name="a3acffbd305ee72dcd4593c0d8af64a4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3acffbd305ee72dcd4593c0d8af64a4f">&#9670;&#160;</a></span>MIN</h2>
+<a id="a761b896e14cf79b785ebe72bb5722863" name="a761b896e14cf79b785ebe72bb5722863"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a761b896e14cf79b785ebe72bb5722863">&#9670;&#160;</a></span>NOTIFICATION_FIFO_LENGTH</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define MIN</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">a, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">b&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;(((a) &lt; (b)) ? (a) : (b))</td>
+          <td class="memname">#define NOTIFICATION_FIFO_LENGTH&#160;&#160;&#160;(16)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00026">26</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+<p>Notification FIFO length. </p>
+
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00041">41</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
 
 </div>
 </div>
@@ -237,7 +233,7 @@ Functions</h2></td></tr>
 
 <p>Receive packet FIFO length. </p>
 
-<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00043">43</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00038">38</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
 
 </div>
 </div>
@@ -255,7 +251,33 @@ Functions</h2></td></tr>
 
 <p>Transmit packet FIFO length. </p>
 
-<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00044">44</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00039">39</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a6b0faecf3a033e3f4ef87fb090a23330" name="a6b0faecf3a033e3f4ef87fb090a23330"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b0faecf3a033e3f4ef87fb090a23330">&#9670;&#160;</a></span>ProcThreadNotification</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="task__ptp_8c.html#a6b0faecf3a033e3f4ef87fb090a23330">ProcThreadNotification</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Notifications for the processing thread. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a6b0faecf3a033e3f4ef87fb090a23330ae04813ff156081b95c9b2e2fd2f78fd8" name="a6b0faecf3a033e3f4ef87fb090a23330ae04813ff156081b95c9b2e2fd2f78fd8"></a>PTN_RECEIVE&#160;</td><td class="fielddoc"><p>A message has been received. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a6b0faecf3a033e3f4ef87fb090a23330aa943e121163737607bb4963a80a578d2" name="a6b0faecf3a033e3f4ef87fb090a23330aa943e121163737607bb4963a80a578d2"></a>PTN_TRANSMIT&#160;</td><td class="fielddoc"><p>A message waits transmission. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a6b0faecf3a033e3f4ef87fb090a23330a07424e63273263a13f002b06604c2ab4" name="a6b0faecf3a033e3f4ef87fb090a23330a07424e63273263a13f002b06604c2ab4"></a>PTN_EVENT&#160;</td><td class="fielddoc"><p>An event has occurred. </p>
+</td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00046">46</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
 
 </div>
 </div>
@@ -283,7 +305,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00060">60</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00071">71</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
 
 </div>
 </div>
@@ -310,7 +332,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00076">76</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00091">91</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
 
 </div>
 </div>
@@ -338,7 +360,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>sucessful posting </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00136">136</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00177">177</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
 
 </div>
 </div>
@@ -397,7 +419,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00141">141</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00193">193</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
 
 </div>
 </div>
@@ -425,7 +447,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>successful insertion </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00171">171</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00230">230</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
 
 </div>
 </div>
@@ -445,7 +467,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Register PTP task. </p>
 
-<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00090">90</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00109">109</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
 
 </div>
 </div>
@@ -473,7 +495,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00193">193</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00258">258</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
 
 </div>
 </div>
@@ -493,7 +515,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Is the PTP task operating? </p>
 
-<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00237">237</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00317">317</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
 
 </div>
 </div>
@@ -513,7 +535,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Unreg PTP task. </p>
 
-<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00128">128</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00162">162</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
 
 </div>
 </div>
