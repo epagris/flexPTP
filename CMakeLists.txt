@@ -162,8 +162,6 @@ set(FLEXPTP_SRC
     ptp_defs.h
     ptp_profile_presets.c
     ptp_profile_presets.h
-    ptp_raw_msg_circbuf.c
-    ptp_raw_msg_circbuf.h
     ptp_servo_types.h
     ptp_sync_cycle_data.h
     ptp_types.h
