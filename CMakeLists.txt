@@ -140,6 +140,7 @@ set(FLEXPTP_SRC
     common.h
     config.c
     config.h
+    critical.h
     event.c
     event.h
     format_utils.c
@@ -148,6 +149,8 @@ set(FLEXPTP_SRC
     logging.h
     master.c
     master.h
+    msg_buf.c
+    msg_buf.h
     msg_utils.c
     msg_utils.h
     network_stack_driver.h
