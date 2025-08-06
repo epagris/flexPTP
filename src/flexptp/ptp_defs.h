@@ -185,11 +185,6 @@ extern const uint8_t PTP_ETHERNET_PEER_DELAY[6]; ///< PTP's L2 Peer_Delay Ethern
 
 // ----------------
 
-// provide own MIN implementation
-#ifdef MIN
-#undef MIN
-#endif
-
-#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+#define FLEXPTP_MS_TO_TICKS(ms) ((ms + (PTP_HEARTBEAT_TICKRATE_MS - 1)) / PTP_HEARTBEAT_TICKRATE_MS)  ///< Interval conversion between milliseconds and ticks
 
 #endif /* FLEXPTP_PTP_DEFS_H_ */

@@ -39,8 +39,9 @@ void ptp_init_delay_req_header() {
 void ptp_send_delay_req_message() {
     // PTP message
     RawPtpMessage delReqMsg = {0};
+    delReqMsg.tag = RPMT_DELAY_REQ;
     delReqMsg.size = delReqHeader.messageLength;
-    delReqMsg.pTs = (S.bmca.state == PTP_BMCA_SLAVE) ? (&(S.slave.scd.t[T3])) : (&(S.master.scd.t[T1])); // timestamp writeback address
+    //delReqMsg.pTs = (S.bmca.state == PTP_BMCA_SLAVE) ? (&(S.slave.scd.t[T3])) : (&(S.master.scd.t[T1])); // timestamp writeback address
     delReqMsg.tx_dm = S.profile.delayMechanism;
     delReqMsg.tx_mc = PTP_MC_EVENT;
 
@@ -76,7 +77,7 @@ void ptp_send_pdelay_resp_follow_up(const RawPtpMessage *pMsg) {
     memcpy(pdelRespFUpMsg.data + reqPortIdOffset, pMsg->data + reqPortIdOffset, PTP_PORT_ID_LENGTH);
 
     // setup packet
-    pdelRespFUpMsg.pTs = NULL;
+    pdelRespFUpMsg.tag = RPMT_RANDOM;
     pdelRespFUpMsg.size = PTP_PCKT_SIZE_PDELAY_RESP_FOLLOW_UP;
     pdelRespFUpMsg.tx_dm = PTP_DM_P2P;
     pdelRespFUpMsg.tx_mc = PTP_MC_GENERAL;
@@ -113,7 +114,7 @@ void ptp_send_pdelay_resp(const RawPtpMessage *pMsg) {
     ptp_write_delay_resp_id_data(pdelRespMsg.data, &reqDelRespId); // REQ.SRC.PORT.ID
 
     // setup packet
-    pdelRespMsg.pTs = &pdelRespMsg.ts;
+    pdelRespMsg.tag = RPMT_RANDOM;
     pdelRespMsg.size = PTP_PCKT_SIZE_PDELAY_RESP;
     pdelRespMsg.pTxCb = ptp_send_pdelay_resp_follow_up;
     pdelRespMsg.tx_dm = PTP_DM_P2P;

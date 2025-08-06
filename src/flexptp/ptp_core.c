@@ -39,69 +39,6 @@ const TimestampI zeroTs = {0, 0}; // a zero timestamp
 
 // --------------------------------------
 
-/**
- * Heartbeat callback.
- *
- * @param timer timer handle
- */
-static void ptp_heartbeat_tmr_cb(
-#ifdef FLEXPTP_FREERTOS
-    TimerType timer
-#elif defined(FLEXPTP_CMSIS_OS2)
-    void * arg
-#endif
-) {
-    PtpCoreEvent event = {.code = PTP_CEV_HEARTBEAT, .w = 0, .dw = 0};
-    ptp_event_enqueue(&event);
-}
-
-/**
- * Construct the heartbeat timer.
- */
-static void ptp_create_heartbeat_tmr() {
-    // create smbc timer
-    #if FLEXPTP_FREERTOS
-    S.timers.heartbeat = xTimerCreate("ptp_heartbeat", pdMS_TO_TICKS(PTP_HEARTBEAT_TICKRATE_MS), // timeout
-                                      true,                                                      // timer operates in repeat mode
-                                      NULL,                                                      // ID
-                                      ptp_heartbeat_tmr_cb);                                     // callback-function
-    #elif defined(FLEXPTP_CMSIS_OS2)
-    S.timers.heartbeat = osTimerNew(ptp_heartbeat_tmr_cb, osTimerPeriodic, NULL, NULL);
-    #endif
-}
-
-/**
- * Remove the heartbeat timer.
- */
-static void ptp_remove_heartbeat_tmr() {
-#ifdef FLEXPTP_FREERTOS
-    xTimerStop(S.timers.heartbeat, 0);
-    xTimerDelete(S.timers.heartbeat, 0);
-#elif defined(FLEXPTP_CMSIS_OS2)
-    osTimerStop(S.timers.heartbeat);
-    osTimerDelete(S.timers.heartbeat);
-#endif
-S.timers.heartbeat = NULL;
-}
-
-static void ptp_start_heartbeat_tmr() {
-#ifdef FLEXPTP_FREERTOS
-    xTimerStart(S.timers.heartbeat, 0);
-#elif defined(FLEXPTP_CMSIS_OS2)
-    osTimerStart(S.timers.heartbeat, (PTP_HEARTBEAT_TICKRATE_MS * 1000) / osKernelGetTickFreq());
-#endif
-}
-
-static void ptp_stop_heartbeat_tmr() {
-#ifdef FLEXPTP_FREERTOS
-    xTimerStop(S.timers.heartbeat, 0);
-#elif defined(FLEXPTP_CMSIS_OS2) 
-    osTimerStop(S.timers.heartbeat);
-#endif
-}
-
-// --------------------------------------
-
 static void ptp_common_init(const uint8_t *hwa) {
     // create clock identity
     ptp_create_clock_identity(hwa);
@@ -121,9 +58,6 @@ static void ptp_common_init(const uint8_t *hwa) {
 
     // initialize controller
     PTP_SERVO_INIT();
-
-    // initialize the heartbeat timer
-    ptp_create_heartbeat_tmr();
 }
 
 // initialize PTP module
@@ -156,10 +90,6 @@ void ptp_init(const uint8_t *hwa) {
 // deinit PTP module
 void ptp_deinit() {
     /* ---- COMMON ----- */
-
-    // remove the heartbeat timer
-    ptp_remove_heartbeat_tmr();
-
 #ifdef CLI_REG_CMD
     // remove cli commands
     ptp_remove_cli_commands();

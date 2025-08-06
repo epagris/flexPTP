@@ -31,7 +31,14 @@
 #include "task.h"
 #include "timers.h"
 #elif defined(FLEXPTP_CMSIS_OS2)
+#include <cmsis_compiler.h>
 #include <cmsis_os2.h>
+#endif
+
+#ifdef FLEXPTP_FREERTOS
+typedef TimerHandle_t TimerType;
+#elif defined(FLEXPTP_CMSIS_OS2)
+typedef osTimerId_t TimerType;
 #endif
 
 /**
@@ -170,15 +177,31 @@ typedef enum {
 /**
  * @brief Raw PTP message structure.
  */
+struct RawPtpMessage_;
+
+/**
+ * @brief * Transmit callback function prototype.
+ */
+typedef void(TxCb)(const struct RawPtpMessage_ *pMsg);
+
+/**
+ * Tagging of transmitted PTP messages.
+ */
+typedef enum {
+    RPMT_RANDOM = 0,            ///< Create a random, unique tag
+    RPMT_SYNC,                  ///< Sync tag
+    RPMT_DELAY_REQ,             ///< Delay_Req tag
+} RawPtpMsgTag;
+
 typedef struct RawPtpMessage_ {
     TimestampI ts; ///< Timestamp
     uint32_t size; ///< Packet size
 
     // --- transmit related ---
-    TimestampI *pTs;                                  ///< pointer to timestamp
-    void (*pTxCb)(const struct RawPtpMessage_ *pMsg); ///< transmit callback function
-    PtpDelayMechanism tx_dm;                          ///< transmit transport type
-    PtpMessageClass tx_mc;                            ///< transmit message class
+    uint32_t tag;            ///< unique transmit tag
+    TxCb *pTxCb;             ///< transmit callback function
+    PtpDelayMechanism tx_dm; ///< transmit transport type
+    PtpMessageClass tx_mc;   ///< transmit message class
 
     // --- data ---
     uint8_t data[MAX_PTP_MSG_SIZE]; ///< raw packet data
@@ -201,7 +224,7 @@ typedef enum {
 } PtpClockClass;
 
 /**
- * @brief Standard clock accuray definitions.
+ * @brief Standard clock accuracy definitions.
  */
 typedef enum {
     PTP_CA_25NS = 0x20,    ///< Accurate to within 25ns
@@ -481,12 +504,6 @@ typedef enum { PTP_FC_IDLE = 0,                    ///< Fast correction algorith
                PTP_FC_TIME_CORRECTION_PROPAGATION, ///< Waiting for the effects of time correction to propagate
 } PtpFastCompState;
 
-#ifdef FLEXPTP_FREERTOS
-typedef TimerHandle_t TimerType;
-#elif defined(FLEXPTP_CMSIS_OS2)
-typedef osTimerId_t TimerType;
-#endif
-
 /**
  * @brief Giant PTP core state object.
  */
@@ -517,10 +534,6 @@ typedef struct {
     PtpStats stats;                   ///< Statistics
     PtpUserEventCallback userEventCb; ///< User event callback pointer
 
-    struct {
-        TimerType heartbeat; ///< timer for managing SBMC operations
-    } timers;                    ///< Management timers
-
     /* ---- SLAVE ----- */
 
     struct {
@@ -528,6 +541,7 @@ typedef struct {
 
         PtpSlaveMessagingState messaging; ///< Messaging state
         PtpSyncCycleData scd;             ///< Sync cycle data
+        bool expectPDelRespFollowUp;      ///< Expect a PDelay_Resp_Follow_Up message
         PtpFastCompState fastCompState;   ///< State of fast compensation
         uint8_t fastCompCntr;             ///< Cycle counter for fast compensation
         TimestampI prevSyncMa;            ///< T1 from the previous cycle
@@ -549,6 +563,7 @@ typedef struct {
         PtpP2PSlaveInfo p2pSlave;      ///< Information on the connected P2P slave (only used in P2P modes)
         uint32_t pdelay_reqSequenceID; ///< Sequence number of the last PDelay_Request sent
         PtpSyncCycleData scd;          ///< Sync cycle data
+        bool expectPDelRespFollowUp;   ///< Expect a PDelay_Resp_Follow_Up message
 
         PtpMasterMessagingState messaging; ///< Messaging state
 

@@ -117,19 +117,8 @@ static int ptp_receive_cb(const Pckt *packet, PcktSieveLayerTag tag) {
 }
 
 static void ptp_transmit_cb(uint32_t ts_s, uint32_t ts_ns, uint32_t tag) {
-    RawPtpMessage *pMsg = (RawPtpMessage *)tag;
-    pMsg->ts.sec = ts_s;
-    pMsg->ts.nanosec = ts_ns;
-    if (pMsg->pTs != NULL) {
-        pMsg->pTs->sec = ts_s;
-        pMsg->pTs->nanosec = ts_ns;
-    }
-    if (pMsg->pTxCb) {
-        pMsg->pTxCb(pMsg);
-    }
-
-    // free buffer
-    ptp_circ_buf_free(&gRawTxMsgBuf);
+    RawPtpMessage *pMsg = (RawPtpMessage *)(tag);
+    ptp_transmit_timestamp_cb(pMsg, ts_s, ts_ns);
 }
 
 void ptp_nsd_transmit_msg(RawPtpMessage *pMsg) {

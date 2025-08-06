@@ -18,7 +18,7 @@
 void ptp_init_delay_req_header();
 
 /**
- * Construct and send Delay_Req message.
+ * Construct and send (P)Delay_Req message.
  */
 void ptp_send_delay_req_message();
 

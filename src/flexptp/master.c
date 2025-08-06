@@ -112,7 +112,7 @@ static void ptp_send_announce_message() {
     ptp_construct_binary_announce_message(announce.data, &S.capabilities); // insert Announce body
 
     // setup packet
-    announce.pTs = NULL;
+    announce.tag = RPMT_RANDOM;
     announce.pTxCb = NULL;
     announce.tx_dm = S.profile.delayMechanism;
     announce.tx_mc = PTP_MC_GENERAL;
@@ -139,7 +139,7 @@ static void ptp_send_follow_up(const RawPtpMessage *pMsg) {
     ptp_write_binary_timestamps(followUp.data, &t1, 1);  // insert t1 timestamp
 
     // setup packet
-    followUp.pTs = NULL;
+    followUp.tag = RPMT_RANDOM;
     followUp.pTxCb = NULL;
     followUp.tx_dm = S.profile.delayMechanism;
     followUp.tx_mc = PTP_MC_GENERAL;
@@ -159,7 +159,7 @@ static void ptp_send_sync_message() {
     ptp_write_binary_timestamps(sync.data, &zeroTs, 1);  // insert an empty timestamp (TWO_STEP -> "reserved")
 
     // setup packet
-    sync.pTs = &sync.ts;
+    sync.tag = RPMT_SYNC;
     sync.pTxCb = ptp_send_follow_up;
     sync.tx_dm = S.profile.delayMechanism;
     sync.tx_mc = PTP_MC_EVENT;
@@ -192,7 +192,7 @@ static void ptp_send_delay_resp_message(const RawPtpMessage *pRawMsg, const PtpH
     ptp_write_delay_resp_id_data(delRespMsg.data, &reqDelRespId); // REQ.SRC.PORT.ID
 
     // setup packet
-    delRespMsg.pTs = NULL;
+    delRespMsg.tag = RPMT_RANDOM;
     delRespMsg.size = PTP_PCKT_SIZE_DELAY_RESP;
     delRespMsg.pTxCb = NULL;
     delRespMsg.tx_dm = PTP_DM_E2E;
@@ -306,6 +306,11 @@ void ptp_master_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
         PTP_IUEV(PTP_UEV_DELAY_RESP_SENT);
 
     } else if (((mt == PTP_MT_PDelay_Resp) || (mt == PTP_MT_PDelay_Resp_Follow_Up)) && (dm == PTP_DM_P2P)) { // let PDelay_Resp and PDelay_Resp_Follow_Up through in P2P mode
+        // try fetching PDelay_Req timestamp
+        if ((mt == PTP_MT_PDelay_Resp) && (!ptp_read_and_clear_transmit_timestamp(RPMT_DELAY_REQ, &S.master.scd.t[T1]))) {
+            return;
+        }
+
         PtpDelay_RespIdentification delay_respID;                                                            // acquire PDelay_Resp(_Follow_Up) identification info
         ptp_read_delay_resp_id_data(&delay_respID, pRawMsg->data);
 
@@ -332,8 +337,15 @@ void ptp_master_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
 
                     // dispatch user event
                     PTP_IUEV(PTP_UEV_PDELAY_RESP_RECVED);
+                } else { // expect a ...FollowUp coming in two step mode 
+                    S.master.expectPDelRespFollowUp = true;
                 }
             } else if (mt == PTP_MT_PDelay_Resp_Follow_Up) {
+                if (!S.master.expectPDelRespFollowUp) {
+                    return;
+                }
+                S.master.expectPDelRespFollowUp = false;
+
                 if (S.master.p2pSlave.state != PTP_P2PSS_NONE) {
                     ptp_extract_timestamps(&(scd->t[T3]), pRawMsg->data, 1); // extract PDelay_Resp transmission time
                     scd->cf[T3] = pHeader->correction_ns;                    // correction field of the PDelay_Resp_Follow_Up
@@ -375,6 +387,9 @@ void ptp_master_reset() {
 
     // disable the module
     S.master.enabled = false;
+
+    // don't expect a PDelay_Req_Follow_Up coming
+    S.master.expectPDelRespFollowUp = false;
 
     // clear the messaging state
     memset(&S.master.messaging, 0, sizeof(PtpMasterMessagingState));

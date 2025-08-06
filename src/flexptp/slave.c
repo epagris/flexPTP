@@ -29,8 +29,8 @@
 static void ptp_tune_clock(float tuning_ppb) {
 #ifdef PTP_ADDEND_INTERFACE
     int64_t compAddend = (int64_t)S.hwclock.addend + (int64_t)(tuning_ppb * PTP_ADDEND_CORR_PER_PPB_F); // compute addend value
-    S.hwclock.addend = MIN(compAddend, 0xFFFFFFFF);                                                   // limit to 32-bit range
-    PTP_SET_ADDEND(S.hwclock.addend);                                                                 // write addend into hardware
+    S.hwclock.addend = MIN(compAddend, 0xFFFFFFFF);                                                     // limit to 32-bit range
+    PTP_SET_ADDEND(S.hwclock.addend);                                                                   // write addend into hardware
 #elif defined(PTP_HLT_INTERFACE)
     S.hwclock.tuning_ppb += tuning_ppb;
     PTP_SET_TUNING(S.hwclock.tuning_ppb);
@@ -377,6 +377,11 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
 
             if (mt == PTP_MT_Delay_Resp) { // Delay_Resp processing
 
+                // try fetching Delay_Req timestamp
+                if (!ptp_read_and_clear_transmit_timestamp(RPMT_DELAY_REQ, &S.slave.scd.t[T3])) {
+                    return;
+                }
+
                 ptp_read_delay_resp_id_data(&delay_respID, pRawMsg->data);
 
                 // if the response was sent to us as a response to our Delay_Req then continue processing
@@ -404,7 +409,12 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
                     CLILOG(S.logging.corr, "C [Del_Resp]: %09lu\n", pHeader->correction_ns);
                 }
 
-            } else if (mt == PTP_MT_PDelay_Resp) {  // PDelay_Resp processing
+            } else if (mt == PTP_MT_PDelay_Resp) { // PDelay_Resp processing
+                // try fetching Delay_Req timestamp
+                if (!ptp_read_and_clear_transmit_timestamp(RPMT_DELAY_REQ, &S.slave.scd.t[T3])) {
+                    return;
+                }
+
                 TimestampI *pT = &S.slave.scd.t[2]; // skip the first 2 timestamps
                 uint64_t *cf = &S.slave.scd.cf[2];  // skip the first 2 correction fields
 
@@ -417,7 +427,8 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
                     pT[T3] = pT[T2] = zeroTs;
                     ptp_commence_p2p_correction(pHeader->sequenceID); // commence correction
                 } else {
-                    ptp_extract_timestamps(&(pT[T2]), pRawMsg->data, 1); // retrieve t2 (P2P)
+                    ptp_extract_timestamps(&(pT[T2]), pRawMsg->data, 1); // retrieve t2 (P2P)                                    
+                    S.slave.expectPDelRespFollowUp = true; // expect a PDelay_Resp_Follow_Up coming
                 }
 
                 // dispatch PDELAY_RESP_RECVED event
@@ -427,6 +438,11 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
                 CLILOG(S.logging.corr, "C [PDel_Resp]: %09lu\n", pHeader->correction_ns);
 
             } else if (mt == PTP_MT_PDelay_Resp_Follow_Up) { // PDelay_Resp_Follow_Up processing
+                // don't fall for rogue messages
+                if (!S.slave.expectPDelRespFollowUp) {
+                    return;
+                }
+
                 ptp_read_delay_resp_id_data(&delay_respID, pRawMsg->data);
 
                 // if sent to us as a response to our Delay_Req then continue processing
@@ -448,6 +464,9 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
                     // log correction field (if enabled)
                     CLILOG(S.logging.corr, "C [PDel_Resp_Follow_Up]: %09lu\n", pHeader->correction_ns);
                 }
+
+                // no other messages are accepted
+                S.slave.expectPDelRespFollowUp = false;
             }
         }
     }
@@ -494,6 +513,9 @@ void ptp_slave_reset() {
     // reset fast correction state
     S.slave.fastCompState = PTP_FC_IDLE;
     S.slave.fastCompCntr = 0;
+
+    // don't expect a Delay_Resp_Follow_Up message
+    S.slave.expectPDelRespFollowUp = false;
 }
 
 void ptp_slave_tick() {

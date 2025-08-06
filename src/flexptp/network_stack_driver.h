@@ -12,10 +12,7 @@
 
 #include <stdbool.h>
 
-#include "ptp_raw_msg_circbuf.h"
-
-extern PtpCircBuf gRawRxMsgBuf; ///< Input circular buffer
-extern PtpCircBuf gRawTxMsgBuf; ///< Output circular buffers
+#include "ptp_types.h"
 
 /**
  * Initialize or reinitialize the Network Stack Driver.
