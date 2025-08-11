@@ -17,6 +17,7 @@
 #include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <inttypes.h>
 
 #ifndef HAVE_CLOCK_ADJTIME
 #include <asm/unistd_64.h>
@@ -424,7 +425,7 @@ static void *nsd_thread(void *arg) {
 
                             struct timespec now;
                             clock_gettime(CLOCK_REALTIME, &now);
-                            CLILOG(LINUX_NSD_TS_DEBUG, "[%lu.%09lu] TX TS: (%u) %lu.%lu\n", now.tv_sec, now.tv_nsec, uid, ts[2].tv_sec, ts[2].tv_nsec);
+                            CLILOG(LINUX_NSD_TS_DEBUG, "[%" __PRI64_PREFIX "u.%09" __PRI64_PREFIX "u] TX TS: (%u) %" __PRI64_PREFIX "u.%" __PRI64_PREFIX "u\n", now.tv_sec, now.tv_nsec, uid, ts[2].tv_sec, ts[2].tv_nsec);
 
                             ptp_transmit_timestamp_cb(uid, ts[2].tv_sec, ts[2].tv_nsec);
                         }
@@ -445,7 +446,7 @@ static void *nsd_thread(void *arg) {
                             struct timespec *tsa = (struct timespec *)CMSG_DATA(cm); // get pointer to the timestamps
                             ts = tsa[2];                                             // extract the hardware timestamp
                             ts_found = true;                                         // indicate that timestamp was found
-                            CLILOG(LINUX_NSD_TS_DEBUG, "RX TS: %lu.%lu\n", ts.tv_sec, ts.tv_nsec);
+                            CLILOG(LINUX_NSD_TS_DEBUG, "RX TS: %" __PRI64_PREFIX "u.%" __PRI64_PREFIX "u\n", ts.tv_sec, ts.tv_nsec);
                         }
                     }
 
@@ -572,7 +573,7 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
     if (send_ok) {
         struct timespec now;
         clock_gettime(CLOCK_REALTIME, &now);
-        CLILOG(LINUX_NSD_TX_ENQUEUE_DEBUG, "[%lu.%09lu] TX enqueue! %u\n", now.tv_sec, now.tv_nsec, uid);
+        CLILOG(LINUX_NSD_TX_ENQUEUE_DEBUG, "[%" __PRI64_PREFIX "u.%09" __PRI64_PREFIX "u] TX enqueue! %u\n", now.tv_sec, now.tv_nsec, uid);
         if (mc == PTP_MC_EVENT) {
             write(matching_q[1], &uid, sizeof(uint32_t));
         } else if (mc == PTP_MC_GENERAL) {

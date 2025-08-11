@@ -23,9 +23,8 @@
 /**
  * Initialize flexPTP module.
  * 
- * @param hwa network interface hardware address over which the flexPTP operates
  */
-void ptp_init(const uint8_t *hwa);
+void ptp_init(void);
 
 /**
  * Deinitialize flexPTP module.

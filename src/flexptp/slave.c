@@ -3,6 +3,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
+#include <inttypes.h>
 
 #include "common.h"
 
@@ -142,7 +143,7 @@ static void ptp_perform_correction() {
             PTP_SERVO_RESET();
 
             // print info
-            CLILOG(S.logging.info, "Time difference has exceeded the coarse correction threshold [%ldns], compensation commenced!\n", d_ns);
+            CLILOG(S.logging.info, "Time difference has exceeded the coarse correction threshold [%" __PRI64_PREFIX "dns], compensation commenced!\n", d_ns);
         }
 
         uint8_t fccntr = S.slave.fastCompCntr;
@@ -195,7 +196,7 @@ static void ptp_perform_correction() {
             PTP_SET_CLOCK((uint32_t)ti.sec, ti.nanosec);
 
             // log time compensation
-            CLILOG(S.logging.info, "[%u/%u] Time compensation: %ld ns\n", fccntr + 1, PTP_FC_TIME_CORRECTION_CYCLES, d_ns);
+            CLILOG(S.logging.info, "[%u/%u] Time compensation: %" __PRI64_PREFIX "d ns\n", fccntr + 1, PTP_FC_TIME_CORRECTION_CYCLES, d_ns);
         } else if (fcs == PTP_FC_TIME_CORRECTION_PROPAGATION) {
             CLILOG(S.logging.info, "[%u/%u] Waiting for time compensation to propagate.\n", fccntr + 1, PTP_FC_TIME_PROPAGATION_CYCLES);
         }
@@ -228,12 +229,12 @@ static void ptp_perform_correction() {
     // log on cli (if enabled)
 #ifdef PTP_ADDEND_INTERFACE
     int32_t d_ticks = tsToTick(&d, PTP_CLOCK_TICK_FREQ_HZ);
-    CLILOG(S.logging.def, "%d %09d %d %09d %d " PTP_COLOR_BYELLOW "% 9d" PTP_COLOR_RESET " % 9d % 12u % 8.4f % 9ld % 9lu\n",
+    CLILOG(S.logging.def, "%d %09d %d %09d %d " PTP_COLOR_BYELLOW "% 9d" PTP_COLOR_RESET " % 9d % 12u % 8.4f % 9" __PRI64_PREFIX "d % 9" __PRI64_PREFIX "u\n",
            (int32_t)syncMa.sec, syncMa.nanosec, (int32_t)delReqMa.sec, delReqMa.nanosec,
            (int32_t)d.sec, d.nanosec, d_ticks,
            S.hwclock.addend, corr_ppb, nsI(&S.network.meanPathDelay), (uint64_t)measSyncPeriod_ns);
 #elif defined(PTP_HLT_INTERFACE)
-    CLILOG(S.logging.def, "%d %09d %d %09d %d " PTP_COLOR_BYELLOW "% 9d" PTP_COLOR_RESET " % 8.4f % 8.4f % 9ld % 9lu\n",
+    CLILOG(S.logging.def, "%d %09d %d %09d %d " PTP_COLOR_BYELLOW "% 9d" PTP_COLOR_RESET " % 8.4f % 8.4f % 9" __PRI64_PREFIX "d % 9" __PRI64_PREFIX "u\n",
            (int32_t)syncMa.sec, syncMa.nanosec, (int32_t)delReqMa.sec, delReqMa.nanosec,
            (int32_t)d.sec, d.nanosec,
            S.hwclock.tuning_ppb, corr_ppb, nsI(&S.network.meanPathDelay), (uint64_t)measSyncPeriod_ns);
@@ -355,7 +356,7 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
                     ptp_commence_e2e_correction();
 
                     // log correction field (if enabled)
-                    CLILOG(S.logging.corr, "C [Follow_Up]: %09lu\n", pHeader->correction_ns);
+                    CLILOG(S.logging.corr, "C [Follow_Up]: %09" __PRI64_PREFIX "u\n", pHeader->correction_ns);
 
                     // dispatch FOLLOW_UP_RECVED event
                     PTP_IUEV(PTP_UEV_FOLLOW_UP_RECVED);
@@ -410,7 +411,7 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
                     PTP_IUEV(PTP_UEV_DELAY_RESP_RECVED);
 
                     // log correction field (if enabled)
-                    CLILOG(S.logging.corr, "C [Del_Resp]: %09lu\n", pHeader->correction_ns);
+                    CLILOG(S.logging.corr, "C [Del_Resp]: %09" __PRI64_PREFIX "u\n", pHeader->correction_ns);
                 }
 
             } else if (mt == PTP_MT_PDelay_Resp) { // PDelay_Resp processing
@@ -439,7 +440,7 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
                 PTP_IUEV(PTP_UEV_PDELAY_RESP_RECVED);
 
                 // log correction field (if enabled)
-                CLILOG(S.logging.corr, "C [PDel_Resp]: %09lu\n", pHeader->correction_ns);
+                CLILOG(S.logging.corr, "C [PDel_Resp]: %09" __PRI64_PREFIX "u\n", pHeader->correction_ns);
 
             } else if (mt == PTP_MT_PDelay_Resp_Follow_Up) { // PDelay_Resp_Follow_Up processing
                 // don't fall for rogue messages
@@ -466,7 +467,7 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
                     PTP_IUEV(PTP_UEV_PDELAY_RESP_FOLLOW_UP_RECVED);
 
                     // log correction field (if enabled)
-                    CLILOG(S.logging.corr, "C [PDel_Resp_Follow_Up]: %09lu\n", pHeader->correction_ns);
+                    CLILOG(S.logging.corr, "C [PDel_Resp_Follow_Up]: %09" __PRI64_PREFIX "u\n", pHeader->correction_ns);
                 }
 
                 // no other messages are accepted

@@ -13,11 +13,10 @@
 #include "timeutils.h"
 #include "tlv.h"
 
+#include <inttypes.h>
 #include <string.h>
 
 #include "minmax.h"
-
-#include <inttypes.h>
 
 ///\cond 0
 #define S (gPtpCoreState)
@@ -286,7 +285,7 @@ static void ptp_master_commence_mpd_computation() {
            "T2: %d.%09d <- PDelay_Req RX (slave) \n"
            "T3: %d.%09d <- PDelay_Resp TX (slave) \n"
            "T4: %d.%09d <- PDelay_Resp RX (master)\n"
-           "    %09lu -- %09lu <- CF in PDelay_Resp and ..._Follow_Up\n\n",
+           "    %09" __PRI64_PREFIX "u -- %09" __PRI64_PREFIX "u <- CF in PDelay_Resp and ..._Follow_Up\n\n",
            (uint32_t)S.master.pdelay_reqSequenceID,
            (int32_t)scd->t[T1].sec, scd->t[T1].nanosec,
            (int32_t)scd->t[T2].sec, scd->t[T2].nanosec,
@@ -294,7 +293,7 @@ static void ptp_master_commence_mpd_computation() {
            (int32_t)scd->t[T4].sec, scd->t[T4].nanosec,
            scd->cf[T2], scd->cf[T3]);
 
-    CLILOG(S.logging.def, "%ld\n", nsI(mpd));
+    CLILOG(S.logging.def, "%" __PRI64_PREFIX "d\n", nsI(mpd));
 }
 
 void ptp_master_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {

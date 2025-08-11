@@ -292,9 +292,7 @@ void reg_task_ptp() {
     ptp_create_heartbeat_tmr();
 
     // initialize PTP subsystem
-    uint8_t hwa[6];
-    ptp_nsd_get_interface_address(hwa);
-    ptp_init(hwa);
+    ptp_init();
 
     // load config if provided
 #ifdef PTP_CONFIG_PTR

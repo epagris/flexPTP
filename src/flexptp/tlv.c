@@ -1,5 +1,5 @@
 #include "tlv.h"
-#include "flexptp/ptp_types.h"
+#include "ptp_types.h"
 #include <string.h>
 
 uint16_t ptp_tlv_insert(void * dst, const PtpProfileTlvElement * pad, PtpMessageType mt, uint16_t maxLen) {

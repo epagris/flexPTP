@@ -41,9 +41,8 @@ const TimestampI zeroTs = {0, 0}; // a zero timestamp
 
 // --------------------------------------
 
-static void ptp_common_init(const uint8_t *hwa) {
-    // create clock identity
-    ptp_create_clock_identity(hwa);
+static void ptp_common_init(void) {
+
 
     // seed the randomizer
     srand(S.hwoptions.clockIdentity);
@@ -58,17 +57,29 @@ static void ptp_common_init(const uint8_t *hwa) {
     PTP_HW_INIT();
 #endif
 
+    // get the hardware address
+    uint8_t hwa[6];
+    ptp_nsd_get_interface_address(hwa);
+
+    // create clock identity
+    ptp_create_clock_identity(hwa);
+
     // initialize controller
     PTP_SERVO_INIT();
 }
 
 // initialize PTP module
-void ptp_init(const uint8_t *hwa) {
+void ptp_init(void) {
+#ifdef CLI_REG_CMD
+    // register cli commands
+    ptp_register_cli_commands();
+#endif // CLI_REG_CMD
+
     // clear the timer
     S.ticks = 0;
 
     /* ---- COMMON ----- */
-    ptp_common_init(hwa);
+    ptp_common_init();
 
     /* ----- SBMC ------ */
     ptp_bmca_init();
@@ -82,11 +93,6 @@ void ptp_init(const uint8_t *hwa) {
     // ---------------------
 
     ptp_reset(); // reset all PTP systems
-
-#ifdef CLI_REG_CMD
-    // register cli commands
-    ptp_register_cli_commands();
-#endif // CLI_REG_CMD
 
     // dispatch INIT_DONE event
     PTP_IUEV(PTP_UEV_INIT_DONE);
