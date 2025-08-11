@@ -43,7 +43,6 @@ const TimestampI zeroTs = {0, 0}; // a zero timestamp
 
 static void ptp_common_init(void) {
 
-
     // seed the randomizer
     srand(S.hwoptions.clockIdentity);
 
@@ -120,7 +119,7 @@ void ptp_deinit() {
 }
 
 // reset PTP subsystem
-void ptp_reset() {
+static void ptp_core_reset() {
     // pause the heartbeat timer
     ptp_stop_heartbeat_tmr();
 
@@ -217,7 +216,10 @@ void ptp_process_event(const PtpCoreEvent *event) {
 
         // dispatch BMCA_STATE_CHANGED event
         PTP_IUEV(PTP_UEV_BMCA_STATE_CHANGED);
-    }
+    } break;
+    case PTP_CEV_RESET: {
+        ptp_core_reset();
+    } break;
     default:
         break;
     }
@@ -227,6 +229,11 @@ void ptp_process_event(const PtpCoreEvent *event) {
 
 uint32_t ptp_get_tick() {
     return S.ticks;
+}
+
+void ptp_reset() {
+    PtpCoreEvent event = { .code = PTP_CEV_RESET, .w = 0, .dw = 0 };
+    ptp_event_enqueue(&event);
 }
 
 // -----------------------------------------------

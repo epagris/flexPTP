@@ -1,10 +1,10 @@
 /**
-  ******************************************************************************
-  * @file    event.h
-  * @copyright András Wiesner, 2025-\showdate "%Y"
-  * @brief   In this module are the core and user events defined.
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    event.h
+ * @copyright András Wiesner, 2025-\showdate "%Y"
+ * @brief   In this module are the core and user events defined.
+ ******************************************************************************
+ */
 
 #ifndef FLEXPTP_EVENT
 #define FLEXPTP_EVENT
@@ -12,9 +12,10 @@
 // ----------- CORE EVENTS -----------
 
 typedef enum {
-    PTP_CEV_HEARTBEAT = 0x00,
-    PTP_CEV_BMCA_STATE_CHANGED,
-    PTP_CEV_TERMINATE,
+    PTP_CEV_HEARTBEAT = 0x00,   ///< Heartbeat event (tick)
+    PTP_CEV_BMCA_STATE_CHANGED, ///< The BMCA state has changed
+    PTP_CEV_RESET,              ///< A reset has been issued
+    PTP_CEV_TERMINATE,          ///< A shutdown is requested
 } PtpCoreEventCode;
 
 #include <stdint.h>
@@ -35,17 +36,17 @@ typedef struct {
 
 /**
  * PTP user event codes.
- * 
+ *
  * Commented-out ones are not yet implemented.
  */
 typedef enum {
     PTP_UEV_INIT_DONE = 0x01, ///< The flexPTP core has been initialized
     PTP_UEV_RESET_DONE,       ///< The flexPTP module has been reset
 
-    PTP_UEV_SYNC_RECVED,                  ///< A Sync message has been received (slave)
-    PTP_UEV_SYNC_SENT,                    ///< A Sync message has eebn sent (master)
-    PTP_UEV_FOLLOW_UP_RECVED,             ///< A Follow_Up message has been received (slave)
-    //PTP_UEV_FOLLOW_UP_SENT,               ///< A Follow_Up message has been sent (master) 
+    PTP_UEV_SYNC_RECVED,      ///< A Sync message has been received (slave)
+    PTP_UEV_SYNC_SENT,        ///< A Sync message has eebn sent (master)
+    PTP_UEV_FOLLOW_UP_RECVED, ///< A Follow_Up message has been received (slave)
+    // PTP_UEV_FOLLOW_UP_SENT,               ///< A Follow_Up message has been sent (master)
     PTP_UEV_DELAY_REQ_RECVED,             ///< A Delay_Req had been received (master)
     PTP_UEV_DELAY_REQ_SENT,               ///< A Delay_Req had been sent (slave)
     PTP_UEV_DELAY_RESP_RECVED,            ///< A Delay_Resp had been received (slave)
@@ -55,9 +56,9 @@ typedef enum {
     PTP_UEV_PDELAY_RESP_RECVED,           ///< A PDelay_Resp had been received (master/slave)
     PTP_UEV_PDELAY_RESP_SENT,             ///< A PDelay_Resp had been sent (master/slave)
     PTP_UEV_PDELAY_RESP_FOLLOW_UP_RECVED, ///< A PDelay_Resp_Follow_Up had been received (master/slave)
-    //PTP_UEV_PDELAY_RESP_FOLLOW_UP_SENT,   ///< A PDelay_Resp_Follow_Up had been sent (master/slave)
-    PTP_UEV_ANNOUNCE_SENT,                ///< An Announce message has been sent (master)
-    PTP_UEV_ANNOUNCE_RECVED,              ///< An Announce message has been received (master/slave)
+    // PTP_UEV_PDELAY_RESP_FOLLOW_UP_SENT,   ///< A PDelay_Resp_Follow_Up had been sent (master/slave)
+    PTP_UEV_ANNOUNCE_SENT,   ///< An Announce message has been sent (master)
+    PTP_UEV_ANNOUNCE_RECVED, ///< An Announce message has been received (master/slave)
 
     PTP_UEV_LOCKED,   ///< The average clock accuracy is sufficient
     PTP_UEV_UNLOCKED, ///< Our clock has deviated from the master in average
@@ -70,7 +71,7 @@ typedef enum {
 
 /**
  * Invoke the user event callback.
- * 
+ *
  * @param uev user event code
  */
 void ptp_invoke_user_event_cb(PtpUserEventCode uev);
