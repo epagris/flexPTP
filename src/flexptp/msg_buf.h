@@ -8,6 +8,8 @@
 
 #define MSGBUF_TTL_DONT_AGE (0xFFFFFFFF) ///< Do not age messages
 
+#define MSGBUF_TAG_OVERWRITE (0x80000000) ///< Overwrite if a message exists with the same tag
+
 /**
  * @brief PTP message buffer entry.
  */
@@ -22,12 +24,23 @@ typedef struct {
 } PtpMsgBufBlock;
 
 /**
+ * @brief Error enumeration for the message buffer.
+ */
+typedef enum {
+    MSGB_ERR_NONE = 0, ///< No error
+    MSGB_ERR_FULL,     ///< The buffer is full, cannot allocate a slot
+    MSGB_ERR_EXISTS,   ///< An allocated message has already been stored under the same tag
+    MSGB_ERR_MISC,     ///< Miscellaneous allocation error
+} PtpMsgBufError;
+
+/**
  * @brief PTP message buffer.
  */
 typedef struct {
     uint32_t n;             ///< Number of blocks
     uint32_t used;          ///< Number of used blocks
     uint32_t lastUId;       ///< Last UID
+    uint32_t error;         ///< Last error
     PtpMsgBufBlock *blocks; ///< Block pool
 } PtpMsgBuf;
 
@@ -90,11 +103,21 @@ RawPtpMessage *msgb_get_by_uid(PtpMsgBuf *buf, uint32_t uid);
 
 /**
  * Set sent flag for a message.
- * 
+ *
  * @param buf pointer to PtpMsgBuf object
  * @param msg pointer to an allocated message
  */
-void msgb_set_sent(PtpMsgBuf * buf, RawPtpMessage * msg);
+void msgb_set_sent(PtpMsgBuf *buf, RawPtpMessage *msg);
+
+/**
+ * Get the UID of an allocated message.
+ *
+ * @param buf pointer to PtpMsgBuf object
+ * @param msg pointer to an allocated message
+ *
+ * @return message UID
+ */
+uint32_t msgb_get_uid(const PtpMsgBuf *buf, const RawPtpMessage *msg);
 
 /**
  * Get sent message by tag.
@@ -115,9 +138,17 @@ void msgb_tick(PtpMsgBuf *buf);
 
 /**
  * Report the message buffer state.
- * 
+ *
  * @param buf pointer to the PtpMsgBuf object
  */
-void msgb_report(PtpMsgBuf * buf);
+void msgb_report(PtpMsgBuf *buf);
+
+/**
+ * Read and clear last error.
+ *
+ * @param buf pointer to the PtpMsgBuf object
+ * @return error code
+ */
+uint32_t msgb_get_error(PtpMsgBuf * buf);
 
 #endif /* FLEXPTP_MSG_BUF */

@@ -1,5 +1,6 @@
 #include "cli_cmds.h"
 
+#include <stdlib.h>
 #include <string.h>
 
 #include "clock_utils.h"
@@ -11,7 +12,6 @@
 #include "settings_interface.h"
 
 #include "minmax.h"
-
 
 // #define S (gPtpCoreState)
 

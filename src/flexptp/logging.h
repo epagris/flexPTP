@@ -1,10 +1,10 @@
 /**
-  ******************************************************************************
-  * @file    logging.h
-  * @copyright András Wiesner, 2019-\showdate "%Y"
-  * @brief   This module handles various logging capabilities.
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    logging.h
+ * @copyright András Wiesner, 2019-\showdate "%Y"
+ * @brief   This module handles various logging capabilities.
+ ******************************************************************************
+ */
 
 #ifndef FLEXPTP_LOGGING_H_
 #define FLEXPTP_LOGGING_H_
@@ -15,13 +15,14 @@
  * @brief Collection type of possible predefined PTP log types.
  */
 enum {
-	PTP_LOG_DEF, ///< Default PTP log, prints sync-cycle related data (e.g. time error, tuning, code word etc.).
-	PTP_LOG_CORR_FIELD, ///< The PTP engine will print the correction fields of particular PTP messages.
-	PTP_LOG_TIMESTAMPS, ///< The PTP engine will print the T1-T4/T6 timestamps (in E2E/P2P modes).
-	PTP_LOG_INFO, ///< If enabled, the user will be notified of unexpected events occurred and exceptions.
-	PTP_LOG_LOCKED_STATE, ///< Signals the user if the PTP engine consideres the clock have gotten locked.
-  PTP_LOG_BMCA, ///< Notifies the user about BMCA state changes
-	PTP_LOG_N
+    PTP_LOG_DEF,          ///< Default PTP log, prints sync-cycle related data (e.g. time error, tuning, code word etc.).
+    PTP_LOG_CORR_FIELD,   ///< The PTP engine will print the correction fields of particular PTP messages.
+    PTP_LOG_TIMESTAMPS,   ///< The PTP engine will print the T1-T4/T6 timestamps (in E2E/P2P modes).
+    PTP_LOG_INFO,         ///< If enabled, the user will be notified of unexpected events occurred and exceptions.
+    PTP_LOG_LOCKED_STATE, ///< Signals the user if the PTP engine considers the clock have gotten locked.
+    PTP_LOG_BMCA,         ///< Notifies the user about BMCA state changes
+    PTP_LOG_TRANSMISSION, ///< Message transmission logging
+    PTP_LOG_N
 };
 
 /**

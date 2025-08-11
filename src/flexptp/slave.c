@@ -1,4 +1,9 @@
 #include "slave.h"
+
+#include <math.h>
+#include <string.h>
+#include <stdlib.h>
+
 #include "common.h"
 
 #include "format_utils.h"
@@ -11,7 +16,6 @@
 
 #include "ptp_core.h"
 #include "ptp_defs.h"
-#include <math.h>
 
 #include "minmax.h"
 
@@ -193,7 +197,7 @@ static void ptp_perform_correction() {
             // log time compensation
             CLILOG(S.logging.info, "[%u/%u] Time compensation: %ld ns\n", fccntr + 1, PTP_FC_TIME_CORRECTION_CYCLES, d_ns);
         } else if (fcs == PTP_FC_TIME_CORRECTION_PROPAGATION) {
-            CLILOG(S.logging.info, "[%u/%u] Waiting for time compensation to propagate.\n", fccntr + 1, PTP_FC_TIME_PROPAGATION_CYCLES, d_ns);
+            CLILOG(S.logging.info, "[%u/%u] Waiting for time compensation to propagate.\n", fccntr + 1, PTP_FC_TIME_PROPAGATION_CYCLES);
         }
 
         // maintain FC state

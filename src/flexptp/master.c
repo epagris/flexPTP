@@ -17,6 +17,8 @@
 
 #include "minmax.h"
 
+#include <inttypes.h>
+
 ///\cond 0
 #define S (gPtpCoreState)
 ///\endcond
@@ -37,6 +39,7 @@ static RawPtpMessage followUp;
 static const PtpProfileTlvElement *tlvChain;
 
 static void ptp_init_announce_header() {
+    announceHeader.minorVersionPTP = 0;
     announceHeader.messageType = PTP_MT_Announce;
     announceHeader.transportSpecific = (uint8_t)S.profile.transportSpecific;
     announceHeader.versionPTP = 2;
@@ -63,6 +66,7 @@ static void ptp_init_announce_header() {
 }
 
 static void ptp_init_sync_header() {
+    syncHeader.minorVersionPTP = 0;
     syncHeader.transportSpecific = S.profile.transportSpecific;
     syncHeader.messageType = PTP_MT_Sync;
     syncHeader.transportSpecific = (uint8_t)S.profile.transportSpecific;
@@ -100,8 +104,6 @@ static void ptp_init_follow_up_message() {
 }
 
 static void ptp_send_announce_message() {
-    PtpHeader header;
-
     // set sequence ID
     announceHeader.sequenceID = S.master.messaging.announceSequenceID++;
     announceHeader.transportSpecific = S.profile.transportSpecific;
@@ -116,6 +118,7 @@ static void ptp_send_announce_message() {
     announce.pTxCb = NULL;
     announce.tx_dm = S.profile.delayMechanism;
     announce.tx_mc = PTP_MC_GENERAL;
+    announce.ttl = FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS;
 
     // send message
     ptp_transmit_enqueue(&announce);
@@ -128,6 +131,7 @@ static void ptp_send_follow_up(const RawPtpMessage *pMsg) {
     TimestampI t1 = pMsg->ts;
 
     // modify header fields
+    header.minorVersionPTP = 0;
     header.transportSpecific = S.profile.transportSpecific;
     header.messageType = PTP_MT_Follow_Up;
     header.messageLength = followUp.size;
@@ -143,14 +147,13 @@ static void ptp_send_follow_up(const RawPtpMessage *pMsg) {
     followUp.pTxCb = NULL;
     followUp.tx_dm = S.profile.delayMechanism;
     followUp.tx_mc = PTP_MC_GENERAL;
+    followUp.ttl = FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS;
 
     // transmit
     ptp_transmit_enqueue(&followUp);
 }
 
 static void ptp_send_sync_message() {
-    PtpHeader header;
-
     // set sequence ID
     syncHeader.sequenceID = S.master.messaging.syncSequenceID++;
 
@@ -159,10 +162,11 @@ static void ptp_send_sync_message() {
     ptp_write_binary_timestamps(sync.data, &zeroTs, 1);  // insert an empty timestamp (TWO_STEP -> "reserved")
 
     // setup packet
-    sync.tag = RPMT_SYNC;
+    sync.tag = RPMT_RANDOM;
     sync.pTxCb = ptp_send_follow_up;
     sync.tx_dm = S.profile.delayMechanism;
     sync.tx_mc = PTP_MC_EVENT;
+    sync.ttl = FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS; //S.master.syncTickPeriod;
 
     // send message
     ptp_transmit_enqueue(&sync);
@@ -172,6 +176,7 @@ static void ptp_send_delay_resp_message(const RawPtpMessage *pRawMsg, const PtpH
     RawPtpMessage delRespMsg = {0};
 
     PtpHeader header = *pHeader; // make a copy
+    header.minorVersionPTP = 0;
     TimestampI t4 = pRawMsg->ts; // fetch t4 timestamp
 
     // create requestingSourcePortIdentity based on clockId from the header
@@ -197,6 +202,7 @@ static void ptp_send_delay_resp_message(const RawPtpMessage *pRawMsg, const PtpH
     delRespMsg.pTxCb = NULL;
     delRespMsg.tx_dm = PTP_DM_E2E;
     delRespMsg.tx_mc = PTP_MC_GENERAL;
+    delRespMsg.ttl = FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS;
 
     // send packet
     ptp_transmit_enqueue(&delRespMsg);
@@ -306,6 +312,7 @@ void ptp_master_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
         PTP_IUEV(PTP_UEV_DELAY_RESP_SENT);
 
     } else if (((mt == PTP_MT_PDelay_Resp) || (mt == PTP_MT_PDelay_Resp_Follow_Up)) && (dm == PTP_DM_P2P)) { // let PDelay_Resp and PDelay_Resp_Follow_Up through in P2P mode
+
         // try fetching PDelay_Req timestamp
         if ((mt == PTP_MT_PDelay_Resp) && (!ptp_read_and_clear_transmit_timestamp(RPMT_DELAY_REQ, &S.master.scd.t[T1]))) {
             return;
@@ -337,7 +344,7 @@ void ptp_master_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
 
                     // dispatch user event
                     PTP_IUEV(PTP_UEV_PDELAY_RESP_RECVED);
-                } else { // expect a ...FollowUp coming in two step mode 
+                } else { // expect a ...FollowUp coming in two-step mode
                     S.master.expectPDelRespFollowUp = true;
                 }
             } else if (mt == PTP_MT_PDelay_Resp_Follow_Up) {
@@ -430,11 +437,37 @@ void ptp_master_tick() {
 
     PtpDelayMechanism dm = S.profile.delayMechanism; // fetch Delay Mechanism
 
+    // gating signal for Sync and Announce transmission
+    bool infoEn = (dm == PTP_DM_E2E) || ((dm == PTP_DM_P2P) && ((S.master.p2pSlave.state == PTP_P2PSS_ESTABLISHED) || (!(S.profile.flags & PTP_PF_ISSUE_SYNC_FOR_COMPLIANT_SLAVE_ONLY_IN_P2P))));
+
+    if (infoEn) {
+        // Sync transmission
+        if (++S.master.syncTmr >= S.master.syncTickPeriod) {
+            S.master.syncTmr = 0;
+            ptp_send_sync_message();
+            PTP_IUEV(PTP_UEV_SYNC_SENT);
+        }
+
+        // Announce transmission
+        if (++S.master.announceTmr >= S.master.announceTickPeriod) { // advance Announce timer
+            S.master.announceTmr = 0;
+        }
+
+        // shift Announce transmission phase with 1 tick
+        if (S.master.announceTmr == 1) {
+            ptp_send_announce_message();
+            PTP_IUEV(PTP_UEV_ANNOUNCE_SENT);
+        }
+    }
+
     // issue PDelay_Req messages
     if (dm == PTP_DM_P2P) {
-        if (++S.master.pdelayReqTmr >= S.master.pdelayReqTickPeriod) {
+        if (++S.master.pdelayReqTmr >= S.master.pdelayReqTickPeriod) { // advance the PDelay_Req counter
             S.master.pdelayReqTmr = 0;
+        }
 
+        // separate PDelay_Req transmission from the Sync-Follow_Up pair by shifting it's phase by one tick
+        if (S.master.pdelayReqTmr == 1) {
             PtpP2PSlaveInfo *si = &(S.master.p2pSlave);
             PtpP2PSlaveState prevState = si->state;
             si->dropoutCntr = (si->dropoutCntr > 0) ? (si->dropoutCntr - 1) : 0; // decrease the slave dropout counter
@@ -448,29 +481,6 @@ void ptp_master_tick() {
 
             // dispatch PDELAY_REQUEST_SENT message
             PTP_IUEV(PTP_UEV_PDELAY_REQ_SENT);
-        }
-    }
-
-    // gating signal for Sync and Announce transmission
-    bool infoEn = (dm == PTP_DM_E2E) || ((dm == PTP_DM_P2P) && ((S.master.p2pSlave.state == PTP_P2PSS_ESTABLISHED) || (!(S.profile.flags & PTP_PF_ISSUE_SYNC_FOR_COMPLIANT_SLAVE_ONLY_IN_P2P))));
-
-    if (infoEn) {
-        // Sync transmission
-        if (++S.master.syncTmr >= S.master.syncTickPeriod) {
-            S.master.syncTmr = 0;
-
-            ptp_send_sync_message();
-
-            PTP_IUEV(PTP_UEV_SYNC_SENT);
-        }
-
-        // Announce transmission
-        if (++S.master.announceTmr >= S.master.announceTickPeriod) {
-            S.master.announceTmr = 0;
-
-            ptp_send_announce_message();
-
-            PTP_IUEV(PTP_UEV_ANNOUNCE_SENT);
         }
     }
 }

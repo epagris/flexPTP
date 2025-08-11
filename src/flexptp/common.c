@@ -1,5 +1,9 @@
 #include "common.h"
 
+#include "msg_buf.h"
+
+#include <string.h>
+
 #include "ptp_core.h"
 #include "task_ptp.h"
 
@@ -27,6 +31,7 @@ void ptp_init_delay_req_header() {
     ptp_clear_flags(&(delReqHeader.flags)); // no flags
     delReqHeader.correction_ns = 0;
     delReqHeader.correction_subns = 0;
+    delReqHeader.minorVersionPTP = 0;
 
     memcpy(&delReqHeader.clockIdentity, &S.hwoptions.clockIdentity, 8);
 
@@ -39,11 +44,13 @@ void ptp_init_delay_req_header() {
 void ptp_send_delay_req_message() {
     // PTP message
     RawPtpMessage delReqMsg = {0};
-    delReqMsg.tag = RPMT_DELAY_REQ;
+    delReqMsg.tag = RPMT_DELAY_REQ; // | MSGBUF_TAG_OVERWRITE;
     delReqMsg.size = delReqHeader.messageLength;
     //delReqMsg.pTs = (S.bmca.state == PTP_BMCA_SLAVE) ? (&(S.slave.scd.t[T3])) : (&(S.master.scd.t[T1])); // timestamp writeback address
     delReqMsg.tx_dm = S.profile.delayMechanism;
     delReqMsg.tx_mc = PTP_MC_EVENT;
+    delReqMsg.pTxCb = NULL; //empty_tx_cb;
+    delReqMsg.ttl = ((S.bmca.state == PTP_BMCA_SLAVE) ? S.slave.delReqTickPeriod : S.master.pdelayReqTickPeriod); // TODO: sync triggered Delay_Req transmission should be handled here!
 
     // increment sequenceID
     delReqHeader.sequenceID = (S.bmca.state == PTP_BMCA_SLAVE) ? (++S.slave.messaging.delay_reqSequenceID) : (++S.master.pdelay_reqSequenceID);
@@ -69,6 +76,7 @@ void ptp_send_pdelay_resp_follow_up(const RawPtpMessage *pMsg) {
     header.messageType = PTP_MT_PDelay_Resp_Follow_Up; // change message type
     ptp_clear_flags(&header.flags);                    // clear flags
     header.messageLength = PTP_PCKT_SIZE_PDELAY_RESP_FOLLOW_UP;
+    header.minorVersionPTP = 0;
 
     // write fields
     ptp_construct_binary_header(pdelRespFUpMsg.data, &header); // HEADER
@@ -82,6 +90,7 @@ void ptp_send_pdelay_resp_follow_up(const RawPtpMessage *pMsg) {
     pdelRespFUpMsg.tx_dm = PTP_DM_P2P;
     pdelRespFUpMsg.tx_mc = PTP_MC_GENERAL;
     pdelRespFUpMsg.pTxCb = NULL;
+    pdelRespFUpMsg.ttl = FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS;
 
     // MSG("PDelRespFollowUp: %d.%09d\n", (int32_t) t3.sec, t3.nanosec);
 
@@ -119,6 +128,7 @@ void ptp_send_pdelay_resp(const RawPtpMessage *pMsg) {
     pdelRespMsg.pTxCb = ptp_send_pdelay_resp_follow_up;
     pdelRespMsg.tx_dm = PTP_DM_P2P;
     pdelRespMsg.tx_mc = PTP_MC_EVENT;
+    pdelRespMsg.ttl = FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS;
 
     // MSG("PDelResp: %d.%09d\n", (int32_t)t2.sec, t2.nanosec);
 

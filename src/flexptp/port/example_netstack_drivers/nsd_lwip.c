@@ -101,7 +101,7 @@ static void ptp_transmit_cb(uint32_t ts_s, uint32_t ts_ns, void * tag) {
     ptp_transmit_timestamp_cb(pMsg, ts_s, ts_ns);
 }
 
-void ptp_nsd_transmit_msg(RawPtpMessage *pMsg) {
+void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
     if (pMsg == NULL) {
         MSG("NULL!!!\n");
         return;

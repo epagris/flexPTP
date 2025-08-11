@@ -29,6 +29,8 @@
 
 #include "minmax.h"
 
+#include <stdlib.h>
+
 ///\cond 0
 // global state
 PtpCoreState gPtpCoreState;
@@ -62,6 +64,9 @@ static void ptp_common_init(const uint8_t *hwa) {
 
 // initialize PTP module
 void ptp_init(const uint8_t *hwa) {
+    // clear the timer
+    S.ticks = 0;
+
     /* ---- COMMON ----- */
     ptp_common_init(hwa);
 
@@ -188,6 +193,7 @@ void ptp_process_packet(RawPtpMessage *pRawMsg) {
 void ptp_process_event(const PtpCoreEvent *event) {
     switch (event->code) {
     case PTP_CEV_HEARTBEAT: { // heartbeat event
+        S.ticks++;
         ptp_bmca_tick();
         ptp_slave_tick();
         ptp_master_tick();
@@ -209,6 +215,12 @@ void ptp_process_event(const PtpCoreEvent *event) {
     default:
         break;
     }
+}
+
+// -----------------------------------------------
+
+uint32_t ptp_get_tick() {
+    return S.ticks;
 }
 
 // -----------------------------------------------

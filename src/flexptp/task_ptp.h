@@ -68,7 +68,7 @@ bool ptp_transmit_enqueue(const RawPtpMessage * pMsg);
  * @param seconds transmit timestamp seconds part
  * @param nanoseconds transmit timestamp nanoseconds part
  */
-void ptp_transmit_timestamp_cb(RawPtpMessage * pMsg, uint32_t seconds, uint32_t nanoseconds);
+void ptp_transmit_timestamp_cb(uint32_t uid, uint32_t seconds, uint32_t nanoseconds);
 
 /**
  * Read transmit timestamp and release message buffer area.

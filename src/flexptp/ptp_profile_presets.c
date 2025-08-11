@@ -91,7 +91,7 @@ static PtpProfilePreset sPtpProfiles[PTP_PROFILE_N] = {
             0,
             1,
             0,
-            PTP_PF_NONE,
+            PTP_PF_NO_FLAGS,
             ""
         }
     },
@@ -117,7 +117,7 @@ static PtpProfilePreset sPtpProfiles[PTP_PROFILE_N] = {
             0,
             1,
             0,
-            PTP_PF_NONE,
+            PTP_PF_NO_FLAGS,
             ""
         }
     }

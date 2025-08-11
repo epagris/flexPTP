@@ -1,6 +1,13 @@
 #include "msg_buf.h"
 
+#include <stdlib.h>
+
 #include "minmax.h"
+#include "ptp_core.h"
+
+#ifndef MSGB_DEBUG
+#define MSGB_DEBUG 0 ///< Message buffer debugging
+#endif
 
 void msgb_init(PtpMsgBuf *buf, PtpMsgBufBlock *pool, uint32_t n) {
     buf->blocks = pool;
@@ -27,19 +34,29 @@ static PtpMsgBufBlock *msgb_get_entry_by_tag(PtpMsgBuf *buf, uint32_t tag) {
     return NULL;
 }
 
+static void msgb_free_block(PtpMsgBuf *buf, PtpMsgBufBlock *block);
+
 RawPtpMessage *msgb_alloc(PtpMsgBuf *buf, uint32_t tag, uint32_t ttl) {
-    if (buf->used == buf->n) { // the buffer is full
+    // signal if the buffer is full and no possible overwrite is instructed
+    if ((buf->used == buf->n) && !((tag & MSGBUF_TAG_OVERWRITE) && (msgb_get_entry_by_tag(buf, tag & (~MSGBUF_TAG_OVERWRITE))))) {
+        CLILOG(MSGB_DEBUG, "[% 8u] (%u) Buffer full!\n", ptp_get_tick(), tag);
         return NULL;
     }
 
     // let's see if the tag is unique or generate a unique tag
-    if (tag == 0) {
+    if ((tag & (~MSGBUF_TAG_OVERWRITE)) == 0) {
         do {
-            tag = rand() & (~((uint32_t)0));
+            tag = rand() & (~((uint32_t)MSGBUF_TAG_OVERWRITE));
         } while (msgb_get_entry_by_tag(buf, tag) != NULL);
     } else {
-        if (msgb_get_entry_by_tag(buf, tag) != NULL) {
-            return NULL;
+        PtpMsgBufBlock * block = msgb_get_entry_by_tag(buf, tag);
+        if (block != NULL) {
+            if (tag & MSGBUF_TAG_OVERWRITE) {
+                msgb_free_block(buf, block);
+            } else {
+                CLILOG(MSGB_DEBUG, "[% 8u] (%u) Tag already exists!\n", ptp_get_tick(), tag);
+                return NULL;
+            }
         }
     }
 
@@ -55,6 +72,7 @@ RawPtpMessage *msgb_alloc(PtpMsgBuf *buf, uint32_t tag, uint32_t ttl) {
 
     // avert some impossible errors
     if (block == NULL) {
+        CLILOG(MSGB_DEBUG, "[% 8u] (%u) Strange error!\n", ptp_get_tick(), tag);
         return NULL;
     }
 
@@ -200,13 +218,20 @@ void msgb_set_sent(PtpMsgBuf *buf, RawPtpMessage *msg) {
     msgb_set_block_sent(buf, block);
 }
 
+uint32_t msgb_get_uid(const PtpMsgBuf *buf, const RawPtpMessage *msg) {
+    PtpMsgBufBlock *block = RAW_MSG_TO_BLOCK(msg);
+    return block->uid;
+}
+
 void msgb_tick(PtpMsgBuf *buf) {
     for (uint32_t i = 0; i < buf->n; i++) {
         PtpMsgBufBlock *block = buf->blocks + i;
         if (block->allocated && (block->ttl != MSGBUF_TTL_DONT_AGE)) {
-            block->ttl = (block->ttl > 0) ? (block->ttl - 1) : block->ttl;
             if (block->ttl == 0) {
+                //MSG("[% 8u] %u has expired!\n", ptp_get_tick(), block->uid);
                 msgb_free_block(buf, block);
+            } else {
+                block->ttl = (block->ttl > 0) ? (block->ttl - 1) : block->ttl;
             }
         }
     }
@@ -217,10 +242,16 @@ void msgb_report(PtpMsgBuf *buf) {
     for (uint32_t i = 0; i < buf->n; i++) {
         PtpMsgBufBlock * block = buf->blocks + i;
         if (block->allocated) {
-            MSG("[% 3u] A % 8X % 8X % 4u %c %s\n", i, block->tag, block->uid, block->ttl, block->committed ? 'C' : ' ', block->sent ? 'S' : ' ');
+            MSG("[% 3u] A % 8X % 8X % 4u %c %c\n", i, block->tag, block->uid, block->ttl, block->committed ? 'C' : ' ', block->sent ? 'S' : ' ');
         } else {
             MSG("[% 3u] F -------------------\n", i);
         }
     }
     MSG("----------------------------------\n");
+}
+
+uint32_t msgb_get_error(PtpMsgBuf * buf) {
+    PtpMsgBufError err = buf->error;
+    buf->error = MSGB_ERR_NONE;
+    return err;
 }

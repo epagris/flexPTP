@@ -18,7 +18,11 @@
 #define PTP_IGMP_DEFAULT_STR ("224.0.1.129")    ///< PTP default IGMP group
 #define PTP_IGMP_PEER_DELAY_STR ("224.0.0.107") ///< PTP Peer-Delay IGMP group
 
-#ifndef LWIP
+#if defined(__linux__)
+#include <netinet/in.h>
+typedef in_addr_t ip_addr_t;
+typedef in_addr_t ip4_addr_t;
+#elif !defined(LWIP)
 typedef ip4_addr ip_addr_t;
 typedef ip4_addr ip4_addr_t;
 #endif
@@ -186,5 +190,7 @@ extern const uint8_t PTP_ETHERNET_PEER_DELAY[6]; ///< PTP's L2 Peer_Delay Ethern
 // ----------------
 
 #define FLEXPTP_MS_TO_TICKS(ms) ((ms + (PTP_HEARTBEAT_TICKRATE_MS - 1)) / PTP_HEARTBEAT_TICKRATE_MS)  ///< Interval conversion between milliseconds and ticks
+
+#define FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS (20)
 
 #endif /* FLEXPTP_PTP_DEFS_H_ */

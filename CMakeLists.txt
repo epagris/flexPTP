@@ -41,6 +41,12 @@ elseif(FLEXPTP_HWPORT STREQUAL "TM4C1294_LWIP")
         port/example_ports/ptp_port_tiva_tm4c1294.h
     ) 
     set(FLEXPTP_HWPORT_BASE "TM4C1294_LWIP")
+elseif(FLEXPTP_HWPORT STREQUAL "LINUX")
+    set(FLEXPTP_HWPORT_SRC
+            port/example_ports/ptp_port_linux.c
+            port/example_ports/ptp_port_linux.h
+    )
+    set(FLEXPTP_HWPORT_BASE "LINUX")
 else()
     set(FLEXPTP_HWPORT_OK 0) 
 endif()
@@ -76,6 +82,12 @@ elseif(FLEXPTP_NSD STREQUAL "ETHERLIB")
         port/example_netstack_drivers/nsd_etherlib.c
     )
     set(FLEXPTP_NETWORK_STACK etherlib)
+elseif (FLEXPTP_NSD STREQUAL "LINUX")
+    set(FLEXPTP_NSD_SRC
+        port/example_netstack_drivers/nsd_linux.c
+        port/example_netstack_drivers/nsd_linux.h
+    )
+    set(FLEXPTP_NETWORK_STACK)
 else()
     set(FLEXPTP_NSD_OK 0)
 endif()
@@ -191,6 +203,7 @@ add_library(${FLEXPTP_TARGET} STATIC ${FLEXPTP_SRC})
 target_include_directories(${FLEXPTP_TARGET} PRIVATE ${FLEXPTP_INCLUDES} ${FLEXPTP_LOCAL_INCLUDES})
 target_compile_options(${FLEXPTP_TARGET} PRIVATE ${FLEXPTP_CPU_PARAMS})
 target_compile_definitions(${FLEXPTP_TARGET} PRIVATE ${FLEXPTP_COMPILE_DEFS})
+target_link_libraries(${FLEXPTP_TARGET} m)
 
 if (FLEXPTP_NETWORK_STACK)
     message("flexPTP: linking against '" ${FLEXPTP_NETWORK_STACK} "' network library")

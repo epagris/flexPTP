@@ -14,6 +14,7 @@
 typedef enum {
     PTP_CEV_HEARTBEAT = 0x00,
     PTP_CEV_BMCA_STATE_CHANGED,
+    PTP_CEV_TERMINATE,
 } PtpCoreEventCode;
 
 #include <stdint.h>

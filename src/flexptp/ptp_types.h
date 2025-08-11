@@ -21,7 +21,7 @@
 
 #include <flexptp_options.h>
 
-#if !defined(FLEXPTP_FREERTOS) && !defined(FLEXPTP_CMSIS_OS2)
+#if !defined(FLEXPTP_FREERTOS) && !defined(FLEXPTP_CMSIS_OS2) && !defined(FLEXPTP_LINUX)
 #define FLEXPTP_FREERTOS (1)
 #endif
 
@@ -33,6 +33,10 @@
 #elif defined(FLEXPTP_CMSIS_OS2)
 #include <cmsis_compiler.h>
 #include <cmsis_os2.h>
+#endif
+
+#if defined(FLEXPTP_FREERTOS) || defined(FLEXPTP_CMSIS_OS2)
+#define FLEXPTP_NON_LINUX_OS (1)
 #endif
 
 #ifdef FLEXPTP_FREERTOS
@@ -188,9 +192,9 @@ typedef void(TxCb)(const struct RawPtpMessage_ *pMsg);
  * Tagging of transmitted PTP messages.
  */
 typedef enum {
-    RPMT_RANDOM = 0,            ///< Create a random, unique tag
-    RPMT_SYNC,                  ///< Sync tag
-    RPMT_DELAY_REQ,             ///< Delay_Req tag
+    RPMT_RANDOM = 0, ///< Create a random, unique tag
+    RPMT_SYNC,       ///< Sync tag
+    RPMT_DELAY_REQ,  ///< (P)Delay_Req tag
 } RawPtpMsgTag;
 
 typedef struct RawPtpMessage_ {
@@ -199,6 +203,7 @@ typedef struct RawPtpMessage_ {
 
     // --- transmit related ---
     uint32_t tag;            ///< unique transmit tag
+    uint32_t ttl;            ///< transmit Time-to-Live in ticks
     TxCb *pTxCb;             ///< transmit callback function
     PtpDelayMechanism tx_dm; ///< transmit transport type
     PtpMessageClass tx_mc;   ///< transmit message class
@@ -286,7 +291,7 @@ typedef PtpAnnounceBody PtpMasterProperties;
  */
 typedef enum PtpM2SState {
     SIdle,        ///< Idle
-    SWaitFollowUp ///< Waiting for a Follow Up message
+    SWaitFollowUp ///< Waiting for a Follow_Up message
 } PtpM2SState;
 
 /**
@@ -353,7 +358,7 @@ typedef struct _PtpProfileAdditionalData {
  * @brief PTP profile flags
  */
 typedef enum {
-    PTP_PF_NONE = 0x00,                                       ///< Empty profile flags
+    PTP_PF_NO_FLAGS = 0x00,                                   ///< Empty profile flags
     PTP_PF_ISSUE_SYNC_FOR_COMPLIANT_SLAVE_ONLY_IN_P2P = 0x01, ///< Send Sync messages only for a compliant peer in P2P mode
     PTP_PF_SLAVE_ONLY = 0x02,                                 ///< Operating only in SLAVE mode
     PTP_PF_N                                                  ///< Number of available PTP profile flags
@@ -521,15 +526,18 @@ typedef struct {
     PtpBmcaState bmca;       ///< BMCA state
     PtpNetworkState network; ///< Network state
 
+    uint32_t ticks; ///< ticks counting form the initialization
+
     // Logging
     struct {
-        bool def;        ///< default
-        bool corr;       ///< correction fields
-        bool timestamps; ///< timestamps
-        bool info;       ///< informative messages
-        bool locked;     ///< clock lock state change
-        bool bmca;       ///< BMCA state change
-    } logging;           ///< Logging
+        bool def;          ///< default
+        bool corr;         ///< correction fields
+        bool timestamps;   ///< timestamps
+        bool info;         ///< informative messages
+        bool locked;       ///< clock lock state change
+        bool bmca;         ///< BMCA state change
+        bool transmission; ///< Transmission logging
+    } logging;             ///< Logging
 
     PtpStats stats;                   ///< Statistics
     PtpUserEventCallback userEventCb; ///< User event callback pointer
