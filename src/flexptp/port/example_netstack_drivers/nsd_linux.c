@@ -19,11 +19,10 @@
 #include <unistd.h>
 #include <inttypes.h>
 
-#ifndef HAVE_CLOCK_ADJTIME
-#include <asm/unistd_64.h>
-#else
-#include <sys/timex.h>
-#endif
+#include <features.h>
+#include <asm-generic/unistd.h>
+#include <bits/time.h>
+
 #include <linux/if_packet.h>
 #include <netinet/ether.h>
 #include <poll.h>
@@ -69,7 +68,7 @@ static void post_notification(char c) {
     write(notif_q[1], &c, 1);
 }
 
-/* FD <-> CLOCKID conversions from linuxptp */
+/* FD <-> CLOCKID conversions (man 2 clock_getres, 'Dynamic clocks' section) */
 #define CLOCKFD 3
 #define FD_TO_CLOCKID(fd) ((clockid_t)((((unsigned int)~fd) << 3) | CLOCKFD))
 #define CLOCKID_TO_FD(clk) ((unsigned int)~((clk) >> 3))
@@ -91,6 +90,7 @@ bool linux_nsd_preinit(const char *ifn) {
     int err;
 
     // retrieve the network interface index
+    // man 7 netdevice
     struct ifreq ifr;
     memset(&ifr, 0, sizeof(ifr));
     strncpy(ifr.ifr_name, if_name, IFNAMSIZ - 1);
@@ -102,6 +102,7 @@ bool linux_nsd_preinit(const char *ifn) {
     if_idx = ifr.ifr_ifindex;
 
     // retrieve the hardware address of the interface
+    // man 7 netdevice
     memset(&ifr, 0, sizeof(ifr));
     strncpy(ifr.ifr_name, if_name, IFNAMSIZ - 1);
     err = ioctl(fd, SIOCGIFHWADDR, &ifr);
@@ -112,6 +113,7 @@ bool linux_nsd_preinit(const char *ifn) {
     memcpy(if_hwaddr, ifr.ifr_hwaddr.sa_data, IFHWADDRLEN);
 
     // retrieve the IP address of the interface
+    // man 7 netdevice
     memset(&ifr, 0, sizeof(ifr));
     ifr.ifr_addr.sa_family = AF_INET;
     strncpy(ifr.ifr_name, if_name, IFNAMSIZ - 1);
@@ -132,6 +134,7 @@ bool linux_nsd_preinit(const char *ifn) {
     MSG("   IP-address: " PTP_COLOR_CYAN "%s\n" PTP_COLOR_RESET, inet_ntoa(if_ipaddr.sin_addr));
 
     // check the hardware timestamp support
+    // https://docs.kernel.org/networking/ethtool-netlink.html#tsinfo-get
     struct ethtool_ts_info tsi = {.cmd = ETHTOOL_GET_TS_INFO};
     memset(&ifr, 0, sizeof(ifr));
     strncpy(ifr.ifr_name, if_name, IFNAMSIZ - 1);
@@ -201,6 +204,13 @@ cleanup:
     return init_ok;
 }
 
+void linux_nsd_cleanup(void) {
+    if (phc_fd > 0) {
+        close(phc_fd);
+        phc_fd = 0;
+    }
+}
+
 static void socket_join_igmp(int fd) {
     // fill in the multicast assignment request
     struct ip_mreq mreq;
@@ -212,6 +222,7 @@ static void socket_join_igmp(int fd) {
     mreq.imr_interface = if_ipaddr.sin_addr;
 
     // join the IGMP group
+    // man 7 ip
     int err = setsockopt(event_fd, IPPROTO_IP, IP_ADD_MEMBERSHIP, &mreq, sizeof(mreq));
     if (err < 0) {
         // MSG("Could not join the required network group!\n");
@@ -240,6 +251,7 @@ static int open_udp_socket(PtpDelayMechanism dm, uint16_t port, const char *hint
     addr.sin_addr.s_addr = (dm == PTP_DM_E2E) ? PTP_IGMP_PRIMARY : PTP_IGMP_PEER_DELAY;
 
     // create socket
+    // man 2 socket
     int sfd = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (sfd < 0) {
         MSG("Could not open the %s socket!\n", hint);
@@ -247,6 +259,7 @@ static int open_udp_socket(PtpDelayMechanism dm, uint16_t port, const char *hint
     }
 
     // enable the reuseaddr option
+    // man 3 setsockopt
     int optval = 1;
     int err = setsockopt(sfd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
     if (err < 0) {
@@ -255,6 +268,7 @@ static int open_udp_socket(PtpDelayMechanism dm, uint16_t port, const char *hint
     }
 
     // assign the multicast transmit interface with the socket
+    // man 7 ip
     err = setsockopt(sfd, IPPROTO_IP, IP_MULTICAST_IF, &if_ipaddr.sin_addr, sizeof(struct in_addr));
     if (err < 0) {
         MSG("Could not set the %s socket IP_MULTICAST_IF option!\n", hint);
@@ -262,6 +276,7 @@ static int open_udp_socket(PtpDelayMechanism dm, uint16_t port, const char *hint
     }
 
     // bind the socket
+    // man 2 bind
     addr.sin_port = htons(port);
     err = bind(sfd, (struct sockaddr *)&addr, sizeof(addr));
     if (err < 0) {
@@ -281,6 +296,7 @@ static int open_raw_socket(PtpDelayMechanism dm, bool bind_socket, const char *h
     const uint8_t *ethaddr = (dm == PTP_DM_E2E) ? PTP_ETHERNET_PRIMARY : PTP_ETHERNET_PEER_DELAY;
 
     // create socket
+    // SOCK_DGRAM: use the kernel features to fill in the Ethernet header
     int sfd = socket(AF_PACKET, SOCK_DGRAM, htons(PTP_ETHERTYPE));
     if (sfd < 0) {
         MSG("Could not open the %s socket!\n", hint);
@@ -288,6 +304,7 @@ static int open_raw_socket(PtpDelayMechanism dm, bool bind_socket, const char *h
     }
 
     // setup address
+    // man 7 packet
     struct sockaddr_ll addr;
     memset(&addr, 0, sizeof(addr));
     addr.sll_ifindex = if_idx;
@@ -298,6 +315,7 @@ static int open_raw_socket(PtpDelayMechanism dm, bool bind_socket, const char *h
     memcpy(addr.sll_addr, ethaddr, ETH_ALEN);
 
     // bind socket if requested
+    // man 2 bind
     int err;
     if (bind_socket) {
         err = bind(sfd, (struct sockaddr *)&addr, sizeof(addr));
@@ -307,6 +325,7 @@ static int open_raw_socket(PtpDelayMechanism dm, bool bind_socket, const char *h
     }
 
     // assign the socket the multicast membership
+    // man 6 packet
     struct packet_mreq mreq;
     mreq.mr_ifindex = if_idx;
     mreq.mr_type = PACKET_MR_MULTICAST;
@@ -323,6 +342,7 @@ static int open_raw_socket(PtpDelayMechanism dm, bool bind_socket, const char *h
 
 static void enable_timestamping(int sfd) {
     // enable timestamping on the socket
+    // https://www.kernel.org/doc/html/latest/networking/timestamping.html#scm-timestamping-records
     int optval = SOF_TIMESTAMPING_RX_HARDWARE | SOF_TIMESTAMPING_RAW_HARDWARE | SOF_TIMESTAMPING_TX_HARDWARE;
     int err = setsockopt(sfd, SOL_SOCKET, SO_TIMESTAMPING, &optval, sizeof(optval));
     if (err < 0) {
@@ -345,6 +365,7 @@ static void enable_timestamping(int sfd) {
     }
 
     // turn on TX and RX timestamping
+    // https://www.kernel.org/doc/html/latest/networking/timestamping.html#hardware-timestamping-configuration-ethtool-msg-tsconfig-set-get
     cfg.flags = 0;
     cfg.tx_type = HWTSTAMP_TX_ON;
     cfg.rx_filter = HWTSTAMP_FILTER_PTP_V2_EVENT;
@@ -354,6 +375,7 @@ static void enable_timestamping(int sfd) {
     }
 
     // enable TX timestamp communication through the socket error queue
+    // man 7 socket
     optval = 1;
     err = setsockopt(sfd, SOL_SOCKET, SO_SELECT_ERR_QUEUE, &optval, sizeof(optval));
     if (err < 0) {
@@ -412,21 +434,23 @@ static void *nsd_thread(void *arg) {
                 msg.msg_controllen = CTRL_BUF_SIZE;
 
                 // event message TRANSMISSION timestamp feedback
+                // https://www.kernel.org/doc/html/latest/networking/timestamping.html#scm-timestamping-records
                 if (pfd[1].revents & POLLPRI) {
-                    ssize_t size = recvmsg(event_fd, &msg, MSG_ERRQUEUE);
-                    struct cmsghdr *cm;
+                    ssize_t size = recvmsg(event_fd, &msg, MSG_ERRQUEUE); // get transmit timestamps from the error queue
+                    struct cmsghdr *cm; // iterate over the chain of control messages
                     for (cm = CMSG_FIRSTHDR(&msg); cm != NULL; cm = CMSG_NXTHDR(&msg, cm)) {
                         int level = cm->cmsg_level;
                         int type = cm->cmsg_type;
                         if ((level == SOL_SOCKET) && (type == SO_TIMESTAMPING)) {
-                            struct timespec *ts = (struct timespec *)CMSG_DATA(cm);
+                            struct timespec *ts = (struct timespec *)CMSG_DATA(cm); // get data from the timestamp control message
                             uint32_t uid = 0;
                             read(matching_q[0], &uid, sizeof(uint32_t));
 
                             struct timespec now;
                             clock_gettime(CLOCK_REALTIME, &now);
-                            CLILOG(LINUX_NSD_TS_DEBUG, "[%" __PRI64_PREFIX "u.%09" __PRI64_PREFIX "u] TX TS: (%u) %" __PRI64_PREFIX "u.%" __PRI64_PREFIX "u\n", now.tv_sec, now.tv_nsec, uid, ts[2].tv_sec, ts[2].tv_nsec);
+                            CLILOG(LINUX_NSD_TS_DEBUG, "[%lu.%09lu] TX TS: (%u) %lu.%09lu\n", now.tv_sec, now.tv_nsec, uid, ts[2].tv_sec, ts[2].tv_nsec);
 
+                            // invoke the transmit timestamp callback, the hardware timestamp always comes in ts[2]
                             ptp_transmit_timestamp_cb(uid, ts[2].tv_sec, ts[2].tv_nsec);
                         }
                     }
@@ -446,7 +470,7 @@ static void *nsd_thread(void *arg) {
                             struct timespec *tsa = (struct timespec *)CMSG_DATA(cm); // get pointer to the timestamps
                             ts = tsa[2];                                             // extract the hardware timestamp
                             ts_found = true;                                         // indicate that timestamp was found
-                            CLILOG(LINUX_NSD_TS_DEBUG, "RX TS: %" __PRI64_PREFIX "u.%" __PRI64_PREFIX "u\n", ts.tv_sec, ts.tv_nsec);
+                            CLILOG(LINUX_NSD_TS_DEBUG, "RX TS: %lu.%09lu\n", ts.tv_sec, ts.tv_nsec);
                         }
                     }
 
@@ -573,7 +597,7 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
     if (send_ok) {
         struct timespec now;
         clock_gettime(CLOCK_REALTIME, &now);
-        CLILOG(LINUX_NSD_TX_ENQUEUE_DEBUG, "[%" __PRI64_PREFIX "u.%09" __PRI64_PREFIX "u] TX enqueue! %u\n", now.tv_sec, now.tv_nsec, uid);
+        CLILOG(LINUX_NSD_TX_ENQUEUE_DEBUG, "[%lu.%09lu] TX enqueue! %u\n", now.tv_sec, now.tv_nsec, uid);
         if (mc == PTP_MC_EVENT) {
             write(matching_q[1], &uid, sizeof(uint32_t));
         } else if (mc == PTP_MC_GENERAL) {
@@ -588,13 +612,7 @@ void ptp_nsd_get_interface_address(uint8_t *hwa) {
 
 // ------------------------
 
-/* clock adjustment syscall from the linuxptp */
-#ifndef HAVE_CLOCK_ADJTIME
-static inline int clock_adjtime(clockid_t id, struct timex *tx) {
-     return syscall(__NR_clock_adjtime, id, tx);
-}
-#endif
-
+/* man 2 clock_adjtime (ADJ_FREQUENCY) */
 #define PPB_TO_TUNING_SCALER (((double)(1 << 16)) / 1000.0)
 
 void linux_adjust_clock(double tuning_ppb) {

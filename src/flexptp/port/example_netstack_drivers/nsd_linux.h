@@ -15,6 +15,11 @@
 bool linux_nsd_preinit(const char * ifn);
 
 /**
+ * Clean up the Linux network stack driver.
+ */
+void linux_nsd_cleanup(void);
+
+/**
  * Set PHC time.
  *
  * @param seconds seconds part
