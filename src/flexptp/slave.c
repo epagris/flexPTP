@@ -115,22 +115,16 @@ static void ptp_perform_correction() {
     // ------------------------------
 
     // fill the previous state variables
-    if (!nonZeroI(&S.slave.prevSyncMa) || !nonZeroI(&S.slave.prevSyncSl) || !nonZeroI(&S.slave.prevTimeError)) {
+    if (!nonZeroI(&S.slave.prevSyncMa) || !nonZeroI(&S.slave.prevSyncSl)) {
         goto retain_cycle_data;
     }
 
     // ------------------------------
 
     // determine the Sync period
-    int64_t measSyncPeriod_ns;
-    // // if momentarily sync interval is not directly measurable, use the nominal value
-    // if (S.profile.logDelayReqPeriod == PTP_LOGPER_SYNCMATCHED && S.profile.delayMechanism == PTP_DM_E2E) {
-    //     measSyncPeriod_ns = S.slave.messaging.syncPeriodMs * 1E+06;
-    // } else { // if accurately measurable...
     TimestampI measSyncPeriod;
     subTime(&measSyncPeriod, &syncMa, &(S.slave.prevSyncMa));
-    measSyncPeriod_ns = nsI(&measSyncPeriod);
-    // }
+    int64_t measSyncPeriod_ns = nsI(&measSyncPeriod);
 
     // ------------------------------
 
@@ -271,7 +265,7 @@ static void ptp_commence_e2e_correction() {
         PTP_IUEV((S.profile.delayMechanism == PTP_DM_E2E) ? PTP_UEV_DELAY_REQ_SENT : PTP_UEV_PDELAY_REQ_SENT);
     }
 
-    // jump clock if error is way too big...
+    // jump the clock if error is way too big...
     TimestampI d;
     subTime(&d, &S.slave.scd.t[T2], &S.slave.scd.t[T1]);
     if (d.sec != 0) {
