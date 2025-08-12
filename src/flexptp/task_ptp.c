@@ -20,9 +20,9 @@
 #ifdef __linux__
 #include <poll.h>
 #include <pthread.h>
+#include <semaphore.h>
 #include <signal.h>
 #include <unistd.h>
-#include <semaphore.h>
 #endif
 
 ///\cond 0
@@ -387,7 +387,7 @@ bool ptp_event_enqueue(const PtpCoreEvent *event) {
 #elif defined(FLEXPTP_CMSIS_OS2)
     ok = osMessageQueuePut(sEventFIFO, event, 0, osWaitForever) == osOK;
     if (ok) {
-        osMessageQueuePut(sNotificationFIFO, &notif, osWaitForever);
+        osMessageQueuePut(sNotificationFIFO, &notif, 0, osWaitForever);
     }
 #elif defined(FLEXPTP_LINUX)
     size_t len = sizeof(PtpCoreEvent);
@@ -569,7 +569,7 @@ static void *task_ptp(void *pParam) {
 #elif defined(FLEXPTP_CMSIS_OS2)
             osMessageQueueGet(sTxCbFIFO, &ts, NULL, osWaitForever);
 #elif defined(FLEXPTP_LINUX)
-            read(sTxCbFIFO[0], &ts, sizeof(TxTs));
+        read(sTxCbFIFO[0], &ts, sizeof(TxTs));
 #endif
 
             // fetch the message
@@ -633,7 +633,7 @@ static void *task_ptp(void *pParam) {
 #elif defined(FLEXPTP_CMSIS_OS2)
             osMessageQueueGet(sRxPacketFIFO, &uid, NULL, osWaitForever);
 #elif defined(FLEXPTP_LINUX)
-            read(sRxPacketFIFO[0], &uid, sizeof(uint32_t));
+        read(sRxPacketFIFO[0], &uid, sizeof(uint32_t));
 #endif
 
             // fetch message

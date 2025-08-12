@@ -97,8 +97,7 @@ static void ptp_receive_cb(void *pArg, struct udp_pcb *pPCB, struct pbuf *pP, co
 }
 
 static void ptp_transmit_cb(uint32_t ts_s, uint32_t ts_ns, void * tag) {
-    RawPtpMessage *pMsg = (RawPtpMessage *)(tag);
-    ptp_transmit_timestamp_cb(pMsg, ts_s, ts_ns);
+    ptp_transmit_timestamp_cb((uint32_t) tag, ts_s, ts_ns);
 }
 
 void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
@@ -117,7 +116,7 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
     memcpy(p->payload, pMsg->data, pMsg->size);
 
     // set transmit callback
-    p->tag = pMsg;
+    p->tag = (void *)uid;
     p->tx_cb = ptp_transmit_cb;
 
     // lock LWIP core
