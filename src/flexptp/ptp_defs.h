@@ -78,8 +78,50 @@ extern const uint8_t PTP_ETHERNET_PEER_DELAY[6]; ///< PTP's L2 Peer_Delay Ethern
 
 // ---- AUTODEFINES ----------
 
+#if !defined(FLEXPTP_FREERTOS) && !defined(FLEXPTP_CMSIS_OS2) && !defined(FLEXPTP_LINUX) && !defined(FLEXPTP_OSLESS)
+#define FLEXPTP_FREERTOS (1)
+#endif
+
+#ifdef FLEXPTP_FREERTOS
+#include "FreeRTOS.h"
+#include "queue.h"
+#include "task.h"
+#include "timers.h"
+#elif defined(FLEXPTP_CMSIS_OS2)
+#include <cmsis_compiler.h>
+#include <cmsis_os2.h>
+#elif defined(FLEXPTP_LINUX)
+#include <poll.h>
+#include <pthread.h>
+#include <semaphore.h>
+#include <signal.h>
+#include <unistd.h>
+#elif defined(FLEXPTP_OSLESS)
+#include "port/osless/fifo.h"
+#endif
+
+#if defined(FLEXPTP_FREERTOS) || defined(FLEXPTP_CMSIS_OS2)
+#define FLEXPTP_NON_LINUX_OS (1)
+#endif
+
+#if defined(FLEXPTP_OSLESS) && !defined(FLEXPTP_OSLESS_LOCK)
+#error "FLEXPTP_OSLESS_LOCK must be defined to use FLEXPTP_OSLESS mode!"
+#endif
+
+#ifndef FLEXPTP_TASK_PRIORITY ///< flexPTP task priority
+#ifdef FLEXPTP_FREERTOS 
+#define FLEXPTP_TASK_PRIORITY (configMAX_PRIORITIES / 2)
+#elif defined(FLEXPTP_CMSIS_OS2)
+#define FLEXPTP_TASK_PRIORITY osPriorityNormal
+#endif
+#endif
+
+#ifndef FLEXPTP_TASK_STASK_SIZE
+#define FLEXPTP_TASK_STACK_SIZE (2048) ///< flexPTP task stack size
+#endif
+
 #ifndef PTP_HEARTBEAT_TICKRATE_MS
-#define PTP_HEARTBEAT_TICKRATE_MS (125) ///< Heartbeat ticking period
+#define PTP_HEARTBEAT_TICKRATE_MS (62) ///< Heartbeat ticking period
 #endif
 
 #ifndef PTP_PORT_ID

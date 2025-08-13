@@ -48,6 +48,8 @@ The library package ships with hardware ports for several platforms, including:
 - **MK64F**: (_lwip_)
   - Example: [NXP FRDM-K64F flexPTP demo](https://github.com/epagris/flexPTP-demo-FRDM-K64F)
 
+...and a [Linux example](https://github.com/epagris/flexPTP-linux)
+
 ## Requirements
 
 Apart from the access to a working C compiler, only the following two criteria must be met to compile flexPTP:

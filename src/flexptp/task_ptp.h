@@ -29,8 +29,10 @@ void ptp_stop_heartbeat_tmr();
 
 /**
  * Register PTP task.
+ * 
+ * @return initialization successful
  */
-void reg_task_ptp();
+bool reg_task_ptp();
 
 /**
  * Unreg PTP task.
@@ -87,5 +89,15 @@ bool ptp_read_and_clear_transmit_timestamp(uint32_t tag, TimestampI * pTs);
  * @return successful posting
  */
 bool ptp_event_enqueue(const PtpCoreEvent * event);
+
+#ifdef FLEXPTP_OSLESS
+/**
+ * Feed the flexPTP with ticks of PTP_HEARTBEAT_TICKRATE_MS long intervals.
+ * This function is only exposed if operating in FLEXPTP_OSLESS mode!
+ * 
+ * Call this function at PTP_HEARTBEAT_TICKRATE_MS intervals.
+ */
+void ptp_heartbeat_tmr_cb();
+#endif
 
 #endif // TASK_PTP_H_

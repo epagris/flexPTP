@@ -192,6 +192,9 @@ set(FLEXPTP_SRC
     timeutils.h
     tlv.c
     tlv.h
+
+    port/osless/fifo.c
+    port/osless/fifo.h
 )
 list(TRANSFORM FLEXPTP_SRC PREPEND "${FLEXPTP_SRC_DIR}/")
 list(APPEND FLEXPTP_SRC ${FLEXPTP_HWPORT_SRC} ${FLEXPTP_NSD_SRC} ${FLEXPTP_SERVO_SRC})

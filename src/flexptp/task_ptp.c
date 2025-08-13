@@ -4,6 +4,7 @@
 
 #include "config.h"
 #include "event.h"
+#include "flexptp/port/osless/fifo.h"
 #include "msg_buf.h"
 #include "network_stack_driver.h"
 #include "profiles.h"
@@ -17,29 +18,20 @@
 
 #include "minmax.h"
 
-#ifdef __linux__
-#include <poll.h>
-#include <pthread.h>
-#include <semaphore.h>
-#include <signal.h>
-#include <unistd.h>
-#endif
+// ---------------------------
 
-///\cond 0
-// ----- TASK PROPERTIES -----
 #ifdef FLEXPTP_NON_LINUX_OS
 #ifdef FLEXPTP_FREERTOS
 static TaskHandle_t sTH; // task handle in direct FreeRTOS mode
 #elif defined(FLEXPTP_CMSIS_OS2)
 static osThreadId_t sTH; // task handle in CMSIS OS2 mode
 #endif
-static uint8_t sPrio = FLEXPTP_TASK_PRIORITY; // priority
-static uint16_t sStkSize = 2048;              // stack size
-static void task_ptp(void *pParam);           // task routine function
+static void task_ptp(void *pParam); // task routine function in non-Linux mode
 #elif defined(FLEXPTP_LINUX)
-static pthread_t sTH;
-
-static void *task_ptp(void *pParam);
+static pthread_t sTH;                // thread handle in Linux mode
+static void *task_ptp(void *pParam); // thread routine in Linux mode
+#elif defined(FLEXPTP_OSLESS)
+static void task_ptp(); // osless task function
 #endif
 
 // ---------------------------
@@ -48,18 +40,18 @@ static bool sPTP_operating = false; // does the PTP subsystem operate?
 
 // ---------------------------
 
+///\cond 0
 #define S (gPtpCoreState)
-
 ///\endcond
 
 // ---------------------------
 
-#define RX_PACKET_FIFO_LENGTH (32) ///< Receive packet FIFO length
-#define TX_PACKET_FIFO_LENGTH (32) ///< Transmit packet FIFO length
+#define RX_PACKET_FIFO_LENGTH (16) ///< Receive packet FIFO length
+#define TX_PACKET_FIFO_LENGTH (16) ///< Transmit packet FIFO length
 
 // FIFO for incoming packets
-#ifdef FLEXPTP_NON_LINUX_OS
-#define EVENT_FIFO_LENGTH (32)        ///< Event FIFO length
+#if defined(FLEXPTP_NON_LINUX_OS) || defined(FLEXPTP_OSLESS)
+#define EVENT_FIFO_LENGTH (16)        ///< Event FIFO length
 #define NOTIFICATION_FIFO_LENGTH (16) ///< Notification FIFO length
 #define TX_CALLBACK_FIFO_LENGTH (10)  ///< Transmit callback FIFO length
 #endif
@@ -104,12 +96,14 @@ static timer_t sHeartBeatTmr;
 
 // queues for message reception and transmission
 #ifdef FLEXPTP_FREERTOS
-static QueueHandle_t sRxPacketFIFO, sEventFIFO;
+static QueueHandle_t sEventFIFO;
+static QueueHandle_t sRxPacketFIFO;
 static QueueHandle_t sTxPacketFIFO;
 static QueueHandle_t sNotificationFIFO;
 static QueueHandle_t sTxCbFIFO;
 #elif defined(FLEXPTP_CMSIS_OS2)
-static osMessageQueueId_t sRxPacketFIFO, sEventFIFO;
+static osMessageQueueId_t sEventFIFO;
+static osMessageQueueId_t sRxPacketFIFO;
 static osMessageQueueId_t sTxPacketFIFO;
 static osMessageQueueId_t sNotificationFIFO;
 static osMessageQueueId_t sTxCbFIFO;
@@ -119,6 +113,17 @@ static int sTxPacketFIFO[2];
 static int sEventFIFO[2];
 static int sTxCbFIFO[2];
 static sem_t sTxCbSem;
+#elif defined(FLEXPTP_OSLESS)
+static Fifo sEventFIFO;
+static Fifo sRxPacketFIFO;
+static Fifo sTxPacketFIFO;
+static Fifo sNotificationFIFO;
+static Fifo sTxCbFIFO;
+static FIFO_POOL(sEventFIFOPool, EVENT_FIFO_LENGTH, sizeof(PtpCoreEvent));
+static FIFO_POOL(sRxPacketFIFOPool, RX_PACKET_FIFO_LENGTH, sizeof(uint32_t));
+static FIFO_POOL(sTxPacketFIFOPool, TX_PACKET_FIFO_LENGTH, sizeof(uint32_t));
+static FIFO_POOL(sNotificationFIFOPool, NOTIFICATION_FIFO_LENGTH, sizeof(ProcThreadNotification));
+static FIFO_POOL(sTxCbFIFOPool, TX_CALLBACK_FIFO_LENGTH, sizeof(TxTs));
 #endif
 
 // buffer for PTP-messages
@@ -134,15 +139,19 @@ static PtpMsgBufBlock sRawTxMsgBufPool[TX_PACKET_FIFO_LENGTH];
  *
  * @param timer timer handle
  */
-static void ptp_heartbeat_tmr_cb(
+#ifndef FLEXPTP_OSLESS
+static
+#endif
+    void
+    ptp_heartbeat_tmr_cb(
 #ifdef FLEXPTP_FREERTOS
-    TimerHandle_t timer
+        TimerHandle_t timer
 #elif defined(FLEXPTP_CMSIS_OS2)
     void *arg
 #elif defined(FLEXPTP_LINUX)
     union sigval data
 #endif
-) {
+    ) {
     PtpCoreEvent event = {.code = PTP_CEV_HEARTBEAT, .w = 0, .dw = 0};
     ptp_event_enqueue(&event);
 }
@@ -150,10 +159,11 @@ static void ptp_heartbeat_tmr_cb(
 /**
  * Construct the heartbeat timer.
  */
-static void ptp_create_heartbeat_tmr() {
+static bool ptp_create_heartbeat_tmr() {
     // create smbc timer
+#ifndef FLEXPTP_OSLESS
     sHeartBeatTmr = NULL;
-#if FLEXPTP_FREERTOS
+#ifdef FLEXPTP_FREERTOS
     sHeartBeatTmr = xTimerCreate("ptp_heartbeat", pdMS_TO_TICKS(PTP_HEARTBEAT_TICKRATE_MS), // timeout
                                  true,                                                      // timer operates in repeat mode
                                  NULL,                                                      // ID
@@ -171,13 +181,18 @@ static void ptp_create_heartbeat_tmr() {
 #endif
     if (sHeartBeatTmr == NULL) {
         MSG("Failed to create the PTP heartbeat timer!\n");
+        return false;
     }
+#endif
+
+    return true;
 }
 
 /**
  * Remove the heartbeat timer.
  */
 static void ptp_remove_heartbeat_tmr() {
+#ifndef FLEXPTP_OSLESS
     ptp_stop_heartbeat_tmr();
 #ifdef FLEXPTP_FREERTOS
     xTimerDelete(sHeartBeatTmr, 0);
@@ -187,6 +202,7 @@ static void ptp_remove_heartbeat_tmr() {
     timer_delete(sHeartBeatTmr);
 #endif
     sHeartBeatTmr = NULL;
+#endif
 }
 
 void ptp_start_heartbeat_tmr() {
@@ -219,31 +235,57 @@ void ptp_stop_heartbeat_tmr() {
 // ----------------------------
 
 // create message queues
-static void ptp_create_message_queues() {
+static bool ptp_create_message_queues() {
     // create packet FIFO
+    bool ok = true;
 #ifdef FLEXPTP_FREERTOS
     sRxPacketFIFO = xQueueCreate(RX_PACKET_FIFO_LENGTH, sizeof(uint32_t));
     sTxPacketFIFO = xQueueCreate(TX_PACKET_FIFO_LENGTH, sizeof(uint32_t));
     sEventFIFO = xQueueCreate(EVENT_FIFO_LENGTH, sizeof(PtpCoreEvent));
     sNotificationFIFO = xQueueCreate(NOTIFICATION_FIFO_LENGTH, sizeof(ProcThreadNotification));
     sTxCbFIFO = xQueueCreate(TX_CALLBACK_FIFO_LENGTH, sizeof(TxTs));
+    ok = (sRxPacketFIFO != NULL) && (sTxPacketFIFO != NULL) && (sEventFIFO != NULL) && (sNotificationFIFO != NULL) && (sTxCbFIFO != NULL);
 #elif defined(FLEXPTP_CMSIS_OS2)
     sRxPacketFIFO = osMessageQueueNew(RX_PACKET_FIFO_LENGTH, sizeof(uint32_t), NULL);
     sTxPacketFIFO = osMessageQueueNew(TX_PACKET_FIFO_LENGTH, sizeof(uint32_t), NULL);
     sEventFIFO = osMessageQueueNew(EVENT_FIFO_LENGTH, sizeof(PtpCoreEvent), NULL);
     sNotificationFIFO = osMessageQueueNew(NOTIFICATION_FIFO_LENGTH, sizeof(ProcThreadNotification), NULL);
     sTxCbFIFO = osMessageQueueNew(TX_CALLBACK_FIFO_LENGTH, sizeof(TxTs), NULL);
+    ok = (sRxPacketFIFO != NULL) && (sTxPacketFIFO != NULL) && (sEventFIFO != NULL) && (sNotificationFIFO != NULL) && (sTxCbFIFO != NULL);
 #elif defined(FLEXPTP_LINUX)
-    pipe(sRxPacketFIFO);
-    pipe(sTxPacketFIFO);
-    pipe(sEventFIFO);
-    pipe(sTxCbFIFO);
-    sem_init(&sTxCbSem, 0, 0);
+
+// clear pipe file descriptors macro
+#define CPFD(fda) \
+    fda[0] = 0;   \
+    fda[1] = 0
+
+    CPFD(sRxPacketFIFO);
+    ok &= CLEAR(sRxPacketFIFO) == 0;
+    CPFD(sTxPacketFIFO);
+    ok &= pipe(sTxPacketFIFO) == 0;
+    CPFD(sEventFIFO);
+    ok &= pipe(sEventFIFO) == 0;
+    CPFD(sTxCbFIFO);
+    ok &= pipe(sTxCbFIFO) == 0;
+    ok &= sem_init(&sTxCbSem, 0, 0) == 0;
+#elif defined(FLEXPTP_OSLESS)
+    fifo_init(&sRxPacketFIFO, RX_PACKET_FIFO_LENGTH, sizeof(uint32_t), sRxPacketFIFOPool, FLEXPTP_OSLESS_LOCK);
+    fifo_init(&sTxPacketFIFO, TX_PACKET_FIFO_LENGTH, sizeof(uint32_t), sTxPacketFIFOPool, FLEXPTP_OSLESS_LOCK);
+    fifo_init(&sEventFIFO, EVENT_FIFO_LENGTH, sizeof(uint32_t), sEventFIFOPool, FLEXPTP_OSLESS_LOCK);
+    fifo_init(&sNotificationFIFO, NOTIFICATION_FIFO_LENGTH, sizeof(ProcThreadNotification), sNotificationFIFOPool, FLEXPTP_OSLESS_LOCK);
+    fifo_init(&sTxCbFIFO, TX_CALLBACK_FIFO_LENGTH, sizeof(TxTs), sTxCbFIFOPool, FLEXPTP_OSLESS_LOCK);
 #endif
+    // if some error has occurred, then delete the message queues
+    if (!ok) {
+        MSG("Failed to create the PTP message queues!\n");
+        return false;
+    }
 
     // initalize packet buffers
     msgb_init(&sRawRxMsgBuf, sRawRxMsgBufPool, RX_PACKET_FIFO_LENGTH);
     msgb_init(&sRawTxMsgBuf, sRawTxMsgBufPool, TX_PACKET_FIFO_LENGTH);
+
+    return true;
 }
 
 #ifdef FLEXPTP_LINUX
@@ -279,9 +321,12 @@ static void ptp_destroy_message_queues() {
 }
 
 // register PTP task and initialize
-void reg_task_ptp() {
+bool reg_task_ptp() {
     // initialize message queues and buffers
-    ptp_create_message_queues();
+    if (!ptp_create_message_queues()) {
+        ptp_destroy_message_queues();
+        return false;
+    }
 
     // set user event callback
 #ifdef PTP_USER_EVENT_CALLBACK
@@ -289,7 +334,10 @@ void reg_task_ptp() {
 #endif
 
     // create heartbeat timer
-    ptp_create_heartbeat_tmr();
+    if (!ptp_create_heartbeat_tmr()) {
+        ptp_destroy_message_queues();
+        return false;
+    }
 
     // initialize PTP subsystem
     ptp_init();
@@ -311,31 +359,31 @@ void reg_task_ptp() {
     // create task
 #ifdef FLEXPTP_FREERTOS
     sTH = NULL;
-    BaseType_t result = xTaskCreate(task_ptp, "ptp", sStkSize / sizeof(BaseType_t), NULL, sPrio, &sTH);
+    BaseType_t result = xTaskCreate(task_ptp, "ptp", FLEXPTP_TASK_STACK_SIZE / sizeof(BaseType_t), NULL, FLEXPTP_TASK_PRIORITY, &sTH);
     if (result != pdPASS) {
         MSG("Failed to create the PTP task! (errcode: %d)\n", result);
-        unreg_task_ptp();
-        return;
+        unreg_task_ptp(); // this will also destroy message queues and the timer
+        return false;
     }
 #elif defined(FLEXPTP_CMSIS_OS2)
     sTH = NULL;
     osThreadAttr_t attr;
     memset(&attr, 0, sizeof(osThreadAttr_t));
     attr.name = "ptp";
-    attr.stack_size = sStkSize;
-    attr.priority = sPrio;
+    attr.stack_size = FLEXPTP_TASK_STACK_SIZE;
+    attr.priority = FLEXPTP_TASK_PRIORITY;
     sTH = osThreadNew(task_ptp, NULL, &attr);
     if (sTH == NULL) {
         MSG("Failed to create the PTP task!\n");
         unreg_task_ptp();
-        return;
+        return false;
     }
 #elif defined(FLEXPTP_LINUX)
     sTH = 0;
     if (pthread_create(&sTH, NULL, task_ptp, NULL) != 0) {
         MSG("Failed to create the PTP thread!\n");
         unreg_task_ptp();
-        return;
+        return false;
     }
     // struct sched_param sched_param = { .sched_priority = 10 };
     // if (sched_setscheduler(getpid(), SCHED_FIFO, &sched_param)) {
@@ -346,6 +394,8 @@ void reg_task_ptp() {
 
     // the PTP subsystem is operating
     sPTP_operating = true;
+
+    return true;
 }
 
 // unregister PTP task
@@ -514,12 +564,18 @@ bool ptp_read_and_clear_transmit_timestamp(uint32_t tag, TimestampI *pTs) {
 // task routine
 #ifdef FLEXPTP_NON_LINUX_OS
 static void task_ptp(void *pParam) {
-
 #elif defined(FLEXPTP_LINUX)
 static void *task_ptp(void *pParam) {
+#elif defined(FLEXPTP_OSLESS)
+static void task_ptp(void) {
 #endif
+
+#ifndef FLEXPTP_OSLESS // OS assisted mode
     bool run = true;
     while (run) {
+#else // OS-less mode
+    while (fifo_get_level(&sNotificationFIFO) > 0) {
+#endif
         // wait for received packet or packet to transfer
         ProcThreadNotification notification = PTN_NONE;
 #ifdef FLEXPTP_FREERTOS
@@ -556,7 +612,8 @@ static void *task_ptp(void *pParam) {
         CLILOG(S.logging.info, "A polling error occurred!\n");
         continue;
     }
-
+#elif defined(FLEXPTP_OSLESS)
+fifo_pop(&sNotificationFIFO, &notification);
 #endif
         /* ---- TRANSMIT DONE ---- */
         if (notification & PTN_TRANSMIT_DONE) {
@@ -564,13 +621,17 @@ static void *task_ptp(void *pParam) {
             // get the timestamp association object
             TxTs ts;
 
+            // clang-format off
 #ifdef FLEXPTP_FREERTOS
             xQueueReceive(sTxCbFIFO, &ts, portMAX_DELAY);
 #elif defined(FLEXPTP_CMSIS_OS2)
             osMessageQueueGet(sTxCbFIFO, &ts, NULL, osWaitForever);
 #elif defined(FLEXPTP_LINUX)
-        read(sTxCbFIFO[0], &ts, sizeof(TxTs));
+            read(sTxCbFIFO[0], &ts, sizeof(TxTs));
+#elif defined(FLEXPTP_OSLESS)
+            fifo_pop(&sTxCbFIFO, &ts);
 #endif
+            // clang-format on
 
             // fetch the message
             CLILOG(S.logging.transmission, "[% 8u]---> %u\n", S.ticks, ts.uid);
@@ -604,13 +665,18 @@ static void *task_ptp(void *pParam) {
             // pop packet UID from the FIFO
             uint32_t uid = 0;
 
+            // clang-format off
 #ifdef FLEXPTP_FREERTOS
             xQueueReceive(sTxPacketFIFO, &uid, portMAX_DELAY);
 #elif defined(FLEXPTP_CMSIS_OS2)
             osMessageQueueGet(sTxPacketFIFO, &uid, NULL, osWaitForever);
 #elif defined(FLEXPTP_LINUX)
-        read(sTxPacketFIFO[0], &uid, sizeof(uint32_t));
+            read(sTxPacketFIFO[0], &uid, sizeof(uint32_t));
+#elif defined(FLEXPTP_OSLESS)
+            fifo_pop(&sTxPacketFIFO, &uid);
 #endif
+            // clang-format on
+
             // fetch the message
             RawPtpMessage *pRawMsg = msgb_get_by_uid(&sRawTxMsgBuf, uid);
             if (pRawMsg != NULL) {
@@ -628,13 +694,17 @@ static void *task_ptp(void *pParam) {
             // pop packet UID from the FIFO
             uint32_t uid = 0;
 
+            // clang-format off
 #ifdef FLEXPTP_FREERTOS
             xQueueReceive(sRxPacketFIFO, &uid, portMAX_DELAY);
 #elif defined(FLEXPTP_CMSIS_OS2)
             osMessageQueueGet(sRxPacketFIFO, &uid, NULL, osWaitForever);
 #elif defined(FLEXPTP_LINUX)
-        read(sRxPacketFIFO[0], &uid, sizeof(uint32_t));
+            read(sRxPacketFIFO[0], &uid, sizeof(uint32_t));
+#elif defined(FLEXPTP_OSLESS)
+            fifo_pop(&sRxPacketFIFO, &uid);
 #endif
+            // clang-format on
 
             // fetch message
             RawPtpMessage *pRawMsg = msgb_get_by_uid(&sRawRxMsgBuf, uid);
@@ -652,13 +722,18 @@ static void *task_ptp(void *pParam) {
 
             // pop event from the FIFO
             PtpCoreEvent event;
+
+            // clang-format off
 #ifdef FLEXPTP_FREERTOS
             xQueueReceive(sEventFIFO, &event, portMAX_DELAY);
 #elif defined(FLEXPTP_CMSIS_OS2)
             osMessageQueueGet(sEventFIFO, &event, NULL, osWaitForever);
 #elif defined(FLEXPTP_LINUX)
-        read(sEventFIFO[0], &event, sizeof(PtpCoreEvent));
+            read(sEventFIFO[0], &event, sizeof(PtpCoreEvent));
+#elif defined(FLEXPTP_OSLESS)
+            fifo_pop(&sEventFIFO, &event);
 #endif
+            // clang-format on
 
             // delegate event processing
             ptp_process_event(&event);

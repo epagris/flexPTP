@@ -13,6 +13,8 @@
 - **MK64F** (_lwip_)
   - Example: [FRDM-K64F flexPTP demo](https://github.com/epagris/flexPTP-demo-FRDM-K64F)
 
+...and a [Linux example](https://github.com/epagris/flexPTP-linux)
+
 # Modified drivers
 
 - \subpage H743_ethernetif_modifications

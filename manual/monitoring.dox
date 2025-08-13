@@ -6,7 +6,7 @@ In the following flexPTP's detailed logging and monitoring features are describe
 
 The flexPTP library implements several kinds of automatic logging, that can be turned on and off using ptp_log_enable(). Predefined logging features are introduced below.
 
-All of these logging features are available through the CLI command `ptp log {def|corr|ts|info|locked|bmca} {on|off}` as well.
+Most of these logging features are available through the CLI command `ptp log {def|corr|ts|info|locked|bmca} {on|off}` as well.
 
 ## Default logging
 
@@ -18,19 +18,31 @@ Definition: slave.c, ptp_perform_correction()
 
 Each synchronization cycle (after the reception of a `Sync` message) the below several current clock and network state variables are getting printed.
 
-| Field        | Description                                                                             |                              Format |
-| ------------ | --------------------------------------------------------------------------------------- | ----------------------------------: |
-| **T1**       | _reception time of the `Sync` message corresponding to the current cycle_               |                 (s, ns): `%%d %09d` |
-| **T4**       | _reception time (by the master) of the last `Delay_Req` message_                        |                 (s, ns): `%%d %09d` |
-| **Δt**       | _time error between us and the master (positive value means we're ahead of the master)_ | (s, ns), clock ticks: `%%d %09d %d` |
-| **addend**   | _hardware clock addend_                                                                 |                     (no unit) `%%u` |
-| **corr_ppb** | _relative clock tuning (correction) value in PPB_                                       |                          PPB: `%%f` |
-| **MPD**      | _network Mean Path Delay between us and the master_                                     |                          ns: `%%ld` |
-| **MSP**      | _measured `Sync` period_                                                                |                        ns: `%%09lu` |
+| Field                      | Description                                                                             |                                          Format |
+| -------------------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------: |
+| **T1**                     | _reception time of the `Sync` message corresponding to the current cycle_               |                             (s, ns): `%%d %09d` |
+| **T4**                     | _reception time (by the master) of the last `Delay_Req` message_                        |                             (s, ns): `%%d %09d` |
+| **Δt**                     | _time error between us and the master (positive value means we're ahead of the master)_ | (s, ns), clock ticks<sup>1</sup>: `%%d %09d %d` |
+| **addend**<sup>1</sup>     | _hardware clock addend_ <sup>1</sup>                                                    |                                 (no unit) `%%u` |
+| **tuning_ppb**<sup>2</sup> | _cumulated hardware tuning_ <sup>2</sup>                                                |                                      PPB: `%%f` |
+| **corr_ppb**               | _relative clock tuning (correction) value in PPB_                                       |                                      PPB: `%%f` |
+| **MPD**                    | _network Mean Path Delay between us and the master_                                     |                                      ns: `%%ld` |
+| **MSP**                    | _measured `Sync` period_                                                                |                                    ns: `%%09lu` |
+
+<sup>1</sup> _Only available when operating the [ADDEND interface](#porting-addend-interface)._
+
+<sup>2</sup> _Only available when operating the [HLT interface](#porting-hlt-interface)._
 
 A logging header gets also issued when this logging capability is turned on.
 
+(with [ADDEND interface](#porting-addend-interface)):
+
 `T1 [s] | T1 [ns] | T4 [s] | T4 [ns] | Dt [s] | Dt [ns] | Dt [tick] | addend | corr_ppb | mpd_ns | sync_period_ns`
+
+(with [HLT interface](#porting-hlt-interface)):
+
+`T1 [s] | T1 [ns] | T4 [s] | T4 [ns] | Dt [s] | Dt [ns] | tuning_ppb | corr_ppb | mpd_ns | sync_period_ns`
+
 
 #### Example
 
@@ -186,7 +198,29 @@ The user gets notified of changes in the clock's accuracy. The clock is consider
 PTP LOCKED!
 PTP DIVERGED!
 ```
+## Transmit message management logging
 
+ID: `PTP_LOG_TRANSMISSION`, CLI: _not available_
+
+Definition: task_ptp.c, task_ptp()
+
+_Format:_
+
+On initiating a transmission:           `[ <flexPTP tick> ] <message UID> (<message tag>) --->`<br>
+On receiving the transmit timestamp:    `[ <flexPTP tick> ]---> <message UID>`<br>
+On the release of an allocated message: `[ <flexPTP tick> ] <message UID> AUTOFREE`
+
+
+#### Example
+
+```
+[      89] 15 (0) --->
+[      89]---> 15
+[      89] 15 AUTOFREE
+[      89] 16 (0) --->
+[      89]---> 16
+[      89] 16 AUTOFREE
+```
 
 # User events
 

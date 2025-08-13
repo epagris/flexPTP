@@ -21,24 +21,6 @@
 
 #include <flexptp_options.h>
 
-#if !defined(FLEXPTP_FREERTOS) && !defined(FLEXPTP_CMSIS_OS2) && !defined(FLEXPTP_LINUX)
-#define FLEXPTP_FREERTOS (1)
-#endif
-
-#ifdef FLEXPTP_FREERTOS
-#include "FreeRTOS.h"
-#include "queue.h"
-#include "task.h"
-#include "timers.h"
-#elif defined(FLEXPTP_CMSIS_OS2)
-#include <cmsis_compiler.h>
-#include <cmsis_os2.h>
-#endif
-
-#if defined(FLEXPTP_FREERTOS) || defined(FLEXPTP_CMSIS_OS2)
-#define FLEXPTP_NON_LINUX_OS (1)
-#endif
-
 #ifdef FLEXPTP_FREERTOS
 typedef TimerHandle_t TimerType;
 #elif defined(FLEXPTP_CMSIS_OS2)
