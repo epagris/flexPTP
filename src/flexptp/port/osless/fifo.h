@@ -6,6 +6,8 @@
 
 /**
  * @brief FIFO lock function.
+ * 
+ * @param lock lock or unlock the system
  */
 typedef void(FifoLockFn)(bool lock);
 

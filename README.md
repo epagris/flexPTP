@@ -51,12 +51,11 @@ The library package ships with hardware ports for several platforms, including:
 
 _All above example projects uses FreeRTOS and/or CMSIS OS2 except for the Linux and specific OS-less examples._
 
-
 ## Requirements
 
 Apart from the access to a working C compiler, only the following two criteria must be met to compile flexPTP:
 
-- The library relies on some operating system services, an embedded operating system is required to integrate the library. Any embedded operating system with a [CMSIS OS2](https://arm-software.github.io/CMSIS_5/RTOS2/html/index.html) wrapper is supported. Besides, [FreeRTOS](https://www.freertos.org/) (API) is supported out-of-the-box. As an experimental feature, Linux is also supported!
+- Although, the library can operate with OS-less systems, it is recommended to use an embedded operating system to gain better control over scheduling and internal message queueing. Any embedded OS with a [CMSIS OS2](https://arm-software.github.io/CMSIS_5/RTOS2/html/index.html) wrapper is supported. Besides, [FreeRTOS](https://www.freertos.org/) API is supported out-of-the-box. As an experimental feature, Linux is also supported!
 - A compatible network stack library and target platform Ethernet driver is required. Currently [Lightweight IP](https://github.com/lwip-tcpip/lwip) (lwip) and [EtherLib](https://gitea.epagris.com/epagris/EtherLib) are supported. as an experimental feature, the POSIX socket API is also supported!
 
 ## Porting and options

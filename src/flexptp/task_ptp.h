@@ -92,10 +92,11 @@ bool ptp_event_enqueue(const PtpCoreEvent * event);
 
 #ifdef FLEXPTP_OSLESS
 /**
- * Feed the flexPTP with ticks of PTP_HEARTBEAT_TICKRATE_MS long intervals.
+ * Provide the flexPTP with periodic ticks of PTP_HEARTBEAT_TICKRATE_MS intervals.
  * This function is only exposed if operating in FLEXPTP_OSLESS mode!
  * 
- * Call this function at PTP_HEARTBEAT_TICKRATE_MS intervals.
+ * Call this function at PTP_HEARTBEAT_TICKRATE_MS intervals if operating in FLEXPTP_OSLESS
+ * mode, otherwise flexPTP manages it.
  */
 void ptp_heartbeat_tmr_cb();
 
@@ -103,7 +104,8 @@ void ptp_heartbeat_tmr_cb();
  * flexPTP's main loop.
  * This function is only exposed if operating in FLEXPTP_OSLESS mode!
  * 
- * Call this function regularly to advance internal processing.
+ * Call this function periodically to advance internal processing if operating in
+ * FLEXPTP_OSLESS mode, otherwise the library internally manages it.
  */
 void task_ptp();
 #endif

@@ -135,9 +135,11 @@ static PtpMsgBufBlock sRawTxMsgBufPool[TX_PACKET_FIFO_LENGTH];
 // ----------------------------
 
 /**
- * Heartbeat callback.
- *
- * @param timer timer handle
+ * Provide the flexPTP with periodic ticks of PTP_HEARTBEAT_TICKRATE_MS intervals.
+ * This function is only exposed if operating in FLEXPTP_OSLESS mode!
+ * 
+ * Call this function at PTP_HEARTBEAT_TICKRATE_MS intervals if operating in FLEXPTP_OSLESS
+ * mode, otherwise flexPTP manages it.
  */
 #ifndef FLEXPTP_OSLESS
 static
@@ -575,7 +577,13 @@ bool ptp_read_and_clear_transmit_timestamp(uint32_t tag, TimestampI *pTs) {
     return true;
 }
 
-// task routine
+/**
+ * flexPTP's main loop.
+ * This function is only exposed if operating in FLEXPTP_OSLESS mode!
+ * 
+ * Call this function periodically to advance internal processing if operating in
+ * FLEXPTP_OSLESS mode, otherwise the library internally manages it.
+ */
 #ifdef FLEXPTP_NON_LINUX_OS
 static void task_ptp(void *pParam) {
 #elif defined(FLEXPTP_LINUX)

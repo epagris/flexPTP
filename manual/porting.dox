@@ -24,8 +24,11 @@ The assembling of a configuration file can be broken down into the following maj
     - define the `FLEXPTP_CMSIS_OS2` macro to use the [CMSIS OS2](https://arm-software.github.io/CMSIS_5/RTOS2/html/index.html) bindings **OR**
     - define the `FLEXPTP_FREERTOS` macro to let the library call the [FreeRTOS](https://www.freertos.org/) API directly **OR**
     - define the `FLEXPTP_LINUX` macro to use the standard Linux API (_experimental_) 
+    - define the `FLEXPTP_OSLESS` macro to enable the no-OS operation mode
+        - In OS-less mode, a method to enter and leave critical sections must be provided through the `FLEXPTP_OSLESS_LOCK` macro with the type FifoLockFn. The simplest locking is to globally disable/enable interrupts.
+        - Usually hidden-from-the-user, core method `task_ptp()` and `ptp_heartbeat_tmr_cb()` are exposed in this mode. They should be invoked periodically to run the library. Learn more at the functions' documentations.
 
-    OS headers must be available to the library (e.g. cmsis_os2.h, FreeRTOS.h, etc.). Linux-specific includes are automatically added.
+    OS headers must be available to the library (e.g. cmsis_os2.h, FreeRTOS.h, etc.).
 
 2. Define **printing routines or macros**:
 
