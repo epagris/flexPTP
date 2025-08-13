@@ -35,7 +35,7 @@ flexPTP offers the following capabilities:
 
 ## Platforms and examples
 
-![Example boards](manual/media/example_boards.png)
+![Example boards](media/example_boards.png)
 
 The library package ships with hardware ports for several platforms, including:
 
