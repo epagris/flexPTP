@@ -262,7 +262,7 @@ static bool ptp_create_message_queues() {
     fda[1] = 0
 
     CPFD(sRxPacketFIFO);
-    ok &= CLEAR(sRxPacketFIFO) == 0;
+    ok &= pipe(sRxPacketFIFO) == 0;
     CPFD(sTxPacketFIFO);
     ok &= pipe(sTxPacketFIFO) == 0;
     CPFD(sEventFIFO);

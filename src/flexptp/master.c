@@ -33,7 +33,7 @@
 static PtpHeader announceHeader;
 static RawPtpMessage announce;
 static PtpHeader syncHeader;
-static RawPtpMessage sync;
+static RawPtpMessage sync_;
 static RawPtpMessage followUp;
 static const PtpProfileTlvElement *tlvChain;
 
@@ -89,8 +89,8 @@ static void ptp_init_sync_header() {
                                       MAX_PTP_MSG_SIZE - PTP_PCKT_SIZE_SYNC);
 
     // save message sizes
-    sync.size = PTP_PCKT_SIZE_SYNC + tlvSize;
-    syncHeader.messageLength = sync.size;
+    sync_.size = PTP_PCKT_SIZE_SYNC + tlvSize;
+    syncHeader.messageLength = sync_.size;
 }
 
 static void ptp_init_follow_up_message() {
@@ -157,18 +157,18 @@ static void ptp_send_sync_message() {
     syncHeader.sequenceID = S.master.messaging.syncSequenceID++;
 
     // fill-in fields
-    ptp_construct_binary_header(sync.data, &syncHeader); // insert header
-    ptp_write_binary_timestamps(sync.data, &zeroTs, 1);  // insert an empty timestamp (TWO_STEP -> "reserved")
+    ptp_construct_binary_header(sync_.data, &syncHeader); // insert header
+    ptp_write_binary_timestamps(sync_.data, &zeroTs, 1);  // insert an empty timestamp (TWO_STEP -> "reserved")
 
     // setup packet
-    sync.tag = RPMT_RANDOM;
-    sync.pTxCb = ptp_send_follow_up;
-    sync.tx_dm = S.profile.delayMechanism;
-    sync.tx_mc = PTP_MC_EVENT;
-    sync.ttl = FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS; //S.master.syncTickPeriod;
+    sync_.tag = RPMT_RANDOM;
+    sync_.pTxCb = ptp_send_follow_up;
+    sync_.tx_dm = S.profile.delayMechanism;
+    sync_.tx_mc = PTP_MC_EVENT;
+    sync_.ttl = FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS; //S.master.syncTickPeriod;
 
     // send message
-    ptp_transmit_enqueue(&sync);
+    ptp_transmit_enqueue(&sync_);
 }
 
 static void ptp_send_delay_resp_message(const RawPtpMessage *pRawMsg, const PtpHeader *pHeader) {
