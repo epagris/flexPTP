@@ -29,6 +29,8 @@
 
 #include "minmax.h"
 
+#include <stdlib.h>
+
 ///\cond 0
 // global state
 PtpCoreState gPtpCoreState;
@@ -39,72 +41,7 @@ const TimestampI zeroTs = {0, 0}; // a zero timestamp
 
 // --------------------------------------
 
-/**
- * Heartbeat callback.
- *
- * @param timer timer handle
- */
-static void ptp_heartbeat_tmr_cb(
-#ifdef FLEXPTP_FREERTOS
-    TimerType timer
-#elif defined(FLEXPTP_CMSIS_OS2)
-    void * arg
-#endif
-) {
-    PtpCoreEvent event = {.code = PTP_CEV_HEARTBEAT, .w = 0, .dw = 0};
-    ptp_event_enqueue(&event);
-}
-
-/**
- * Construct the heartbeat timer.
- */
-static void ptp_create_heartbeat_tmr() {
-    // create smbc timer
-    #if FLEXPTP_FREERTOS
-    S.timers.heartbeat = xTimerCreate("ptp_heartbeat", pdMS_TO_TICKS(PTP_HEARTBEAT_TICKRATE_MS), // timeout
-                                      true,                                                      // timer operates in repeat mode
-                                      NULL,                                                      // ID
-                                      ptp_heartbeat_tmr_cb);                                     // callback-function
-    #elif defined(FLEXPTP_CMSIS_OS2)
-    S.timers.heartbeat = osTimerNew(ptp_heartbeat_tmr_cb, osTimerPeriodic, NULL, NULL);
-    #endif
-}
-
-/**
- * Remove the heartbeat timer.
- */
-static void ptp_remove_heartbeat_tmr() {
-#ifdef FLEXPTP_FREERTOS
-    xTimerStop(S.timers.heartbeat, 0);
-    xTimerDelete(S.timers.heartbeat, 0);
-#elif defined(FLEXPTP_CMSIS_OS2)
-    osTimerStop(S.timers.heartbeat);
-    osTimerDelete(S.timers.heartbeat);
-#endif
-S.timers.heartbeat = NULL;
-}
-
-static void ptp_start_heartbeat_tmr() {
-#ifdef FLEXPTP_FREERTOS
-    xTimerStart(S.timers.heartbeat, 0);
-#elif defined(FLEXPTP_CMSIS_OS2)
-    osTimerStart(S.timers.heartbeat, (PTP_HEARTBEAT_TICKRATE_MS * 1000) / osKernelGetTickFreq());
-#endif
-}
-
-static void ptp_stop_heartbeat_tmr() {
-#ifdef FLEXPTP_FREERTOS
-    xTimerStop(S.timers.heartbeat, 0);
-#elif defined(FLEXPTP_CMSIS_OS2) 
-    osTimerStop(S.timers.heartbeat);
-#endif
-}
-
-// --------------------------------------
-
-static void ptp_common_init(const uint8_t *hwa) {
-    // create clock identity
-    ptp_create_clock_identity(hwa);
+static void ptp_common_init(void) {
 
     // seed the randomizer
     srand(S.hwoptions.clockIdentity);
@@ -119,17 +56,29 @@ static void ptp_common_init(const uint8_t *hwa) {
     PTP_HW_INIT();
 #endif
 
+    // get the hardware address
+    uint8_t hwa[6];
+    ptp_nsd_get_interface_address(hwa);
+
+    // create clock identity
+    ptp_create_clock_identity(hwa);
+
     // initialize controller
     PTP_SERVO_INIT();
-
-    // initialize the heartbeat timer
-    ptp_create_heartbeat_tmr();
 }
 
 // initialize PTP module
-void ptp_init(const uint8_t *hwa) {
+void ptp_init(void) {
+#ifdef CLI_REG_CMD
+    // register cli commands
+    ptp_register_cli_commands();
+#endif // CLI_REG_CMD
+
+    // clear the timer
+    S.ticks = 0;
+
     /* ---- COMMON ----- */
-    ptp_common_init(hwa);
+    ptp_common_init();
 
     /* ----- SBMC ------ */
     ptp_bmca_init();
@@ -144,11 +93,6 @@ void ptp_init(const uint8_t *hwa) {
 
     ptp_reset(); // reset all PTP systems
 
-#ifdef CLI_REG_CMD
-    // register cli commands
-    ptp_register_cli_commands();
-#endif // CLI_REG_CMD
-
     // dispatch INIT_DONE event
     PTP_IUEV(PTP_UEV_INIT_DONE);
 }
@@ -156,10 +100,6 @@ void ptp_init(const uint8_t *hwa) {
 // deinit PTP module
 void ptp_deinit() {
     /* ---- COMMON ----- */
-
-    // remove the heartbeat timer
-    ptp_remove_heartbeat_tmr();
-
 #ifdef CLI_REG_CMD
     // remove cli commands
     ptp_remove_cli_commands();
@@ -179,7 +119,7 @@ void ptp_deinit() {
 }
 
 // reset PTP subsystem
-void ptp_reset() {
+static void ptp_core_reset() {
     // pause the heartbeat timer
     ptp_stop_heartbeat_tmr();
 
@@ -258,6 +198,7 @@ void ptp_process_packet(RawPtpMessage *pRawMsg) {
 void ptp_process_event(const PtpCoreEvent *event) {
     switch (event->code) {
     case PTP_CEV_HEARTBEAT: { // heartbeat event
+        S.ticks++;
         ptp_bmca_tick();
         ptp_slave_tick();
         ptp_master_tick();
@@ -275,10 +216,24 @@ void ptp_process_event(const PtpCoreEvent *event) {
 
         // dispatch BMCA_STATE_CHANGED event
         PTP_IUEV(PTP_UEV_BMCA_STATE_CHANGED);
-    }
+    } break;
+    case PTP_CEV_RESET: {
+        ptp_core_reset();
+    } break;
     default:
         break;
     }
+}
+
+// -----------------------------------------------
+
+uint32_t ptp_get_tick() {
+    return S.ticks;
+}
+
+void ptp_reset() {
+    PtpCoreEvent event = { .code = PTP_CEV_RESET, .w = 0, .dw = 0 };
+    ptp_event_enqueue(&event);
 }
 
 // -----------------------------------------------

@@ -117,22 +117,10 @@ static int ptp_receive_cb(const Pckt *packet, PcktSieveLayerTag tag) {
 }
 
 static void ptp_transmit_cb(uint32_t ts_s, uint32_t ts_ns, uint32_t tag) {
-    RawPtpMessage *pMsg = (RawPtpMessage *)tag;
-    pMsg->ts.sec = ts_s;
-    pMsg->ts.nanosec = ts_ns;
-    if (pMsg->pTs != NULL) {
-        pMsg->pTs->sec = ts_s;
-        pMsg->pTs->nanosec = ts_ns;
-    }
-    if (pMsg->pTxCb) {
-        pMsg->pTxCb(pMsg);
-    }
-
-    // free buffer
-    ptp_circ_buf_free(&gRawTxMsgBuf);
+    ptp_transmit_timestamp_cb(tag, ts_s, ts_ns);
 }
 
-void ptp_nsd_transmit_msg(RawPtpMessage *pMsg) {
+void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
     PtpMessageClass mc = pMsg->tx_mc;
 
     // narrow down by transport type
@@ -140,10 +128,10 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg) {
         cbd conn = (mc == PTP_MC_EVENT) ? PTP_L4_EVENT : PTP_L4_GENERAL;                // select connection by message type
         uint16_t port = (mc == PTP_MC_EVENT) ? PTP_PORT_EVENT : PTP_PORT_GENERAL;       // select port by message class
         ip_addr_t ipaddr = (DM == PTP_DM_E2E) ? PTP_IGMP_PRIMARY : PTP_IGMP_PEER_DELAY; // select destination IP-address by delmech.
-        udp_sendto_arg(conn, pMsg->data, pMsg->size, ipaddr, port, (uint32_t)pMsg);     // send packet
+        udp_sendto_arg(conn, pMsg->data, pMsg->size, ipaddr, port, uid);     // send packet
     } else if (TP == PTP_TP_802_3) {
         const uint8_t *ethaddr = (DM == PTP_DM_E2E) ? PTP_ETHERNET_PRIMARY : PTP_ETHERNET_PEER_DELAY; // select destination address by delmech.
-        cet_send_arg(PTP_L2, ethaddr, pMsg->data, pMsg->size, (uint32_t)pMsg);                        // send frame
+        cet_send_arg(PTP_L2, ethaddr, pMsg->data, pMsg->size, uid);                        // send frame
     }
 }
 

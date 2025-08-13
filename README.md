@@ -4,7 +4,7 @@
 
 ![flexPTP-running-on-TM4C1294](manual/media/TIVA.gif)
 
-**flexPTP has been designed with low resource utilization in mind. The library can easily fit into 20K program and 10K data memory space with all features enabled. The library has been ported to and tested on ARM Cortex-M4 and Cortex-M7 based microcontrollers manufactured by several vendors (e.g. STM32F4xx, STM32F7xx, STM32H7xx, TM4C1294 etc.). According to simple measurements published in several papers of ours, with the help of the library even low-power systems achieved a synchronization precision of tens of nanoseconds.**
+**flexPTP has been designed with low resource utilization in mind, the library has been ported to and tested on ARM Cortex-M4 and Cortex-M7 based microcontrollers from several vendors (e.g. STM32F4xx, STM32F7xx, STM32H7xx, TM4C1294 etc.). According to simple measurements published in several papers, with the help of the library, even low-power systems achieved a synchronization precision of tens of nanoseconds.**
 
 *The library is released under the MIT license with the endeavour to provide quick and compact solution for embedded time synchronization.*
 
@@ -32,10 +32,12 @@ flexPTP offers the following capabilities:
 
 ## Platforms and examples
 
+![Example boards](manual/media/example_boards.png)
+
 The library package ships with hardware ports for several platforms, including:
 
 - **TM4C1294** (_lwIP_)
-  - Example: [EK-TM4C1294XL Connected LaunchPad flexPTP demo](https://github.com/epagris/flexPTP-demo-TM4C1294)
+  - Example: [EK-TM4C1294XL Connected LaunchPad flexPTP demo](https://github.com/epagris/flexPTP-demo-TM4C1294), [EK-TM4C1294XL Connected LaunchPad **OS-less** flexPTP demo](https://github.com/epagris/flexPTP-demo-TM4C1294-osless)
 - **STM32F4xx** (_EtherLib_/_lwip_)
   - Example: [STM32 NUCLEO-F439ZI flexPTP demo](https://github.com/epagris/flexPTP-demo-NUCLEO-F439ZI)
 - **STM32F7xx** (_EtherLib_/_lwip_)
@@ -45,12 +47,16 @@ The library package ships with hardware ports for several platforms, including:
 - **MK64F**: (_lwip_)
   - Example: [NXP FRDM-K64F flexPTP demo](https://github.com/epagris/flexPTP-demo-FRDM-K64F)
 
+...and a **[Linux example](https://github.com/epagris/flexPTP-linux)** 
+
+_All above example projects uses FreeRTOS and/or CMSIS OS2 except for the Linux and specific OS-less examples._
+
 ## Requirements
 
 Apart from the access to a working C compiler, only the following two criteria must be met to compile flexPTP:
 
-- The library relies on some operating system services, an embedded operating system is required to integrate the library. Any embedded operating system with a [CMSIS OS2](https://arm-software.github.io/CMSIS_5/RTOS2/html/index.html) wrapper is supported. Besides, [FreeRTOS](https://www.freertos.org/) (API) is supported out-of-the-box.
-- A compatible network stack library and target platform Ethernet driver is required. Currently [Lightweight IP](https://github.com/lwip-tcpip/lwip) (lwip) and [EtherLib](https://gitea.epagris.com/epagris/EtherLib) are supported.
+- Although, the library can operate with OS-less systems, it is recommended to use an embedded operating system to gain better control over scheduling and internal message queueing. Any embedded OS with a [CMSIS OS2](https://arm-software.github.io/CMSIS_5/RTOS2/html/index.html) wrapper is supported. Besides, [FreeRTOS](https://www.freertos.org/) API is supported out-of-the-box. As an experimental feature, Linux is also supported!
+- A compatible network stack library and target platform Ethernet driver is required. Currently [Lightweight IP](https://github.com/lwip-tcpip/lwip) (lwip) and [EtherLib](https://gitea.epagris.com/epagris/EtherLib) are supported. as an experimental feature, the POSIX socket API is also supported!
 
 ## Porting and options
 

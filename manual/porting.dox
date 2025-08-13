@@ -22,7 +22,12 @@ The assembling of a configuration file can be broken down into the following maj
 
 1. Choose an **OS interface**:
     - define the `FLEXPTP_CMSIS_OS2` macro to use the [CMSIS OS2](https://arm-software.github.io/CMSIS_5/RTOS2/html/index.html) bindings **OR**
-    - define the `FLEXPTP_FREERTOS` macro to let the library call the [FreeRTOS](https://www.freertos.org/) API directly
+    - define the `FLEXPTP_FREERTOS` macro to let the library call the [FreeRTOS](https://www.freertos.org/) API directly **OR**
+    - define the `FLEXPTP_LINUX` macro to use the standard Linux API (_experimental_) 
+    - define the `FLEXPTP_OSLESS` macro to enable the no-OS operation mode
+        - In OS-less mode, a method to enter and leave critical sections must be provided through the `FLEXPTP_OSLESS_LOCK` macro with the type FifoLockFn. The simplest locking is to globally disable/enable interrupts.
+        - Usually hidden-from-the-user, core method `task_ptp()` and `ptp_heartbeat_tmr_cb()` are exposed in this mode. They should be invoked periodically to run the library. Learn more at the functions' documentations.
+
     OS headers must be available to the library (e.g. cmsis_os2.h, FreeRTOS.h, etc.).
 
 2. Define **printing routines or macros**:
@@ -79,11 +84,11 @@ flexptp_options_stm32f407_etherlib.h, flexptp_options_stm32h743_etherlib.h, flex
 
 ## Network Stack Driver (NSD) {#network-stack-driver}
 
-The flexPTP library expects (only!) the below message transception related functions given. These are the functions, that are declared in network_stack_driver.h. During the porting work, these functions must be implemennted.
+The flexPTP library expects (only!) the below message transception related functions defined. These are the functions, that are declared in network_stack_driver.h. During the porting work, these functions must be implemented.
 
 - `void ptp_nsd_init(PtpTransportType tp, PtpDelayMechanism dm)`: This function initializes (opens and closes) the network connections based on the profile settings passed in the `tp` and `dm` parameters. `tp` and `dm` can take on any value from `PtpTransportType` and `PtpDelayMechanism`, respectively. Passing `-1` in either parameter signals that the flexPTP wants the network layer to close all connections. In other words, by passing `-1` the flexPTP does not defined a valid profile. It is expected that this function gets called multiple times. On subsequent calls, the function first informs the network that we are leaving the IGMP-group of the profile we abandon and closes connection associated with the profile we are leaving. Then, it takes on the new profile, opens the new connection and joins the new IGMP-groups. Joining and leaving of the IGMP-groups is performed by invoking the `ptp_nsd_igmp_join_leave()` method.
 
-- `void ptp_nsd_transmit_msg(RawPtpMessage *pMsg)`: The flexPTP engine calls this function to dispatch a PTP message. The NSD can safely anticipate that fields of the message passed from the PTP engine carry fields reflecting the profile that was set by the latest `ptp_nsd_init()` call. The function must only fetch the PTP message class from the message passed to determine through which connection it has to be sent.
+- `void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid)`<sup>1</sup>: The flexPTP engine calls this function to dispatch a PTP message. The NSD can safely anticipate that fields of the message passed from the PTP engine carry fields reflecting the profile that was set by the latest `ptp_nsd_init()` call. The function must only fetch the PTP message class from the message passed to determine through which connection it has to be sent. The outbound messages are identified by unique IDs (UIDs). The message UID must be used to identify messages upon feeding back transmit timestamps using the `ptp_transmit_timestamp_cb()` function. The former function is 'thread safe', it can be called from an interrupt context as well.
 
 - `void ptp_nsd_igmp_join_leave(bool join)`: The flexPTP engine might intend to inform the network about the joining or leaving of the IGMP-group associated with the operating profile (for example upon link recovery). Besides, `ptp_nsd_init()` references this function as well.
 
@@ -93,6 +98,8 @@ Finally, it's also the job of the NSD module to make the received messages avail
 
 Inherently, the fetching and exchanging of the ingress and egress timestamps with the flexPTP core fall also in the scope of the NSD module.
 
+<sup>1</sup> _This function signature has changed._
+
 ### NSD examples
 
 nsd_lwip.c, nsd_etherlib.c : Sample NSD implementations for lwIP and EtherLib network stacks.
@@ -101,7 +108,7 @@ nsd_lwip.c, nsd_etherlib.c : Sample NSD implementations for lwIP and EtherLib ne
 
 The library supports two different, mutually exclusive clock management interfaces: the old-style **ADDEND-based** tuning interface and the newly introduced **High-Level Tuning (HLT)** interface. The user should implement the one better matched to the underlying hardware.
 
-### ADDEND-interface
+### ADDEND-interface {#porting-addend-interface}
 
 ![General structure of a PTP hardware clock with distinguished high precision frequency divider and counter](media/tuneable_hardware_clock.png)
 
@@ -137,7 +144,7 @@ flexptp_options_stm32f407_etherlib.h, flexptp_options_stm32h743_etherlib.h, flex
 
 ptp_port_stm32f407_etherlib.c, ptp_port_stm32f407_lwip.c, ptp_port_stm32h743_etherlib.c, ptp_port_stm32h743_lwip.c, ptp_port_tiva_tm4c1294.c
 
-### High-Level Tuning (HLT) interface
+### High-Level Tuning (HLT) interface {#porting-hlt-interface}
 
 This interface enables flexPTP to operate hardware clocks regardless of the clock's inner structure considering the clock as a black-box device. This interface is provided to extend flexPTP support to devices with hardware clocks differing from the formerly introduced one.
 
@@ -170,12 +177,12 @@ List of definitions, part of the initial configuration, with default values. Def
 
 Macros controlling basic internal operation.
 
-| Macro                           | Default value | Description                                                          |
-| ------------------------------- | ------------- | -------------------------------------------------------------------- |
-| `PTP_HEARTBEAT_TICKRATE_MS`     | 125           | Internal core scheduler period (ms)                                  |
-| `PTP_ACCURACY_LIMIT_NS`         | 100           | Threshold of the `LOCKED` state (ns)                                 |
-| `PTP_DEFAULT_SERVO_OFFSET_NS`   | 0             | Initial servo offset (ns) (can be changed in runtime)                |
-| `PTP_DEFAULT_COARSE_TRIGGER_NS` | 20000000      | Coarse correction kick-in threshold (ns) (can be changed in runtime) |
+| Macro                           | Default value | Description                                                                                            |
+| ------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------ |
+| `PTP_HEARTBEAT_TICKRATE_MS`     | 62            | Internal core scheduler period (ms). It should be less than the half of the shortest messaging period. |
+| `PTP_ACCURACY_LIMIT_NS`         | 100           | Threshold of the `LOCKED` state (ns)                                                                   |
+| `PTP_DEFAULT_SERVO_OFFSET_NS`   | 0             | Initial servo offset (ns) (can be changed in runtime)                                                  |
+| `PTP_DEFAULT_COARSE_TRIGGER_NS` | 20000000      | Coarse correction kick-in threshold (ns) (can be changed in runtime)                                   |
 
 ### PTP definitions
 

@@ -1,4 +1,10 @@
 #include "slave.h"
+
+#include <math.h>
+#include <string.h>
+#include <stdlib.h>
+#include <inttypes.h>
+
 #include "common.h"
 
 #include "format_utils.h"
@@ -11,7 +17,6 @@
 
 #include "ptp_core.h"
 #include "ptp_defs.h"
-#include <math.h>
 
 #include "minmax.h"
 
@@ -29,8 +34,8 @@
 static void ptp_tune_clock(float tuning_ppb) {
 #ifdef PTP_ADDEND_INTERFACE
     int64_t compAddend = (int64_t)S.hwclock.addend + (int64_t)(tuning_ppb * PTP_ADDEND_CORR_PER_PPB_F); // compute addend value
-    S.hwclock.addend = MIN(compAddend, 0xFFFFFFFF);                                                   // limit to 32-bit range
-    PTP_SET_ADDEND(S.hwclock.addend);                                                                 // write addend into hardware
+    S.hwclock.addend = MIN(compAddend, 0xFFFFFFFF);                                                     // limit to 32-bit range
+    PTP_SET_ADDEND(S.hwclock.addend);                                                                   // write addend into hardware
 #elif defined(PTP_HLT_INTERFACE)
     S.hwclock.tuning_ppb += tuning_ppb;
     PTP_SET_TUNING(S.hwclock.tuning_ppb);
@@ -110,22 +115,16 @@ static void ptp_perform_correction() {
     // ------------------------------
 
     // fill the previous state variables
-    if (!nonZeroI(&S.slave.prevSyncMa) || !nonZeroI(&S.slave.prevSyncSl) || !nonZeroI(&S.slave.prevTimeError)) {
+    if (!nonZeroI(&S.slave.prevSyncMa) || !nonZeroI(&S.slave.prevSyncSl)) {
         goto retain_cycle_data;
     }
 
     // ------------------------------
 
     // determine the Sync period
-    int64_t measSyncPeriod_ns;
-    // // if momentarily sync interval is not directly measurable, use the nominal value
-    // if (S.profile.logDelayReqPeriod == PTP_LOGPER_SYNCMATCHED && S.profile.delayMechanism == PTP_DM_E2E) {
-    //     measSyncPeriod_ns = S.slave.messaging.syncPeriodMs * 1E+06;
-    // } else { // if accurately measurable...
     TimestampI measSyncPeriod;
     subTime(&measSyncPeriod, &syncMa, &(S.slave.prevSyncMa));
-    measSyncPeriod_ns = nsI(&measSyncPeriod);
-    // }
+    int64_t measSyncPeriod_ns = nsI(&measSyncPeriod);
 
     // ------------------------------
 
@@ -138,7 +137,7 @@ static void ptp_perform_correction() {
             PTP_SERVO_RESET();
 
             // print info
-            CLILOG(S.logging.info, "Time difference has exceeded the coarse correction threshold [%ldns], compensation commenced!\n", d_ns);
+            CLILOG(S.logging.info, "Time difference has exceeded the coarse correction threshold [%" __PRI64_PREFIX "dns], compensation commenced!\n", d_ns);
         }
 
         uint8_t fccntr = S.slave.fastCompCntr;
@@ -191,9 +190,9 @@ static void ptp_perform_correction() {
             PTP_SET_CLOCK((uint32_t)ti.sec, ti.nanosec);
 
             // log time compensation
-            CLILOG(S.logging.info, "[%u/%u] Time compensation: %ld ns\n", fccntr + 1, PTP_FC_TIME_CORRECTION_CYCLES, d_ns);
+            CLILOG(S.logging.info, "[%u/%u] Time compensation: %" __PRI64_PREFIX "d ns\n", fccntr + 1, PTP_FC_TIME_CORRECTION_CYCLES, d_ns);
         } else if (fcs == PTP_FC_TIME_CORRECTION_PROPAGATION) {
-            CLILOG(S.logging.info, "[%u/%u] Waiting for time compensation to propagate.\n", fccntr + 1, PTP_FC_TIME_PROPAGATION_CYCLES, d_ns);
+            CLILOG(S.logging.info, "[%u/%u] Waiting for time compensation to propagate.\n", fccntr + 1, PTP_FC_TIME_PROPAGATION_CYCLES);
         }
 
         // maintain FC state
@@ -224,12 +223,12 @@ static void ptp_perform_correction() {
     // log on cli (if enabled)
 #ifdef PTP_ADDEND_INTERFACE
     int32_t d_ticks = tsToTick(&d, PTP_CLOCK_TICK_FREQ_HZ);
-    CLILOG(S.logging.def, "%d %09d %d %09d %d " PTP_COLOR_BYELLOW "% 9d" PTP_COLOR_RESET " % 9d % 12u % 8.4f % 9ld % 9lu\n",
+    CLILOG(S.logging.def, "%d %09d %d %09d %d " PTP_COLOR_BYELLOW "% 9d" PTP_COLOR_RESET " % 9d % 12u % 8.4f % 9" __PRI64_PREFIX "d % 9" __PRI64_PREFIX "u\n",
            (int32_t)syncMa.sec, syncMa.nanosec, (int32_t)delReqMa.sec, delReqMa.nanosec,
            (int32_t)d.sec, d.nanosec, d_ticks,
            S.hwclock.addend, corr_ppb, nsI(&S.network.meanPathDelay), (uint64_t)measSyncPeriod_ns);
 #elif defined(PTP_HLT_INTERFACE)
-    CLILOG(S.logging.def, "%d %09d %d %09d %d " PTP_COLOR_BYELLOW "% 9d" PTP_COLOR_RESET " % 8.4f % 8.4f % 9ld % 9lu\n",
+    CLILOG(S.logging.def, "%d %09d %d %09d %d " PTP_COLOR_BYELLOW "% 9d" PTP_COLOR_RESET " % 8.4f % 8.4f % 9" __PRI64_PREFIX "d % 9" __PRI64_PREFIX "u\n",
            (int32_t)syncMa.sec, syncMa.nanosec, (int32_t)delReqMa.sec, delReqMa.nanosec,
            (int32_t)d.sec, d.nanosec,
            S.hwclock.tuning_ppb, corr_ppb, nsI(&S.network.meanPathDelay), (uint64_t)measSyncPeriod_ns);
@@ -266,7 +265,7 @@ static void ptp_commence_e2e_correction() {
         PTP_IUEV((S.profile.delayMechanism == PTP_DM_E2E) ? PTP_UEV_DELAY_REQ_SENT : PTP_UEV_PDELAY_REQ_SENT);
     }
 
-    // jump clock if error is way too big...
+    // jump the clock if error is way too big...
     TimestampI d;
     subTime(&d, &S.slave.scd.t[T2], &S.slave.scd.t[T1]);
     if (d.sec != 0) {
@@ -351,7 +350,7 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
                     ptp_commence_e2e_correction();
 
                     // log correction field (if enabled)
-                    CLILOG(S.logging.corr, "C [Follow_Up]: %09lu\n", pHeader->correction_ns);
+                    CLILOG(S.logging.corr, "C [Follow_Up]: %09" __PRI64_PREFIX "u\n", pHeader->correction_ns);
 
                     // dispatch FOLLOW_UP_RECVED event
                     PTP_IUEV(PTP_UEV_FOLLOW_UP_RECVED);
@@ -377,6 +376,11 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
 
             if (mt == PTP_MT_Delay_Resp) { // Delay_Resp processing
 
+                // try fetching Delay_Req timestamp
+                if (!ptp_read_and_clear_transmit_timestamp(RPMT_DELAY_REQ, &S.slave.scd.t[T3])) {
+                    return;
+                }
+
                 ptp_read_delay_resp_id_data(&delay_respID, pRawMsg->data);
 
                 // if the response was sent to us as a response to our Delay_Req then continue processing
@@ -401,10 +405,15 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
                     PTP_IUEV(PTP_UEV_DELAY_RESP_RECVED);
 
                     // log correction field (if enabled)
-                    CLILOG(S.logging.corr, "C [Del_Resp]: %09lu\n", pHeader->correction_ns);
+                    CLILOG(S.logging.corr, "C [Del_Resp]: %09" __PRI64_PREFIX "u\n", pHeader->correction_ns);
                 }
 
-            } else if (mt == PTP_MT_PDelay_Resp) {  // PDelay_Resp processing
+            } else if (mt == PTP_MT_PDelay_Resp) { // PDelay_Resp processing
+                // try fetching Delay_Req timestamp
+                if (!ptp_read_and_clear_transmit_timestamp(RPMT_DELAY_REQ, &S.slave.scd.t[T3])) {
+                    return;
+                }
+
                 TimestampI *pT = &S.slave.scd.t[2]; // skip the first 2 timestamps
                 uint64_t *cf = &S.slave.scd.cf[2];  // skip the first 2 correction fields
 
@@ -417,16 +426,22 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
                     pT[T3] = pT[T2] = zeroTs;
                     ptp_commence_p2p_correction(pHeader->sequenceID); // commence correction
                 } else {
-                    ptp_extract_timestamps(&(pT[T2]), pRawMsg->data, 1); // retrieve t2 (P2P)
+                    ptp_extract_timestamps(&(pT[T2]), pRawMsg->data, 1); // retrieve t2 (P2P)                                    
+                    S.slave.expectPDelRespFollowUp = true; // expect a PDelay_Resp_Follow_Up coming
                 }
 
                 // dispatch PDELAY_RESP_RECVED event
                 PTP_IUEV(PTP_UEV_PDELAY_RESP_RECVED);
 
                 // log correction field (if enabled)
-                CLILOG(S.logging.corr, "C [PDel_Resp]: %09lu\n", pHeader->correction_ns);
+                CLILOG(S.logging.corr, "C [PDel_Resp]: %09" __PRI64_PREFIX "u\n", pHeader->correction_ns);
 
             } else if (mt == PTP_MT_PDelay_Resp_Follow_Up) { // PDelay_Resp_Follow_Up processing
+                // don't fall for rogue messages
+                if (!S.slave.expectPDelRespFollowUp) {
+                    return;
+                }
+
                 ptp_read_delay_resp_id_data(&delay_respID, pRawMsg->data);
 
                 // if sent to us as a response to our Delay_Req then continue processing
@@ -446,8 +461,11 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
                     PTP_IUEV(PTP_UEV_PDELAY_RESP_FOLLOW_UP_RECVED);
 
                     // log correction field (if enabled)
-                    CLILOG(S.logging.corr, "C [PDel_Resp_Follow_Up]: %09lu\n", pHeader->correction_ns);
+                    CLILOG(S.logging.corr, "C [PDel_Resp_Follow_Up]: %09" __PRI64_PREFIX "u\n", pHeader->correction_ns);
                 }
+
+                // no other messages are accepted
+                S.slave.expectPDelRespFollowUp = false;
             }
         }
     }
@@ -494,6 +512,9 @@ void ptp_slave_reset() {
     // reset fast correction state
     S.slave.fastCompState = PTP_FC_IDLE;
     S.slave.fastCompCntr = 0;
+
+    // don't expect a Delay_Resp_Follow_Up message
+    S.slave.expectPDelRespFollowUp = false;
 }
 
 void ptp_slave_tick() {

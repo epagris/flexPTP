@@ -1,6 +1,8 @@
 #include "cli_cmds.h"
 
+#include <stdlib.h>
 #include <string.h>
+#include <inttypes.h>
 
 #include "clock_utils.h"
 #include "logging.h"
@@ -11,7 +13,6 @@
 #include "settings_interface.h"
 
 #include "minmax.h"
-
 
 // #define S (gPtpCoreState)
 
@@ -79,7 +80,7 @@ static CMD_FUNCTION(CB_time) {
     ptp_time(&t);
 
     if (argc > 0 && !strcmp(ppArgs[0], "ns")) {
-        MSG("%lu %u\n", t.sec, t.nanosec);
+        MSG("%" __PRI64_PREFIX "u %u\n", t.sec, t.nanosec);
     } else {
         tsPrint(datetime, (const TimestampI *)&t);
         MSG("%s\n", datetime);
@@ -312,7 +313,7 @@ static CMD_FUNCTION(CB_coarseThreshold) {
         ptp_set_coarse_threshold(atoi(ppArgs[0]));
     }
 
-    MSG("PTP coarse correction threshold: %lu ns\n", ptp_get_coarse_threshold());
+    MSG("PTP coarse correction threshold: %" __PRI64_PREFIX "u ns\n", ptp_get_coarse_threshold());
     return 0;
 }
 

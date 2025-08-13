@@ -19,7 +19,7 @@ void ptp_print_profile() {
         PTP_TRANSPEC_HINT[ptp_get_transport_specific()],
         PTP_TRANSPORT_TYPE_HINT[ptp_get_transport_type()],
         PTP_DELMECH_HINT[ptp_get_delay_mechanism()],
-        ptp_get_domain());
+        (uint32_t)ptp_get_domain());
 
     int8_t drlp = ptp_get_delay_req_log_period();
     if (drlp != PTP_LOGPER_SYNCMATCHED) {
@@ -39,11 +39,11 @@ void ptp_print_profile() {
 
     uint8_t flags = ptp_get_profile_flags();
     MSG(PTP_COLOR_BYELLOW " flags:              " PTP_COLOR_CYAN "0x%X\n", flags);
-    for (uint8_t i = 0; i < PTP_PF_N - 1; i++) {
+    for (uint32_t i = 0; i < PTP_PF_N - 1; i++) {
         uint8_t mask = 1 << i;
         bool on = (flags & mask) != 0;
         const char * color = on ? (PTP_COLOR_BGREEN) : (PTP_COLOR_BRED);
         char bullet = on ? '+' : '-';
-        MSG("   %s%c (0x%X) %s" PTP_COLOR_RESET "\n", color, bullet, mask,  PTP_FLAGS_HINT[i]);
+        MSG("   %s%c (0x%X) %s" PTP_COLOR_RESET "\n", color, bullet, (uint32_t)mask, PTP_FLAGS_HINT[i]);
     }
 }

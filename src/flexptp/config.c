@@ -1,6 +1,7 @@
 #include "config.h"
 
 #include <stdbool.h>
+#include <string.h>
 
 #include "ptp_core.h"
 
@@ -11,13 +12,14 @@
 // -------------
 
 // config logging flags
-#define CONFIG_LOG_DEF (0x01)        ///< Default logging
-#define CONFIG_LOG_INFO (0x02)       ///< General info logging
-#define CONFIG_LOG_CORR (0x04)       ///< Correction field logging
-#define CONFIG_LOG_TIMESTAMPS (0x08) ///< Timestamp logging
-#define CONFIG_LOG_LOCKED (0x10)     ///< Inform the user if the clock diverges or locks
-#define CONFIG_LOG_BMCA (0x20)       ///< Peek BMCA state changes
-#define CONFIG_LOG_ALL (0x3F)        ///< All logging options packed
+#define CONFIG_LOG_DEF (0x01)          ///< Default logging
+#define CONFIG_LOG_INFO (0x02)         ///< General info logging
+#define CONFIG_LOG_CORR (0x04)         ///< Correction field logging
+#define CONFIG_LOG_TIMESTAMPS (0x08)   ///< Timestamp logging
+#define CONFIG_LOG_LOCKED (0x10)       ///< Inform the user if the clock diverges or locks
+#define CONFIG_LOG_BMCA (0x20)         ///< Peek BMCA state changes
+#define CONFIG_LOG_TRANSMISSION (0x40) ///< Log transmission events
+#define CONFIG_LOG_ALL (0x7F)          ///< All logging options packed
 
 ///\cond 0
 #define CONFIG_ADD_LOGGING(c, f) (((c) ? (f) : 0))
@@ -33,7 +35,8 @@ void ptp_store_config(PtpConfig *pConfig) {
                        CONFIG_ADD_LOGGING(S.logging.corr, CONFIG_LOG_CORR) |
                        CONFIG_ADD_LOGGING(S.logging.timestamps, CONFIG_LOG_TIMESTAMPS) |
                        CONFIG_ADD_LOGGING(S.logging.locked, CONFIG_LOG_LOCKED) |
-                       CONFIG_ADD_LOGGING(S.logging.bmca, CONFIG_LOG_BMCA);
+                       CONFIG_ADD_LOGGING(S.logging.bmca, CONFIG_LOG_BMCA) |
+                       CONFIG_ADD_LOGGING(S.logging.transmission, CONFIG_LOG_TRANSMISSION);
     pConfig->priority1 = S.capabilities.priority1;
     pConfig->priority2 = S.capabilities.priority2;
 }
@@ -73,6 +76,7 @@ void ptp_load_config(const PtpConfig *pConfig) {
     S.logging.timestamps = (pConfig->logging & CONFIG_LOG_TIMESTAMPS) != 0;
     S.logging.locked = (pConfig->logging & CONFIG_LOG_LOCKED) != 0;
     S.logging.bmca = (pConfig->logging & CONFIG_LOG_BMCA) != 0;
+    S.logging.transmission = (pConfig->logging & CONFIG_LOG_TRANSMISSION) != 0;
 }
 
 void ptp_load_config_from_dump(const void *pDump) {

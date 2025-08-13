@@ -21,17 +21,10 @@
 
 #include <flexptp_options.h>
 
-#if !defined(FLEXPTP_FREERTOS) && !defined(FLEXPTP_CMSIS_OS2)
-#define FLEXPTP_FREERTOS (1)
-#endif
-
 #ifdef FLEXPTP_FREERTOS
-#include "FreeRTOS.h"
-#include "queue.h"
-#include "task.h"
-#include "timers.h"
+typedef TimerHandle_t TimerType;
 #elif defined(FLEXPTP_CMSIS_OS2)
-#include <cmsis_os2.h>
+typedef osTimerId_t TimerType;
 #endif
 
 /**
@@ -170,15 +163,32 @@ typedef enum {
 /**
  * @brief Raw PTP message structure.
  */
+struct RawPtpMessage_;
+
+/**
+ * @brief * Transmit callback function prototype.
+ */
+typedef void(TxCb)(const struct RawPtpMessage_ *pMsg);
+
+/**
+ * Tagging of transmitted PTP messages.
+ */
+typedef enum {
+    RPMT_RANDOM = 0, ///< Create a random, unique tag
+    RPMT_SYNC,       ///< Sync tag
+    RPMT_DELAY_REQ,  ///< (P)Delay_Req tag
+} RawPtpMsgTag;
+
 typedef struct RawPtpMessage_ {
     TimestampI ts; ///< Timestamp
     uint32_t size; ///< Packet size
 
     // --- transmit related ---
-    TimestampI *pTs;                                  ///< pointer to timestamp
-    void (*pTxCb)(const struct RawPtpMessage_ *pMsg); ///< transmit callback function
-    PtpDelayMechanism tx_dm;                          ///< transmit transport type
-    PtpMessageClass tx_mc;                            ///< transmit message class
+    uint32_t tag;            ///< unique transmit tag
+    uint32_t ttl;            ///< transmit Time-to-Live in ticks
+    TxCb *pTxCb;             ///< transmit callback function
+    PtpDelayMechanism tx_dm; ///< transmit transport type
+    PtpMessageClass tx_mc;   ///< transmit message class
 
     // --- data ---
     uint8_t data[MAX_PTP_MSG_SIZE]; ///< raw packet data
@@ -201,7 +211,7 @@ typedef enum {
 } PtpClockClass;
 
 /**
- * @brief Standard clock accuray definitions.
+ * @brief Standard clock accuracy definitions.
  */
 typedef enum {
     PTP_CA_25NS = 0x20,    ///< Accurate to within 25ns
@@ -263,7 +273,7 @@ typedef PtpAnnounceBody PtpMasterProperties;
  */
 typedef enum PtpM2SState {
     SIdle,        ///< Idle
-    SWaitFollowUp ///< Waiting for a Follow Up message
+    SWaitFollowUp ///< Waiting for a Follow_Up message
 } PtpM2SState;
 
 /**
@@ -330,7 +340,7 @@ typedef struct _PtpProfileAdditionalData {
  * @brief PTP profile flags
  */
 typedef enum {
-    PTP_PF_NONE = 0x00,                                       ///< Empty profile flags
+    PTP_PF_NO_FLAGS = 0x00,                                   ///< Empty profile flags
     PTP_PF_ISSUE_SYNC_FOR_COMPLIANT_SLAVE_ONLY_IN_P2P = 0x01, ///< Send Sync messages only for a compliant peer in P2P mode
     PTP_PF_SLAVE_ONLY = 0x02,                                 ///< Operating only in SLAVE mode
     PTP_PF_N                                                  ///< Number of available PTP profile flags
@@ -481,12 +491,6 @@ typedef enum { PTP_FC_IDLE = 0,                    ///< Fast correction algorith
                PTP_FC_TIME_CORRECTION_PROPAGATION, ///< Waiting for the effects of time correction to propagate
 } PtpFastCompState;
 
-#ifdef FLEXPTP_FREERTOS
-typedef TimerHandle_t TimerType;
-#elif defined(FLEXPTP_CMSIS_OS2)
-typedef osTimerId_t TimerType;
-#endif
-
 /**
  * @brief Giant PTP core state object.
  */
@@ -504,22 +508,21 @@ typedef struct {
     PtpBmcaState bmca;       ///< BMCA state
     PtpNetworkState network; ///< Network state
 
+    uint32_t ticks; ///< ticks counting form the initialization
+
     // Logging
     struct {
-        bool def;        ///< default
-        bool corr;       ///< correction fields
-        bool timestamps; ///< timestamps
-        bool info;       ///< informative messages
-        bool locked;     ///< clock lock state change
-        bool bmca;       ///< BMCA state change
-    } logging;           ///< Logging
+        bool def;          ///< default
+        bool corr;         ///< correction fields
+        bool timestamps;   ///< timestamps
+        bool info;         ///< informative messages
+        bool locked;       ///< clock lock state change
+        bool bmca;         ///< BMCA state change
+        bool transmission; ///< Transmission logging
+    } logging;             ///< Logging
 
     PtpStats stats;                   ///< Statistics
     PtpUserEventCallback userEventCb; ///< User event callback pointer
-
-    struct {
-        TimerType heartbeat; ///< timer for managing SBMC operations
-    } timers;                    ///< Management timers
 
     /* ---- SLAVE ----- */
 
@@ -528,6 +531,7 @@ typedef struct {
 
         PtpSlaveMessagingState messaging; ///< Messaging state
         PtpSyncCycleData scd;             ///< Sync cycle data
+        bool expectPDelRespFollowUp;      ///< Expect a PDelay_Resp_Follow_Up message
         PtpFastCompState fastCompState;   ///< State of fast compensation
         uint8_t fastCompCntr;             ///< Cycle counter for fast compensation
         TimestampI prevSyncMa;            ///< T1 from the previous cycle
@@ -549,6 +553,7 @@ typedef struct {
         PtpP2PSlaveInfo p2pSlave;      ///< Information on the connected P2P slave (only used in P2P modes)
         uint32_t pdelay_reqSequenceID; ///< Sequence number of the last PDelay_Request sent
         PtpSyncCycleData scd;          ///< Sync cycle data
+        bool expectPDelRespFollowUp;   ///< Expect a PDelay_Resp_Follow_Up message
 
         PtpMasterMessagingState messaging; ///< Messaging state
 

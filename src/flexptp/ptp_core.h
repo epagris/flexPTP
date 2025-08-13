@@ -23,9 +23,8 @@
 /**
  * Initialize flexPTP module.
  * 
- * @param hwa network interface hardware address over which the flexPTP operates
  */
-void ptp_init(const uint8_t *hwa);
+void ptp_init(void);
 
 /**
  * Deinitialize flexPTP module.
@@ -50,6 +49,13 @@ void ptp_process_packet(RawPtpMessage *pRawMsg);
  * @param event pointer to an event object
  */
 void ptp_process_event(const PtpCoreEvent * event);
+
+/**
+ * Get current PTP tick.
+ *
+ * @return current flexPTP tick
+ */
+uint32_t ptp_get_tick();
 
 /**
  * Set callback invoked each synchronization cycle.

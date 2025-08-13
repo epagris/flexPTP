@@ -18,7 +18,11 @@
 #define PTP_IGMP_DEFAULT_STR ("224.0.1.129")    ///< PTP default IGMP group
 #define PTP_IGMP_PEER_DELAY_STR ("224.0.0.107") ///< PTP Peer-Delay IGMP group
 
-#ifndef LWIP
+#if defined(__linux__)
+#include <netinet/in.h>
+typedef in_addr_t ip_addr_t;
+typedef in_addr_t ip4_addr_t;
+#elif !defined(LWIP)
 typedef ip4_addr ip_addr_t;
 typedef ip4_addr ip4_addr_t;
 #endif
@@ -74,8 +78,50 @@ extern const uint8_t PTP_ETHERNET_PEER_DELAY[6]; ///< PTP's L2 Peer_Delay Ethern
 
 // ---- AUTODEFINES ----------
 
+#if !defined(FLEXPTP_FREERTOS) && !defined(FLEXPTP_CMSIS_OS2) && !defined(FLEXPTP_LINUX) && !defined(FLEXPTP_OSLESS)
+#define FLEXPTP_FREERTOS (1)
+#endif
+
+#ifdef FLEXPTP_FREERTOS
+#include "FreeRTOS.h"
+#include "queue.h"
+#include "task.h"
+#include "timers.h"
+#elif defined(FLEXPTP_CMSIS_OS2)
+#include <cmsis_compiler.h>
+#include <cmsis_os2.h>
+#elif defined(FLEXPTP_LINUX)
+#include <poll.h>
+#include <pthread.h>
+#include <semaphore.h>
+#include <signal.h>
+#include <unistd.h>
+#elif defined(FLEXPTP_OSLESS)
+#include "port/osless/fifo.h"
+#endif
+
+#if defined(FLEXPTP_FREERTOS) || defined(FLEXPTP_CMSIS_OS2)
+#define FLEXPTP_NON_LINUX_OS (1)
+#endif
+
+#if defined(FLEXPTP_OSLESS) && !defined(FLEXPTP_OSLESS_LOCK)
+#error "FLEXPTP_OSLESS_LOCK must be defined to use FLEXPTP_OSLESS mode!"
+#endif
+
+#ifndef FLEXPTP_TASK_PRIORITY ///< flexPTP task priority
+#ifdef FLEXPTP_FREERTOS 
+#define FLEXPTP_TASK_PRIORITY (configMAX_PRIORITIES / 2)
+#elif defined(FLEXPTP_CMSIS_OS2)
+#define FLEXPTP_TASK_PRIORITY osPriorityNormal
+#endif
+#endif
+
+#ifndef FLEXPTP_TASK_STASK_SIZE
+#define FLEXPTP_TASK_STACK_SIZE (2048) ///< flexPTP task stack size
+#endif
+
 #ifndef PTP_HEARTBEAT_TICKRATE_MS
-#define PTP_HEARTBEAT_TICKRATE_MS (125) ///< Heartbeat ticking period
+#define PTP_HEARTBEAT_TICKRATE_MS (62) ///< Heartbeat ticking period
 #endif
 
 #ifndef PTP_PORT_ID
@@ -185,11 +231,8 @@ extern const uint8_t PTP_ETHERNET_PEER_DELAY[6]; ///< PTP's L2 Peer_Delay Ethern
 
 // ----------------
 
-// provide own MIN implementation
-#ifdef MIN
-#undef MIN
-#endif
+#define FLEXPTP_MS_TO_TICKS(ms) ((ms + (PTP_HEARTBEAT_TICKRATE_MS - 1)) / PTP_HEARTBEAT_TICKRATE_MS)  ///< Interval conversion between milliseconds and ticks
 
-#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+#define FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS (20)
 
 #endif /* FLEXPTP_PTP_DEFS_H_ */

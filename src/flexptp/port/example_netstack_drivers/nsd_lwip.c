@@ -21,7 +21,7 @@ static struct udp_pcb *PTP_L4_GENERAL = NULL;
 static PtpTransportType TP = -1;
 static PtpDelayMechanism DM = -1;
 
-static void ptp_transmit_cb(uint32_t ts_s, uint32_t ts_ns, uint32_t tag);
+static void ptp_transmit_cb(uint32_t ts_s, uint32_t ts_ns, void * tag);
 static void ptp_receive_cb(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, u16_t port);
 
 void ptp_nsd_igmp_join_leave(bool join) {
@@ -96,26 +96,11 @@ static void ptp_receive_cb(void *pArg, struct udp_pcb *pPCB, struct pbuf *pP, co
     pbuf_free(pP);
 }
 
-static void ptp_transmit_cb(uint32_t ts_s, uint32_t ts_ns, uint32_t tag) {
-    RawPtpMessage *pMsg = (RawPtpMessage *)(tag);
-    pMsg->ts.sec = ts_s;
-    pMsg->ts.nanosec = ts_ns;
-
-    // MSG("%u.%09u\n", ts_s, ts_ns);
-
-    if (pMsg->pTs != NULL) {
-        pMsg->pTs->sec = ts_s;
-        pMsg->pTs->nanosec = ts_ns;
-    }
-
-    if (pMsg->pTxCb) {
-        pMsg->pTxCb(pMsg);
-    }
-    
-    ptp_circ_buf_free(&gRawTxMsgBuf);
+static void ptp_transmit_cb(uint32_t ts_s, uint32_t ts_ns, void * tag) {
+    ptp_transmit_timestamp_cb((uint32_t) tag, ts_s, ts_ns);
 }
 
-void ptp_nsd_transmit_msg(RawPtpMessage *pMsg) {
+void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
     if (pMsg == NULL) {
         MSG("NULL!!!\n");
         return;
@@ -131,7 +116,7 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg) {
     memcpy(p->payload, pMsg->data, pMsg->size);
 
     // set transmit callback
-    p->tag = pMsg;
+    p->tag = (void *)uid;
     p->tx_cb = ptp_transmit_cb;
 
     // lock LWIP core

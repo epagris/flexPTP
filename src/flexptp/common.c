@@ -1,5 +1,9 @@
 #include "common.h"
 
+#include "msg_buf.h"
+
+#include <string.h>
+
 #include "ptp_core.h"
 #include "task_ptp.h"
 
@@ -11,8 +15,8 @@
 #define S (gPtpCoreState)
 ///\endcond
 
-static PtpHeader delReqHeader; ///< header for sending Delay_Reg messages
-static RawPtpMessage pdelRespMsg; ///< whole, compiled PDelay_Resp message
+static PtpHeader delReqHeader;       ///< header for sending Delay_Reg messages
+static RawPtpMessage pdelRespMsg;    ///< whole, compiled PDelay_Resp message
 static RawPtpMessage pdelRespFUpMsg; ///< whole, compiled PDelay_Resp_Follow_Up message
 
 // ------------------
@@ -22,11 +26,12 @@ void ptp_init_delay_req_header() {
     delReqHeader.transportSpecific = (uint8_t)S.profile.transportSpecific;
     delReqHeader.versionPTP = 2; // PTPv2
     delReqHeader.messageLength = PTP_HEADER_LENGTH + PTP_TIMESTAMP_LENGTH +
-                                ((S.profile.delayMechanism == PTP_DM_P2P) ? PTP_TIMESTAMP_LENGTH : 0);
+                                 ((S.profile.delayMechanism == PTP_DM_P2P) ? PTP_TIMESTAMP_LENGTH : 0);
     delReqHeader.domainNumber = S.profile.domainNumber;
     ptp_clear_flags(&(delReqHeader.flags)); // no flags
     delReqHeader.correction_ns = 0;
     delReqHeader.correction_subns = 0;
+    delReqHeader.minorVersionPTP = 0;
 
     memcpy(&delReqHeader.clockIdentity, &S.hwoptions.clockIdentity, 8);
 
@@ -39,10 +44,13 @@ void ptp_init_delay_req_header() {
 void ptp_send_delay_req_message() {
     // PTP message
     RawPtpMessage delReqMsg = {0};
+    delReqMsg.tag = RPMT_DELAY_REQ; // | MSGBUF_TAG_OVERWRITE;
     delReqMsg.size = delReqHeader.messageLength;
-    delReqMsg.pTs = (S.bmca.state == PTP_BMCA_SLAVE) ? (&(S.slave.scd.t[T3])) : (&(S.master.scd.t[T1])); // timestamp writeback address
+    // delReqMsg.pTs = (S.bmca.state == PTP_BMCA_SLAVE) ? (&(S.slave.scd.t[T3])) : (&(S.master.scd.t[T1])); // timestamp writeback address
     delReqMsg.tx_dm = S.profile.delayMechanism;
     delReqMsg.tx_mc = PTP_MC_EVENT;
+    delReqMsg.pTxCb = NULL; // empty_tx_cb;
+    delReqMsg.ttl = ((S.bmca.state == PTP_BMCA_SLAVE) ? ((S.profile.logDelayReqPeriod == PTP_LOGPER_SYNCMATCHED) ? FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS : S.slave.delReqTickPeriod) : S.master.pdelayReqTickPeriod);
 
     // increment sequenceID
     delReqHeader.sequenceID = (S.bmca.state == PTP_BMCA_SLAVE) ? (++S.slave.messaging.delay_reqSequenceID) : (++S.master.pdelay_reqSequenceID);
@@ -68,6 +76,7 @@ void ptp_send_pdelay_resp_follow_up(const RawPtpMessage *pMsg) {
     header.messageType = PTP_MT_PDelay_Resp_Follow_Up; // change message type
     ptp_clear_flags(&header.flags);                    // clear flags
     header.messageLength = PTP_PCKT_SIZE_PDELAY_RESP_FOLLOW_UP;
+    header.minorVersionPTP = 0;
 
     // write fields
     ptp_construct_binary_header(pdelRespFUpMsg.data, &header); // HEADER
@@ -76,11 +85,12 @@ void ptp_send_pdelay_resp_follow_up(const RawPtpMessage *pMsg) {
     memcpy(pdelRespFUpMsg.data + reqPortIdOffset, pMsg->data + reqPortIdOffset, PTP_PORT_ID_LENGTH);
 
     // setup packet
-    pdelRespFUpMsg.pTs = NULL;
+    pdelRespFUpMsg.tag = RPMT_RANDOM;
     pdelRespFUpMsg.size = PTP_PCKT_SIZE_PDELAY_RESP_FOLLOW_UP;
     pdelRespFUpMsg.tx_dm = PTP_DM_P2P;
     pdelRespFUpMsg.tx_mc = PTP_MC_GENERAL;
     pdelRespFUpMsg.pTxCb = NULL;
+    pdelRespFUpMsg.ttl = FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS;
 
     // MSG("PDelRespFollowUp: %d.%09d\n", (int32_t) t3.sec, t3.nanosec);
 
@@ -113,11 +123,12 @@ void ptp_send_pdelay_resp(const RawPtpMessage *pMsg) {
     ptp_write_delay_resp_id_data(pdelRespMsg.data, &reqDelRespId); // REQ.SRC.PORT.ID
 
     // setup packet
-    pdelRespMsg.pTs = &pdelRespMsg.ts;
+    pdelRespMsg.tag = RPMT_RANDOM;
     pdelRespMsg.size = PTP_PCKT_SIZE_PDELAY_RESP;
     pdelRespMsg.pTxCb = ptp_send_pdelay_resp_follow_up;
     pdelRespMsg.tx_dm = PTP_DM_P2P;
     pdelRespMsg.tx_mc = PTP_MC_EVENT;
+    pdelRespMsg.ttl = FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS;
 
     // MSG("PDelResp: %d.%09d\n", (int32_t)t2.sec, t2.nanosec);
 

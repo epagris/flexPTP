@@ -18,9 +18,21 @@
 #include "ptp_types.h"
 
 /**
- * Register PTP task.
+ * Start the heartbeat timer.
  */
-void reg_task_ptp();
+void ptp_start_heartbeat_tmr();
+
+/**
+ * Stop the heartbeat timer.
+ */
+void ptp_stop_heartbeat_tmr();
+
+/**
+ * Register PTP task.
+ * 
+ * @return initialization successful
+ */
+bool reg_task_ptp();
 
 /**
  * Unreg PTP task.
@@ -30,7 +42,7 @@ void unreg_task_ptp();
 /**
  * Is the PTP task operating?
  */
-bool task_ptp_is_operating();
+bool is_flexPTP_operating();
 
 /**
  * Enqueue PTP message.
@@ -38,8 +50,8 @@ bool task_ptp_is_operating();
  * @param pPayload message payload
  * @param len message length
  * @param ts_sec reception timestamp seconds part
- * @param ts_ns receptiopn timestamp nanoseconds part
- * @param tp transport portocol (L2/L4)
+ * @param ts_ns reception timestamp nanoseconds part
+ * @param tp transport protocol (L2/L4)
  */
 void ptp_receive_enqueue(const void *pPayload, uint32_t len, uint32_t ts_sec, uint32_t ts_ns, int tp);
 
@@ -52,11 +64,50 @@ void ptp_receive_enqueue(const void *pPayload, uint32_t len, uint32_t ts_sec, ui
 bool ptp_transmit_enqueue(const RawPtpMessage * pMsg);
 
 /**
+ * Transmit timestamp callback handler.
+ * 
+ * @param tag unique message tag
+ * @param seconds transmit timestamp seconds part
+ * @param nanoseconds transmit timestamp nanoseconds part
+ */
+void ptp_transmit_timestamp_cb(uint32_t uid, uint32_t seconds, uint32_t nanoseconds);
+
+/**
+ * Read transmit timestamp and release message buffer area.
+ * 
+ * @param tag unique message tag
+ * @param pTs pointer to a TimestampI object
+ * 
+ * @return successful timestamp fetch
+ */
+bool ptp_read_and_clear_transmit_timestamp(uint32_t tag, TimestampI * pTs);
+
+/**
  * Post an event.
  * 
  * @param event pointer to a filled event object
- * @return sucessful posting
+ * @return successful posting
  */
 bool ptp_event_enqueue(const PtpCoreEvent * event);
+
+#ifdef FLEXPTP_OSLESS
+/**
+ * Provide the flexPTP with periodic ticks of PTP_HEARTBEAT_TICKRATE_MS intervals.
+ * This function is only exposed if operating in FLEXPTP_OSLESS mode!
+ * 
+ * Call this function at PTP_HEARTBEAT_TICKRATE_MS intervals if operating in FLEXPTP_OSLESS
+ * mode, otherwise flexPTP manages it.
+ */
+void ptp_heartbeat_tmr_cb();
+
+/**
+ * flexPTP's main loop.
+ * This function is only exposed if operating in FLEXPTP_OSLESS mode!
+ * 
+ * Call this function periodically to advance internal processing if operating in
+ * FLEXPTP_OSLESS mode, otherwise the library internally manages it.
+ */
+void task_ptp();
+#endif
 
 #endif // TASK_PTP_H_

@@ -12,10 +12,7 @@
 
 #include <stdbool.h>
 
-#include "ptp_raw_msg_circbuf.h"
-
-extern PtpCircBuf gRawRxMsgBuf; ///< Input circular buffer
-extern PtpCircBuf gRawTxMsgBuf; ///< Output circular buffers
+#include "ptp_types.h"
 
 /**
  * Initialize or reinitialize the Network Stack Driver.
@@ -36,8 +33,9 @@ void ptp_nsd_get_interface_address(uint8_t * hwa);
  * Transmit a PTP message.
  * 
  * @param pMsg pointer to a RawPtpMessage
+ * @param uid UID of the message
  */
-void ptp_nsd_transmit_msg(RawPtpMessage *pMsg);
+void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid);
 
 /**
  * Join or leave IGMP groups associated with the current PTP profile.
