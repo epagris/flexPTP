@@ -116,8 +116,7 @@ $(document).ready(function(){initNavTree('network__stack__driver_8h.html',''); i
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">network_stack_driver.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -125,7 +124,7 @@ $(document).ready(function(){initNavTree('network__stack__driver_8h.html',''); i
 <p>This file is a header for the employed Network Stack Driver (NSD). A NSD must define ALL four functions listed below.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="ptp__raw__msg__circbuf_8h_source.html">ptp_raw_msg_circbuf.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>&quot;</code><br />
 </div>
 <p><a href="network__stack__driver_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -135,19 +134,10 @@ Functions</h2></td></tr>
 <tr class="separator:a448d70ee83a66f7dd5f5e602c7f41b8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8084e66715ef332fa46c677421f6b20f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="network__stack__driver_8h.html#a8084e66715ef332fa46c677421f6b20f">ptp_nsd_get_interface_address</a> (uint8_t *hwa)</td></tr>
 <tr class="separator:a8084e66715ef332fa46c677421f6b20f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06c3b6dbcec5f68576cd1a48bf8755b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="network__stack__driver_8h.html#a06c3b6dbcec5f68576cd1a48bf8755b2">ptp_nsd_transmit_msg</a> (<a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a> *pMsg)</td></tr>
-<tr class="separator:a06c3b6dbcec5f68576cd1a48bf8755b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a202fbe6ff51f6e1f54b9792ea10f3b25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="network__stack__driver_8h.html#a202fbe6ff51f6e1f54b9792ea10f3b25">ptp_nsd_transmit_msg</a> (<a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a> *pMsg, uint32_t uid)</td></tr>
+<tr class="separator:a202fbe6ff51f6e1f54b9792ea10f3b25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a403275d7e5b31f6714a93ebd28d1c2e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="network__stack__driver_8h.html#a403275d7e5b31f6714a93ebd28d1c2e4">ptp_nsd_igmp_join_leave</a> (bool join)</td></tr>
 <tr class="separator:a403275d7e5b31f6714a93ebd28d1c2e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:acca6b1cff50af54eb7e4d3f7568f6d5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_ptp_circ_buf.html">PtpCircBuf</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="network__stack__driver_8h.html#acca6b1cff50af54eb7e4d3f7568f6d5c">gRawRxMsgBuf</a></td></tr>
-<tr class="memdesc:acca6b1cff50af54eb7e4d3f7568f6d5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input circular buffer.  <br /></td></tr>
-<tr class="separator:acca6b1cff50af54eb7e4d3f7568f6d5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5add86d5c2b56e49b427d7669afeff6f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_ptp_circ_buf.html">PtpCircBuf</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="network__stack__driver_8h.html#a5add86d5c2b56e49b427d7669afeff6f">gRawTxMsgBuf</a></td></tr>
-<tr class="memdesc:a5add86d5c2b56e49b427d7669afeff6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output circular buffers.  <br /></td></tr>
-<tr class="separator:a5add86d5c2b56e49b427d7669afeff6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This file is a header for the employed Network Stack Driver (NSD). A NSD must define ALL four functions listed below. </p>
@@ -178,7 +168,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00150">150</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00138">138</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
 
 </div>
 </div>
@@ -241,8 +231,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a06c3b6dbcec5f68576cd1a48bf8755b2" name="a06c3b6dbcec5f68576cd1a48bf8755b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06c3b6dbcec5f68576cd1a48bf8755b2">&#9670;&#160;</a></span>ptp_nsd_transmit_msg()</h2>
+<a id="a202fbe6ff51f6e1f54b9792ea10f3b25" name="a202fbe6ff51f6e1f54b9792ea10f3b25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a202fbe6ff51f6e1f54b9792ea10f3b25">&#9670;&#160;</a></span>ptp_nsd_transmit_msg()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -251,69 +241,31 @@ Variables</h2></td></tr>
           <td class="memname">void ptp_nsd_transmit_msg </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a> *&#160;</td>
-          <td class="paramname"><em>pMsg</em></td><td>)</td>
+          <td class="paramname"><em>pMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>uid</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Transmit a PTP message.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pMsg</td><td>pointer to a <a class="el" href="struct_raw_ptp_message.html" title="Raw PTP message structure.">RawPtpMessage</a> </td></tr>
+    <tr><td class="paramname">pMsg</td><td>pointer to a <a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a> </td></tr>
+    <tr><td class="paramname">uid</td><td>UID of the message </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00135">135</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="acca6b1cff50af54eb7e4d3f7568f6d5c" name="acca6b1cff50af54eb7e4d3f7568f6d5c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acca6b1cff50af54eb7e4d3f7568f6d5c">&#9670;&#160;</a></span>gRawRxMsgBuf</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_ptp_circ_buf.html">PtpCircBuf</a> gRawRxMsgBuf</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Input circular buffer. </p>
-
-</div>
-</div>
-<a id="a5add86d5c2b56e49b427d7669afeff6f" name="a5add86d5c2b56e49b427d7669afeff6f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5add86d5c2b56e49b427d7669afeff6f">&#9670;&#160;</a></span>gRawTxMsgBuf</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_ptp_circ_buf.html">PtpCircBuf</a> gRawTxMsgBuf</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Output circular buffers. </p>
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00123">123</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
 
 </div>
 </div>

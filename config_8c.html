@@ -123,6 +123,7 @@ $(document).ready(function(){initNavTree('config_8c.html',''); initResizable(); 
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="config_8h_source.html">config.h</a>&quot;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="ptp__core_8h_source.html">ptp_core.h</a>&quot;</code><br />
 </div>
 <p><a href="config_8c_source.html">Go to the source code of this file.</a></p>
@@ -147,7 +148,10 @@ Macros</h2></td></tr>
 <tr class="memitem:a4e0513a932bcbe9be56b5d6804b23847"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8c.html#a4e0513a932bcbe9be56b5d6804b23847">CONFIG_LOG_BMCA</a>&#160;&#160;&#160;(0x20)</td></tr>
 <tr class="memdesc:a4e0513a932bcbe9be56b5d6804b23847"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek BMCA state changes.  <br /></td></tr>
 <tr class="separator:a4e0513a932bcbe9be56b5d6804b23847"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae027cf3e3acd22a2fe98753993efe2d5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8c.html#ae027cf3e3acd22a2fe98753993efe2d5">CONFIG_LOG_ALL</a>&#160;&#160;&#160;(0x3F)</td></tr>
+<tr class="memitem:ae097544c511ad5c2c5711519025229bf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8c.html#ae097544c511ad5c2c5711519025229bf">CONFIG_LOG_TRANSMISSION</a>&#160;&#160;&#160;(0x40)</td></tr>
+<tr class="memdesc:ae097544c511ad5c2c5711519025229bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log transmission events.  <br /></td></tr>
+<tr class="separator:ae097544c511ad5c2c5711519025229bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae027cf3e3acd22a2fe98753993efe2d5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8c.html#ae027cf3e3acd22a2fe98753993efe2d5">CONFIG_LOG_ALL</a>&#160;&#160;&#160;(0x7F)</td></tr>
 <tr class="memdesc:ae027cf3e3acd22a2fe98753993efe2d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">All logging options packed.  <br /></td></tr>
 <tr class="separator:ae027cf3e3acd22a2fe98753993efe2d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -168,14 +172,14 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define CONFIG_LOG_ALL&#160;&#160;&#160;(0x3F)</td>
+          <td class="memname">#define CONFIG_LOG_ALL&#160;&#160;&#160;(0x7F)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>All logging options packed. </p>
 
-<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00020">20</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00022">22</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
 
 </div>
 </div>
@@ -193,7 +197,7 @@ Functions</h2></td></tr>
 
 <p>Peek BMCA state changes. </p>
 
-<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00019">19</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00020">20</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
 
 </div>
 </div>
@@ -211,7 +215,7 @@ Functions</h2></td></tr>
 
 <p>Correction field logging. </p>
 
-<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00016">16</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00017">17</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
 
 </div>
 </div>
@@ -229,7 +233,7 @@ Functions</h2></td></tr>
 
 <p>Default logging. </p>
 
-<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00014">14</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00015">15</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
 
 </div>
 </div>
@@ -247,7 +251,7 @@ Functions</h2></td></tr>
 
 <p>General info logging. </p>
 
-<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00015">15</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00016">16</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
 
 </div>
 </div>
@@ -265,7 +269,7 @@ Functions</h2></td></tr>
 
 <p>Inform the user if the clock diverges or locks. </p>
 
-<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00018">18</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00019">19</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
 
 </div>
 </div>
@@ -283,7 +287,25 @@ Functions</h2></td></tr>
 
 <p>Timestamp logging. </p>
 
-<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00017">17</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00018">18</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
+
+</div>
+</div>
+<a id="ae097544c511ad5c2c5711519025229bf" name="ae097544c511ad5c2c5711519025229bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae097544c511ad5c2c5711519025229bf">&#9670;&#160;</a></span>CONFIG_LOG_TRANSMISSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CONFIG_LOG_TRANSMISSION&#160;&#160;&#160;(0x40)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Log transmission events. </p>
+
+<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00021">21</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
 
 </div>
 </div>
@@ -310,7 +332,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00041">41</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00044">44</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
 
 </div>
 </div>
@@ -336,7 +358,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00078">78</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00082">82</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
 
 </div>
 </div>
@@ -362,7 +384,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00028">28</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00030">30</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
 
 </div>
 </div>

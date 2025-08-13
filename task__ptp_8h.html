@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('task__ptp_8h.html',''); initResizable(
 </div><!--header-->
 <div class="contents">
 
-<p>The entry point of the whole PTP-implementation. Calling <a class="el" href="task__ptp_8h.html#a2d483d3c32b3890d8c699018e48e45cd">reg_task_ptp()</a> initializes the PTP-engine, invoking <a class="el" href="task__ptp_8h.html#a5fd98059e4c2ec1004c74064e17cbe4c">unreg_task_ptp()</a> shuts it down.  
+<p>The entry point of the whole PTP-implementation. Calling <a class="el" href="task__ptp_8h.html#aff77e313d172028af7484d66ef2cef1f">reg_task_ptp()</a> initializes the PTP-engine, invoking <a class="el" href="task__ptp_8h.html#a5fd98059e4c2ec1004c74064e17cbe4c">unreg_task_ptp()</a> shuts it down.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
@@ -132,25 +132,53 @@ $(document).ready(function(){initNavTree('task__ptp_8h.html',''); initResizable(
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2d483d3c32b3890d8c699018e48e45cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task__ptp_8h.html#a2d483d3c32b3890d8c699018e48e45cd">reg_task_ptp</a> ()</td></tr>
-<tr class="separator:a2d483d3c32b3890d8c699018e48e45cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fa3429450d28566339b689d464260f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task__ptp_8h.html#a2fa3429450d28566339b689d464260f3">ptp_start_heartbeat_tmr</a> ()</td></tr>
+<tr class="separator:a2fa3429450d28566339b689d464260f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a858bb79ae107883c54da075e71f9ecac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task__ptp_8h.html#a858bb79ae107883c54da075e71f9ecac">ptp_stop_heartbeat_tmr</a> ()</td></tr>
+<tr class="separator:a858bb79ae107883c54da075e71f9ecac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff77e313d172028af7484d66ef2cef1f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task__ptp_8h.html#aff77e313d172028af7484d66ef2cef1f">reg_task_ptp</a> ()</td></tr>
+<tr class="separator:aff77e313d172028af7484d66ef2cef1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5fd98059e4c2ec1004c74064e17cbe4c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task__ptp_8h.html#a5fd98059e4c2ec1004c74064e17cbe4c">unreg_task_ptp</a> ()</td></tr>
 <tr class="separator:a5fd98059e4c2ec1004c74064e17cbe4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a878a4e5ad4927a4a372b0a9755acf51b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task__ptp_8h.html#a878a4e5ad4927a4a372b0a9755acf51b">task_ptp_is_operating</a> ()</td></tr>
-<tr class="separator:a878a4e5ad4927a4a372b0a9755acf51b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95e79be47c136a295b9b5d4313ea2148"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task__ptp_8h.html#a95e79be47c136a295b9b5d4313ea2148">is_flexPTP_operating</a> ()</td></tr>
+<tr class="separator:a95e79be47c136a295b9b5d4313ea2148"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1409be7128c102f50cc590ec0aa817e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task__ptp_8h.html#a1409be7128c102f50cc590ec0aa817e0">ptp_receive_enqueue</a> (const void *pPayload, uint32_t len, uint32_t ts_sec, uint32_t ts_ns, int tp)</td></tr>
 <tr class="separator:a1409be7128c102f50cc590ec0aa817e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b43e49ceba255ff05d4acdfa37a6869"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task__ptp_8h.html#a2b43e49ceba255ff05d4acdfa37a6869">ptp_transmit_enqueue</a> (const <a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a> *pMsg)</td></tr>
 <tr class="separator:a2b43e49ceba255ff05d4acdfa37a6869"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d8d64d0927e028889b55b6bff4c7d57"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task__ptp_8h.html#a6d8d64d0927e028889b55b6bff4c7d57">ptp_transmit_timestamp_cb</a> (uint32_t uid, uint32_t seconds, uint32_t nanoseconds)</td></tr>
+<tr class="separator:a6d8d64d0927e028889b55b6bff4c7d57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad30f8dedd228ec115b9603cd80de665"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task__ptp_8h.html#aad30f8dedd228ec115b9603cd80de665">ptp_read_and_clear_transmit_timestamp</a> (uint32_t tag, <a class="el" href="struct_timestamp_i.html">TimestampI</a> *pTs)</td></tr>
+<tr class="separator:aad30f8dedd228ec115b9603cd80de665"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73b5e9841da53dee4d9230d8a418b2ac"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task__ptp_8h.html#a73b5e9841da53dee4d9230d8a418b2ac">ptp_event_enqueue</a> (const <a class="el" href="struct_ptp_core_event.html">PtpCoreEvent</a> *event)</td></tr>
 <tr class="separator:a73b5e9841da53dee4d9230d8a418b2ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The entry point of the whole PTP-implementation. Calling <a class="el" href="task__ptp_8h.html#a2d483d3c32b3890d8c699018e48e45cd">reg_task_ptp()</a> initializes the PTP-engine, invoking <a class="el" href="task__ptp_8h.html#a5fd98059e4c2ec1004c74064e17cbe4c">unreg_task_ptp()</a> shuts it down. </p>
+<div class="textblock"><p>The entry point of the whole PTP-implementation. Calling <a class="el" href="task__ptp_8h.html#aff77e313d172028af7484d66ef2cef1f">reg_task_ptp()</a> initializes the PTP-engine, invoking <a class="el" href="task__ptp_8h.html#a5fd98059e4c2ec1004c74064e17cbe4c">unreg_task_ptp()</a> shuts it down. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>András Wiesner, 2019-2025 </dd></dl>
 
 <p class="definition">Definition in file <a class="el" href="task__ptp_8h_source.html">task_ptp.h</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a95e79be47c136a295b9b5d4313ea2148" name="a95e79be47c136a295b9b5d4313ea2148"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95e79be47c136a295b9b5d4313ea2148">&#9670;&#160;</a></span>is_flexPTP_operating()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool is_flexPTP_operating </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Is the PTP task operating? </p>
+
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00786">786</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+
+</div>
+</div>
 <a id="a73b5e9841da53dee4d9230d8a418b2ac" name="a73b5e9841da53dee4d9230d8a418b2ac"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a73b5e9841da53dee4d9230d8a418b2ac">&#9670;&#160;</a></span>ptp_event_enqueue()</h2>
 
@@ -173,9 +201,48 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>sucessful posting </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>successful posting </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00177">177</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00430">430</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+
+</div>
+</div>
+<a id="aad30f8dedd228ec115b9603cd80de665" name="aad30f8dedd228ec115b9603cd80de665"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad30f8dedd228ec115b9603cd80de665">&#9670;&#160;</a></span>ptp_read_and_clear_transmit_timestamp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ptp_read_and_clear_transmit_timestamp </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>tag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_timestamp_i.html">TimestampI</a> *&#160;</td>
+          <td class="paramname"><em>pTs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read transmit timestamp and release message buffer area.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>unique message tag </td></tr>
+    <tr><td class="paramname">pTs</td><td>pointer to a <a class="el" href="struct_timestamp_i.html" title="Timestamp (signed)">TimestampI</a> object</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>successful timestamp fetch </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00564">564</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
 
 </div>
 </div>
@@ -228,13 +295,53 @@ Functions</h2></td></tr>
     <tr><td class="paramname">pPayload</td><td>message payload </td></tr>
     <tr><td class="paramname">len</td><td>message length </td></tr>
     <tr><td class="paramname">ts_sec</td><td>reception timestamp seconds part </td></tr>
-    <tr><td class="paramname">ts_ns</td><td>receptiopn timestamp nanoseconds part </td></tr>
-    <tr><td class="paramname">tp</td><td>transport portocol (L2/L4) </td></tr>
+    <tr><td class="paramname">ts_ns</td><td>reception timestamp nanoseconds part </td></tr>
+    <tr><td class="paramname">tp</td><td>transport protocol (L2/L4) </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00193">193</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00457">457</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+
+</div>
+</div>
+<a id="a2fa3429450d28566339b689d464260f3" name="a2fa3429450d28566339b689d464260f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fa3429450d28566339b689d464260f3">&#9670;&#160;</a></span>ptp_start_heartbeat_tmr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ptp_start_heartbeat_tmr </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Start the heartbeat timer. </p>
+
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00210">210</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+
+</div>
+</div>
+<a id="a858bb79ae107883c54da075e71f9ecac" name="a858bb79ae107883c54da075e71f9ecac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a858bb79ae107883c54da075e71f9ecac">&#9670;&#160;</a></span>ptp_stop_heartbeat_tmr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ptp_stop_heartbeat_tmr </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stop the heartbeat timer. </p>
+
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00225">225</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
 
 </div>
 </div>
@@ -262,47 +369,73 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>successful insertion </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00230">230</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00502">502</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
 
 </div>
 </div>
-<a id="a2d483d3c32b3890d8c699018e48e45cd" name="a2d483d3c32b3890d8c699018e48e45cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d483d3c32b3890d8c699018e48e45cd">&#9670;&#160;</a></span>reg_task_ptp()</h2>
+<a id="a6d8d64d0927e028889b55b6bff4c7d57" name="a6d8d64d0927e028889b55b6bff4c7d57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d8d64d0927e028889b55b6bff4c7d57">&#9670;&#160;</a></span>ptp_transmit_timestamp_cb()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void reg_task_ptp </td>
+          <td class="memname">void ptp_transmit_timestamp_cb </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>uid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>seconds</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>nanoseconds</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Transmit timestamp callback handler.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>unique message tag </td></tr>
+    <tr><td class="paramname">seconds</td><td>transmit timestamp seconds part </td></tr>
+    <tr><td class="paramname">nanoseconds</td><td>transmit timestamp nanoseconds part </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00537">537</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+
+</div>
+</div>
+<a id="aff77e313d172028af7484d66ef2cef1f" name="aff77e313d172028af7484d66ef2cef1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff77e313d172028af7484d66ef2cef1f">&#9670;&#160;</a></span>reg_task_ptp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool reg_task_ptp </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Register PTP task. </p>
+<p>Register PTP task.</p>
+<dl class="section return"><dt>Returns</dt><dd>initialization successful </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00109">109</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
-
-</div>
-</div>
-<a id="a878a4e5ad4927a4a372b0a9755acf51b" name="a878a4e5ad4927a4a372b0a9755acf51b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a878a4e5ad4927a4a372b0a9755acf51b">&#9670;&#160;</a></span>task_ptp_is_operating()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool task_ptp_is_operating </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Is the PTP task operating? </p>
-
-<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00317">317</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00326">326</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
 
 </div>
 </div>
@@ -322,7 +455,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Unreg PTP task. </p>
 
-<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00162">162</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task__ptp_8c_source.html#l00404">404</a> of file <a class="el" href="task__ptp_8c_source.html">task_ptp.c</a>.</p>
 
 </div>
 </div>

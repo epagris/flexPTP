@@ -121,16 +121,13 @@ $(document).ready(function(){initNavTree('struct_raw_ptp_message.html',''); init
 </div><!--header-->
 <div class="contents">
 
-<p>Raw PTP message structure.  
- <a href="struct_raw_ptp_message.html#details">More...</a></p>
-
 <p><code>#include &lt;<a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for RawPtpMessage:</div>
 <div class="dyncontent">
 <div class="center"><img src="struct_raw_ptp_message__coll__graph.png" border="0" usemap="#a_raw_ptp_message_coll__map" alt="Collaboration graph"/></div>
 <map name="a_raw_ptp_message_coll__map" id="a_raw_ptp_message_coll__map">
-<area shape="rect" title="Raw PTP message structure." alt="" coords="5,108,135,133"/>
+<area shape="rect" title=" " alt="" coords="5,93,135,119"/>
 <area shape="rect" href="struct_timestamp_i.html" title="Timestamp (signed)" alt="" coords="20,5,120,31"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
@@ -143,12 +140,15 @@ Data Fields</h2></td></tr>
 <tr class="memitem:ab2c6b258f02add8fdf4cfc7c371dd772"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_raw_ptp_message.html#ab2c6b258f02add8fdf4cfc7c371dd772">size</a></td></tr>
 <tr class="memdesc:ab2c6b258f02add8fdf4cfc7c371dd772"><td class="mdescLeft">&#160;</td><td class="mdescRight">Packet size.  <br /></td></tr>
 <tr class="separator:ab2c6b258f02add8fdf4cfc7c371dd772"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5f06ab88eac1045ec092ddbd5f7c399"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_timestamp_i.html">TimestampI</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_raw_ptp_message.html#ae5f06ab88eac1045ec092ddbd5f7c399">pTs</a></td></tr>
-<tr class="memdesc:ae5f06ab88eac1045ec092ddbd5f7c399"><td class="mdescLeft">&#160;</td><td class="mdescRight">pointer to timestamp  <br /></td></tr>
-<tr class="separator:ae5f06ab88eac1045ec092ddbd5f7c399"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9652f89b842911e80708d5a6ed9fff11"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_raw_ptp_message.html#a9652f89b842911e80708d5a6ed9fff11">pTxCb</a> )(const struct RawPtpMessage_ *pMsg)</td></tr>
-<tr class="memdesc:a9652f89b842911e80708d5a6ed9fff11"><td class="mdescLeft">&#160;</td><td class="mdescRight">transmit callback function  <br /></td></tr>
-<tr class="separator:a9652f89b842911e80708d5a6ed9fff11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c50fcd1195659821729f52af8f3bb7d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_raw_ptp_message.html#a1c50fcd1195659821729f52af8f3bb7d">tag</a></td></tr>
+<tr class="memdesc:a1c50fcd1195659821729f52af8f3bb7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">unique transmit tag  <br /></td></tr>
+<tr class="separator:a1c50fcd1195659821729f52af8f3bb7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48b9f3382e0929bbd75cda2bf2838126"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_raw_ptp_message.html#a48b9f3382e0929bbd75cda2bf2838126">ttl</a></td></tr>
+<tr class="memdesc:a48b9f3382e0929bbd75cda2bf2838126"><td class="mdescLeft">&#160;</td><td class="mdescRight">transmit Time-to-Live in ticks  <br /></td></tr>
+<tr class="separator:a48b9f3382e0929bbd75cda2bf2838126"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa9f1d85f2079bbaf25a346ee2dfa33d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="ptp__types_8h.html#a833a465bc4c13e2df6b7b0df50f5d678">TxCb</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_raw_ptp_message.html#afa9f1d85f2079bbaf25a346ee2dfa33d">pTxCb</a></td></tr>
+<tr class="memdesc:afa9f1d85f2079bbaf25a346ee2dfa33d"><td class="mdescLeft">&#160;</td><td class="mdescRight">transmit callback function  <br /></td></tr>
+<tr class="separator:afa9f1d85f2079bbaf25a346ee2dfa33d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b583b1797c3a7a9d9005d91dc0a4e9f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="ptp__types_8h.html#aa353086afe318bec4ec7ce3757ba478e">PtpDelayMechanism</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_raw_ptp_message.html#a3b583b1797c3a7a9d9005d91dc0a4e9f">tx_dm</a></td></tr>
 <tr class="memdesc:a3b583b1797c3a7a9d9005d91dc0a4e9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">transmit transport type  <br /></td></tr>
 <tr class="separator:a3b583b1797c3a7a9d9005d91dc0a4e9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,9 +160,8 @@ Data Fields</h2></td></tr>
 <tr class="separator:ae7f206c14a28d9b027d5f2e3c80a3729"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Raw PTP message structure. </p>
-
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00173">173</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<div class="textblock">
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00182">182</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="ae7f206c14a28d9b027d5f2e3c80a3729" name="ae7f206c14a28d9b027d5f2e3c80a3729"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae7f206c14a28d9b027d5f2e3c80a3729">&#9670;&#160;</a></span>data</h2>
@@ -178,43 +177,25 @@ Data Fields</h2></td></tr>
 
 <p>raw packet data </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00184">184</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00194">194</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
-<a id="ae5f06ab88eac1045ec092ddbd5f7c399" name="ae5f06ab88eac1045ec092ddbd5f7c399"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae5f06ab88eac1045ec092ddbd5f7c399">&#9670;&#160;</a></span>pTs</h2>
+<a id="afa9f1d85f2079bbaf25a346ee2dfa33d" name="afa9f1d85f2079bbaf25a346ee2dfa33d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa9f1d85f2079bbaf25a346ee2dfa33d">&#9670;&#160;</a></span>pTxCb</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_timestamp_i.html">TimestampI</a>* pTs</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>pointer to timestamp </p>
-
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00178">178</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
-
-</div>
-</div>
-<a id="a9652f89b842911e80708d5a6ed9fff11" name="a9652f89b842911e80708d5a6ed9fff11"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9652f89b842911e80708d5a6ed9fff11">&#9670;&#160;</a></span>pTxCb</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void(* pTxCb) (const struct RawPtpMessage_ *pMsg)</td>
+          <td class="memname"><a class="el" href="ptp__types_8h.html#a833a465bc4c13e2df6b7b0df50f5d678">TxCb</a>* pTxCb</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>transmit callback function </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00179">179</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00189">189</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -232,7 +213,25 @@ Data Fields</h2></td></tr>
 
 <p>Packet size. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00175">175</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00184">184</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+
+</div>
+</div>
+<a id="a1c50fcd1195659821729f52af8f3bb7d" name="a1c50fcd1195659821729f52af8f3bb7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c50fcd1195659821729f52af8f3bb7d">&#9670;&#160;</a></span>tag</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t tag</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>unique transmit tag </p>
+
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00187">187</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -250,7 +249,25 @@ Data Fields</h2></td></tr>
 
 <p>Timestamp. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00174">174</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00183">183</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+
+</div>
+</div>
+<a id="a48b9f3382e0929bbd75cda2bf2838126" name="a48b9f3382e0929bbd75cda2bf2838126"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48b9f3382e0929bbd75cda2bf2838126">&#9670;&#160;</a></span>ttl</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ttl</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>transmit Time-to-Live in ticks </p>
+
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00188">188</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -268,7 +285,7 @@ Data Fields</h2></td></tr>
 
 <p>transmit transport type </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00180">180</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00190">190</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -286,7 +303,7 @@ Data Fields</h2></td></tr>
 
 <p>transmit message class </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00181">181</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00191">191</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>

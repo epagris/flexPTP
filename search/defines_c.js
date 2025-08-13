@@ -12,5 +12,7 @@ var searchData=
   ['t_5fsec_5fper_5fleapyear_9',['T_SEC_PER_LEAPYEAR',['../timeutils_8h.html#ae9eb470388769330501bdf6d3eb7f805',1,'timeutils.h']]],
   ['t_5fsec_5fper_5fminute_10',['T_SEC_PER_MINUTE',['../timeutils_8h.html#a3dc38983d478aef0ae1ae478bd2e8b49',1,'timeutils.h']]],
   ['t_5fsec_5fper_5fyear_11',['T_SEC_PER_YEAR',['../timeutils_8h.html#aa133db9819f728e946e94b3ba38e1703',1,'timeutils.h']]],
-  ['tx_5fpacket_5ffifo_5flength_12',['TX_PACKET_FIFO_LENGTH',['../task__ptp_8c.html#adc17615268db5366e8765834d70f6cf6',1,'task_ptp.c']]]
+  ['tx_5fcallback_5ffifo_5flength_12',['TX_CALLBACK_FIFO_LENGTH',['../task__ptp_8c.html#a020b0833bd23516690c39c208c715def',1,'task_ptp.c']]],
+  ['tx_5fpacket_5ffifo_5flength_13',['TX_PACKET_FIFO_LENGTH',['../task__ptp_8c.html#adc17615268db5366e8765834d70f6cf6',1,'task_ptp.c']]],
+  ['tx_5fttl_5fms_14',['TX_TTL_MS',['../task__ptp_8c.html#a40b9087c0168e13e36ca9c07ea8584fa',1,'task_ptp.c']]]
 ];

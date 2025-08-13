@@ -143,41 +143,36 @@ $(document).ready(function(){initNavTree('ptp__core_8c.html',''); initResizable(
 <code>#include &quot;<a class="el" href="timeutils_8h_source.html">timeutils.h</a>&quot;</code><br />
 <code>#include &lt;flexptp_options.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="minmax_8h_source.html">minmax.h</a>&quot;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
 </div>
 <p><a href="ptp__core_8c_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a12b132bf50cd44da26ba439c17c95131"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__core_8c.html#a12b132bf50cd44da26ba439c17c95131">ptp_heartbeat_tmr_cb</a> (<a class="el" href="ptp__types_8h.html#a5a0e9e1971b37b7cf635ab8b75d03da6">TimerType</a> timer)</td></tr>
-<tr class="separator:a12b132bf50cd44da26ba439c17c95131"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55527e05b40a010a452b88a82bf5ee95"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__core_8c.html#a55527e05b40a010a452b88a82bf5ee95">ptp_create_heartbeat_tmr</a> ()</td></tr>
-<tr class="separator:a55527e05b40a010a452b88a82bf5ee95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afea6b13ced1716b71b2d6d6db971cab7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__core_8c.html#afea6b13ced1716b71b2d6d6db971cab7">ptp_remove_heartbeat_tmr</a> ()</td></tr>
-<tr class="separator:afea6b13ced1716b71b2d6d6db971cab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ca23dd255400c286b3e4c7086ba7cfb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__core_8c.html#a5ca23dd255400c286b3e4c7086ba7cfb">ptp_start_heartbeat_tmr</a> ()</td></tr>
-<tr class="separator:a5ca23dd255400c286b3e4c7086ba7cfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acfadd58fb94353f72f057bd775f52976"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__core_8c.html#acfadd58fb94353f72f057bd775f52976">ptp_stop_heartbeat_tmr</a> ()</td></tr>
-<tr class="separator:acfadd58fb94353f72f057bd775f52976"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b39e2cb4087fc9d0465f5c5acdef578"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__core_8c.html#a2b39e2cb4087fc9d0465f5c5acdef578">ptp_common_init</a> (const uint8_t *hwa)</td></tr>
-<tr class="separator:a2b39e2cb4087fc9d0465f5c5acdef578"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1851b3abf7f386383377ba4bf326ca56"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__core_8c.html#a1851b3abf7f386383377ba4bf326ca56">ptp_init</a> (const uint8_t *hwa)</td></tr>
-<tr class="separator:a1851b3abf7f386383377ba4bf326ca56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe9f34aaaf1d3f4f752b028439572144"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__core_8c.html#abe9f34aaaf1d3f4f752b028439572144">ptp_common_init</a> (void)</td></tr>
+<tr class="separator:abe9f34aaaf1d3f4f752b028439572144"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae18f652fb2102235587eef7a2be224ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__core_8c.html#ae18f652fb2102235587eef7a2be224ee">ptp_init</a> (void)</td></tr>
+<tr class="separator:ae18f652fb2102235587eef7a2be224ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a138f6e72585f0970f404e653fa67d809"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__core_8c.html#a138f6e72585f0970f404e653fa67d809">ptp_deinit</a> ()</td></tr>
 <tr class="separator:a138f6e72585f0970f404e653fa67d809"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52febb700b5a0f2af1bc5f31d43593ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__core_8c.html#a52febb700b5a0f2af1bc5f31d43593ce">ptp_reset</a> ()</td></tr>
-<tr class="separator:a52febb700b5a0f2af1bc5f31d43593ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88cc10298e270846d063e2c9a2e570d1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__core_8c.html#a88cc10298e270846d063e2c9a2e570d1">ptp_core_reset</a> ()</td></tr>
+<tr class="separator:a88cc10298e270846d063e2c9a2e570d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ca33e7b33efd42d8564a258f9985cd4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__core_8c.html#a2ca33e7b33efd42d8564a258f9985cd4">ptp_process_packet</a> (<a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a> *pRawMsg)</td></tr>
 <tr class="separator:a2ca33e7b33efd42d8564a258f9985cd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14dc008ad00c26828fd4868683329edb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__core_8c.html#a14dc008ad00c26828fd4868683329edb">ptp_process_event</a> (const <a class="el" href="struct_ptp_core_event.html">PtpCoreEvent</a> *event)</td></tr>
 <tr class="separator:a14dc008ad00c26828fd4868683329edb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36322fb0ca929da884c50ba651c83f70"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__core_8c.html#a36322fb0ca929da884c50ba651c83f70">ptp_get_tick</a> ()</td></tr>
+<tr class="separator:a36322fb0ca929da884c50ba651c83f70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52febb700b5a0f2af1bc5f31d43593ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__core_8c.html#a52febb700b5a0f2af1bc5f31d43593ce">ptp_reset</a> ()</td></tr>
+<tr class="separator:a52febb700b5a0f2af1bc5f31d43593ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3463e5c04c2542d2bde9f21520b09d86"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__core_8c.html#a3463e5c04c2542d2bde9f21520b09d86">ptp_set_sync_callback</a> (<a class="el" href="ptp__types_8h.html#a46935577d0036742a30c9042d42a519e">PtpSyncCallback</a> syncCb)</td></tr>
 <tr class="separator:a3463e5c04c2542d2bde9f21520b09d86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c5a3c700b5c8e29e2a839a770409d9f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__core_8c.html#a8c5a3c700b5c8e29e2a839a770409d9f">ptp_set_user_event_callback</a> (<a class="el" href="ptp__types_8h.html#a45cabd2ea4c608b4b84ce719019cd8e0">PtpUserEventCallback</a> userEventCb)</td></tr>
 <tr class="separator:a8c5a3c700b5c8e29e2a839a770409d9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a2b39e2cb4087fc9d0465f5c5acdef578" name="a2b39e2cb4087fc9d0465f5c5acdef578"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b39e2cb4087fc9d0465f5c5acdef578">&#9670;&#160;</a></span>ptp_common_init()</h2>
+<a id="abe9f34aaaf1d3f4f752b028439572144" name="abe9f34aaaf1d3f4f752b028439572144"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe9f34aaaf1d3f4f752b028439572144">&#9670;&#160;</a></span>ptp_common_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -188,8 +183,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static void ptp_common_init </td>
           <td>(</td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>hwa</em></td><td>)</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -200,12 +195,12 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00105">105</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00044">44</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
 
 </div>
 </div>
-<a id="a55527e05b40a010a452b88a82bf5ee95" name="a55527e05b40a010a452b88a82bf5ee95"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55527e05b40a010a452b88a82bf5ee95">&#9670;&#160;</a></span>ptp_create_heartbeat_tmr()</h2>
+<a id="a88cc10298e270846d063e2c9a2e570d1" name="a88cc10298e270846d063e2c9a2e570d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88cc10298e270846d063e2c9a2e570d1">&#9670;&#160;</a></span>ptp_core_reset()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -214,7 +209,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void ptp_create_heartbeat_tmr </td>
+          <td class="memname">static void ptp_core_reset </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -226,9 +221,8 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct the heartbeat timer. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00061">61</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00122">122</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
 
 </div>
 </div>
@@ -248,47 +242,33 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Deinitialize flexPTP module. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00157">157</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00101">101</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
 
 </div>
 </div>
-<a id="a12b132bf50cd44da26ba439c17c95131" name="a12b132bf50cd44da26ba439c17c95131"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a12b132bf50cd44da26ba439c17c95131">&#9670;&#160;</a></span>ptp_heartbeat_tmr_cb()</h2>
+<a id="a36322fb0ca929da884c50ba651c83f70" name="a36322fb0ca929da884c50ba651c83f70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36322fb0ca929da884c50ba651c83f70">&#9670;&#160;</a></span>ptp_get_tick()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void ptp_heartbeat_tmr_cb </td>
+          <td class="memname">uint32_t ptp_get_tick </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="ptp__types_8h.html#a5a0e9e1971b37b7cf635ab8b75d03da6">TimerType</a>&#160;</td>
-          <td class="paramname"><em>timer</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>Heartbeat callback.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">timer</td><td>timer handle </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Get current PTP tick.</p>
+<dl class="section return"><dt>Returns</dt><dd>current flexPTP tick </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00047">47</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00230">230</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
 
 </div>
 </div>
-<a id="a1851b3abf7f386383377ba4bf326ca56" name="a1851b3abf7f386383377ba4bf326ca56"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1851b3abf7f386383377ba4bf326ca56">&#9670;&#160;</a></span>ptp_init()</h2>
+<a id="ae18f652fb2102235587eef7a2be224ee" name="ae18f652fb2102235587eef7a2be224ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae18f652fb2102235587eef7a2be224ee">&#9670;&#160;</a></span>ptp_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -296,21 +276,15 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void ptp_init </td>
           <td>(</td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>hwa</em></td><td>)</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initialize flexPTP module.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">hwa</td><td>network interface hardware address over which the flexPTP operates </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Initialize flexPTP module. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00130">130</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00071">71</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
 
 </div>
 </div>
@@ -337,7 +311,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00258">258</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00198">198</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
 
 </div>
 </div>
@@ -364,35 +338,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00217">217</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
-
-</div>
-</div>
-<a id="afea6b13ced1716b71b2d6d6db971cab7" name="afea6b13ced1716b71b2d6d6db971cab7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afea6b13ced1716b71b2d6d6db971cab7">&#9670;&#160;</a></span>ptp_remove_heartbeat_tmr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void ptp_remove_heartbeat_tmr </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Remove the heartbeat timer. </p>
-
-<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00076">76</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00157">157</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
 
 </div>
 </div>
@@ -412,7 +358,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Reset PTP subsystem. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00182">182</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00234">234</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
 
 </div>
 </div>
@@ -438,7 +384,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00286">286</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00241">241</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
 
 </div>
 </div>
@@ -464,61 +410,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00290">290</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
-
-</div>
-</div>
-<a id="a5ca23dd255400c286b3e4c7086ba7cfb" name="a5ca23dd255400c286b3e4c7086ba7cfb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ca23dd255400c286b3e4c7086ba7cfb">&#9670;&#160;</a></span>ptp_start_heartbeat_tmr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void ptp_start_heartbeat_tmr </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00087">87</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
-
-</div>
-</div>
-<a id="acfadd58fb94353f72f057bd775f52976" name="acfadd58fb94353f72f057bd775f52976"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acfadd58fb94353f72f057bd775f52976">&#9670;&#160;</a></span>ptp_stop_heartbeat_tmr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void ptp_stop_heartbeat_tmr </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00095">95</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__core_8c_source.html#l00245">245</a> of file <a class="el" href="ptp__core_8c_source.html">ptp_core.c</a>.</p>
 
 </div>
 </div>

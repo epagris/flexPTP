@@ -135,6 +135,7 @@ $(document).ready(function(){initNavTree('master_8c.html',''); initResizable(); 
 <code>#include &quot;<a class="el" href="task__ptp_8h_source.html">task_ptp.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="timeutils_8h_source.html">timeutils.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="tlv_8h_source.html">tlv.h</a>&quot;</code><br />
+<code>#include &lt;inttypes.h&gt;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="minmax_8h_source.html">minmax.h</a>&quot;</code><br />
 </div>
@@ -188,8 +189,8 @@ Variables</h2></td></tr>
 <tr class="separator:ae30505665b0d71dbfa6916b915ba243d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e549fe835f184822d14ec4661dcc8bb"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_ptp_header.html">PtpHeader</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="master_8c.html#a1e549fe835f184822d14ec4661dcc8bb">syncHeader</a></td></tr>
 <tr class="separator:a1e549fe835f184822d14ec4661dcc8bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf33d10bfaf09123ce77940c326a91cd"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="master_8c.html#adf33d10bfaf09123ce77940c326a91cd">sync</a></td></tr>
-<tr class="separator:adf33d10bfaf09123ce77940c326a91cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d48e588f468a8beff46270c6ff0b6ed"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="master_8c.html#a8d48e588f468a8beff46270c6ff0b6ed">sync_</a></td></tr>
+<tr class="separator:a8d48e588f468a8beff46270c6ff0b6ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90e3d1eb7a74b3d8a6868c5dbe56be64"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="master_8c.html#a90e3d1eb7a74b3d8a6868c5dbe56be64">followUp</a></td></tr>
 <tr class="separator:a90e3d1eb7a74b3d8a6868c5dbe56be64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab20e592e46b370e030f9d9501b0ad504"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="struct_ptp_profile_tlv_element.html">PtpProfileTlvElement</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="master_8c.html#ab20e592e46b370e030f9d9501b0ad504">tlvChain</a></td></tr>
@@ -213,7 +214,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00212">212</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00217">217</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -241,7 +242,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00039">39</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00040">40</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -268,7 +269,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00093">93</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00096">96</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -295,7 +296,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00065">65</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00067">67</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -322,7 +323,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00272">272</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00277">277</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -342,7 +343,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Destroy th eMaster module. </p>
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00359">359</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00377">377</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -362,7 +363,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Disable the master module. </p>
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00407">407</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00428">428</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -382,7 +383,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Enable the master module. </p>
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00383">383</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00404">404</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -402,7 +403,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Initialize the Master module. </p>
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00354">354</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00372">372</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -437,7 +438,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00220">220</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00225">225</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -475,7 +476,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00294">294</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00299">299</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -495,7 +496,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Reset the Master module. </p>
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00363">363</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00381">381</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -515,7 +516,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Pass ticks to the Master module. </p>
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00411">411</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00432">432</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -542,7 +543,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00102">102</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00105">105</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -580,7 +581,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00171">171</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00174">174</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -608,7 +609,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00124">124</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00126">126</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -635,7 +636,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00151">151</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00155">155</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -660,7 +661,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00033">33</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00034">34</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -684,7 +685,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00032">32</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00033">33</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -708,7 +709,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00036">36</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00037">37</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -736,12 +737,12 @@ Variables</h2></td></tr>
 <div class="line">    <span class="stringliteral">&quot;CANDIDATE&quot;</span>,</div>
 <div class="line">    <span class="stringliteral">&quot;ESTABLISHED&quot;</span>}</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00207">207</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00212">212</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
-<a id="adf33d10bfaf09123ce77940c326a91cd" name="adf33d10bfaf09123ce77940c326a91cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adf33d10bfaf09123ce77940c326a91cd">&#9670;&#160;</a></span>sync</h2>
+<a id="a8d48e588f468a8beff46270c6ff0b6ed" name="a8d48e588f468a8beff46270c6ff0b6ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d48e588f468a8beff46270c6ff0b6ed">&#9670;&#160;</a></span>sync_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -750,7 +751,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a> sync</td>
+          <td class="memname"><a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a> sync_</td>
         </tr>
       </table>
   </td>
@@ -760,7 +761,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00035">35</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00036">36</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -784,7 +785,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00034">34</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00035">35</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -808,7 +809,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00037">37</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00038">38</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>

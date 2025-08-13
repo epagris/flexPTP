@@ -7,6 +7,7 @@ var config_8c =
     [ "CONFIG_LOG_INFO", "config_8c.html#a85300016e00427d9bfe383d4046350b8", null ],
     [ "CONFIG_LOG_LOCKED", "config_8c.html#a42b2b5ee2b85283c1df544bd05e0a20e", null ],
     [ "CONFIG_LOG_TIMESTAMPS", "config_8c.html#a7d358ea1b693df32136dbe7e24658de2", null ],
+    [ "CONFIG_LOG_TRANSMISSION", "config_8c.html#ae097544c511ad5c2c5711519025229bf", null ],
     [ "ptp_load_config", "config_8c.html#aa712b3f005a65116eec03a57e90438ba", null ],
     [ "ptp_load_config_from_dump", "config_8c.html#a8d28b65da348c9b6f0b70900bdad4960", null ],
     [ "ptp_store_config", "config_8c.html#a84868766e7435c8056768a758bed6137", null ]

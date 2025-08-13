@@ -144,6 +144,8 @@ Macros</h2></td></tr>
 Enumerations</h2></td></tr>
 <tr class="memitem:aaeb6caf74048e4e1880c07e2adf7ed75"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="event_8h.html#aaeb6caf74048e4e1880c07e2adf7ed75">PtpCoreEventCode</a> { <a class="el" href="event_8h.html#aaeb6caf74048e4e1880c07e2adf7ed75a6995edf0c2c25400acc7b6b602f98efb">PTP_CEV_HEARTBEAT</a> = 0x00
 , <a class="el" href="event_8h.html#aaeb6caf74048e4e1880c07e2adf7ed75ad98f838a64cc0d329fcf884aa6faec1e">PTP_CEV_BMCA_STATE_CHANGED</a>
+, <a class="el" href="event_8h.html#aaeb6caf74048e4e1880c07e2adf7ed75a8b82b1d1f01281e1f855e7237318944e">PTP_CEV_RESET</a>
+, <a class="el" href="event_8h.html#aaeb6caf74048e4e1880c07e2adf7ed75a171ec0f87e74d7184fc1ed0b69642804">PTP_CEV_TERMINATE</a>
  }</td></tr>
 <tr class="separator:aaeb6caf74048e4e1880c07e2adf7ed75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c52195048eeb16f32cec8305a8c8334"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="event_8h.html#a6c52195048eeb16f32cec8305a8c8334">PtpUserEventCode</a> { <br />
@@ -204,7 +206,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="event_8h_source.html#l00077">77</a> of file <a class="el" href="event_8h_source.html">event.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="event_8h_source.html#l00079">79</a> of file <a class="el" href="event_8h_source.html">event.h</a>.</p>
 
 </div>
 </div>
@@ -221,8 +223,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aaeb6caf74048e4e1880c07e2adf7ed75a6995edf0c2c25400acc7b6b602f98efb" name="aaeb6caf74048e4e1880c07e2adf7ed75a6995edf0c2c25400acc7b6b602f98efb"></a>PTP_CEV_HEARTBEAT&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aaeb6caf74048e4e1880c07e2adf7ed75ad98f838a64cc0d329fcf884aa6faec1e" name="aaeb6caf74048e4e1880c07e2adf7ed75ad98f838a64cc0d329fcf884aa6faec1e"></a>PTP_CEV_BMCA_STATE_CHANGED&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aaeb6caf74048e4e1880c07e2adf7ed75a6995edf0c2c25400acc7b6b602f98efb" name="aaeb6caf74048e4e1880c07e2adf7ed75a6995edf0c2c25400acc7b6b602f98efb"></a>PTP_CEV_HEARTBEAT&#160;</td><td class="fielddoc"><p>Heartbeat event (tick) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aaeb6caf74048e4e1880c07e2adf7ed75ad98f838a64cc0d329fcf884aa6faec1e" name="aaeb6caf74048e4e1880c07e2adf7ed75ad98f838a64cc0d329fcf884aa6faec1e"></a>PTP_CEV_BMCA_STATE_CHANGED&#160;</td><td class="fielddoc"><p>The BMCA state has changed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aaeb6caf74048e4e1880c07e2adf7ed75a8b82b1d1f01281e1f855e7237318944e" name="aaeb6caf74048e4e1880c07e2adf7ed75a8b82b1d1f01281e1f855e7237318944e"></a>PTP_CEV_RESET&#160;</td><td class="fielddoc"><p>A reset has been issued. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aaeb6caf74048e4e1880c07e2adf7ed75a171ec0f87e74d7184fc1ed0b69642804" name="aaeb6caf74048e4e1880c07e2adf7ed75a171ec0f87e74d7184fc1ed0b69642804"></a>PTP_CEV_TERMINATE&#160;</td><td class="fielddoc"><p>A shutdown is requested. </p>
+</td></tr>
 </table>
 
 <p class="definition">Definition at line <a class="el" href="event_8h_source.html#l00014">14</a> of file <a class="el" href="event_8h_source.html">event.h</a>.</p>
@@ -287,7 +295,7 @@ Functions</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="event_8h_source.html#l00040">40</a> of file <a class="el" href="event_8h_source.html">event.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="event_8h_source.html#l00042">42</a> of file <a class="el" href="event_8h_source.html">event.h</a>.</p>
 
 </div>
 </div>

@@ -1,8 +1,8 @@
 var annotated_dup =
 [
+    [ "Fifo", "struct_fifo.html", "struct_fifo" ],
     [ "PtpAnnounceBody", "struct_ptp_announce_body.html", "struct_ptp_announce_body" ],
     [ "PtpBmcaState", "struct_ptp_bmca_state.html", "struct_ptp_bmca_state" ],
-    [ "PtpCircBuf", "struct_ptp_circ_buf.html", "struct_ptp_circ_buf" ],
     [ "PtpConfig", "struct_ptp_config.html", "struct_ptp_config" ],
     [ "PtpCoreEvent", "struct_ptp_core_event.html", "struct_ptp_core_event" ],
     [ "PtpCoreState", "struct_ptp_core_state.html", "struct_ptp_core_state" ],
@@ -12,6 +12,8 @@ var annotated_dup =
     [ "PtpHWClockState", "struct_ptp_h_w_clock_state.html", "struct_ptp_h_w_clock_state" ],
     [ "PtpLogPair", "struct_ptp_log_pair.html", "struct_ptp_log_pair" ],
     [ "PtpMasterMessagingState", "struct_ptp_master_messaging_state.html", "struct_ptp_master_messaging_state" ],
+    [ "PtpMsgBuf", "struct_ptp_msg_buf.html", "struct_ptp_msg_buf" ],
+    [ "PtpMsgBufBlock", "struct_ptp_msg_buf_block.html", "struct_ptp_msg_buf_block" ],
     [ "PtpNetworkState", "struct_ptp_network_state.html", "struct_ptp_network_state" ],
     [ "PtpP2PSlaveInfo", "struct_ptp_p2_p_slave_info.html", "struct_ptp_p2_p_slave_info" ],
     [ "PtpProfile", "struct_ptp_profile.html", "struct_ptp_profile" ],
@@ -25,5 +27,6 @@ var annotated_dup =
     [ "PtpTlvPreset", "struct_ptp_tlv_preset.html", "struct_ptp_tlv_preset" ],
     [ "RawPtpMessage", "struct_raw_ptp_message.html", "struct_raw_ptp_message" ],
     [ "TimestampI", "struct_timestamp_i.html", "struct_timestamp_i" ],
-    [ "TimestampU", "struct_timestamp_u.html", "struct_timestamp_u" ]
+    [ "TimestampU", "struct_timestamp_u.html", "struct_timestamp_u" ],
+    [ "TxTs", "struct_tx_ts.html", "struct_tx_ts" ]
 ];

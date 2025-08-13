@@ -16,7 +16,6 @@ var ptp__types_8h =
     [ "PtpNetworkState", "struct_ptp_network_state.html", "struct_ptp_network_state" ],
     [ "PtpStats", "struct_ptp_stats.html", "struct_ptp_stats" ],
     [ "PtpCoreState", "struct_ptp_core_state.html", "struct_ptp_core_state" ],
-    [ "FLEXPTP_FREERTOS", "ptp__types_8h.html#ad68f01211bcc2a5342a9d23ecfdcaa3b", null ],
     [ "MAX_PTP_MSG_SIZE", "ptp__types_8h.html#ab9a5b1004564a82c7f0aab1069fcc2ba", null ],
     [ "PTP_TLV_HEADER", "ptp__types_8h.html#a7f9a1eafe20e661bf08b831ea74a4f99", null ],
     [ "PTP_VARIANCE_HAS_NOT_BEEN_COMPUTED", "ptp__types_8h.html#ac8bbf4f548e8bad3306b48543d16b6b9", null ],
@@ -24,6 +23,7 @@ var ptp__types_8h =
     [ "PtpSyncCallback", "ptp__types_8h.html#a46935577d0036742a30c9042d42a519e", null ],
     [ "PtpUserEventCallback", "ptp__types_8h.html#a45cabd2ea4c608b4b84ce719019cd8e0", null ],
     [ "TimerType", "ptp__types_8h.html#a5a0e9e1971b37b7cf635ab8b75d03da6", null ],
+    [ "TxCb", "ptp__types_8h.html#a833a465bc4c13e2df6b7b0df50f5d678", null ],
     [ "BmcaCandidateState", "ptp__types_8h.html#a0f2deb690644fe2c5751684018fe84a6", [
       [ "BMCA_NO_CANDIDATE", "ptp__types_8h.html#a0f2deb690644fe2c5751684018fe84a6aa4dd92f7040358db83f64cff994d1524", null ],
       [ "BMCA_CANDIDATE_COLLECTION", "ptp__types_8h.html#a0f2deb690644fe2c5751684018fe84a6a247f93ab5be884d4744b0dd251dbd809", null ]
@@ -123,7 +123,7 @@ var ptp__types_8h =
       [ "PTP_P2PSS_ESTABLISHED", "ptp__types_8h.html#ae4104fe8cfc83cb1b1acad40e0c7efb2a33563e2e212a8e184da4c2c9c6a83497", null ]
     ] ],
     [ "PtpProfileFlags", "ptp__types_8h.html#af7660187be027791a7264a12085fb338", [
-      [ "PTP_PF_NONE", "ptp__types_8h.html#af7660187be027791a7264a12085fb338a35011cef2115a8cc4b0e018685956b78", null ],
+      [ "PTP_PF_NO_FLAGS", "ptp__types_8h.html#af7660187be027791a7264a12085fb338a7770a21471141711ebaf9312fc10ee45", null ],
       [ "PTP_PF_ISSUE_SYNC_FOR_COMPLIANT_SLAVE_ONLY_IN_P2P", "ptp__types_8h.html#af7660187be027791a7264a12085fb338a6cf2c9a3ea196c8958967b1bfffb2d6b", null ],
       [ "PTP_PF_SLAVE_ONLY", "ptp__types_8h.html#af7660187be027791a7264a12085fb338a20e5055e66945c8231db009fbc917444", null ],
       [ "PTP_PF_N", "ptp__types_8h.html#af7660187be027791a7264a12085fb338a19ae1cd6849caaba9c0309782366f672", null ]
@@ -160,5 +160,10 @@ var ptp__types_8h =
     [ "PtpTransportType", "ptp__types_8h.html#a2964210d435f30e9125953c23045ea0b", [
       [ "PTP_TP_IPv4", "ptp__types_8h.html#a2964210d435f30e9125953c23045ea0ba0d18b938a553d2c2eddb2113b1aca22c", null ],
       [ "PTP_TP_802_3", "ptp__types_8h.html#a2964210d435f30e9125953c23045ea0baa0d87f8f9801afbfbfdb6ed79fbee525", null ]
+    ] ],
+    [ "RawPtpMsgTag", "ptp__types_8h.html#ab186ed990b0f24890415178a8c562a9b", [
+      [ "RPMT_RANDOM", "ptp__types_8h.html#ab186ed990b0f24890415178a8c562a9ba6787187c5247e59ac396e3adcce7b360", null ],
+      [ "RPMT_SYNC", "ptp__types_8h.html#ab186ed990b0f24890415178a8c562a9bad911b72129c86cdcf402cd58cdfaab3d", null ],
+      [ "RPMT_DELAY_REQ", "ptp__types_8h.html#ab186ed990b0f24890415178a8c562a9baf004928c048813525e3d01bbd6017c92", null ]
     ] ]
 ];

@@ -1,11 +1,19 @@
 var searchData=
 [
   ['r_0',['R',['../kalman__filter_8c.html#aff2bd6f73e7661615c2407a90cd59c63',1,'kalman_filter.c']]],
-  ['rawptpmessage_1',['RawPtpMessage',['../struct_raw_ptp_message.html',1,'']]],
-  ['rd_5fprev_5fppb_2',['rd_prev_ppb',['../pid__controller_8c.html#a151d0085b10b2d1f43f67724b42cd710',1,'pid_controller.c']]],
-  ['reg_5ftask_5fptp_3',['reg_task_ptp',['../task__ptp_8c.html#a2d483d3c32b3890d8c699018e48e45cd',1,'reg_task_ptp():&#160;task_ptp.c'],['../task__ptp_8h.html#a2d483d3c32b3890d8c699018e48e45cd',1,'reg_task_ptp():&#160;task_ptp.c']]],
-  ['reportcount_4',['reportCount',['../struct_ptp_p2_p_slave_info.html#a14dbd95c4669b76d6eb23f0abd7a3c90',1,'PtpP2PSlaveInfo']]],
-  ['requestingsourceclockidentity_5',['requestingSourceClockIdentity',['../struct_ptp_delay___resp_identification.html#a4662e5e1e8dc5e8d9ea725942ee886a2',1,'PtpDelay_RespIdentification']]],
-  ['requestingsourceportidentity_6',['requestingSourcePortIdentity',['../struct_ptp_delay___resp_identification.html#a646597c6713dab47cc8eeab469ba2c17',1,'PtpDelay_RespIdentification']]],
-  ['rx_5fpacket_5ffifo_5flength_7',['RX_PACKET_FIFO_LENGTH',['../task__ptp_8c.html#ace2de45925d7f22db605219809d77b7a',1,'task_ptp.c']]]
+  ['raw_5fmsg_5fto_5fblock_1',['RAW_MSG_TO_BLOCK',['../msg__buf_8c.html#abb88de1b282f279e1eb7760631cfbdb4',1,'msg_buf.c']]],
+  ['rawptpmessage_2',['RawPtpMessage',['../struct_raw_ptp_message.html',1,'']]],
+  ['rawptpmsgtag_3',['RawPtpMsgTag',['../ptp__types_8h.html#ab186ed990b0f24890415178a8c562a9b',1,'ptp_types.h']]],
+  ['rd_5fprev_5fppb_4',['rd_prev_ppb',['../pid__controller_8c.html#a151d0085b10b2d1f43f67724b42cd710',1,'pid_controller.c']]],
+  ['read_5',['read',['../struct_fifo.html#a0a71cf941cf2509857d61e1443ad8eaa',1,'Fifo']]],
+  ['reg_5ftask_5fptp_6',['reg_task_ptp',['../task__ptp_8c.html#aff77e313d172028af7484d66ef2cef1f',1,'reg_task_ptp():&#160;task_ptp.c'],['../task__ptp_8h.html#aff77e313d172028af7484d66ef2cef1f',1,'reg_task_ptp():&#160;task_ptp.c']]],
+  ['reportcount_7',['reportCount',['../struct_ptp_p2_p_slave_info.html#a14dbd95c4669b76d6eb23f0abd7a3c90',1,'PtpP2PSlaveInfo']]],
+  ['requestingsourceclockidentity_8',['requestingSourceClockIdentity',['../struct_ptp_delay___resp_identification.html#a4662e5e1e8dc5e8d9ea725942ee886a2',1,'PtpDelay_RespIdentification']]],
+  ['requestingsourceportidentity_9',['requestingSourcePortIdentity',['../struct_ptp_delay___resp_identification.html#a646597c6713dab47cc8eeab469ba2c17',1,'PtpDelay_RespIdentification']]],
+  ['rpmt_5fdelay_5freq_10',['RPMT_DELAY_REQ',['../ptp__types_8h.html#ab186ed990b0f24890415178a8c562a9baf004928c048813525e3d01bbd6017c92',1,'ptp_types.h']]],
+  ['rpmt_5frandom_11',['RPMT_RANDOM',['../ptp__types_8h.html#ab186ed990b0f24890415178a8c562a9ba6787187c5247e59ac396e3adcce7b360',1,'ptp_types.h']]],
+  ['rpmt_5fsync_12',['RPMT_SYNC',['../ptp__types_8h.html#ab186ed990b0f24890415178a8c562a9bad911b72129c86cdcf402cd58cdfaab3d',1,'ptp_types.h']]],
+  ['rx_5fctrl_5fbuf_13',['rx_ctrl_buf',['../nsd__linux_8c.html#ad8dd2a3133f4c5b1a7af74839a068305',1,'nsd_linux.c']]],
+  ['rx_5fpacket_5ffifo_5flength_14',['RX_PACKET_FIFO_LENGTH',['../task__ptp_8c.html#ace2de45925d7f22db605219809d77b7a',1,'task_ptp.c']]],
+  ['rx_5fttl_5fms_15',['RX_TTL_MS',['../task__ptp_8c.html#a78ca5e32b50ab736ef769dccfea74238',1,'task_ptp.c']]]
 ];

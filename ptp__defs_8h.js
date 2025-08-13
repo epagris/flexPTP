@@ -1,11 +1,16 @@
 var ptp__defs_8h =
 [
     [ "ETHERTYPE_PTP", "ptp__defs_8h.html#a3c3b928c381ef4b09b28318d5343e9ac", null ],
+    [ "FLEXPTP_FREERTOS", "ptp__defs_8h.html#ad68f01211bcc2a5342a9d23ecfdcaa3b", null ],
     [ "FLEXPTP_htonl", "ptp__defs_8h.html#a269a398fab4b61d3955f84b30a0c5605", null ],
     [ "FLEXPTP_htons", "ptp__defs_8h.html#a867a1d7417963441047eab62d663ba05", null ],
+    [ "FLEXPTP_MS_TO_TICKS", "ptp__defs_8h.html#ad5f0555b0fa10206af9936fd4a42306e", null ],
+    [ "FLEXPTP_NON_LINUX_OS", "ptp__defs_8h.html#a5ccad66d3f30f1ca1c7b467939bc58a2", null ],
     [ "FLEXPTP_ntohl", "ptp__defs_8h.html#a64e252c931e0c1035f34c36a783d53fd", null ],
     [ "FLEXPTP_ntohs", "ptp__defs_8h.html#a6fcf18471c396e83f5a50675444b8258", null ],
-    [ "MIN", "ptp__defs_8h.html#a3acffbd305ee72dcd4593c0d8af64a4f", null ],
+    [ "FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS", "ptp__defs_8h.html#ac76c134f363d13f30aecc02f1a59511a", null ],
+    [ "FLEXPTP_TASK_PRIORITY", "ptp__defs_8h.html#a53b8a0cd469673a510bc734d8d0dac94", null ],
+    [ "FLEXPTP_TASK_STACK_SIZE", "ptp__defs_8h.html#a6faa1c0f2d39f84e4c1ea878ba105855", null ],
     [ "PTP_ACCURACY_LIMIT_NS", "ptp__defs_8h.html#a1fa31ce795774a0904d3d059cee26213", null ],
     [ "PTP_ADDEND_CORR_PER_PPB_F", "ptp__defs_8h.html#a6a201ce3980eb809d9ab9262999858de", null ],
     [ "PTP_ADDEND_INIT", "ptp__defs_8h.html#aac46f9712d10db597b03ae556afede2d", null ],

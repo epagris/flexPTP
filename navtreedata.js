@@ -78,25 +78,26 @@ var NAVTREE =
           [ "Slave mode", "monitoring.html#autotoc_md54", [
             [ "Example", "monitoring.html#autotoc_md55", null ]
           ] ]
-        ] ]
+        ] ],
+        [ "Transmit message management logging", "monitoring.html#autotoc_md56", null ]
       ] ],
-      [ "User events", "monitoring.html#autotoc_md56", null ],
-      [ "Statistics", "monitoring.html#autotoc_md57", null ]
+      [ "User events", "monitoring.html#autotoc_md58", null ],
+      [ "Statistics", "monitoring.html#autotoc_md59", null ]
     ] ],
     [ "Porting and configuration", "porting.html", [
       [ "Porting", "porting.html#port-config-port", [
-        [ "Port option file", "porting.html#autotoc_md58", [
-          [ "Example option files", "porting.html#autotoc_md59", null ]
+        [ "Port option file", "porting.html#autotoc_md60", [
+          [ "Example option files", "porting.html#autotoc_md61", null ]
         ] ],
         [ "Network Stack Driver (NSD)", "porting.html#network-stack-driver", [
-          [ "NSD examples", "porting.html#autotoc_md60", null ]
+          [ "NSD examples", "porting.html#autotoc_md62", null ]
         ] ],
         [ "Hardware Clock Driver", "porting.html#hardware-clock-driver", [
-          [ "ADDEND-interface", "porting.html#autotoc_md61", [
-            [ "Example option files", "porting.html#autotoc_md62", null ],
-            [ "Example Hardware Clock Driver files", "porting.html#autotoc_md63", null ]
+          [ "ADDEND-interface", "porting.html#porting-addend-interface", [
+            [ "Example option files", "porting.html#autotoc_md63", null ],
+            [ "Example Hardware Clock Driver files", "porting.html#autotoc_md64", null ]
           ] ],
-          [ "High-Level Tuning (HLT) interface", "porting.html#autotoc_md64", [
+          [ "High-Level Tuning (HLT) interface", "porting.html#porting-hlt-interface", [
             [ "Example option files", "porting.html#autotoc_md65", null ],
             [ "Example Hardware Clock Driver files", "porting.html#autotoc_md66", null ]
           ] ]
@@ -195,11 +196,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_h743_ethernetif_modifications.html",
-"flexptp__options__stm32h743__etherlib_8h_source.html",
-"msg__utils_8c.html#a4d7914a620c970aec568859f651f8087",
-"ptp__port__stm32f407__lwip_8c.html#a8b3a4843168aac4019da37e18ab6b952",
-"settings__interface_8c.html#a4e5c7407d0bb75abb28caf97143b6027",
-"struct_ptp_profile.html#aa2585d779da0ab21273a8d92de9a0ebe"
+"flexptp__options__stm32h743_8h.html#a6d05c58b62fafdaf1d107abfc39ab8cf",
+"minmax_8h.html#afa99ec4acc4ecb2dc3c2d05da15d0e3f",
+"project_organization.html#autotoc_md74",
+"ptp__types_8h.html#a5af6e9a813f31df8ce81457a72a802c9a798249c5983d93b06e690ab45e58264c",
+"struct_ptp_announce_body.html#a87e18f3390e8f5d489c76a197fe29966",
+"task__ptp_8h.html#a6d8d64d0927e028889b55b6bff4c7d57"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

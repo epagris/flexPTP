@@ -122,6 +122,8 @@ $(document).ready(function(){initNavTree('common_8c.html',''); initResizable(); 
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="common_8h_source.html">common.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="msg__buf_8h_source.html">msg_buf.h</a>&quot;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="ptp__core_8h_source.html">ptp_core.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="task__ptp_8h_source.html">task_ptp.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="msg__utils_8h_source.html">msg_utils.h</a>&quot;</code><br />
@@ -176,7 +178,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Reset functionality shared with both slave and master. </p>
 
-<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00156">156</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00167">167</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
 
 </div>
 </div>
@@ -221,7 +223,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00128">128</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00139">139</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
 
 </div>
 </div>
@@ -266,7 +268,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00141">141</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00152">152</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
 
 </div>
 </div>
@@ -286,7 +288,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Initialize Delay_Request header. </p>
 
-<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00020">20</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00024">24</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
 
 </div>
 </div>
@@ -304,9 +306,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Construct and send Delay_Req message. </p>
+<p>Construct and send (P)Delay_Req message. </p>
 
-<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00039">39</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00044">44</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
 
 </div>
 </div>
@@ -333,7 +335,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00091">91</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00101">101</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
 
 </div>
 </div>
@@ -360,7 +362,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00061">61</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00069">69</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
 
 </div>
 </div>
@@ -387,7 +389,7 @@ Variables</h2></td></tr>
 
 <p>header for sending Delay_Reg messages </p>
 
-<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00014">14</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00018">18</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
 
 </div>
 </div>
@@ -413,7 +415,7 @@ Variables</h2></td></tr>
 
 <p>whole, compiled PDelay_Resp_Follow_Up message </p>
 
-<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00016">16</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00020">20</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
 
 </div>
 </div>
@@ -439,7 +441,7 @@ Variables</h2></td></tr>
 
 <p>whole, compiled PDelay_Resp message </p>
 
-<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00015">15</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="common_8c_source.html#l00019">19</a> of file <a class="el" href="common_8c_source.html">common.c</a>.</p>
 
 </div>
 </div>

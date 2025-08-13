@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['vec_5fadd_0',['vec_add',['../kalman__filter_8c.html#ab4d9e267f3ddbfadee671d4167592098',1,'kalman_filter.c']]],
-  ['vec_5fcopy_1',['vec_copy',['../kalman__filter_8c.html#ae3fc3d64fbebffe3330a384f27548f08',1,'kalman_filter.c']]],
-  ['vec_5fsub_2',['vec_sub',['../kalman__filter_8c.html#a272fd23a37ed5337963e127e6ed517b6',1,'kalman_filter.c']]],
-  ['vec_5fzero_3',['vec_zero',['../kalman__filter_8c.html#a3537b194d04d44b4cd72b17da8c0edd7',1,'kalman_filter.c']]]
+  ['socket_5fjoin_5figmp_0',['socket_join_igmp',['../nsd__linux_8c.html#a64d9c6b029f763d7328c93ed54555110',1,'nsd_linux.c']]],
+  ['subtime_1',['subTime',['../timeutils_8c.html#a96f3830db59fe5144e1252cbf2bae1b7',1,'subTime(TimestampI *r, const TimestampI *a, const TimestampI *b):&#160;timeutils.c'],['../timeutils_8h.html#a96f3830db59fe5144e1252cbf2bae1b7',1,'subTime(TimestampI *r, const TimestampI *a, const TimestampI *b):&#160;timeutils.c']]]
 ];

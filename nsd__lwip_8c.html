@@ -143,8 +143,8 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ab3dfaf5c088b313b725159c22b19b660"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__lwip_8c.html#ab3dfaf5c088b313b725159c22b19b660">ptp_transmit_cb</a> (uint32_t ts_s, uint32_t ts_ns, uint32_t tag)</td></tr>
-<tr class="separator:ab3dfaf5c088b313b725159c22b19b660"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab04f1a2c0c0ce98e9823f271fcb2414a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__lwip_8c.html#ab04f1a2c0c0ce98e9823f271fcb2414a">ptp_transmit_cb</a> (uint32_t ts_s, uint32_t ts_ns, void *tag)</td></tr>
+<tr class="separator:ab04f1a2c0c0ce98e9823f271fcb2414a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7cf8e204e226cf122471866525ade559"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__lwip_8c.html#a7cf8e204e226cf122471866525ade559">ptp_receive_cb</a> (void *arg, struct udp_pcb *pcb, struct pbuf *p, const <a class="el" href="ptp__defs_8h.html#ace0914133938da206cea00ef96e8061a">ip_addr_t</a> *addr, u16_t port)</td></tr>
 <tr class="separator:a7cf8e204e226cf122471866525ade559"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a403275d7e5b31f6714a93ebd28d1c2e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__lwip_8c.html#a403275d7e5b31f6714a93ebd28d1c2e4">ptp_nsd_igmp_join_leave</a> (bool join)</td></tr>
@@ -153,8 +153,8 @@ Functions</h2></td></tr>
 <tr class="separator:a448d70ee83a66f7dd5f5e602c7f41b8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b422306adb807427ed243129d139c8b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__lwip_8c.html#a7b422306adb807427ed243129d139c8b">ptp_receive_cb</a> (void *pArg, struct udp_pcb *pPCB, struct pbuf *pP, const <a class="el" href="ptp__defs_8h.html#ace0914133938da206cea00ef96e8061a">ip_addr_t</a> *pAddr, uint16_t port)</td></tr>
 <tr class="separator:a7b422306adb807427ed243129d139c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06c3b6dbcec5f68576cd1a48bf8755b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__lwip_8c.html#a06c3b6dbcec5f68576cd1a48bf8755b2">ptp_nsd_transmit_msg</a> (<a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a> *pMsg)</td></tr>
-<tr class="separator:a06c3b6dbcec5f68576cd1a48bf8755b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a202fbe6ff51f6e1f54b9792ea10f3b25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__lwip_8c.html#a202fbe6ff51f6e1f54b9792ea10f3b25">ptp_nsd_transmit_msg</a> (<a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a> *pMsg, uint32_t uid)</td></tr>
+<tr class="separator:a202fbe6ff51f6e1f54b9792ea10f3b25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13a6be414428aa69be06d18239401c03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__lwip_8c.html#a13a6be414428aa69be06d18239401c03">ptp_transmit_free</a> (struct pbuf *pPBuf)</td></tr>
 <tr class="separator:a13a6be414428aa69be06d18239401c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8084e66715ef332fa46c677421f6b20f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__lwip_8c.html#a8084e66715ef332fa46c677421f6b20f">ptp_nsd_get_interface_address</a> (uint8_t *hwa)</td></tr>
@@ -186,7 +186,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="nsd__lwip_8c_source.html#l00165">165</a> of file <a class="el" href="nsd__lwip_8c_source.html">nsd_lwip.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__lwip_8c_source.html#l00150">150</a> of file <a class="el" href="nsd__lwip_8c_source.html">nsd_lwip.c</a>.</p>
 
 </div>
 </div>
@@ -217,7 +217,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="nsd__lwip_8c_source.html#l00168">168</a> of file <a class="el" href="nsd__lwip_8c_source.html">nsd_lwip.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__lwip_8c_source.html#l00153">153</a> of file <a class="el" href="nsd__lwip_8c_source.html">nsd_lwip.c</a>.</p>
 
 </div>
 </div>
@@ -244,7 +244,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nsd__lwip_8c_source.html#l00161">161</a> of file <a class="el" href="nsd__lwip_8c_source.html">nsd_lwip.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__lwip_8c_source.html#l00146">146</a> of file <a class="el" href="nsd__lwip_8c_source.html">nsd_lwip.c</a>.</p>
 
 </div>
 </div>
@@ -307,8 +307,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a06c3b6dbcec5f68576cd1a48bf8755b2" name="a06c3b6dbcec5f68576cd1a48bf8755b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06c3b6dbcec5f68576cd1a48bf8755b2">&#9670;&#160;</a></span>ptp_nsd_transmit_msg()</h2>
+<a id="a202fbe6ff51f6e1f54b9792ea10f3b25" name="a202fbe6ff51f6e1f54b9792ea10f3b25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a202fbe6ff51f6e1f54b9792ea10f3b25">&#9670;&#160;</a></span>ptp_nsd_transmit_msg()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -317,20 +317,31 @@ Variables</h2></td></tr>
           <td class="memname">void ptp_nsd_transmit_msg </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a> *&#160;</td>
-          <td class="paramname"><em>pMsg</em></td><td>)</td>
+          <td class="paramname"><em>pMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>uid</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Transmit a PTP message.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pMsg</td><td>pointer to a <a class="el" href="struct_raw_ptp_message.html" title="Raw PTP message structure.">RawPtpMessage</a> </td></tr>
+    <tr><td class="paramname">pMsg</td><td>pointer to a <a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a> </td></tr>
+    <tr><td class="paramname">uid</td><td>UID of the message </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nsd__lwip_8c_source.html#l00118">118</a> of file <a class="el" href="nsd__lwip_8c_source.html">nsd_lwip.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__lwip_8c_source.html#l00103">103</a> of file <a class="el" href="nsd__lwip_8c_source.html">nsd_lwip.c</a>.</p>
 
 </div>
 </div>
@@ -444,8 +455,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ab3dfaf5c088b313b725159c22b19b660" name="ab3dfaf5c088b313b725159c22b19b660"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3dfaf5c088b313b725159c22b19b660">&#9670;&#160;</a></span>ptp_transmit_cb()</h2>
+<a id="ab04f1a2c0c0ce98e9823f271fcb2414a" name="ab04f1a2c0c0ce98e9823f271fcb2414a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab04f1a2c0c0ce98e9823f271fcb2414a">&#9670;&#160;</a></span>ptp_transmit_cb()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -468,7 +479,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>tag</em>&#160;</td>
         </tr>
         <tr>
@@ -504,7 +515,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="nsd__lwip_8c_source.html#l00157">157</a> of file <a class="el" href="nsd__lwip_8c_source.html">nsd_lwip.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__lwip_8c_source.html#l00142">142</a> of file <a class="el" href="nsd__lwip_8c_source.html">nsd_lwip.c</a>.</p>
 
 </div>
 </div>

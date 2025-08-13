@@ -8,5 +8,6 @@ var searchData=
   ['common_2ec_5',['common.c',['../common_8c.html',1,'']]],
   ['common_2eh_6',['common.h',['../common_8h.html',1,'']]],
   ['config_2ec_7',['config.c',['../config_8c.html',1,'']]],
-  ['config_2eh_8',['config.h',['../config_8h.html',1,'']]]
+  ['config_2eh_8',['config.h',['../config_8h.html',1,'']]],
+  ['critical_2eh_9',['critical.h',['../critical_8h.html',1,'']]]
 ];

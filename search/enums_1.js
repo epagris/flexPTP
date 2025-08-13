@@ -12,13 +12,14 @@ var searchData=
   ['ptpm2sstate_9',['PtpM2SState',['../ptp__types_8h.html#a9ca78918bde2b70e797a084a284e164a',1,'ptp_types.h']]],
   ['ptpmessageclass_10',['PtpMessageClass',['../ptp__types_8h.html#a8dd57af72bd46fa7defd2f1b0f692b4b',1,'ptp_types.h']]],
   ['ptpmessagetype_11',['PtpMessageType',['../ptp__types_8h.html#a9e053fb4748c174bc1e870145f65db69',1,'ptp_types.h']]],
-  ['ptpp2pslavestate_12',['PtpP2PSlaveState',['../ptp__types_8h.html#ae4104fe8cfc83cb1b1acad40e0c7efb2',1,'ptp_types.h']]],
-  ['ptpprofileenum_13',['PtpProfileEnum',['../ptp__profile__presets_8c.html#a3d593949992cf943af35d4d81e56578d',1,'ptp_profile_presets.c']]],
-  ['ptpprofileflags_14',['PtpProfileFlags',['../ptp__types_8h.html#af7660187be027791a7264a12085fb338',1,'ptp_types.h']]],
-  ['ptptimesource_15',['PtpTimeSource',['../ptp__types_8h.html#afa9baeef926cde7aa743c0e34f7ff672',1,'ptp_types.h']]],
-  ['ptptlvpresetenum_16',['PtpTlvPresetEnum',['../ptp__profile__presets_8c.html#a896a1d3a5dbbe04c54de256e0cd68fcd',1,'ptp_profile_presets.c']]],
-  ['ptptlvtype_17',['PtpTlvType',['../ptp__types_8h.html#a7d266c40bb65b66a1960128671a4abbc',1,'ptp_types.h']]],
-  ['ptptransportspecific_18',['PtpTransportSpecific',['../ptp__types_8h.html#aeb56a68f27eb91b48211dcad78a709d8',1,'ptp_types.h']]],
-  ['ptptransporttype_19',['PtpTransportType',['../ptp__types_8h.html#a2964210d435f30e9125953c23045ea0b',1,'ptp_types.h']]],
-  ['ptpusereventcode_20',['PtpUserEventCode',['../event_8h.html#a6c52195048eeb16f32cec8305a8c8334',1,'event.h']]]
+  ['ptpmsgbuferror_12',['PtpMsgBufError',['../msg__buf_8h.html#a758e9b0a44b4501125de7046f7224e02',1,'msg_buf.h']]],
+  ['ptpp2pslavestate_13',['PtpP2PSlaveState',['../ptp__types_8h.html#ae4104fe8cfc83cb1b1acad40e0c7efb2',1,'ptp_types.h']]],
+  ['ptpprofileenum_14',['PtpProfileEnum',['../ptp__profile__presets_8c.html#a3d593949992cf943af35d4d81e56578d',1,'ptp_profile_presets.c']]],
+  ['ptpprofileflags_15',['PtpProfileFlags',['../ptp__types_8h.html#af7660187be027791a7264a12085fb338',1,'ptp_types.h']]],
+  ['ptptimesource_16',['PtpTimeSource',['../ptp__types_8h.html#afa9baeef926cde7aa743c0e34f7ff672',1,'ptp_types.h']]],
+  ['ptptlvpresetenum_17',['PtpTlvPresetEnum',['../ptp__profile__presets_8c.html#a896a1d3a5dbbe04c54de256e0cd68fcd',1,'ptp_profile_presets.c']]],
+  ['ptptlvtype_18',['PtpTlvType',['../ptp__types_8h.html#a7d266c40bb65b66a1960128671a4abbc',1,'ptp_types.h']]],
+  ['ptptransportspecific_19',['PtpTransportSpecific',['../ptp__types_8h.html#aeb56a68f27eb91b48211dcad78a709d8',1,'ptp_types.h']]],
+  ['ptptransporttype_20',['PtpTransportType',['../ptp__types_8h.html#a2964210d435f30e9125953c23045ea0b',1,'ptp_types.h']]],
+  ['ptpusereventcode_21',['PtpUserEventCode',['../event_8h.html#a6c52195048eeb16f32cec8305a8c8334',1,'event.h']]]
 ];

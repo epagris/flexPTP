@@ -21,7 +21,7 @@ var master_8c =
     [ "announceHeader", "master_8c.html#a93ba9b3bceabe1a66954ea7714700f7b", null ],
     [ "followUp", "master_8c.html#a90e3d1eb7a74b3d8a6868c5dbe56be64", null ],
     [ "P2P_SLAVE_STATE_HINTS", "master_8c.html#ae9b92a728e66fe362fbf8d0cc6445a70", null ],
-    [ "sync", "master_8c.html#adf33d10bfaf09123ce77940c326a91cd", null ],
+    [ "sync_", "master_8c.html#a8d48e588f468a8beff46270c6ff0b6ed", null ],
     [ "syncHeader", "master_8c.html#a1e549fe835f184822d14ec4661dcc8bb", null ],
     [ "tlvChain", "master_8c.html#ab20e592e46b370e030f9d9501b0ad504", null ]
 ];

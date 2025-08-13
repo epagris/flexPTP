@@ -172,6 +172,9 @@ Data Fields</h2></td></tr>
 <tr class="memitem:ad3152e5b349dd81ec7e539538d459798"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_ptp_network_state.html">PtpNetworkState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ptp_core_state.html#ad3152e5b349dd81ec7e539538d459798">network</a></td></tr>
 <tr class="memdesc:ad3152e5b349dd81ec7e539538d459798"><td class="mdescLeft">&#160;</td><td class="mdescRight">Network state.  <br /></td></tr>
 <tr class="separator:ad3152e5b349dd81ec7e539538d459798"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3507a48ae247ff252738ca350810b21"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ptp_core_state.html#ab3507a48ae247ff252738ca350810b21">ticks</a></td></tr>
+<tr class="memdesc:ab3507a48ae247ff252738ca350810b21"><td class="mdescLeft">&#160;</td><td class="mdescRight">ticks counting form the initialization  <br /></td></tr>
+<tr class="separator:ab3507a48ae247ff252738ca350810b21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac454ff27abef049fb30897dc5969ae6"><td class="memItemLeft" >struct {</td></tr>
 <tr class="memitem:a6a35a9f36544ec4ebdd17f474e168265"><td class="memItemLeft" >&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="struct_ptp_core_state.html#a6a35a9f36544ec4ebdd17f474e168265">def</a></td></tr>
 <tr class="memdesc:a6a35a9f36544ec4ebdd17f474e168265"><td class="mdescLeft">&#160;</td><td class="mdescRight">default  <a href="struct_ptp_core_state.html#a6a35a9f36544ec4ebdd17f474e168265">More...</a><br /></td></tr>
@@ -191,6 +194,9 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a0c91053ccebb5abc2d05f47bd610b5eb"><td class="memItemLeft" >&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="struct_ptp_core_state.html#a0c91053ccebb5abc2d05f47bd610b5eb">bmca</a></td></tr>
 <tr class="memdesc:a0c91053ccebb5abc2d05f47bd610b5eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">BMCA state change.  <a href="struct_ptp_core_state.html#a0c91053ccebb5abc2d05f47bd610b5eb">More...</a><br /></td></tr>
 <tr class="separator:a0c91053ccebb5abc2d05f47bd610b5eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3453dc4301b32d242a12b574223bc6ee"><td class="memItemLeft" >&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="struct_ptp_core_state.html#a3453dc4301b32d242a12b574223bc6ee">transmission</a></td></tr>
+<tr class="memdesc:a3453dc4301b32d242a12b574223bc6ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmission logging.  <a href="struct_ptp_core_state.html#a3453dc4301b32d242a12b574223bc6ee">More...</a><br /></td></tr>
+<tr class="separator:a3453dc4301b32d242a12b574223bc6ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac454ff27abef049fb30897dc5969ae6"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ptp_core_state.html#aac454ff27abef049fb30897dc5969ae6">logging</a></td></tr>
 <tr class="memdesc:aac454ff27abef049fb30897dc5969ae6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logging.  <br /></td></tr>
 <tr class="separator:aac454ff27abef049fb30897dc5969ae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -200,14 +206,7 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a1e76e47b757f6a2e1840c4ef317dc59a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="ptp__types_8h.html#a45cabd2ea4c608b4b84ce719019cd8e0">PtpUserEventCallback</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ptp_core_state.html#a1e76e47b757f6a2e1840c4ef317dc59a">userEventCb</a></td></tr>
 <tr class="memdesc:a1e76e47b757f6a2e1840c4ef317dc59a"><td class="mdescLeft">&#160;</td><td class="mdescRight">User event callback pointer.  <br /></td></tr>
 <tr class="separator:a1e76e47b757f6a2e1840c4ef317dc59a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9309baae00e92ec6bf52227c290e7c7b"><td class="memItemLeft" >struct {</td></tr>
-<tr class="memitem:adcdbfc1f90642b107ecb404e6c725c38"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="ptp__types_8h.html#a5a0e9e1971b37b7cf635ab8b75d03da6">TimerType</a>&#160;&#160;&#160;<a class="el" href="struct_ptp_core_state.html#adcdbfc1f90642b107ecb404e6c725c38">heartbeat</a></td></tr>
-<tr class="memdesc:adcdbfc1f90642b107ecb404e6c725c38"><td class="mdescLeft">&#160;</td><td class="mdescRight">timer for managing SBMC operations  <a href="struct_ptp_core_state.html#adcdbfc1f90642b107ecb404e6c725c38">More...</a><br /></td></tr>
-<tr class="separator:adcdbfc1f90642b107ecb404e6c725c38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9309baae00e92ec6bf52227c290e7c7b"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ptp_core_state.html#a9309baae00e92ec6bf52227c290e7c7b">timers</a></td></tr>
-<tr class="memdesc:a9309baae00e92ec6bf52227c290e7c7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Management timers.  <br /></td></tr>
-<tr class="separator:a9309baae00e92ec6bf52227c290e7c7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ae522224c80b801136ab202e22e28a6"><td class="memItemLeft" >struct {</td></tr>
+<tr class="memitem:a8b7259527e965e592d607228f66f5bf6"><td class="memItemLeft" >struct {</td></tr>
 <tr class="memitem:a8740ba80e30dd75e71d09fa1dcf04f3d"><td class="memItemLeft" >&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="struct_ptp_core_state.html#a8740ba80e30dd75e71d09fa1dcf04f3d">enabled</a></td></tr>
 <tr class="memdesc:a8740ba80e30dd75e71d09fa1dcf04f3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave module is enabled.  <a href="struct_ptp_core_state.html#a8740ba80e30dd75e71d09fa1dcf04f3d">More...</a><br /></td></tr>
 <tr class="separator:a8740ba80e30dd75e71d09fa1dcf04f3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -217,6 +216,9 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a11688749b5cae984b1c2dc508f4a8719"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="struct_ptp_sync_cycle_data.html">PtpSyncCycleData</a>&#160;&#160;&#160;<a class="el" href="struct_ptp_core_state.html#a11688749b5cae984b1c2dc508f4a8719">scd</a></td></tr>
 <tr class="memdesc:a11688749b5cae984b1c2dc508f4a8719"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sync cycle data.  <a href="struct_ptp_core_state.html#a11688749b5cae984b1c2dc508f4a8719">More...</a><br /></td></tr>
 <tr class="separator:a11688749b5cae984b1c2dc508f4a8719"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacd1d57a26de9768bcd8449853df50a5"><td class="memItemLeft" >&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="struct_ptp_core_state.html#aacd1d57a26de9768bcd8449853df50a5">expectPDelRespFollowUp</a></td></tr>
+<tr class="memdesc:aacd1d57a26de9768bcd8449853df50a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expect a PDelay_Resp_Follow_Up message.  <a href="struct_ptp_core_state.html#aacd1d57a26de9768bcd8449853df50a5">More...</a><br /></td></tr>
+<tr class="separator:aacd1d57a26de9768bcd8449853df50a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4528c74e39fbc6a61e9fd0dda1c1922d"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="ptp__types_8h.html#a8eb694373758507149a9b074ec1003b1">PtpFastCompState</a>&#160;&#160;&#160;<a class="el" href="struct_ptp_core_state.html#a4528c74e39fbc6a61e9fd0dda1c1922d">fastCompState</a></td></tr>
 <tr class="memdesc:a4528c74e39fbc6a61e9fd0dda1c1922d"><td class="mdescLeft">&#160;</td><td class="mdescRight">State of fast compensation.  <a href="struct_ptp_core_state.html#a4528c74e39fbc6a61e9fd0dda1c1922d">More...</a><br /></td></tr>
 <tr class="separator:a4528c74e39fbc6a61e9fd0dda1c1922d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -244,9 +246,9 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a4669e5fd5685fabf29fe3cdcfea9c92b"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="ptp__types_8h.html#a46935577d0036742a30c9042d42a519e">PtpSyncCallback</a>&#160;&#160;&#160;<a class="el" href="struct_ptp_core_state.html#a4669e5fd5685fabf29fe3cdcfea9c92b">syncCb</a></td></tr>
 <tr class="memdesc:a4669e5fd5685fabf29fe3cdcfea9c92b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sync callback invoked in every synchronization cycle.  <a href="struct_ptp_core_state.html#a4669e5fd5685fabf29fe3cdcfea9c92b">More...</a><br /></td></tr>
 <tr class="separator:a4669e5fd5685fabf29fe3cdcfea9c92b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ae522224c80b801136ab202e22e28a6"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ptp_core_state.html#a2ae522224c80b801136ab202e22e28a6">slave</a></td></tr>
-<tr class="separator:a2ae522224c80b801136ab202e22e28a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad88d4356c2a404139f75baeec518b894"><td class="memItemLeft" >struct {</td></tr>
+<tr class="memitem:a8b7259527e965e592d607228f66f5bf6"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ptp_core_state.html#a8b7259527e965e592d607228f66f5bf6">slave</a></td></tr>
+<tr class="separator:a8b7259527e965e592d607228f66f5bf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5570488fe82480a0f683f19d046bf2b8"><td class="memItemLeft" >struct {</td></tr>
 <tr class="memitem:a8740ba80e30dd75e71d09fa1dcf04f3d"><td class="memItemLeft" >&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="struct_ptp_core_state.html#a8740ba80e30dd75e71d09fa1dcf04f3d">enabled</a></td></tr>
 <tr class="memdesc:a8740ba80e30dd75e71d09fa1dcf04f3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master module is enabled.  <a href="struct_ptp_core_state.html#a8740ba80e30dd75e71d09fa1dcf04f3d">More...</a><br /></td></tr>
 <tr class="separator:a8740ba80e30dd75e71d09fa1dcf04f3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -259,6 +261,9 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a11688749b5cae984b1c2dc508f4a8719"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="struct_ptp_sync_cycle_data.html">PtpSyncCycleData</a>&#160;&#160;&#160;<a class="el" href="struct_ptp_core_state.html#a11688749b5cae984b1c2dc508f4a8719">scd</a></td></tr>
 <tr class="memdesc:a11688749b5cae984b1c2dc508f4a8719"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sync cycle data.  <a href="struct_ptp_core_state.html#a11688749b5cae984b1c2dc508f4a8719">More...</a><br /></td></tr>
 <tr class="separator:a11688749b5cae984b1c2dc508f4a8719"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacd1d57a26de9768bcd8449853df50a5"><td class="memItemLeft" >&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="struct_ptp_core_state.html#aacd1d57a26de9768bcd8449853df50a5">expectPDelRespFollowUp</a></td></tr>
+<tr class="memdesc:aacd1d57a26de9768bcd8449853df50a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expect a PDelay_Resp_Follow_Up message.  <a href="struct_ptp_core_state.html#aacd1d57a26de9768bcd8449853df50a5">More...</a><br /></td></tr>
+<tr class="separator:aacd1d57a26de9768bcd8449853df50a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7378b214d9a36da8c3d69fbf23168cc6"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="struct_ptp_master_messaging_state.html">PtpMasterMessagingState</a>&#160;&#160;&#160;<a class="el" href="struct_ptp_core_state.html#a7378b214d9a36da8c3d69fbf23168cc6">messaging</a></td></tr>
 <tr class="memdesc:a7378b214d9a36da8c3d69fbf23168cc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Messaging state.  <a href="struct_ptp_core_state.html#a7378b214d9a36da8c3d69fbf23168cc6">More...</a><br /></td></tr>
 <tr class="separator:a7378b214d9a36da8c3d69fbf23168cc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -280,13 +285,13 @@ Data Fields</h2></td></tr>
 <tr class="memitem:ac54e00ea95dddd2a43a2972b060c7f99"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="struct_ptp_core_state.html#ac54e00ea95dddd2a43a2972b060c7f99">pdelayReqTmr</a></td></tr>
 <tr class="memdesc:ac54e00ea95dddd2a43a2972b060c7f99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counter for PDelayReq transmission scheduling.  <a href="struct_ptp_core_state.html#ac54e00ea95dddd2a43a2972b060c7f99">More...</a><br /></td></tr>
 <tr class="separator:ac54e00ea95dddd2a43a2972b060c7f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad88d4356c2a404139f75baeec518b894"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ptp_core_state.html#ad88d4356c2a404139f75baeec518b894">master</a></td></tr>
-<tr class="separator:ad88d4356c2a404139f75baeec518b894"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5570488fe82480a0f683f19d046bf2b8"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ptp_core_state.html#a5570488fe82480a0f683f19d046bf2b8">master</a></td></tr>
+<tr class="separator:a5570488fe82480a0f683f19d046bf2b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Giant PTP core state object. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00493">493</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00497">497</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="ae10f55ea76b94e36a8edafae5037703a" name="ae10f55ea76b94e36a8edafae5037703a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae10f55ea76b94e36a8edafae5037703a">&#9670;&#160;</a></span>announceTickPeriod</h2>
@@ -302,7 +307,7 @@ Data Fields</h2></td></tr>
 
 <p>Announce transmission in ticks. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00557">557</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00562">562</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -320,7 +325,7 @@ Data Fields</h2></td></tr>
 
 <p>Counter to schedule Announce transmission. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00558">558</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00563">563</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -338,7 +343,7 @@ Data Fields</h2></td></tr>
 
 <p>BMCA state. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00504">504</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00508">508</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -356,7 +361,7 @@ Data Fields</h2></td></tr>
 
 <p>BMCA state change. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00514">514</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00520">520</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -374,7 +379,7 @@ Data Fields</h2></td></tr>
 
 <p>The capabilities of this device. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00495">495</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00499">499</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -392,7 +397,7 @@ Data Fields</h2></td></tr>
 
 <p>clockIdentity calculated from MAC address </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00501">501</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00505">505</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -410,7 +415,7 @@ Data Fields</h2></td></tr>
 
 <p>time error limit above coarse correction is engaged </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00536">536</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00540">540</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -428,7 +433,7 @@ Data Fields</h2></td></tr>
 
 <p>correction fields </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00510">510</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00516">516</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -446,7 +451,7 @@ Data Fields</h2></td></tr>
 
 <p>default </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00509">509</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00515">515</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -464,7 +469,7 @@ Data Fields</h2></td></tr>
 
 <p>ticks between Delay_Req transmissions </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00538">538</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00542">542</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -482,7 +487,7 @@ Data Fields</h2></td></tr>
 
 <p>Timer counting ticks for Delay_Req transmissions. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00539">539</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00543">543</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -501,7 +506,25 @@ Data Fields</h2></td></tr>
 <p>Slave module is enabled. </p>
 <p>Master module is enabled. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00527">527</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00530">530</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+
+</div>
+</div>
+<a id="aacd1d57a26de9768bcd8449853df50a5" name="aacd1d57a26de9768bcd8449853df50a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacd1d57a26de9768bcd8449853df50a5">&#9670;&#160;</a></span>expectPDelRespFollowUp</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool expectPDelRespFollowUp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Expect a PDelay_Resp_Follow_Up message. </p>
+
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00534">534</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -519,7 +542,7 @@ Data Fields</h2></td></tr>
 
 <p>Cycle counter for fast compensation. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00532">532</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00536">536</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -537,25 +560,7 @@ Data Fields</h2></td></tr>
 
 <p>State of fast compensation. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00531">531</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
-
-</div>
-</div>
-<a id="adcdbfc1f90642b107ecb404e6c725c38" name="adcdbfc1f90642b107ecb404e6c725c38"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adcdbfc1f90642b107ecb404e6c725c38">&#9670;&#160;</a></span>heartbeat</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="ptp__types_8h.html#a5a0e9e1971b37b7cf635ab8b75d03da6">TimerType</a> heartbeat</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>timer for managing SBMC operations </p>
-
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00521">521</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00535">535</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -573,7 +578,7 @@ Data Fields</h2></td></tr>
 
 <p>Hardware clock state. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00497">497</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00501">501</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -607,7 +612,7 @@ Data Fields</h2></td></tr>
 
 <p>informative messages </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00512">512</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00518">518</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -625,7 +630,7 @@ Data Fields</h2></td></tr>
 
 <p>clock lock state change </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00513">513</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00519">519</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -645,8 +650,8 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a id="ad88d4356c2a404139f75baeec518b894" name="ad88d4356c2a404139f75baeec518b894"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad88d4356c2a404139f75baeec518b894">&#9670;&#160;</a></span></h2>
+<a id="a5570488fe82480a0f683f19d046bf2b8" name="a5570488fe82480a0f683f19d046bf2b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5570488fe82480a0f683f19d046bf2b8">&#9670;&#160;</a></span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -673,7 +678,7 @@ Data Fields</h2></td></tr>
 
 <p>Messaging state. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00529">529</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00532">532</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -691,7 +696,7 @@ Data Fields</h2></td></tr>
 
 <p>Messaging state. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00553">553</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00558">558</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -709,7 +714,7 @@ Data Fields</h2></td></tr>
 
 <p>Network state. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00505">505</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00509">509</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -727,7 +732,7 @@ Data Fields</h2></td></tr>
 
 <p>PPS signal offset. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00500">500</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00504">504</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -745,7 +750,7 @@ Data Fields</h2></td></tr>
 
 <p>Information on the connected P2P slave (only used in P2P modes) </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00549">549</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00553">553</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -763,7 +768,7 @@ Data Fields</h2></td></tr>
 
 <p>Sequence number of the last PDelay_Request sent. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00550">550</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00554">554</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -781,7 +786,7 @@ Data Fields</h2></td></tr>
 
 <p>PDelayReq transmission period in ticks. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00559">559</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00564">564</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -799,7 +804,7 @@ Data Fields</h2></td></tr>
 
 <p>Counter for PDelayReq transmission scheduling. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00560">560</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00565">565</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -817,7 +822,7 @@ Data Fields</h2></td></tr>
 
 <p>T1 from the previous cycle. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00533">533</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00537">537</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -835,7 +840,7 @@ Data Fields</h2></td></tr>
 
 <p>T2 from the previous cycle. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00534">534</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00538">538</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -853,7 +858,7 @@ Data Fields</h2></td></tr>
 
 <p>Time error in the previous cycle. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00535">535</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00539">539</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -871,7 +876,7 @@ Data Fields</h2></td></tr>
 
 <p>PTP profile. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00494">494</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00498">498</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -889,12 +894,12 @@ Data Fields</h2></td></tr>
 
 <p>Sync cycle data. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00530">530</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00533">533</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
-<a id="a2ae522224c80b801136ab202e22e28a6" name="a2ae522224c80b801136ab202e22e28a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ae522224c80b801136ab202e22e28a6">&#9670;&#160;</a></span></h2>
+<a id="a8b7259527e965e592d607228f66f5bf6" name="a8b7259527e965e592d607228f66f5bf6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b7259527e965e592d607228f66f5bf6">&#9670;&#160;</a></span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -921,7 +926,7 @@ Data Fields</h2></td></tr>
 
 <p>Statistics. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00517">517</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00524">524</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -939,7 +944,7 @@ Data Fields</h2></td></tr>
 
 <p>Sync callback invoked in every synchronization cycle. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00541">541</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00545">545</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -957,7 +962,7 @@ Data Fields</h2></td></tr>
 
 <p>Sync transmission period in ticks. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00555">555</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00560">560</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -975,23 +980,25 @@ Data Fields</h2></td></tr>
 
 <p>Counter for scheduling Sync transmission. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00556">556</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00561">561</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
-<a id="a9309baae00e92ec6bf52227c290e7c7b" name="a9309baae00e92ec6bf52227c290e7c7b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9309baae00e92ec6bf52227c290e7c7b">&#9670;&#160;</a></span></h2>
+<a id="ab3507a48ae247ff252738ca350810b21" name="ab3507a48ae247ff252738ca350810b21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3507a48ae247ff252738ca350810b21">&#9670;&#160;</a></span>ticks</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct  { ... }  timers</td>
+          <td class="memname">uint32_t ticks</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Management timers. </p>
+<p>ticks counting form the initialization </p>
+
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00511">511</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -1009,7 +1016,25 @@ Data Fields</h2></td></tr>
 
 <p>timestamps </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00511">511</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00517">517</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+
+</div>
+</div>
+<a id="a3453dc4301b32d242a12b574223bc6ee" name="a3453dc4301b32d242a12b574223bc6ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3453dc4301b32d242a12b574223bc6ee">&#9670;&#160;</a></span>transmission</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool transmission</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Transmission logging. </p>
+
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00521">521</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -1027,7 +1052,7 @@ Data Fields</h2></td></tr>
 
 <p>User event callback pointer. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00518">518</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00525">525</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>

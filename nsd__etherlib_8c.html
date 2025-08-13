@@ -155,8 +155,8 @@ Functions</h2></td></tr>
 <tr class="separator:a403275d7e5b31f6714a93ebd28d1c2e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a448d70ee83a66f7dd5f5e602c7f41b8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#a448d70ee83a66f7dd5f5e602c7f41b8d">ptp_nsd_init</a> (<a class="el" href="ptp__types_8h.html#a2964210d435f30e9125953c23045ea0b">PtpTransportType</a> tp, <a class="el" href="ptp__types_8h.html#aa353086afe318bec4ec7ce3757ba478e">PtpDelayMechanism</a> dm)</td></tr>
 <tr class="separator:a448d70ee83a66f7dd5f5e602c7f41b8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06c3b6dbcec5f68576cd1a48bf8755b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#a06c3b6dbcec5f68576cd1a48bf8755b2">ptp_nsd_transmit_msg</a> (<a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a> *pMsg)</td></tr>
-<tr class="separator:a06c3b6dbcec5f68576cd1a48bf8755b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a202fbe6ff51f6e1f54b9792ea10f3b25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#a202fbe6ff51f6e1f54b9792ea10f3b25">ptp_nsd_transmit_msg</a> (<a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a> *pMsg, uint32_t uid)</td></tr>
+<tr class="separator:a202fbe6ff51f6e1f54b9792ea10f3b25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8084e66715ef332fa46c677421f6b20f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#a8084e66715ef332fa46c677421f6b20f">ptp_nsd_get_interface_address</a> (uint8_t *hwa)</td></tr>
 <tr class="separator:a8084e66715ef332fa46c677421f6b20f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -218,7 +218,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00150">150</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00138">138</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
 
 </div>
 </div>
@@ -281,8 +281,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a06c3b6dbcec5f68576cd1a48bf8755b2" name="a06c3b6dbcec5f68576cd1a48bf8755b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06c3b6dbcec5f68576cd1a48bf8755b2">&#9670;&#160;</a></span>ptp_nsd_transmit_msg()</h2>
+<a id="a202fbe6ff51f6e1f54b9792ea10f3b25" name="a202fbe6ff51f6e1f54b9792ea10f3b25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a202fbe6ff51f6e1f54b9792ea10f3b25">&#9670;&#160;</a></span>ptp_nsd_transmit_msg()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -291,20 +291,31 @@ Variables</h2></td></tr>
           <td class="memname">void ptp_nsd_transmit_msg </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a> *&#160;</td>
-          <td class="paramname"><em>pMsg</em></td><td>)</td>
+          <td class="paramname"><em>pMsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>uid</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Transmit a PTP message.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pMsg</td><td>pointer to a <a class="el" href="struct_raw_ptp_message.html" title="Raw PTP message structure.">RawPtpMessage</a> </td></tr>
+    <tr><td class="paramname">pMsg</td><td>pointer to a <a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a> </td></tr>
+    <tr><td class="paramname">uid</td><td>UID of the message </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00135">135</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00123">123</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
 
 </div>
 </div>

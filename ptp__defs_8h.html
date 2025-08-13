@@ -127,6 +127,10 @@ $(document).ready(function(){initNavTree('ptp__defs_8h.html',''); initResizable(
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;flexptp_options.h&gt;</code><br />
+<code>#include &quot;FreeRTOS.h&quot;</code><br />
+<code>#include &quot;queue.h&quot;</code><br />
+<code>#include &quot;task.h&quot;</code><br />
+<code>#include &quot;timers.h&quot;</code><br />
 </div>
 <p><a href="ptp__defs_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -206,7 +210,17 @@ Macros</h2></td></tr>
 <tr class="memitem:a10f67db3ffbf260e5af53c1af8c570db"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__defs_8h.html#a10f67db3ffbf260e5af53c1af8c570db">PTP_CLOCK_TICK_FREQ_HZ</a>&#160;&#160;&#160;(1000000000 / <a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#afe6fb0be9af930d13c30a164a096cffc">PTP_INCREMENT_NSEC</a>)</td></tr>
 <tr class="memdesc:a10f67db3ffbf260e5af53c1af8c570db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rated clock tick frequency.  <br /></td></tr>
 <tr class="separator:a10f67db3ffbf260e5af53c1af8c570db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0dfb57ec7c0d325acf28e89270f3920b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__defs_8h.html#a0dfb57ec7c0d325acf28e89270f3920b">PTP_HEARTBEAT_TICKRATE_MS</a>&#160;&#160;&#160;(125)</td></tr>
+<tr class="memitem:ad68f01211bcc2a5342a9d23ecfdcaa3b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__defs_8h.html#ad68f01211bcc2a5342a9d23ecfdcaa3b">FLEXPTP_FREERTOS</a>&#160;&#160;&#160;(1)</td></tr>
+<tr class="separator:ad68f01211bcc2a5342a9d23ecfdcaa3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ccad66d3f30f1ca1c7b467939bc58a2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__defs_8h.html#a5ccad66d3f30f1ca1c7b467939bc58a2">FLEXPTP_NON_LINUX_OS</a>&#160;&#160;&#160;(1)</td></tr>
+<tr class="memdesc:a5ccad66d3f30f1ca1c7b467939bc58a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">flexPTP task priority  <br /></td></tr>
+<tr class="separator:a5ccad66d3f30f1ca1c7b467939bc58a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53b8a0cd469673a510bc734d8d0dac94"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__defs_8h.html#a53b8a0cd469673a510bc734d8d0dac94">FLEXPTP_TASK_PRIORITY</a>&#160;&#160;&#160;(configMAX_PRIORITIES / 2)</td></tr>
+<tr class="separator:a53b8a0cd469673a510bc734d8d0dac94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6faa1c0f2d39f84e4c1ea878ba105855"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__defs_8h.html#a6faa1c0f2d39f84e4c1ea878ba105855">FLEXPTP_TASK_STACK_SIZE</a>&#160;&#160;&#160;(2048)</td></tr>
+<tr class="memdesc:a6faa1c0f2d39f84e4c1ea878ba105855"><td class="mdescLeft">&#160;</td><td class="mdescRight">flexPTP task stack size  <br /></td></tr>
+<tr class="separator:a6faa1c0f2d39f84e4c1ea878ba105855"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0dfb57ec7c0d325acf28e89270f3920b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__defs_8h.html#a0dfb57ec7c0d325acf28e89270f3920b">PTP_HEARTBEAT_TICKRATE_MS</a>&#160;&#160;&#160;(62)</td></tr>
 <tr class="memdesc:a0dfb57ec7c0d325acf28e89270f3920b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heartbeat ticking period.  <br /></td></tr>
 <tr class="separator:a0dfb57ec7c0d325acf28e89270f3920b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaefee41afe2b5aa4ab5d4a5f5fdef2a5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__defs_8h.html#aaefee41afe2b5aa4ab5d4a5f5fdef2a5">PTP_PORT_ID</a>&#160;&#160;&#160;(1)</td></tr>
@@ -298,8 +312,11 @@ Macros</h2></td></tr>
 <tr class="separator:a867a1d7417963441047eab62d663ba05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6fcf18471c396e83f5a50675444b8258"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__defs_8h.html#a6fcf18471c396e83f5a50675444b8258">FLEXPTP_ntohs</a>(a)&#160;&#160;&#160;<a class="el" href="ptp__defs_8h.html#a867a1d7417963441047eab62d663ba05">FLEXPTP_htons</a>((a))</td></tr>
 <tr class="separator:a6fcf18471c396e83f5a50675444b8258"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3acffbd305ee72dcd4593c0d8af64a4f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__defs_8h.html#a3acffbd305ee72dcd4593c0d8af64a4f">MIN</a>(a,  b)&#160;&#160;&#160;(((a) &lt; (b)) ? (a) : (b))</td></tr>
-<tr class="separator:a3acffbd305ee72dcd4593c0d8af64a4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5f0555b0fa10206af9936fd4a42306e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__defs_8h.html#ad5f0555b0fa10206af9936fd4a42306e">FLEXPTP_MS_TO_TICKS</a>(ms)&#160;&#160;&#160;((ms + (<a class="el" href="ptp__defs_8h.html#a0dfb57ec7c0d325acf28e89270f3920b">PTP_HEARTBEAT_TICKRATE_MS</a> - 1)) / <a class="el" href="ptp__defs_8h.html#a0dfb57ec7c0d325acf28e89270f3920b">PTP_HEARTBEAT_TICKRATE_MS</a>)</td></tr>
+<tr class="memdesc:ad5f0555b0fa10206af9936fd4a42306e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interval conversion between milliseconds and ticks.  <br /></td></tr>
+<tr class="separator:ad5f0555b0fa10206af9936fd4a42306e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac76c134f363d13f30aecc02f1a59511a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__defs_8h.html#ac76c134f363d13f30aecc02f1a59511a">FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS</a>&#160;&#160;&#160;(20)</td></tr>
+<tr class="separator:ac76c134f363d13f30aecc02f1a59511a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -343,7 +360,23 @@ Variables</h2></td></tr>
 
 <p>(for lwIP conformity) </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00030">30</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00034">34</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+
+</div>
+</div>
+<a id="ad68f01211bcc2a5342a9d23ecfdcaa3b" name="ad68f01211bcc2a5342a9d23ecfdcaa3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad68f01211bcc2a5342a9d23ecfdcaa3b">&#9670;&#160;</a></span>FLEXPTP_FREERTOS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FLEXPTP_FREERTOS&#160;&#160;&#160;(1)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00082">82</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -367,7 +400,7 @@ Variables</h2></td></tr>
 <div class="line">     (((a) &lt;&lt; 8) &amp; 0x00ff0000) |  \</div>
 <div class="line">     (((a) &lt;&lt; 24) &amp; 0xff000000))</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00172">172</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00218">218</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -389,7 +422,47 @@ Variables</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">    ((((a) &gt;&gt; 8) &amp; 0x00ff) | \</div>
 <div class="line">     (((a) &lt;&lt; 8) &amp; 0xff00))</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00180">180</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00226">226</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+
+</div>
+</div>
+<a id="ad5f0555b0fa10206af9936fd4a42306e" name="ad5f0555b0fa10206af9936fd4a42306e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5f0555b0fa10206af9936fd4a42306e">&#9670;&#160;</a></span>FLEXPTP_MS_TO_TICKS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FLEXPTP_MS_TO_TICKS</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ms</td><td>)</td>
+          <td>&#160;&#160;&#160;((ms + (<a class="el" href="ptp__defs_8h.html#a0dfb57ec7c0d325acf28e89270f3920b">PTP_HEARTBEAT_TICKRATE_MS</a> - 1)) / <a class="el" href="ptp__defs_8h.html#a0dfb57ec7c0d325acf28e89270f3920b">PTP_HEARTBEAT_TICKRATE_MS</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Interval conversion between milliseconds and ticks. </p>
+
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00234">234</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+
+</div>
+</div>
+<a id="a5ccad66d3f30f1ca1c7b467939bc58a2" name="a5ccad66d3f30f1ca1c7b467939bc58a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ccad66d3f30f1ca1c7b467939bc58a2">&#9670;&#160;</a></span>FLEXPTP_NON_LINUX_OS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FLEXPTP_NON_LINUX_OS&#160;&#160;&#160;(1)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>flexPTP task priority </p>
+
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00111">111</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -409,7 +482,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00178">178</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00224">224</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -429,37 +502,57 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00184">184</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00230">230</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
-<a id="a3acffbd305ee72dcd4593c0d8af64a4f" name="a3acffbd305ee72dcd4593c0d8af64a4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3acffbd305ee72dcd4593c0d8af64a4f">&#9670;&#160;</a></span>MIN</h2>
+<a id="ac76c134f363d13f30aecc02f1a59511a" name="ac76c134f363d13f30aecc02f1a59511a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac76c134f363d13f30aecc02f1a59511a">&#9670;&#160;</a></span>FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define MIN</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">a, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">b&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;(((a) &lt; (b)) ? (a) : (b))</td>
+          <td class="memname">#define FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS&#160;&#160;&#160;(20)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00193">193</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00236">236</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+
+</div>
+</div>
+<a id="a53b8a0cd469673a510bc734d8d0dac94" name="a53b8a0cd469673a510bc734d8d0dac94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53b8a0cd469673a510bc734d8d0dac94">&#9670;&#160;</a></span>FLEXPTP_TASK_PRIORITY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FLEXPTP_TASK_PRIORITY&#160;&#160;&#160;(configMAX_PRIORITIES / 2)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00113">113</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+
+</div>
+</div>
+<a id="a6faa1c0f2d39f84e4c1ea878ba105855" name="a6faa1c0f2d39f84e4c1ea878ba105855"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6faa1c0f2d39f84e4c1ea878ba105855">&#9670;&#160;</a></span>FLEXPTP_TASK_STACK_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FLEXPTP_TASK_STACK_SIZE&#160;&#160;&#160;(2048)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>flexPTP task stack size </p>
+
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00120">120</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -477,7 +570,7 @@ Variables</h2></td></tr>
 
 <p>Limit of the LOCKED state. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00086">86</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00132">132</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -495,7 +588,7 @@ Variables</h2></td></tr>
 
 <p>Addend/ppb ratio. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00070">70</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00074">74</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -513,7 +606,7 @@ Variables</h2></td></tr>
 
 <p>Initial addend value. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00069">69</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00073">73</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -529,7 +622,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00064">64</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00068">68</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -547,7 +640,7 @@ Variables</h2></td></tr>
 
 <p>Length of the Announce body. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00043">43</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00047">47</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -565,7 +658,7 @@ Variables</h2></td></tr>
 
 <p>Number of tolerated consecutive lost Announce messages. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00106">106</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00152">152</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -583,7 +676,7 @@ Variables</h2></td></tr>
 
 <p>Best clock class of this device. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00124">124</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00170">170</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -601,7 +694,7 @@ Variables</h2></td></tr>
 
 <p>BMCA LISTENING state timeout. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00098">98</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00144">144</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -619,7 +712,7 @@ Variables</h2></td></tr>
 
 <p>Clock priority1. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00114">114</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00160">160</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -637,7 +730,7 @@ Variables</h2></td></tr>
 
 <p>Clock priority2. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00118">118</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00164">164</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -655,7 +748,7 @@ Variables</h2></td></tr>
 
 <p>Rated clock tick frequency. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00073">73</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00077">77</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -673,7 +766,7 @@ Variables</h2></td></tr>
 
 <p>Bright green. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00157">157</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00203">203</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -691,7 +784,7 @@ Variables</h2></td></tr>
 
 <p>Blue. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00160">160</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00206">206</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -709,7 +802,7 @@ Variables</h2></td></tr>
 
 <p>Bright magenta. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00162">162</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00208">208</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -727,7 +820,7 @@ Variables</h2></td></tr>
 
 <p>Bright red. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00155">155</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00201">201</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -745,7 +838,7 @@ Variables</h2></td></tr>
 
 <p>Bright yellow. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00159">159</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00205">205</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -763,7 +856,7 @@ Variables</h2></td></tr>
 
 <p>Cyan. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00163">163</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00209">209</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -781,7 +874,7 @@ Variables</h2></td></tr>
 
 <p>Green. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00156">156</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00202">202</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -799,7 +892,7 @@ Variables</h2></td></tr>
 
 <p>Magenta. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00161">161</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00207">207</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -818,7 +911,7 @@ Variables</h2></td></tr>
 <p>&lt; Define this to override PTP_COLOR_* macros </p>
 <p>Red </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00154">154</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00200">200</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -836,7 +929,7 @@ Variables</h2></td></tr>
 
 <p>Reset colors. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00164">164</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00210">210</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -854,7 +947,7 @@ Variables</h2></td></tr>
 
 <p>Yellow. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00158">158</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00204">204</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -872,7 +965,7 @@ Variables</h2></td></tr>
 
 <p>Coarse correction kick-in threshold. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00094">94</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00140">140</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -890,7 +983,7 @@ Variables</h2></td></tr>
 
 <p>Default servo offset in nanoseconds. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00090">90</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00136">136</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -908,7 +1001,7 @@ Variables</h2></td></tr>
 
 <p>By default, disable Master operation mode. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00110">110</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00156">156</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -926,7 +1019,7 @@ Variables</h2></td></tr>
 
 <p>PTP EtherType. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00029">29</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00033">33</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -944,7 +1037,7 @@ Variables</h2></td></tr>
 
 <p>UTC offset caused by the accumulated leap seconds. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00136">136</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00182">182</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -962,7 +1055,7 @@ Variables</h2></td></tr>
 
 <p>Length of the PTP header. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00040">40</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00044">44</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -973,14 +1066,14 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define PTP_HEARTBEAT_TICKRATE_MS&#160;&#160;&#160;(125)</td>
+          <td class="memname">#define PTP_HEARTBEAT_TICKRATE_MS&#160;&#160;&#160;(62)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Heartbeat ticking period. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00078">78</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00124">124</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1034,7 +1127,7 @@ Variables</h2></td></tr>
 
 <p>Number of Announce intervals. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00102">102</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00148">148</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1052,7 +1145,7 @@ Variables</h2></td></tr>
 
 <p>Maximum profile name length. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00057">57</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00061">61</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1070,7 +1163,7 @@ Variables</h2></td></tr>
 
 <p>Maximum TLV preset name length. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00058">58</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00062">62</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1088,7 +1181,7 @@ Variables</h2></td></tr>
 
 <p>Reserved area at the end of the message. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00049">49</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00053">53</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1106,7 +1199,7 @@ Variables</h2></td></tr>
 
 <p>Size of an Announce message. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00053">53</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00057">57</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1124,7 +1217,7 @@ Variables</h2></td></tr>
 
 <p>Size of a Delay_Req message. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00047">47</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00051">51</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1142,7 +1235,7 @@ Variables</h2></td></tr>
 
 <p>Size of a Delay_Resp message. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00048">48</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00052">52</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1160,7 +1253,7 @@ Variables</h2></td></tr>
 
 <p>Size of a Follow_Up message. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00046">46</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00050">50</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1178,7 +1271,7 @@ Variables</h2></td></tr>
 
 <p>Size of a PDelay_Req message. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00050">50</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00054">54</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1196,7 +1289,7 @@ Variables</h2></td></tr>
 
 <p>Size of a PDelay_Resp message. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00051">51</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00055">55</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1214,7 +1307,7 @@ Variables</h2></td></tr>
 
 <p>Size of a PDelay_Resp_Follow_Up message. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00052">52</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00056">56</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1232,7 +1325,7 @@ Variables</h2></td></tr>
 
 <p>Size of a Sync message. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00045">45</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00049">49</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1250,7 +1343,7 @@ Variables</h2></td></tr>
 
 <p>Maximum number of failed PDelReq-PDelResp cycles before the MASTER drops the SLAVE. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00146">146</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00192">192</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1268,7 +1361,7 @@ Variables</h2></td></tr>
 
 <p>Number of consecutive PDelReq-PDelResp iterations after the SLAVE is considered stable. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00142">142</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00188">188</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1286,7 +1379,7 @@ Variables</h2></td></tr>
 
 <p>PTP event message port. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00037">37</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00041">41</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1304,7 +1397,7 @@ Variables</h2></td></tr>
 
 <p>PTP general message port. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00038">38</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00042">42</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1322,7 +1415,7 @@ Variables</h2></td></tr>
 
 <p>PTP port ID on the device. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00082">82</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00128">128</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1340,7 +1433,7 @@ Variables</h2></td></tr>
 
 <p>Length of the port identification field. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00042">42</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00046">46</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1358,7 +1451,7 @@ Variables</h2></td></tr>
 
 <p>Time source of this device. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00132">132</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00178">178</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1376,7 +1469,7 @@ Variables</h2></td></tr>
 
 <p>Length of a single timestamp. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00041">41</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00045">45</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1394,7 +1487,7 @@ Variables</h2></td></tr>
 
 <p>Worst accuracy of this device. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00128">128</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00174">174</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1411,7 +1504,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00023">23</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00027">27</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>
@@ -1427,7 +1520,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00022">22</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__defs_8h_source.html#l00026">26</a> of file <a class="el" href="ptp__defs_8h_source.html">ptp_defs.h</a>.</p>
 
 </div>
 </div>

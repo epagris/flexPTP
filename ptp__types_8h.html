@@ -133,10 +133,6 @@ $(document).ready(function(){initNavTree('ptp__types_8h.html',''); initResizable
 <code>#include &quot;<a class="el" href="timeutils_8h_source.html">timeutils.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="ptp__sync__cycle__data_8h_source.html">ptp_sync_cycle_data.h</a>&quot;</code><br />
 <code>#include &lt;flexptp_options.h&gt;</code><br />
-<code>#include &quot;FreeRTOS.h&quot;</code><br />
-<code>#include &quot;queue.h&quot;</code><br />
-<code>#include &quot;task.h&quot;</code><br />
-<code>#include &quot;timers.h&quot;</code><br />
 </div>
 <p><a href="ptp__types_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -152,7 +148,6 @@ Data Structures</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identification carrying Delay_Resp message.  <a href="struct_ptp_delay___resp_identification.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raw PTP message structure.  <a href="struct_raw_ptp_message.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ptp_announce_body.html">PtpAnnounceBody</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contents of a PTP Announce message without the common PTP header.  <a href="struct_ptp_announce_body.html#details">More...</a><br /></td></tr>
@@ -193,8 +188,6 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ad68f01211bcc2a5342a9d23ecfdcaa3b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__types_8h.html#ad68f01211bcc2a5342a9d23ecfdcaa3b">FLEXPTP_FREERTOS</a>&#160;&#160;&#160;(1)</td></tr>
-<tr class="separator:ad68f01211bcc2a5342a9d23ecfdcaa3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9a5b1004564a82c7f0aab1069fcc2ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__types_8h.html#ab9a5b1004564a82c7f0aab1069fcc2ba">MAX_PTP_MSG_SIZE</a>&#160;&#160;&#160;(128)</td></tr>
 <tr class="memdesc:ab9a5b1004564a82c7f0aab1069fcc2ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum PTP message size.  <br /></td></tr>
 <tr class="separator:ab9a5b1004564a82c7f0aab1069fcc2ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -205,14 +198,20 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:a5a0e9e1971b37b7cf635ab8b75d03da6"><td class="memItemLeft" align="right" valign="top">typedef TimerHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__types_8h.html#a5a0e9e1971b37b7cf635ab8b75d03da6">TimerType</a></td></tr>
+<tr class="separator:a5a0e9e1971b37b7cf635ab8b75d03da6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a833a465bc4c13e2df6b7b0df50f5d678"><td class="memItemLeft" align="right" valign="top">typedef void()&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__types_8h.html#a833a465bc4c13e2df6b7b0df50f5d678">TxCb</a>(const struct RawPtpMessage_ *pMsg)</td></tr>
+<tr class="memdesc:a833a465bc4c13e2df6b7b0df50f5d678"><td class="mdescLeft">&#160;</td><td class="mdescRight"><ul>
+<li>Transmit callback function prototype. </li>
+</ul>
+ <br /></td></tr>
+<tr class="separator:a833a465bc4c13e2df6b7b0df50f5d678"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a829d9118e4062f301ae8539d9134ad"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="struct_ptp_announce_body.html">PtpAnnounceBody</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__types_8h.html#a8a829d9118e4062f301ae8539d9134ad">PtpMasterProperties</a></td></tr>
 <tr class="separator:a8a829d9118e4062f301ae8539d9134ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46935577d0036742a30c9042d42a519e"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__types_8h.html#a46935577d0036742a30c9042d42a519e">PtpSyncCallback</a>) (int64_t time_error, const <a class="el" href="struct_ptp_sync_cycle_data.html">PtpSyncCycleData</a> *pSCD, uint32_t freqCodeWord)</td></tr>
 <tr class="separator:a46935577d0036742a30c9042d42a519e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45cabd2ea4c608b4b84ce719019cd8e0"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__types_8h.html#a45cabd2ea4c608b4b84ce719019cd8e0">PtpUserEventCallback</a>) (<a class="el" href="event_8h.html#a6c52195048eeb16f32cec8305a8c8334">PtpUserEventCode</a> uev)</td></tr>
 <tr class="separator:a45cabd2ea4c608b4b84ce719019cd8e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a0e9e1971b37b7cf635ab8b75d03da6"><td class="memItemLeft" align="right" valign="top">typedef TimerHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__types_8h.html#a5a0e9e1971b37b7cf635ab8b75d03da6">TimerType</a></td></tr>
-<tr class="separator:a5a0e9e1971b37b7cf635ab8b75d03da6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -261,6 +260,11 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a8dd57af72bd46fa7defd2f1b0f692b4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration for different PTP message classes.  <a href="ptp__types_8h.html#a8dd57af72bd46fa7defd2f1b0f692b4b">More...</a><br /></td></tr>
 <tr class="separator:a8dd57af72bd46fa7defd2f1b0f692b4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab186ed990b0f24890415178a8c562a9b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__types_8h.html#ab186ed990b0f24890415178a8c562a9b">RawPtpMsgTag</a> { <a class="el" href="ptp__types_8h.html#ab186ed990b0f24890415178a8c562a9ba6787187c5247e59ac396e3adcce7b360">RPMT_RANDOM</a> = 0
+, <a class="el" href="ptp__types_8h.html#ab186ed990b0f24890415178a8c562a9bad911b72129c86cdcf402cd58cdfaab3d">RPMT_SYNC</a>
+, <a class="el" href="ptp__types_8h.html#ab186ed990b0f24890415178a8c562a9baf004928c048813525e3d01bbd6017c92">RPMT_DELAY_REQ</a>
+ }</td></tr>
+<tr class="separator:ab186ed990b0f24890415178a8c562a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5af6e9a813f31df8ce81457a72a802c9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__types_8h.html#a5af6e9a813f31df8ce81457a72a802c9">PtpClockClass</a> { <br />
 &#160;&#160;<a class="el" href="ptp__types_8h.html#a5af6e9a813f31df8ce81457a72a802c9a75a29fbc2c262999b328ccc23da863da">PTP_CC_PRIMARY_REFERENCE</a> = 6
 , <a class="el" href="ptp__types_8h.html#a5af6e9a813f31df8ce81457a72a802c9a63fc0a9dfe91f349b13b63e0d0637c76">PTP_CC_PRIMARY_REFERENCE_HOLDOVER</a> = 7
@@ -304,7 +308,7 @@ Enumerations</h2></td></tr>
 , <a class="el" href="ptp__types_8h.html#a94931f16cbb6ca5dcb74c0e3d15ba9fca9130e22a503c82458eca61d2e7a20baa">PTP_CA_UNKNOWN</a> = 0xFE
 <br />
  }</td></tr>
-<tr class="memdesc:a94931f16cbb6ca5dcb74c0e3d15ba9fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard clock accuray definitions.  <a href="ptp__types_8h.html#a94931f16cbb6ca5dcb74c0e3d15ba9fc">More...</a><br /></td></tr>
+<tr class="memdesc:a94931f16cbb6ca5dcb74c0e3d15ba9fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard clock accuracy definitions.  <a href="ptp__types_8h.html#a94931f16cbb6ca5dcb74c0e3d15ba9fc">More...</a><br /></td></tr>
 <tr class="separator:a94931f16cbb6ca5dcb74c0e3d15ba9fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa9baeef926cde7aa743c0e34f7ff672"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__types_8h.html#afa9baeef926cde7aa743c0e34f7ff672">PtpTimeSource</a> { <br />
 &#160;&#160;<a class="el" href="ptp__types_8h.html#afa9baeef926cde7aa743c0e34f7ff672a0fe365af8bdd243fc0c72afd7f2197cf">PTP_TSRC_ATOMIC_CLOCK</a> = 0x10
@@ -357,7 +361,7 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:a53e41c362b71e8f5e6bf2489fd9f5ccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af7660187be027791a7264a12085fb338"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__types_8h.html#af7660187be027791a7264a12085fb338">PtpProfileFlags</a> { <a class="el" href="ptp__types_8h.html#af7660187be027791a7264a12085fb338a35011cef2115a8cc4b0e018685956b78">PTP_PF_NONE</a> = 0x00
+<tr class="memitem:af7660187be027791a7264a12085fb338"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ptp__types_8h.html#af7660187be027791a7264a12085fb338">PtpProfileFlags</a> { <a class="el" href="ptp__types_8h.html#af7660187be027791a7264a12085fb338a7770a21471141711ebaf9312fc10ee45">PTP_PF_NO_FLAGS</a> = 0x00
 , <a class="el" href="ptp__types_8h.html#af7660187be027791a7264a12085fb338a6cf2c9a3ea196c8958967b1bfffb2d6b">PTP_PF_ISSUE_SYNC_FOR_COMPLIANT_SLAVE_ONLY_IN_P2P</a> = 0x01
 , <a class="el" href="ptp__types_8h.html#af7660187be027791a7264a12085fb338a20e5055e66945c8231db009fbc917444">PTP_PF_SLAVE_ONLY</a> = 0x02
 , <a class="el" href="ptp__types_8h.html#af7660187be027791a7264a12085fb338a19ae1cd6849caaba9c0309782366f672">PTP_PF_N</a>
@@ -404,22 +408,6 @@ Enumerations</h2></td></tr>
 
 <p class="definition">Definition in file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ad68f01211bcc2a5342a9d23ecfdcaa3b" name="ad68f01211bcc2a5342a9d23ecfdcaa3b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad68f01211bcc2a5342a9d23ecfdcaa3b">&#9670;&#160;</a></span>FLEXPTP_FREERTOS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FLEXPTP_FREERTOS&#160;&#160;&#160;(1)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00025">25</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
-
-</div>
-</div>
 <a id="ab9a5b1004564a82c7f0aab1069fcc2ba" name="ab9a5b1004564a82c7f0aab1069fcc2ba"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab9a5b1004564a82c7f0aab1069fcc2ba">&#9670;&#160;</a></span>MAX_PTP_MSG_SIZE</h2>
 
@@ -434,7 +422,7 @@ Enumerations</h2></td></tr>
 
 <p>Maximum PTP message size. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00168">168</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00161">161</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -453,7 +441,7 @@ Enumerations</h2></td></tr>
 <div class="line">    uint16_t length;</div>
 </div><!-- fragment --><p>Length of this TLV </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00386">386</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00396">396</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -469,7 +457,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00242">242</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00252">252</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -486,7 +474,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00259">259</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00269">269</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -503,7 +491,7 @@ Enumerations</h2></td></tr>
 </div><div class="memdoc">
 <p>Sync callback type prototype. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00462">462</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00472">472</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -520,7 +508,7 @@ Enumerations</h2></td></tr>
 </div><div class="memdoc">
 <p>User event callback prototype. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00473">473</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00483">483</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -536,7 +524,28 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00485">485</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00025">25</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+
+</div>
+</div>
+<a id="a833a465bc4c13e2df6b7b0df50f5d678" name="a833a465bc4c13e2df6b7b0df50f5d678"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a833a465bc4c13e2df6b7b0df50f5d678">&#9670;&#160;</a></span>TxCb</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void() TxCb(const struct RawPtpMessage_ *pMsg)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><ul>
+<li>Transmit callback function prototype. </li>
+</ul>
+</p>
+
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00171">171</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -561,7 +570,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00281">281</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00291">291</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -587,7 +596,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00272">272</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00282">282</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -614,7 +623,7 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><a id="a53e41c362b71e8f5e6bf2489fd9f5ccba95628fca3861bc5fe4738386a5429ad2" name="a53e41c362b71e8f5e6bf2489fd9f5ccba95628fca3861bc5fe4738386a5429ad2"></a>PTP_BMCA_DISABLED&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00295">295</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00305">305</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -630,7 +639,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Standard clock accuray definitions. </p>
+<p>Standard clock accuracy definitions. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a94931f16cbb6ca5dcb74c0e3d15ba9fcaa9cc9702bd9583aebbc784f318a8039b" name="a94931f16cbb6ca5dcb74c0e3d15ba9fcaa9cc9702bd9583aebbc784f318a8039b"></a>PTP_CA_25NS&#160;</td><td class="fielddoc"><p>Accurate to within 25ns. </p>
 </td></tr>
@@ -672,7 +681,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00206">206</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00216">216</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -712,7 +721,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00190">190</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00200">200</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -742,7 +751,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00054">54</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00047">47</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -766,7 +775,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00147">147</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00140">140</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -793,7 +802,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00478">478</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00488">488</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -819,7 +828,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00289">289</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00299">299</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -839,11 +848,11 @@ Enumerations</h2></td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a9ca78918bde2b70e797a084a284e164aac813365626eb29ef2ed641cc916cd5e0" name="a9ca78918bde2b70e797a084a284e164aac813365626eb29ef2ed641cc916cd5e0"></a>SIdle&#160;</td><td class="fielddoc"><p>Idle. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a9ca78918bde2b70e797a084a284e164aa6a8826fafe0141039045606786a79fd9" name="a9ca78918bde2b70e797a084a284e164aa6a8826fafe0141039045606786a79fd9"></a>SWaitFollowUp&#160;</td><td class="fielddoc"><p>Waiting for a Follow Up message. </p>
+<tr><td class="fieldname"><a id="a9ca78918bde2b70e797a084a284e164aa6a8826fafe0141039045606786a79fd9" name="a9ca78918bde2b70e797a084a284e164aa6a8826fafe0141039045606786a79fd9"></a>SWaitFollowUp&#160;</td><td class="fielddoc"><p>Waiting for a Follow_Up message. </p>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00264">264</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00274">274</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -867,7 +876,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00163">163</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00156">156</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -903,7 +912,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00040">40</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00033">33</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -929,7 +938,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00417">417</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00427">427</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -947,7 +956,7 @@ Enumerations</h2></td></tr>
 
 <p>PTP profile flags. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="af7660187be027791a7264a12085fb338a35011cef2115a8cc4b0e018685956b78" name="af7660187be027791a7264a12085fb338a35011cef2115a8cc4b0e018685956b78"></a>PTP_PF_NONE&#160;</td><td class="fielddoc"><p>Empty profile flags. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="af7660187be027791a7264a12085fb338a7770a21471141711ebaf9312fc10ee45" name="af7660187be027791a7264a12085fb338a7770a21471141711ebaf9312fc10ee45"></a>PTP_PF_NO_FLAGS&#160;</td><td class="fielddoc"><p>Empty profile flags. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="af7660187be027791a7264a12085fb338a6cf2c9a3ea196c8958967b1bfffb2d6b" name="af7660187be027791a7264a12085fb338a6cf2c9a3ea196c8958967b1bfffb2d6b"></a>PTP_PF_ISSUE_SYNC_FOR_COMPLIANT_SLAVE_ONLY_IN_P2P&#160;</td><td class="fielddoc"><p>Send Sync messages only for a compliant peer in P2P mode. </p>
 </td></tr>
@@ -957,7 +966,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00332">332</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00342">342</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -993,7 +1002,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00231">231</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00241">241</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -1029,7 +1038,7 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><a id="a7d266c40bb65b66a1960128671a4abbca23e63ca4b3dfe305598175a65d591e02" name="a7d266c40bb65b66a1960128671a4abbca23e63ca4b3dfe305598175a65d591e02"></a>PTP_TLV_CUM_FREQ_SCALE_FACTOR_OFFSET&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00357">357</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00367">367</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -1053,7 +1062,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00155">155</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00148">148</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -1077,7 +1086,32 @@ Enumerations</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00139">139</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00132">132</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+
+</div>
+</div>
+<a id="ab186ed990b0f24890415178a8c562a9b" name="ab186ed990b0f24890415178a8c562a9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab186ed990b0f24890415178a8c562a9b">&#9670;&#160;</a></span>RawPtpMsgTag</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="ptp__types_8h.html#ab186ed990b0f24890415178a8c562a9b">RawPtpMsgTag</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Tagging of transmitted PTP messages. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ab186ed990b0f24890415178a8c562a9ba6787187c5247e59ac396e3adcce7b360" name="ab186ed990b0f24890415178a8c562a9ba6787187c5247e59ac396e3adcce7b360"></a>RPMT_RANDOM&#160;</td><td class="fielddoc"><p>Create a random, unique tag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab186ed990b0f24890415178a8c562a9bad911b72129c86cdcf402cd58cdfaab3d" name="ab186ed990b0f24890415178a8c562a9bad911b72129c86cdcf402cd58cdfaab3d"></a>RPMT_SYNC&#160;</td><td class="fielddoc"><p>Sync tag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab186ed990b0f24890415178a8c562a9baf004928c048813525e3d01bbd6017c92" name="ab186ed990b0f24890415178a8c562a9baf004928c048813525e3d01bbd6017c92"></a>RPMT_DELAY_REQ&#160;</td><td class="fielddoc"><p>(P)Delay_Req tag </p>
+</td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00176">176</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>

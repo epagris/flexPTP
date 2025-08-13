@@ -122,7 +122,7 @@ $(document).ready(function(){initNavTree('monitoring.html',''); initResizable();
 <h1><a class="anchor" id="autotoc_md33"></a>
 Logging</h1>
 <p>The flexPTP library implements several kinds of automatic logging, that can be turned on and off using <a class="el" href="logging_8c.html#a8d85f9f4ac5038dc0902f11c0e2e3c72">ptp_log_enable()</a>. Predefined logging features are introduced below.</p>
-<p>All of these logging features are available through the CLI command <code>ptp log {def|corr|ts|info|locked|bmca} {on|off}</code> as well.</p>
+<p>Most of these logging features are available through the CLI command <code>ptp log {def|corr|ts|info|locked|bmca} {on|off}</code> as well.</p>
 <h2><a class="anchor" id="autotoc_md34"></a>
 Default logging</h2>
 <p>ID: <code>PTP_LOG_DEF</code>, CLI: <code>def</code></p>
@@ -138,18 +138,25 @@ Slave clock mode</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>T4</b>   </td><td class="markdownTableBodyNone"><em>reception time (by the master) of the last <code>Delay_Req</code> message</em>   </td><td class="markdownTableBodyRight">(s, ns): <code>%d %09d</code>    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>Δt</b>   </td><td class="markdownTableBodyNone"><em>time error between us and the master (positive value means we're ahead of the master)</em>   </td><td class="markdownTableBodyRight">(s, ns), clock ticks: <code>%d %09d d</code>    </td></tr>
+<td class="markdownTableBodyNone"><b>Δt</b>   </td><td class="markdownTableBodyNone"><em>time error between us and the master (positive value means we're ahead of the master)</em>   </td><td class="markdownTableBodyRight">(s, ns), clock ticks<sup>1</sup>: <code>%d %09d d</code>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>addend</b>   </td><td class="markdownTableBodyNone"><em>hardware clock addend</em>   </td><td class="markdownTableBodyRight">(no unit) <code>%u</code>    </td></tr>
+<td class="markdownTableBodyNone"><b>addend</b><sup>1</sup>   </td><td class="markdownTableBodyNone"><em>hardware clock addend</em> <sup>1</sup>   </td><td class="markdownTableBodyRight">(no unit) <code>%u</code>    </td></tr>
 <tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>tuning_ppb</b><sup>2</sup>   </td><td class="markdownTableBodyNone"><em>cumulated hardware tuning</em> <sup>2</sup>   </td><td class="markdownTableBodyRight">PPB: <code>%f</code>    </td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>corr_ppb</b>   </td><td class="markdownTableBodyNone"><em>relative clock tuning (correction) value in PPB</em>   </td><td class="markdownTableBodyRight">PPB: <code>%f</code>    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>MPD</b>   </td><td class="markdownTableBodyNone"><em>network Mean Path Delay between us and the master</em>   </td><td class="markdownTableBodyRight">ns: <code>%ld</code>    </td></tr>
 <tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>MPD</b>   </td><td class="markdownTableBodyNone"><em>network Mean Path Delay between us and the master</em>   </td><td class="markdownTableBodyRight">ns: <code>%ld</code>    </td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>MSP</b>   </td><td class="markdownTableBodyNone"><em>measured <code>Sync</code> period</em>   </td><td class="markdownTableBodyRight">ns: <code>%%09lu</code>   </td></tr>
 </table>
+<p><sup>1</sup> <em>Only available when operating the <a class="el" href="porting.html#porting-addend-interface">ADDEND interface</a>.</em></p>
+<p><sup>2</sup> <em>Only available when operating the <a class="el" href="porting.html#porting-hlt-interface">HLT interface</a>.</em></p>
 <p>A logging header gets also issued when this logging capability is turned on.</p>
+<p>(with <a class="el" href="porting.html#porting-addend-interface">ADDEND interface</a>):</p>
 <p><code>T1 [s] | T1 [ns] | T4 [s] | T4 [ns] | Dt [s] | Dt [ns] | Dt [tick] | addend | corr_ppb | mpd_ns | sync_period_ns</code></p>
+<p>(with <a class="el" href="porting.html#porting-hlt-interface">HLT interface</a>):</p>
+<p><code>T1 [s] | T1 [ns] | T4 [s] | T4 [ns] | Dt [s] | Dt [ns] | tuning_ppb | corr_ppb | mpd_ns | sync_period_ns</code></p>
 <h4><a class="anchor" id="autotoc_md36"></a>
 Example</h4>
 <div class="fragment"><div class="line">1750245425 776292333 1750245425 331768083 0       -27 -4 4260879975 57.835724 3414 1000057519</div>
@@ -264,7 +271,23 @@ Slave mode</h3>
 Example</h4>
 <div class="fragment"><div class="line">PTP LOCKED!</div>
 <div class="line">PTP DIVERGED!</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md56"></a>
+</div><!-- fragment --> <h2><a class="anchor" id="autotoc_md56"></a>
+Transmit message management logging</h2>
+<p>ID: <code>PTP_LOG_TRANSMISSION</code>, CLI: <em>not available</em></p>
+<p>Definition: <a class="el" href="task__ptp_8c.html">task_ptp.c</a>, <a class="el" href="task__ptp_8c.html#a2670d7e2f02b9edd806eeeb6b2782069">task_ptp()</a></p>
+<p><em>Format:</em></p>
+<p>On initiating a transmission: <code>[ &lt;flexPTP tick&gt; ] &lt;message UID&gt; (&lt;message tag&gt;) ---&gt;</code><br  />
+ On receiving the transmit timestamp: <code>[ &lt;flexPTP tick&gt; ]---&gt; &lt;message UID&gt;</code><br  />
+ On the release of an allocated message: <code>[ &lt;flexPTP tick&gt; ] &lt;message UID&gt; AUTOFREE</code></p>
+<h4><a class="anchor" id="autotoc_md57"></a>
+Example</h4>
+<div class="fragment"><div class="line">[      89] 15 (0) ---&gt;</div>
+<div class="line">[      89]---&gt; 15</div>
+<div class="line">[      89] 15 AUTOFREE</div>
+<div class="line">[      89] 16 (0) ---&gt;</div>
+<div class="line">[      89]---&gt; 16</div>
+<div class="line">[      89] 16 AUTOFREE</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md58"></a>
 User events</h1>
 <p>The flexPTP enables the user to register a callback function that gets invoked whenever one of the following events occur in the core:</p>
 <table class="markdownTable">
@@ -314,7 +337,7 @@ User events</h1>
 <td class="markdownTableBodyNone"><code>PTP_UEV_QUEUE_ERROR</code>   </td><td class="markdownTableBodyNone">This event signals that the flexPTP's internal transmission output queue is full and blocked.   </td></tr>
 </table>
 <p>The callback function can be hooked into flexPTP either by calling <a class="el" href="ptp__core_8c.html#a8c5a3c700b5c8e29e2a839a770409d9f">ptp_set_user_event_callback()</a> in runtime or by defining the PTP_USER_EVENT_CALLBACK macro in compile time. PTP_UEV_INIT_DONE can only be caught if the latter method is used.</p>
-<h1><a class="anchor" id="autotoc_md57"></a>
+<h1><a class="anchor" id="autotoc_md59"></a>
 Statistics</h1>
 <p>The flexPTP library collects runtime statistics. Currently two fields are implemented in the <a class="el" href="struct_ptp_stats.html" title="Structure for statistics.">PtpStats</a> structure:</p>
 <table class="markdownTable">

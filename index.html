@@ -148,13 +148,18 @@ Features</h2>
 <li>provides <b>CMake-support</b>, compiles into a library</li>
 <li>provides a simple servo (controller) interface</li>
 <li>automatically cooperates with certain CLI terminals</li>
+<li><b>NEW</b>: <b>can operate with OS-less platforms!</b></li>
 </ul>
 <h2><a class="anchor" id="autotoc_md17"></a>
 Platforms and examples</h2>
-<p>The library package ships with hardware ports for several platforms, including:</p>
+<div class="image">
+<img src="example_boards.png" alt=""/>
+<div class="caption">
+Example boards</div></div>
+    <p>The library package ships with hardware ports for several platforms, including:</p>
 <ul>
 <li><b>TM4C1294</b> (<em>lwIP</em>)<ul>
-<li>Example: <a href="https://github.com/epagris/flexPTP-demo-TM4C1294">EK-TM4C1294XL Connected LaunchPad flexPTP demo</a></li>
+<li>Example: <a href="https://github.com/epagris/flexPTP-demo-TM4C1294">EK-TM4C1294XL Connected LaunchPad flexPTP demo</a>, <a href="https://github.com/epagris/flexPTP-demo-TM4C1294-osless">EK-TM4C1294XL Connected LaunchPad <b>OS-less</b> flexPTP demo</a></li>
 </ul>
 </li>
 <li><b>STM32F4xx</b> (<em>EtherLib</em>/_lwip_)<ul>
@@ -174,12 +179,14 @@ Platforms and examples</h2>
 </ul>
 </li>
 </ul>
+<p>...and a <b><a href="https://github.com/epagris/flexPTP-linux">Linux example</a></b></p>
+<p><em>All above example projects uses FreeRTOS and/or CMSIS OS2 except for the Linux and specific OS-less examples.</em></p>
 <h2><a class="anchor" id="autotoc_md18"></a>
 Requirements</h2>
 <p>Apart from the access to a working C compiler, only the following two criteria must be met to compile flexPTP:</p>
 <ul>
-<li>The library relies on some operating system services, an embedded operating system is required to integrate the library. Any embedded operating system with a <a href="https://arm-software.github.io/CMSIS_5/RTOS2/html/index.html">CMSIS OS2</a> wrapper is supported. Besides, <a href="https://www.freertos.org/">FreeRTOS</a> API is supported out-of-the-box.</li>
-<li>A compatible network stack library and target platform Ethernet driver is required. Currently <a href="https://github.com/lwip-tcpip/lwip">Lightweight IP</a> (lwip) and <a href="https://gitea.epagris.com/epagris/EtherLib">EtherLib</a> are supported.</li>
+<li>Although, the library can operate with OS-less systems, it is recommended to use an embedded operating system to gain better control over scheduling and internal message queueing. Any embedded OS with a <a href="https://arm-software.github.io/CMSIS_5/RTOS2/html/index.html">CMSIS OS2</a> wrapper is supported. Besides, <a href="https://www.freertos.org/">FreeRTOS</a> API is supported out-of-the-box.</li>
+<li>A compatible network stack library and target platform Ethernet driver is required. Currently <a href="https://github.com/lwip-tcpip/lwip">Lightweight IP</a> (lwip) and <a href="https://gitea.epagris.com/epagris/EtherLib">EtherLib</a> embedded Ethernet stacks, and the POSIX socket API are supported.</li>
 </ul>
 <h2><a class="anchor" id="autotoc_md19"></a>
 Porting and options</h2>
@@ -217,7 +224,7 @@ Building</h2>
 Usage</h2>
 <h3><a class="anchor" id="autotoc_md26"></a>
 Startup and shutdown</h3>
-<p>The flexPTP module can be started/stopped by calling <a class="el" href="task__ptp_8c.html#a2d483d3c32b3890d8c699018e48e45cd">reg_task_ptp()</a> and <a class="el" href="task__ptp_8c.html#a5fd98059e4c2ec1004c74064e17cbe4c">unreg_task_ptp()</a>.</p>
+<p>The flexPTP module can be started/stopped by calling <a class="el" href="task__ptp_8c.html#aff77e313d172028af7484d66ef2cef1f">reg_task_ptp()</a> and <a class="el" href="task__ptp_8c.html#a5fd98059e4c2ec1004c74064e17cbe4c">unreg_task_ptp()</a>.</p>
 <h3><a class="anchor" id="autotoc_md27"></a>
 Runtime operation</h3>
 <p>The library has an extensive interface for manipulating the PTP operation mode during runtime (e.g. change profile, enable logging etc.), learn more <a class="el" href="project_organization.html">here</a>. The flexPTP includes a CLI interface as well, if a suitable CLI library is given, flexPTP offers the following multitude of CLI commands:</p>

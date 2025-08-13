@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['subtime_0',['subTime',['../timeutils_8c.html#a96f3830db59fe5144e1252cbf2bae1b7',1,'subTime(TimestampI *r, const TimestampI *a, const TimestampI *b):&#160;timeutils.c'],['../timeutils_8h.html#a96f3830db59fe5144e1252cbf2bae1b7',1,'subTime(TimestampI *r, const TimestampI *a, const TimestampI *b):&#160;timeutils.c']]]
+  ['open_5fraw_5fsocket_0',['open_raw_socket',['../nsd__linux_8c.html#a6fd329bb82ed73ba067a7b274ec23f3c',1,'nsd_linux.c']]],
+  ['open_5fudp_5fsocket_1',['open_udp_socket',['../nsd__linux_8c.html#a55e7ee8f05d6467816ebaaddc74d29b9',1,'nsd_linux.c']]]
 ];

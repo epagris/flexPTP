@@ -1,0 +1,6 @@
+<map id="PtpMsgBuf" name="PtpMsgBuf">
+<area shape="rect" id="node1" title="PTP message buffer." alt="" coords="24,269,116,295"/>
+<area shape="rect" id="node2" href="$struct_ptp_msg_buf_block.html" title="PTP message buffer entry." alt="" coords="6,181,134,207"/>
+<area shape="rect" id="node3" href="$struct_raw_ptp_message.html" title=" " alt="" coords="5,93,135,119"/>
+<area shape="rect" id="node4" href="$struct_timestamp_i.html" title="Timestamp (signed)" alt="" coords="20,5,120,31"/>
+</map>

@@ -4,7 +4,9 @@ var event_8h =
     [ "PTP_IUEV", "event_8h.html#a897d6a0acdceb3813549d13529f1b075", null ],
     [ "PtpCoreEventCode", "event_8h.html#aaeb6caf74048e4e1880c07e2adf7ed75", [
       [ "PTP_CEV_HEARTBEAT", "event_8h.html#aaeb6caf74048e4e1880c07e2adf7ed75a6995edf0c2c25400acc7b6b602f98efb", null ],
-      [ "PTP_CEV_BMCA_STATE_CHANGED", "event_8h.html#aaeb6caf74048e4e1880c07e2adf7ed75ad98f838a64cc0d329fcf884aa6faec1e", null ]
+      [ "PTP_CEV_BMCA_STATE_CHANGED", "event_8h.html#aaeb6caf74048e4e1880c07e2adf7ed75ad98f838a64cc0d329fcf884aa6faec1e", null ],
+      [ "PTP_CEV_RESET", "event_8h.html#aaeb6caf74048e4e1880c07e2adf7ed75a8b82b1d1f01281e1f855e7237318944e", null ],
+      [ "PTP_CEV_TERMINATE", "event_8h.html#aaeb6caf74048e4e1880c07e2adf7ed75a171ec0f87e74d7184fc1ed0b69642804", null ]
     ] ],
     [ "PtpUserEventCode", "event_8h.html#a6c52195048eeb16f32cec8305a8c8334", [
       [ "PTP_UEV_INIT_DONE", "event_8h.html#a6c52195048eeb16f32cec8305a8c8334a76d3bb48e5a47c1ce3bb8965a9a5d0d0", null ],

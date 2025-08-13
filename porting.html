@@ -128,16 +128,23 @@ Porting</h1>
 <li>a (simple) <b>hardware clock driver</b>, through which flexPTP can set or tune the hardware clock and query time.</li>
 </ul>
 <p>In the sections below you'll see samples for all three configuration module types.</p>
-<h2><a class="anchor" id="autotoc_md58"></a>
+<h2><a class="anchor" id="autotoc_md60"></a>
 Port option file</h2>
 <p>Each project that includes flexPTP must provide a <code>flexptp_options.h</code> header file. This file has the purpose to tell flexPTP the basic hardware features (e.g. oscillator frequency), and to define bindings to hardware clock and servo management routines.</p>
 <p>Our experience with embedded development shows that a newcomer might run into difficulties on creating a port to a software to be learned. We recommend you to open an example <code>flexptp_options_XXX.h</code> file from the <code>port/example_options</code> location before reading the following. Taking a quick look into a pre-made configuration file might make the interpretation of the section below much easier.</p>
 <p>The assembling of a configuration file can be broken down into the following major steps:</p>
 <ol type="1">
-<li>Choose an <b>OS interface</b>:<ul>
+<li><p class="startli">Choose an <b>OS interface</b>:</p><ul>
 <li>define the <code>FLEXPTP_CMSIS_OS2</code> macro to use the <a href="https://arm-software.github.io/CMSIS_5/RTOS2/html/index.html">CMSIS OS2</a> bindings <b>OR</b></li>
-<li>define the <code>FLEXPTP_FREERTOS</code> macro to let the library call the <a href="https://www.freertos.org/">FreeRTOS</a> API directly OS headers must be available to the library (e.g. cmsis_os2.h, FreeRTOS.h, etc.).</li>
+<li>define the <code>FLEXPTP_FREERTOS</code> macro to let the library call the <a href="https://www.freertos.org/">FreeRTOS</a> API directly <b>OR</b></li>
+<li>define the <code>FLEXPTP_LINUX</code> macro to use the standard Linux API (<em>experimental</em>)</li>
+<li>define the <code>FLEXPTP_OSLESS</code> macro to enable the no-OS operation mode<ul>
+<li>In OS-less mode, a method to enter and leave critical sections must be provided through the <code>FLEXPTP_OSLESS_LOCK</code> macro with the type FifoLockFn. The simplest locking is to globally disable/enable interrupts.</li>
+<li>Usually hidden-from-the-user, core method <code><a class="el" href="task__ptp_8c.html#a2670d7e2f02b9edd806eeeb6b2782069">task_ptp()</a></code> and <code><a class="el" href="task__ptp_8c.html#aec5bf8fe2ef6218628f1c23dc6029120">ptp_heartbeat_tmr_cb()</a></code> are exposed in this mode. They should be invoked periodically to run the library. Learn more at the functions' documentations.</li>
 </ul>
+</li>
+</ul>
+<p class="startli">OS headers must be available to the library (e.g. cmsis_os2.h, FreeRTOS.h, etc.).</p>
 </li>
 <li>Define <b>printing routines or macros</b>:<ul>
 <li><code>MSG(...)</code>: a basic formatted printing function that mimics <code>printf()</code> functionality (called with <code>printf()</code>-fashioned parameters). flexPTP uses the following formatting marks: <code>%d</code>, <code>%i</code>, <code>%u</code>, <code>%lu</code>, <code>%f</code>, <code>%x</code>, <code>%X</code>, <code>%s</code>, <code>%c</code>, <code>%%</code>.</li>
@@ -193,27 +200,28 @@ Port option file</h2>
 </ol>
 <p>We emphasize, that many examples can be found on configuration files in the <code>port/example_options</code> directory.</p>
 <p>Throughout the assembling of a new the options file you might find that the Ethernet driver, that came along the target platform lacks routines handling PTP functionality. In that case you it's your duty to extend the driver with the proper features. Many examples on such extensions can be found in the <code>port/example_ports</code> directory.</p>
-<h3><a class="anchor" id="autotoc_md59"></a>
+<h3><a class="anchor" id="autotoc_md61"></a>
 Example option files</h3>
 <p><a class="el" href="flexptp__options__stm32f407__etherlib_8h.html">flexptp_options_stm32f407_etherlib.h</a>, <a class="el" href="flexptp__options__stm32h743__etherlib_8h.html">flexptp_options_stm32h743_etherlib.h</a>, <a class="el" href="flexptp__options__stm32h743_8h.html">flexptp_options_stm32h743.h</a>, <a class="el" href="flexptp__options__tm4c1294_8h.html">flexptp_options_tm4c1294.h</a>, <a class="el" href="flexptp__options__mk64f_8h.html">flexptp_options_mk64f.h</a></p>
 <h2><a class="anchor" id="network-stack-driver"></a>
 Network Stack Driver (NSD)</h2>
-<p>The flexPTP library expects (only!) the below message transception related functions given. These are the functions, that are declared in <a class="el" href="network__stack__driver_8h.html" title="This file is a header for the employed Network Stack Driver (NSD). A NSD must define ALL four functio...">network_stack_driver.h</a>. During the porting work, these functions must be implemennted.</p>
+<p>The flexPTP library expects (only!) the below message transception related functions defined. These are the functions, that are declared in <a class="el" href="network__stack__driver_8h.html" title="This file is a header for the employed Network Stack Driver (NSD). A NSD must define ALL four functio...">network_stack_driver.h</a>. During the porting work, these functions must be implemented.</p>
 <ul>
 <li><code>void <a class="el" href="network__stack__driver_8h.html#a448d70ee83a66f7dd5f5e602c7f41b8d">ptp_nsd_init(PtpTransportType tp, PtpDelayMechanism dm)</a></code>: This function initializes (opens and closes) the network connections based on the profile settings passed in the <code>tp</code> and <code>dm</code> parameters. <code>tp</code> and <code>dm</code> can take on any value from <code>PtpTransportType</code> and <code>PtpDelayMechanism</code>, respectively. Passing <code>-1</code> in either parameter signals that the flexPTP wants the network layer to close all connections. In other words, by passing <code>-1</code> the flexPTP does not defined a valid profile. It is expected that this function gets called multiple times. On subsequent calls, the function first informs the network that we are leaving the IGMP-group of the profile we abandon and closes connection associated with the profile we are leaving. Then, it takes on the new profile, opens the new connection and joins the new IGMP-groups. Joining and leaving of the IGMP-groups is performed by invoking the <code><a class="el" href="network__stack__driver_8h.html#a403275d7e5b31f6714a93ebd28d1c2e4">ptp_nsd_igmp_join_leave()</a></code> method.</li>
-<li><code>void <a class="el" href="network__stack__driver_8h.html#a06c3b6dbcec5f68576cd1a48bf8755b2">ptp_nsd_transmit_msg(RawPtpMessage *pMsg)</a></code>: The flexPTP engine calls this function to dispatch a PTP message. The NSD can safely anticipate that fields of the message passed from the PTP engine carry fields reflecting the profile that was set by the latest <code><a class="el" href="network__stack__driver_8h.html#a448d70ee83a66f7dd5f5e602c7f41b8d">ptp_nsd_init()</a></code> call. The function must only fetch the PTP message class from the message passed to determine through which connection it has to be sent.</li>
+<li><code>void <a class="el" href="network__stack__driver_8h.html#a202fbe6ff51f6e1f54b9792ea10f3b25">ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid)</a></code><sup>1</sup>: The flexPTP engine calls this function to dispatch a PTP message. The NSD can safely anticipate that fields of the message passed from the PTP engine carry fields reflecting the profile that was set by the latest <code><a class="el" href="network__stack__driver_8h.html#a448d70ee83a66f7dd5f5e602c7f41b8d">ptp_nsd_init()</a></code> call. The function must only fetch the PTP message class from the message passed to determine through which connection it has to be sent. The outbound messages are identified by unique IDs (UIDs). The message UID must be used to identify messages upon feeding back transmit timestamps using the <code><a class="el" href="task__ptp_8c.html#a6d8d64d0927e028889b55b6bff4c7d57">ptp_transmit_timestamp_cb()</a></code> function. The former function is 'thread safe', it can be called from an interrupt context as well.</li>
 <li><code>void <a class="el" href="network__stack__driver_8h.html#a403275d7e5b31f6714a93ebd28d1c2e4">ptp_nsd_igmp_join_leave(bool join)</a></code>: The flexPTP engine might intend to inform the network about the joining or leaving of the IGMP-group associated with the operating profile (for example upon link recovery). Besides, <code><a class="el" href="network__stack__driver_8h.html#a448d70ee83a66f7dd5f5e602c7f41b8d">ptp_nsd_init()</a></code> references this function as well.</li>
 <li><code>void <a class="el" href="network__stack__driver_8h.html#a8084e66715ef332fa46c677421f6b20f">ptp_nsd_get_interface_address(uint8_t * hwa)</a></code>: This function returns with the hardware address of the associated Ethernet interface. Parameter <code>hwa</code> is expected to be able to hold (at least) 6-bytes (the size of an Ethernet Hardware Address).</li>
 </ul>
 <p>Finally, it's also the job of the NSD module to make the received messages available to the flexPTP core. This is done by calling the <code><a class="el" href="task__ptp_8c.html#a1409be7128c102f50cc590ec0aa817e0">ptp_receive_enqueue()</a></code> function with the proper parameters: data, size and ingress timestamp split into seconds and nanoseconds field.</p>
 <p>Inherently, the fetching and exchanging of the ingress and egress timestamps with the flexPTP core fall also in the scope of the NSD module.</p>
-<h3><a class="anchor" id="autotoc_md60"></a>
+<p><sup>1</sup> <em>This function signature has changed.</em></p>
+<h3><a class="anchor" id="autotoc_md62"></a>
 NSD examples</h3>
 <p><a class="el" href="nsd__lwip_8c.html">nsd_lwip.c</a>, <a class="el" href="nsd__etherlib_8c.html">nsd_etherlib.c</a> : Sample NSD implementations for lwIP and EtherLib network stacks.</p>
 <h2><a class="anchor" id="hardware-clock-driver"></a>
 Hardware Clock Driver</h2>
 <p>The library supports two different, mutually exclusive clock management interfaces: the old-style <b>ADDEND-based</b> tuning interface and the newly introduced <b>High-Level Tuning (HLT)</b> interface. The user should implement the one better matched to the underlying hardware.</p>
-<h3><a class="anchor" id="autotoc_md61"></a>
+<h3><a class="anchor" id="porting-addend-interface"></a>
 ADDEND-interface</h3>
 <div class="image">
 <img src="tuneable_hardware_clock.png" alt=""/>
@@ -237,13 +245,13 @@ General structure of a PTP hardware clock with distinguished high precision freq
 <p>To maintain backward-compatibility this interface is auto-selected if no interface selection macro was defined. The best practice is to define the <code>PTP_ADDEND_INTERFACE</code> macro to explicitly select this interface.</p>
 <p>Additionally, the frequency of the PTP clock input and the increment must also be defined: <code>PTP_MAIN_OSCILLATOR_FREQ_HZ</code>, <code>PTP_INCREMENT_NSEC</code></p>
 <p>Usually the hardware clock driver also implements further miscellaneous functionality, like the controlling of the PPS output signal.</p>
-<h4><a class="anchor" id="autotoc_md62"></a>
+<h4><a class="anchor" id="autotoc_md63"></a>
 Example option files</h4>
 <p><a class="el" href="flexptp__options__stm32f407__etherlib_8h.html">flexptp_options_stm32f407_etherlib.h</a>, <a class="el" href="flexptp__options__stm32h743__etherlib_8h.html">flexptp_options_stm32h743_etherlib.h</a>, <a class="el" href="flexptp__options__stm32h743_8h.html">flexptp_options_stm32h743.h</a>, <a class="el" href="flexptp__options__tm4c1294_8h.html">flexptp_options_tm4c1294.h</a></p>
-<h4><a class="anchor" id="autotoc_md63"></a>
+<h4><a class="anchor" id="autotoc_md64"></a>
 Example Hardware Clock Driver files</h4>
 <p><a class="el" href="ptp__port__stm32f407__etherlib_8c.html">ptp_port_stm32f407_etherlib.c</a>, <a class="el" href="ptp__port__stm32f407__lwip_8c.html">ptp_port_stm32f407_lwip.c</a>, <a class="el" href="ptp__port__stm32h743__etherlib_8c.html">ptp_port_stm32h743_etherlib.c</a>, <a class="el" href="ptp__port__stm32h743__lwip_8c.html">ptp_port_stm32h743_lwip.c</a>, <a class="el" href="ptp__port__tiva__tm4c1294_8c.html">ptp_port_tiva_tm4c1294.c</a></p>
-<h3><a class="anchor" id="autotoc_md64"></a>
+<h3><a class="anchor" id="porting-hlt-interface"></a>
 High-Level Tuning (HLT) interface</h3>
 <p>This interface enables flexPTP to operate hardware clocks regardless of the clock's inner structure considering the clock as a black-box device. This interface is provided to extend flexPTP support to devices with hardware clocks differing from the formerly introduced one.</p>
 <p>The interface consists of the following few methods:</p><ul>
@@ -272,7 +280,7 @@ Operation mode parameters</h3>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Macro   </th><th class="markdownTableHeadNone">Default value   </th><th class="markdownTableHeadNone">Description    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>PTP_HEARTBEAT_TICKRATE_MS</code>   </td><td class="markdownTableBodyNone">125   </td><td class="markdownTableBodyNone">Internal core scheduler period (ms)    </td></tr>
+<td class="markdownTableBodyNone"><code>PTP_HEARTBEAT_TICKRATE_MS</code>   </td><td class="markdownTableBodyNone">62   </td><td class="markdownTableBodyNone">Internal core scheduler period (ms). It should be less than the half of the shortest messaging period.    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>PTP_ACCURACY_LIMIT_NS</code>   </td><td class="markdownTableBodyNone">100   </td><td class="markdownTableBodyNone">Threshold of the <code>LOCKED</code> state (ns)    </td></tr>
 <tr class="markdownTableRowOdd">
