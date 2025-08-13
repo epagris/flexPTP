@@ -177,12 +177,12 @@ List of definitions, part of the initial configuration, with default values. Def
 
 Macros controlling basic internal operation.
 
-| Macro                           | Default value | Description                                                                                     |
-| ------------------------------- | ------------- | ----------------------------------------------------------------------------------------------- |
-| `PTP_HEARTBEAT_TICKRATE_MS`     | 62            | Internal core scheduler period (ms). It should be less than half the shortest messaging period. |
-| `PTP_ACCURACY_LIMIT_NS`         | 100           | Threshold of the `LOCKED` state (ns)                                                            |
-| `PTP_DEFAULT_SERVO_OFFSET_NS`   | 0             | Initial servo offset (ns) (can be changed in runtime)                                           |
-| `PTP_DEFAULT_COARSE_TRIGGER_NS` | 20000000      | Coarse correction kick-in threshold (ns) (can be changed in runtime)                            |
+| Macro                           | Default value | Description                                                                                            |
+| ------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------ |
+| `PTP_HEARTBEAT_TICKRATE_MS`     | 62            | Internal core scheduler period (ms). It should be less than the half of the shortest messaging period. |
+| `PTP_ACCURACY_LIMIT_NS`         | 100           | Threshold of the `LOCKED` state (ns)                                                                   |
+| `PTP_DEFAULT_SERVO_OFFSET_NS`   | 0             | Initial servo offset (ns) (can be changed in runtime)                                                  |
+| `PTP_DEFAULT_COARSE_TRIGGER_NS` | 20000000      | Coarse correction kick-in threshold (ns) (can be changed in runtime)                                   |
 
 ### PTP definitions
 
