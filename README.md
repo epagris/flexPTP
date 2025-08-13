@@ -32,20 +32,25 @@ flexPTP offers the following capabilities:
 
 ## Platforms and examples
 
+![Example boards](manual/media/example_boards.png)
+
 The library package ships with hardware ports for several platforms, including:
 
-- **TM4C1294** (_lwIP_) <img src="https://www.ti.com/etc/designs/ti/images/ui/ic-logo.svg" style="height: 20px; vertical-align: middle;">
-  - Example: [EK-TM4C1294XL Connected LaunchPad flexPTP demo](https://github.com/epagris/flexPTP-demo-TM4C1294)
-- **STM32F4xx** (_EtherLib_/_lwip_) <img src="https://www.st.com/content/dam/st-crew/media-library/browse/stmicroelectronics-logo-2020-blue.jpg" style="height: 35px; vertical-align: middle; clip-path: rect(8.6px 86px 31.5px 9.6px);">
+- **TM4C1294** (_lwIP_)
+  - Example: [EK-TM4C1294XL Connected LaunchPad flexPTP demo](https://github.com/epagris/flexPTP-demo-TM4C1294), [EK-TM4C1294XL Connected LaunchPad **OS-less** flexPTP demo](https://github.com/epagris/flexPTP-demo-TM4C1294-osless)
+- **STM32F4xx** (_EtherLib_/_lwip_)
   - Example: [STM32 NUCLEO-F439ZI flexPTP demo](https://github.com/epagris/flexPTP-demo-NUCLEO-F439ZI)
-- **STM32F7xx** (_EtherLib_/_lwip_) <img src="https://www.st.com/content/dam/st-crew/media-library/browse/stmicroelectronics-logo-2020-blue.jpg" style="height: 35px; vertical-align: middle; clip-path: rect(8.6px 86px 31.5px 9.6px);">
+- **STM32F7xx** (_EtherLib_/_lwip_)
   - Example: [STM32 NUCLEO-F746ZG flexPTP demo](https://github.com/epagris/flexPTP-demo-NUCLEO-F746ZG)
-- **STM32H7xx** (_EtherLib_/_lwip_) <img src="https://www.st.com/content/dam/st-crew/media-library/browse/stmicroelectronics-logo-2020-blue.jpg" style="height: 35px; vertical-align: middle; clip-path: rect(8.6px 86px 31.5px 9.6px);">
+- **STM32H7xx** (_EtherLib_/_lwip_)
   - Example: [STM32 NUCLEO-H743ZI flexPTP demo](https://github.com/epagris/flexPTP-demo-NUCLEO-H743ZI), [STM32 **dual-core** NUCLEO-H745ZI-Q flexPTP demo](https://github.com/epagris/flexPTP-demo-NUCLEO-H745ZI-Q/)
-- **MK64F**: (_lwip_) <img src="https://www.nxp.com/assets/images/en/logos-internal/NXP_logo_RGB_web.jpg" style="height: 42px; vertical-align: middle; clip-path: rect(12px 62px 30px 12px);">
+- **MK64F**: (_lwip_)
   - Example: [NXP FRDM-K64F flexPTP demo](https://github.com/epagris/flexPTP-demo-FRDM-K64F)
 
-...and a **[Linux example](https://github.com/epagris/flexPTP-linux)** <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Tux.svg/330px-Tux.svg.png" style="height: 30px; vertical-align: middle">
+...and a **[Linux example](https://github.com/epagris/flexPTP-linux)** 
+
+_All above example projects uses FreeRTOS and/or CMSIS OS2 except for the Linux and specific OS-less examples._
+
 
 ## Requirements
 
