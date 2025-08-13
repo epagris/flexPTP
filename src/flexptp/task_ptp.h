@@ -98,6 +98,14 @@ bool ptp_event_enqueue(const PtpCoreEvent * event);
  * Call this function at PTP_HEARTBEAT_TICKRATE_MS intervals.
  */
 void ptp_heartbeat_tmr_cb();
+
+/**
+ * flexPTP's main loop.
+ * This function is only exposed if operating in FLEXPTP_OSLESS mode!
+ * 
+ * Call this function regularly to advance internal processing.
+ */
+void task_ptp();
 #endif
 
 #endif // TASK_PTP_H_

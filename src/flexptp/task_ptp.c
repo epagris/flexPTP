@@ -31,7 +31,7 @@ static void task_ptp(void *pParam); // task routine function in non-Linux mode
 static pthread_t sTH;                // thread handle in Linux mode
 static void *task_ptp(void *pParam); // thread routine in Linux mode
 #elif defined(FLEXPTP_OSLESS)
-static void task_ptp(); // osless task function
+void task_ptp(void); // osless task function
 #endif
 
 // ---------------------------
@@ -442,6 +442,11 @@ bool ptp_event_enqueue(const PtpCoreEvent *event) {
 #elif defined(FLEXPTP_LINUX)
     size_t len = sizeof(PtpCoreEvent);
     ok = write(sEventFIFO[1], event, len) == len;
+#elif defined(FLEXPTP_OSLESS)
+    ok = fifo_push(&sEventFIFO, event);
+    if (ok) {
+        fifo_push(&sNotificationFIFO, &notif);
+    }
 #endif
     return ok;
 }
@@ -481,6 +486,9 @@ void ptp_receive_enqueue(const void *pPayload, uint32_t len, uint32_t ts_sec, ui
         osMessageQueuePut(sNotificationFIFO, &notif, 0, osWaitForever);
 #elif defined(FLEXPTP_LINUX)
         write(sRxPacketFIFO[1], &uid, sizeof(uint32_t));
+#elif defined(FLEXPTP_OSLESS)
+        fifo_push(&sRxPacketFIFO, &uid);
+        fifo_push(&sNotificationFIFO, &notif);
 #endif
     } else {
         if (msgb_get_error(&sRawRxMsgBuf) == MSGB_ERR_FULL) {
@@ -510,6 +518,9 @@ bool ptp_transmit_enqueue(const RawPtpMessage *pMsg) {
         osMessageQueuePut(sNotificationFIFO, &notif, 0, osWaitForever);
 #elif defined(FLEXPTP_LINUX)
         write(sTxPacketFIFO[1], &uid, sizeof(uint32_t));
+#elif defined(FLEXPTP_OSLESS)
+        fifo_push(&sTxPacketFIFO, &uid);
+        fifo_push(&sNotificationFIFO, &notif);
 #endif
         return true;
     } else {
@@ -542,6 +553,9 @@ void ptp_transmit_timestamp_cb(uint32_t uid, uint32_t seconds, uint32_t nanoseco
 #elif defined(FLEXPTP_LINUX)
     write(sTxCbFIFO[1], &ts, sizeof(TxTs));
     sem_post(&sTxCbSem);
+#elif defined(FLEXPTP_OSLESS)
+    fifo_push(&sTxCbFIFO, &ts);
+    fifo_push(&sNotificationFIFO, &notif);
 #endif
 }
 
@@ -567,7 +581,7 @@ static void task_ptp(void *pParam) {
 #elif defined(FLEXPTP_LINUX)
 static void *task_ptp(void *pParam) {
 #elif defined(FLEXPTP_OSLESS)
-static void task_ptp(void) {
+void task_ptp(void) {
 #endif
 
 #ifndef FLEXPTP_OSLESS // OS assisted mode
@@ -613,7 +627,7 @@ static void task_ptp(void) {
         continue;
     }
 #elif defined(FLEXPTP_OSLESS)
-fifo_pop(&sNotificationFIFO, &notification);
+    fifo_pop(&sNotificationFIFO, &notification);
 #endif
         /* ---- TRANSMIT DONE ---- */
         if (notification & PTN_TRANSMIT_DONE) {
