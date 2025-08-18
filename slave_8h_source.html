@@ -124,21 +124,29 @@ $(document).ready(function(){initNavTree('slave_8h_source.html',''); initResizab
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="ptp__types_8h.html">ptp_types.h</a>&quot;</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keywordtype">void</span> <a class="code hl_function" href="slave_8h.html#a591f9730a29b5536e2590e3689a813fe">ptp_slave_process_message</a>(<a class="code hl_struct" href="struct_raw_ptp_message.html">RawPtpMessage</a> *pRawMsg, <a class="code hl_struct" href="struct_ptp_header.html">PtpHeader</a> *pHeader);</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keywordtype">void</span> <a class="code hl_function" href="slave_8h.html#a30aa49f0ba417a3c8c6a820568b4d61a">ptp_slave_init</a>();</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keywordtype">void</span> <a class="code hl_function" href="slave_8h.html#a90a31f932773e9b3ed5b9decb305025f">ptp_slave_reset</a>();</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keywordtype">void</span> <a class="code hl_function" href="slave_8h.html#a234d98f0663f110f6be6fa2a56df2bb7">ptp_slave_destroy</a>();</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keywordtype">void</span> <a class="code hl_function" href="slave_8h.html#a60dc495fe5f15e94a222255ffb37f11c">ptp_slave_enable</a>();</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="keywordtype">void</span> <a class="code hl_function" href="slave_8h.html#a927306898d8aac86ecdc6f8f73532a61">ptp_slave_disable</a>();</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="keywordtype">void</span> <a class="code hl_function" href="slave_8h.html#a68cf8777261442862f4c04933015431b">ptp_slave_tick</a>();</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#endif </span><span class="comment">/* FLEXPTP_SLAVE */</span><span class="preprocessor"></span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keywordtype">void</span> <a class="code hl_function" href="slave_8h.html#a591f9730a29b5536e2590e3689a813fe">ptp_slave_process_message</a>(<a class="code hl_struct" href="struct_raw_ptp_message.html">RawPtpMessage</a> *pRawMsg, <a class="code hl_struct" href="struct_ptp_header.html">PtpHeader</a> *pHeader);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keywordtype">void</span> <a class="code hl_function" href="slave_8h.html#a30aa49f0ba417a3c8c6a820568b4d61a">ptp_slave_init</a>();</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keywordtype">void</span> <a class="code hl_function" href="slave_8h.html#a90a31f932773e9b3ed5b9decb305025f">ptp_slave_reset</a>();</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keywordtype">void</span> <a class="code hl_function" href="slave_8h.html#a234d98f0663f110f6be6fa2a56df2bb7">ptp_slave_destroy</a>();</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keywordtype">void</span> <a class="code hl_function" href="slave_8h.html#a60dc495fe5f15e94a222255ffb37f11c">ptp_slave_enable</a>();</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="keywordtype">void</span> <a class="code hl_function" href="slave_8h.html#a927306898d8aac86ecdc6f8f73532a61">ptp_slave_disable</a>();</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="keywordtype">void</span> <a class="code hl_function" href="slave_8h.html#a68cf8777261442862f4c04933015431b">ptp_slave_tick</a>();</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>}</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">#endif </span><span class="comment">/* FLEXPTP_SLAVE */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="aptp__types_8h_html"><div class="ttname"><a href="ptp__types_8h.html">ptp_types.h</a></div><div class="ttdoc">This module defines the fundamental PTP message and state machine type, flags, bitfields and the PTP ...</div></div>
 <div class="ttc" id="aslave_8h_html_a234d98f0663f110f6be6fa2a56df2bb7"><div class="ttname"><a href="slave_8h.html#a234d98f0663f110f6be6fa2a56df2bb7">ptp_slave_destroy</a></div><div class="ttdeci">void ptp_slave_destroy()</div><div class="ttdef"><b>Definition:</b> <a href="slave_8c_source.html#l00484">slave.c:484</a></div></div>
 <div class="ttc" id="aslave_8h_html_a30aa49f0ba417a3c8c6a820568b4d61a"><div class="ttname"><a href="slave_8h.html#a30aa49f0ba417a3c8c6a820568b4d61a">ptp_slave_init</a></div><div class="ttdeci">void ptp_slave_init()</div><div class="ttdef"><b>Definition:</b> <a href="slave_8c_source.html#l00476">slave.c:476</a></div></div>
@@ -147,8 +155,8 @@ $(document).ready(function(){initNavTree('slave_8h_source.html',''); initResizab
 <div class="ttc" id="aslave_8h_html_a68cf8777261442862f4c04933015431b"><div class="ttname"><a href="slave_8h.html#a68cf8777261442862f4c04933015431b">ptp_slave_tick</a></div><div class="ttdeci">void ptp_slave_tick()</div><div class="ttdef"><b>Definition:</b> <a href="slave_8c_source.html#l00520">slave.c:520</a></div></div>
 <div class="ttc" id="aslave_8h_html_a90a31f932773e9b3ed5b9decb305025f"><div class="ttname"><a href="slave_8h.html#a90a31f932773e9b3ed5b9decb305025f">ptp_slave_reset</a></div><div class="ttdeci">void ptp_slave_reset()</div><div class="ttdef"><b>Definition:</b> <a href="slave_8c_source.html#l00488">slave.c:488</a></div></div>
 <div class="ttc" id="aslave_8h_html_a927306898d8aac86ecdc6f8f73532a61"><div class="ttname"><a href="slave_8h.html#a927306898d8aac86ecdc6f8f73532a61">ptp_slave_disable</a></div><div class="ttdeci">void ptp_slave_disable()</div><div class="ttdef"><b>Definition:</b> <a href="slave_8c_source.html#l00555">slave.c:555</a></div></div>
-<div class="ttc" id="astruct_ptp_header_html"><div class="ttname"><a href="struct_ptp_header.html">PtpHeader</a></div><div class="ttdoc">PTP message header structure.</div><div class="ttdef"><b>Definition:</b> <a href="ptp__types_8h_source.html#l00076">ptp_types.h:77</a></div></div>
-<div class="ttc" id="astruct_raw_ptp_message_html"><div class="ttname"><a href="struct_raw_ptp_message.html">RawPtpMessage</a></div><div class="ttdef"><b>Definition:</b> <a href="ptp__types_8h_source.html#l00182">ptp_types.h:182</a></div></div>
+<div class="ttc" id="astruct_ptp_header_html"><div class="ttname"><a href="struct_ptp_header.html">PtpHeader</a></div><div class="ttdoc">PTP message header structure.</div><div class="ttdef"><b>Definition:</b> <a href="ptp__types_8h_source.html#l00080">ptp_types.h:81</a></div></div>
+<div class="ttc" id="astruct_raw_ptp_message_html"><div class="ttname"><a href="struct_raw_ptp_message.html">RawPtpMessage</a></div><div class="ttdef"><b>Definition:</b> <a href="ptp__types_8h_source.html#l00186">ptp_types.h:186</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

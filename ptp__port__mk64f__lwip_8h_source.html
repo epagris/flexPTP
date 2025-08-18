@@ -123,14 +123,22 @@ $(document).ready(function(){initNavTree('ptp__port__mk64f__lwip_8h_source.html'
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="timeutils_8h.html">flexptp/timeutils.h</a>&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">/* The hardware clock initialization is implemented as part of</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * the lwIP ethernetif using the standard ENET_* methods. */</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keywordtype">void</span> <a class="code hl_function" href="ptp__port__mk64f__lwip_8h.html#ab133931d6420470d83a9cb013f46415f">ptphw_gettime</a>(<a class="code hl_struct" href="struct_timestamp_u.html">TimestampU</a> * pTime);</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#endif </span><span class="comment">/* FLEXPTP_PORT_PTP_PORT_MK64F_LWIP */</span><span class="preprocessor"></span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">/* The hardware clock initialization is implemented as part of</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * the lwIP ethernetif using the standard ENET_* methods. */</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keywordtype">void</span> <a class="code hl_function" href="ptp__port__mk64f__lwip_8h.html#ab133931d6420470d83a9cb013f46415f">ptphw_gettime</a>(<a class="code hl_struct" href="struct_timestamp_u.html">TimestampU</a> * pTime);</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>}</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#endif </span><span class="comment">/* FLEXPTP_PORT_PTP_PORT_MK64F_LWIP */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="aptp__port__mk64f__lwip_8h_html_ab133931d6420470d83a9cb013f46415f"><div class="ttname"><a href="ptp__port__mk64f__lwip_8h.html#ab133931d6420470d83a9cb013f46415f">ptphw_gettime</a></div><div class="ttdeci">void ptphw_gettime(TimestampU *pTime)</div><div class="ttdef"><b>Definition:</b> <a href="ptp__port__ch32f207__etherlib_8c_source.html#l00045">ptp_port_ch32f207_etherlib.c:45</a></div></div>
-<div class="ttc" id="astruct_timestamp_u_html"><div class="ttname"><a href="struct_timestamp_u.html">TimestampU</a></div><div class="ttdoc">Timestamp (unsigned)</div><div class="ttdef"><b>Definition:</b> <a href="timeutils_8h_source.html#l00019">timeutils.h:20</a></div></div>
+<div class="ttc" id="astruct_timestamp_u_html"><div class="ttname"><a href="struct_timestamp_u.html">TimestampU</a></div><div class="ttdoc">Timestamp (unsigned)</div><div class="ttdef"><b>Definition:</b> <a href="timeutils_8h_source.html#l00023">timeutils.h:24</a></div></div>
 <div class="ttc" id="atimeutils_8h_html"><div class="ttname"><a href="timeutils_8h.html">timeutils.h</a></div><div class="ttdoc">This module defines storage classes for timestamps and operations on time values.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

@@ -126,234 +126,242 @@ $(document).ready(function(){initNavTree('ptp__defs_8h_source.html',''); initRes
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;flexptp_options.h&gt;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment">// IP address of PTP-IGMP groups</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a761ed35fdd79054bf5054e2539fc8952">   18</a></span><span class="preprocessor">#define PTP_IGMP_DEFAULT_STR (&quot;224.0.1.129&quot;</span>)    </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a093267b1b4f8b8b6d72ce29e114a1e2b">   19</a></span><span class="preprocessor">#define PTP_IGMP_PEER_DELAY_STR (&quot;224.0.0.107&quot;</span>) </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#if defined(__linux__)</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &lt;netinet/in.h&gt;</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">typedef</span> in_addr_t <a class="code hl_typedef" href="ptp__defs_8h.html#ace0914133938da206cea00ef96e8061a">ip_addr_t</a>;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">typedef</span> in_addr_t <a class="code hl_typedef" href="ptp__defs_8h.html#ac1d28d6ef08f3c7e55700b1b18199097">ip4_addr_t</a>;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#elif !defined(LWIP)</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ace0914133938da206cea00ef96e8061a">   26</a></span><span class="keyword">typedef</span> ip4_addr <a class="code hl_typedef" href="ptp__defs_8h.html#ace0914133938da206cea00ef96e8061a">ip_addr_t</a>;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ac1d28d6ef08f3c7e55700b1b18199097">   27</a></span><span class="keyword">typedef</span> ip4_addr <a class="code hl_typedef" href="ptp__defs_8h.html#ac1d28d6ef08f3c7e55700b1b18199097">ip4_addr_t</a>;</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">extern</span> <span class="keyword">const</span> <a class="code hl_typedef" href="ptp__defs_8h.html#ace0914133938da206cea00ef96e8061a">ip_addr_t</a> <a class="code hl_variable" href="ptp__defs_8h.html#a19f61a8981c67812a3504ce95219d3e2">PTP_IGMP_PRIMARY</a>;    </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">extern</span> <span class="keyword">const</span> <a class="code hl_typedef" href="ptp__defs_8h.html#ace0914133938da206cea00ef96e8061a">ip_addr_t</a> <a class="code hl_variable" href="ptp__defs_8h.html#ad851d0e9f75709e3c4e68311994120ff">PTP_IGMP_PEER_DELAY</a>; </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a66b4264d8a3f30b62462917df20c3593">   33</a></span><span class="preprocessor">#define PTP_ETHERTYPE (0x88F7)        </span></div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a3c3b928c381ef4b09b28318d5343e9ac">   34</a></span><span class="preprocessor">#define ETHERTYPE_PTP (PTP_ETHERTYPE) </span></div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="comment">// Ethernet address of PTP messages</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keyword">extern</span> <span class="keyword">const</span> uint8_t <a class="code hl_variable" href="ptp__defs_8h.html#a7e91a6219029b5fd9e7ce6798d8c8d43">PTP_ETHERNET_PRIMARY</a>[6];    </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keyword">extern</span> <span class="keyword">const</span> uint8_t <a class="code hl_variable" href="ptp__defs_8h.html#a265c1b370ac13cc7ab0a7879cede2cdf">PTP_ETHERNET_PEER_DELAY</a>[6]; </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment">// IP address of PTP-IGMP groups</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a761ed35fdd79054bf5054e2539fc8952">   22</a></span><span class="preprocessor">#define PTP_IGMP_DEFAULT_STR (&quot;224.0.1.129&quot;</span>)    </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a093267b1b4f8b8b6d72ce29e114a1e2b">   23</a></span><span class="preprocessor">#define PTP_IGMP_PEER_DELAY_STR (&quot;224.0.0.107&quot;</span>) </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#if defined(__linux__)</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &lt;netinet/in.h&gt;</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">typedef</span> in_addr_t <a class="code hl_typedef" href="ptp__defs_8h.html#ace0914133938da206cea00ef96e8061a">ip_addr_t</a>;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">typedef</span> in_addr_t <a class="code hl_typedef" href="ptp__defs_8h.html#ac1d28d6ef08f3c7e55700b1b18199097">ip4_addr_t</a>;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#elif !defined(LWIP)</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ace0914133938da206cea00ef96e8061a">   30</a></span><span class="keyword">typedef</span> ip4_addr <a class="code hl_typedef" href="ptp__defs_8h.html#ace0914133938da206cea00ef96e8061a">ip_addr_t</a>;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ac1d28d6ef08f3c7e55700b1b18199097">   31</a></span><span class="keyword">typedef</span> ip4_addr <a class="code hl_typedef" href="ptp__defs_8h.html#ac1d28d6ef08f3c7e55700b1b18199097">ip4_addr_t</a>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">extern</span> <span class="keyword">const</span> <a class="code hl_typedef" href="ptp__defs_8h.html#ace0914133938da206cea00ef96e8061a">ip_addr_t</a> <a class="code hl_variable" href="ptp__defs_8h.html#a19f61a8981c67812a3504ce95219d3e2">PTP_IGMP_PRIMARY</a>;    </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keyword">extern</span> <span class="keyword">const</span> <a class="code hl_typedef" href="ptp__defs_8h.html#ace0914133938da206cea00ef96e8061a">ip_addr_t</a> <a class="code hl_variable" href="ptp__defs_8h.html#ad851d0e9f75709e3c4e68311994120ff">PTP_IGMP_PEER_DELAY</a>; </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a66b4264d8a3f30b62462917df20c3593">   37</a></span><span class="preprocessor">#define PTP_ETHERTYPE (0x88F7)        </span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a3c3b928c381ef4b09b28318d5343e9ac">   38</a></span><span class="preprocessor">#define ETHERTYPE_PTP (PTP_ETHERTYPE) </span></div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="comment">// PTP UDP ports</span></div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a3e017cbae31fed44a1f3cfea086df6b3">   41</a></span><span class="preprocessor">#define PTP_PORT_EVENT (319)   </span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a8d9c58aa260c900c72d3184302a1a569">   42</a></span><span class="preprocessor">#define PTP_PORT_GENERAL (320) </span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="comment">// Ethernet address of PTP messages</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keyword">extern</span> <span class="keyword">const</span> uint8_t <a class="code hl_variable" href="ptp__defs_8h.html#a7e91a6219029b5fd9e7ce6798d8c8d43">PTP_ETHERNET_PRIMARY</a>[6];    </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keyword">extern</span> <span class="keyword">const</span> uint8_t <a class="code hl_variable" href="ptp__defs_8h.html#a265c1b370ac13cc7ab0a7879cede2cdf">PTP_ETHERNET_PEER_DELAY</a>[6]; </div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a53f4846b41ddf839e9445e06012211ba">   44</a></span><span class="preprocessor">#define PTP_HEADER_LENGTH (34)        </span></div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a541b76729c8ff797f5135e35bf395bad">   45</a></span><span class="preprocessor">#define PTP_TIMESTAMP_LENGTH (10)     </span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a65d3208bfe43cb673336c9e1c61ad78c">   46</a></span><span class="preprocessor">#define PTP_PORT_ID_LENGTH (10)       </span></div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a2551cda8a1e3076342c3a0bb44896093">   47</a></span><span class="preprocessor">#define PTP_ANNOUNCE_BODY_LENGTH (20) </span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a9930e794efb3911587713ebb8e8277f6">   49</a></span><span class="preprocessor">#define PTP_PCKT_SIZE_SYNC (PTP_HEADER_LENGTH + PTP_TIMESTAMP_LENGTH)                                       </span></div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a235b452f0f6714cefcdb4c98b2dab304">   50</a></span><span class="preprocessor">#define PTP_PCKT_SIZE_FOLLOW_UP (PTP_HEADER_LENGTH + PTP_TIMESTAMP_LENGTH)                                  </span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a24159b44d898cfbcd0d6f0ad72d60bba">   51</a></span><span class="preprocessor">#define PTP_PCKT_SIZE_DELAY_REQ (PTP_HEADER_LENGTH + PTP_TIMESTAMP_LENGTH)                                  </span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a60d2c0102635076d35cd23a600e3788b">   52</a></span><span class="preprocessor">#define PTP_PCKT_SIZE_DELAY_RESP (PTP_HEADER_LENGTH + PTP_TIMESTAMP_LENGTH + PTP_PORT_ID_LENGTH)            </span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a049588c159d56f2a24b99f28088ff474">   53</a></span><span class="preprocessor">#define PTP_PCKT_PDELAY_RESERVED_END (10)                                                                   </span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a0da7c70e703a014ccb8e78572800c270">   54</a></span><span class="preprocessor">#define PTP_PCKT_SIZE_PDELAY_REQ (PTP_HEADER_LENGTH + PTP_TIMESTAMP_LENGTH + PTP_PCKT_PDELAY_RESERVED_END)  </span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ab98b6b95903264dc654a2f0cf373e1bc">   55</a></span><span class="preprocessor">#define PTP_PCKT_SIZE_PDELAY_RESP (PTP_HEADER_LENGTH + PTP_TIMESTAMP_LENGTH + PTP_PORT_ID_LENGTH)           </span></div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a468ea02d2b7caa80d2f00595b41c6b78">   56</a></span><span class="preprocessor">#define PTP_PCKT_SIZE_PDELAY_RESP_FOLLOW_UP (PTP_HEADER_LENGTH + PTP_TIMESTAMP_LENGTH + PTP_PORT_ID_LENGTH) </span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a2b7cdc616f27a9e1787ed752c65704ef">   57</a></span><span class="preprocessor">#define PTP_PCKT_SIZE_ANNOUNCE (PTP_HEADER_LENGTH + PTP_TIMESTAMP_LENGTH + PTP_ANNOUNCE_BODY_LENGTH)        </span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="comment">// ---------------------------</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a1fa962cbdf35723c81c87b5333828c1c">   61</a></span><span class="preprocessor">#define PTP_MAX_PROFILE_NAME_LENGTH (7)                            </span></div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a0cf3ffe840dfae6ab7cbcbea99f04eeb">   62</a></span><span class="preprocessor">#define PTP_MAX_TLV_PRESET_NAME_LENGTH PTP_MAX_PROFILE_NAME_LENGTH </span></div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="comment">// ---- CALCULATED VALUES ----</span></div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="comment">// automatically select the ADDEND interface if nothing was specified</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">#if !defined(PTP_ADDEND_INTERFACE) &amp;&amp; !defined(PTP_HLT_INTERFACE)</span></div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ac421b80fbd859a58e3751d5525a3df60">   68</a></span><span class="preprocessor">#define PTP_ADDEND_INTERFACE</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="comment">// ADDEND interface parameter calculation</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="preprocessor">#if defined(PTP_ADDEND_INTERFACE)</span></div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#aac46f9712d10db597b03ae556afede2d">   73</a></span><span class="preprocessor">#define PTP_ADDEND_INIT (((double)(0x100000000)) / (((double)(PTP_MAIN_OSCILLATOR_FREQ_HZ)) / ((double)(PTP_CLOCK_TICK_FREQ_HZ)))) </span></div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a6a201ce3980eb809d9ab9262999858de">   74</a></span><span class="preprocessor">#define PTP_ADDEND_CORR_PER_PPB_F (((double)0x100000000) / ((double)PTP_INCREMENT_NSEC * PTP_MAIN_OSCILLATOR_FREQ_HZ))             </span></div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a10f67db3ffbf260e5af53c1af8c570db">   77</a></span><span class="preprocessor">#define PTP_CLOCK_TICK_FREQ_HZ (1000000000 / PTP_INCREMENT_NSEC) </span></div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="comment">// ---- AUTODEFINES ----------</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="comment">// PTP UDP ports</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a3e017cbae31fed44a1f3cfea086df6b3">   45</a></span><span class="preprocessor">#define PTP_PORT_EVENT (319)   </span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a8d9c58aa260c900c72d3184302a1a569">   46</a></span><span class="preprocessor">#define PTP_PORT_GENERAL (320) </span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a53f4846b41ddf839e9445e06012211ba">   48</a></span><span class="preprocessor">#define PTP_HEADER_LENGTH (34)        </span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a541b76729c8ff797f5135e35bf395bad">   49</a></span><span class="preprocessor">#define PTP_TIMESTAMP_LENGTH (10)     </span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a65d3208bfe43cb673336c9e1c61ad78c">   50</a></span><span class="preprocessor">#define PTP_PORT_ID_LENGTH (10)       </span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a2551cda8a1e3076342c3a0bb44896093">   51</a></span><span class="preprocessor">#define PTP_ANNOUNCE_BODY_LENGTH (20) </span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a9930e794efb3911587713ebb8e8277f6">   53</a></span><span class="preprocessor">#define PTP_PCKT_SIZE_SYNC (PTP_HEADER_LENGTH + PTP_TIMESTAMP_LENGTH)                                       </span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a235b452f0f6714cefcdb4c98b2dab304">   54</a></span><span class="preprocessor">#define PTP_PCKT_SIZE_FOLLOW_UP (PTP_HEADER_LENGTH + PTP_TIMESTAMP_LENGTH)                                  </span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a24159b44d898cfbcd0d6f0ad72d60bba">   55</a></span><span class="preprocessor">#define PTP_PCKT_SIZE_DELAY_REQ (PTP_HEADER_LENGTH + PTP_TIMESTAMP_LENGTH)                                  </span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a60d2c0102635076d35cd23a600e3788b">   56</a></span><span class="preprocessor">#define PTP_PCKT_SIZE_DELAY_RESP (PTP_HEADER_LENGTH + PTP_TIMESTAMP_LENGTH + PTP_PORT_ID_LENGTH)            </span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a049588c159d56f2a24b99f28088ff474">   57</a></span><span class="preprocessor">#define PTP_PCKT_PDELAY_RESERVED_END (10)                                                                   </span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a0da7c70e703a014ccb8e78572800c270">   58</a></span><span class="preprocessor">#define PTP_PCKT_SIZE_PDELAY_REQ (PTP_HEADER_LENGTH + PTP_TIMESTAMP_LENGTH + PTP_PCKT_PDELAY_RESERVED_END)  </span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ab98b6b95903264dc654a2f0cf373e1bc">   59</a></span><span class="preprocessor">#define PTP_PCKT_SIZE_PDELAY_RESP (PTP_HEADER_LENGTH + PTP_TIMESTAMP_LENGTH + PTP_PORT_ID_LENGTH)           </span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a468ea02d2b7caa80d2f00595b41c6b78">   60</a></span><span class="preprocessor">#define PTP_PCKT_SIZE_PDELAY_RESP_FOLLOW_UP (PTP_HEADER_LENGTH + PTP_TIMESTAMP_LENGTH + PTP_PORT_ID_LENGTH) </span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a2b7cdc616f27a9e1787ed752c65704ef">   61</a></span><span class="preprocessor">#define PTP_PCKT_SIZE_ANNOUNCE (PTP_HEADER_LENGTH + PTP_TIMESTAMP_LENGTH + PTP_ANNOUNCE_BODY_LENGTH)        </span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="comment">// ---------------------------</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a1fa962cbdf35723c81c87b5333828c1c">   65</a></span><span class="preprocessor">#define PTP_MAX_PROFILE_NAME_LENGTH (7)                            </span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a0cf3ffe840dfae6ab7cbcbea99f04eeb">   66</a></span><span class="preprocessor">#define PTP_MAX_TLV_PRESET_NAME_LENGTH PTP_MAX_PROFILE_NAME_LENGTH </span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="comment">// ---- CALCULATED VALUES ----</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="comment">// automatically select the ADDEND interface if nothing was specified</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="preprocessor">#if !defined(PTP_ADDEND_INTERFACE) &amp;&amp; !defined(PTP_HLT_INTERFACE)</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ac421b80fbd859a58e3751d5525a3df60">   72</a></span><span class="preprocessor">#define PTP_ADDEND_INTERFACE</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="comment">// ADDEND interface parameter calculation</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="preprocessor">#if defined(PTP_ADDEND_INTERFACE)</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#aac46f9712d10db597b03ae556afede2d">   77</a></span><span class="preprocessor">#define PTP_ADDEND_INIT (((double)(0x100000000)) / (((double)(PTP_MAIN_OSCILLATOR_FREQ_HZ)) / ((double)(PTP_CLOCK_TICK_FREQ_HZ)))) </span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a6a201ce3980eb809d9ab9262999858de">   78</a></span><span class="preprocessor">#define PTP_ADDEND_CORR_PER_PPB_F (((double)0x100000000) / ((double)PTP_INCREMENT_NSEC * PTP_MAIN_OSCILLATOR_FREQ_HZ))             </span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="preprocessor">#if !defined(FLEXPTP_FREERTOS) &amp;&amp; !defined(FLEXPTP_CMSIS_OS2) &amp;&amp; !defined(FLEXPTP_LINUX) &amp;&amp; !defined(FLEXPTP_OSLESS)</span></div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ad68f01211bcc2a5342a9d23ecfdcaa3b">   82</a></span><span class="preprocessor">#define FLEXPTP_FREERTOS (1)</span></div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a10f67db3ffbf260e5af53c1af8c570db">   81</a></span><span class="preprocessor">#define PTP_CLOCK_TICK_FREQ_HZ (1000000000 / PTP_INCREMENT_NSEC) </span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="comment">// ---- AUTODEFINES ----------</span></div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="preprocessor">#ifdef FLEXPTP_FREERTOS</span></div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="preprocessor">#include &quot;FreeRTOS.h&quot;</span></div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="preprocessor">#include &quot;queue.h&quot;</span></div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="preprocessor">#include &quot;task.h&quot;</span></div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="preprocessor">#include &quot;timers.h&quot;</span></div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><span class="preprocessor">#elif defined(FLEXPTP_CMSIS_OS2)</span></div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="preprocessor">#include &lt;cmsis_compiler.h&gt;</span></div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="preprocessor">#include &lt;cmsis_os2.h&gt;</span></div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="preprocessor">#elif defined(FLEXPTP_LINUX)</span></div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="preprocessor">#include &lt;poll.h&gt;</span></div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="preprocessor">#include &lt;pthread.h&gt;</span></div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="preprocessor">#include &lt;semaphore.h&gt;</span></div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="preprocessor">#include &lt;signal.h&gt;</span></div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="preprocessor">#elif defined(FLEXPTP_OSLESS)</span></div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="preprocessor">#include &quot;<a class="code" href="fifo_8h.html">port/osless/fifo.h</a>&quot;</span></div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="preprocessor">#if defined(FLEXPTP_FREERTOS) || defined(FLEXPTP_CMSIS_OS2)</span></div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="preprocessor">#define FLEXPTP_NON_LINUX_OS (1)</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="preprocessor">#if !defined(FLEXPTP_FREERTOS) &amp;&amp; !defined(FLEXPTP_CMSIS_OS2) &amp;&amp; !defined(FLEXPTP_LINUX) &amp;&amp; !defined(FLEXPTP_OSLESS)</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ad68f01211bcc2a5342a9d23ecfdcaa3b">   86</a></span><span class="preprocessor">#define FLEXPTP_FREERTOS (1)</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="preprocessor">#ifdef FLEXPTP_FREERTOS</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><span class="preprocessor">#include &quot;FreeRTOS.h&quot;</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="preprocessor">#include &quot;queue.h&quot;</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="preprocessor">#include &quot;task.h&quot;</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="preprocessor">#include &quot;timers.h&quot;</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="preprocessor">#elif defined(FLEXPTP_CMSIS_OS2)</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="preprocessor">#include &lt;cmsis_compiler.h&gt;</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="preprocessor">#include &lt;cmsis_os2.h&gt;</span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="preprocessor">#elif defined(FLEXPTP_LINUX)</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="preprocessor">#include &lt;poll.h&gt;</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="preprocessor">#include &lt;pthread.h&gt;</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="preprocessor">#include &lt;semaphore.h&gt;</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="preprocessor">#include &lt;signal.h&gt;</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="preprocessor">#elif defined(FLEXPTP_OSLESS)</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="preprocessor">#include &quot;<a class="code" href="fifo_8h.html">port/osless/fifo.h</a>&quot;</span></div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span><span class="preprocessor">#if defined(FLEXPTP_OSLESS) &amp;&amp; !defined(FLEXPTP_OSLESS_LOCK)</span></div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="preprocessor">#error &quot;FLEXPTP_OSLESS_LOCK must be defined to use FLEXPTP_OSLESS mode!&quot;</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span><span class="preprocessor">#if defined(FLEXPTP_FREERTOS) || defined(FLEXPTP_CMSIS_OS2)</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="preprocessor">#define FLEXPTP_NON_LINUX_OS (1)</span></div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a5ccad66d3f30f1ca1c7b467939bc58a2">  111</a></span><span class="preprocessor">#ifndef FLEXPTP_TASK_PRIORITY </span></div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="preprocessor">#ifdef FLEXPTP_FREERTOS </span></div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a53b8a0cd469673a510bc734d8d0dac94">  113</a></span><span class="preprocessor">#define FLEXPTP_TASK_PRIORITY (configMAX_PRIORITIES / 2)</span></div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="preprocessor">#elif defined(FLEXPTP_CMSIS_OS2)</span></div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="preprocessor">#define FLEXPTP_TASK_PRIORITY osPriorityNormal</span></div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="preprocessor">#ifndef FLEXPTP_TASK_STASK_SIZE</span></div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a6faa1c0f2d39f84e4c1ea878ba105855">  120</a></span><span class="preprocessor">#define FLEXPTP_TASK_STACK_SIZE (2048) </span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="preprocessor">#if defined(FLEXPTP_OSLESS) &amp;&amp; !defined(FLEXPTP_OSLESS_LOCK)</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="preprocessor">#error &quot;FLEXPTP_OSLESS_LOCK must be defined to use FLEXPTP_OSLESS mode!&quot;</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a5ccad66d3f30f1ca1c7b467939bc58a2">  115</a></span><span class="preprocessor">#ifndef FLEXPTP_TASK_PRIORITY </span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span><span class="preprocessor">#ifdef FLEXPTP_FREERTOS </span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a53b8a0cd469673a510bc734d8d0dac94">  117</a></span><span class="preprocessor">#define FLEXPTP_TASK_PRIORITY (configMAX_PRIORITIES / 2)</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="preprocessor">#elif defined(FLEXPTP_CMSIS_OS2)</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="preprocessor">#define FLEXPTP_TASK_PRIORITY osPriorityNormal</span></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="preprocessor">#ifndef PTP_HEARTBEAT_TICKRATE_MS</span></div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a0dfb57ec7c0d325acf28e89270f3920b">  124</a></span><span class="preprocessor">#define PTP_HEARTBEAT_TICKRATE_MS (62) </span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="preprocessor">#ifndef FLEXPTP_TASK_STASK_SIZE</span></div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a6faa1c0f2d39f84e4c1ea878ba105855">  124</a></span><span class="preprocessor">#define FLEXPTP_TASK_STACK_SIZE (2048) </span></div>
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="preprocessor">#ifndef PTP_PORT_ID</span></div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#aaefee41afe2b5aa4ab5d4a5f5fdef2a5">  128</a></span><span class="preprocessor">#define PTP_PORT_ID (1) </span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="preprocessor">#ifndef PTP_HEARTBEAT_TICKRATE_MS</span></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a0dfb57ec7c0d325acf28e89270f3920b">  128</a></span><span class="preprocessor">#define PTP_HEARTBEAT_TICKRATE_MS (62) </span></div>
 <div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="preprocessor">#ifndef PTP_ACCURACY_LIMIT_NS</span></div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a1fa31ce795774a0904d3d059cee26213">  132</a></span><span class="preprocessor">#define PTP_ACCURACY_LIMIT_NS (100) </span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="preprocessor">#ifndef PTP_PORT_ID</span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#aaefee41afe2b5aa4ab5d4a5f5fdef2a5">  132</a></span><span class="preprocessor">#define PTP_PORT_ID (1) </span></div>
 <div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span><span class="preprocessor">#ifndef PTP_DEFAULT_SERVO_OFFSET</span></div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a7609250adf5dd617f141a9de1f6de249">  136</a></span><span class="preprocessor">#define PTP_DEFAULT_SERVO_OFFSET (0) </span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span><span class="preprocessor">#ifndef PTP_ACCURACY_LIMIT_NS</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a1fa31ce795774a0904d3d059cee26213">  136</a></span><span class="preprocessor">#define PTP_ACCURACY_LIMIT_NS (100) </span></div>
 <div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span><span class="preprocessor">#ifndef PTP_DEFAULT_COARSE_TRIGGER_NS</span></div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ab44fcff7fbfae949a5be708c3f124ea4">  140</a></span><span class="preprocessor">#define PTP_DEFAULT_COARSE_TRIGGER_NS (20000000) </span></div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span><span class="preprocessor">#ifndef PTP_DEFAULT_SERVO_OFFSET</span></div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a7609250adf5dd617f141a9de1f6de249">  140</a></span><span class="preprocessor">#define PTP_DEFAULT_SERVO_OFFSET (0) </span></div>
 <div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span><span class="preprocessor">#ifndef PTP_BMCA_LISTENING_TIMEOUT_MS</span></div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a7e8c365245d34b62c70ea0d0c41ecd10">  144</a></span><span class="preprocessor">#define PTP_BMCA_LISTENING_TIMEOUT_MS (3000) </span></div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span><span class="preprocessor">#ifndef PTP_DEFAULT_COARSE_TRIGGER_NS</span></div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ab44fcff7fbfae949a5be708c3f124ea4">  144</a></span><span class="preprocessor">#define PTP_DEFAULT_COARSE_TRIGGER_NS (20000000) </span></div>
 <div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span><span class="preprocessor">#ifndef PTP_MASTER_QUALIFICATION_TIMEOUT</span></div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a1316cd7d4745be4f616eea796317b7a6">  148</a></span><span class="preprocessor">#define PTP_MASTER_QUALIFICATION_TIMEOUT (4) </span></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span><span class="preprocessor">#ifndef PTP_BMCA_LISTENING_TIMEOUT_MS</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a7e8c365245d34b62c70ea0d0c41ecd10">  148</a></span><span class="preprocessor">#define PTP_BMCA_LISTENING_TIMEOUT_MS (3000) </span></div>
 <div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><span class="preprocessor">#ifndef PTP_ANNOUNCE_RECEIPT_TIMEOUT</span></div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a3baebe9cb68cc75ce7c861070caa666e">  152</a></span><span class="preprocessor">#define PTP_ANNOUNCE_RECEIPT_TIMEOUT (3) </span></div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><span class="preprocessor">#ifndef PTP_MASTER_QUALIFICATION_TIMEOUT</span></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a1316cd7d4745be4f616eea796317b7a6">  152</a></span><span class="preprocessor">#define PTP_MASTER_QUALIFICATION_TIMEOUT (4) </span></div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="preprocessor">#ifndef PTP_ENABLE_MASTER_OPERATION</span></div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#aa5c0c516583486610ae6384916cedeb6">  156</a></span><span class="preprocessor">#define PTP_ENABLE_MASTER_OPERATION (0) </span></div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="preprocessor">#ifndef PTP_ANNOUNCE_RECEIPT_TIMEOUT</span></div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a3baebe9cb68cc75ce7c861070caa666e">  156</a></span><span class="preprocessor">#define PTP_ANNOUNCE_RECEIPT_TIMEOUT (3) </span></div>
 <div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> </div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span><span class="preprocessor">#ifndef PTP_CLOCK_PRIORITY1</span></div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a41c10c0eda467083f466f5e0bc097ee5">  160</a></span><span class="preprocessor">#define PTP_CLOCK_PRIORITY1 (128) </span></div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span><span class="preprocessor">#ifndef PTP_ENABLE_MASTER_OPERATION</span></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#aa5c0c516583486610ae6384916cedeb6">  160</a></span><span class="preprocessor">#define PTP_ENABLE_MASTER_OPERATION (0) </span></div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span><span class="preprocessor">#ifndef PTP_CLOCK_PRIORITY2</span></div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a325fb61a4bd4128188ba62b299acdfb5">  164</a></span><span class="preprocessor">#define PTP_CLOCK_PRIORITY2 (128) </span></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span><span class="preprocessor">#ifndef PTP_CLOCK_PRIORITY1</span></div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a41c10c0eda467083f466f5e0bc097ee5">  164</a></span><span class="preprocessor">#define PTP_CLOCK_PRIORITY1 (128) </span></div>
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="comment">// ---- CAPABILITIES AND ANNOUNCE DATASET -------</span></div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span><span class="preprocessor">#ifndef PTP_BEST_CLOCK_CLASS</span></div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#aebf65db47fececde895184fcf51b408b">  170</a></span><span class="preprocessor">#define PTP_BEST_CLOCK_CLASS (PTP_CC_DEFAULT) </span></div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="preprocessor">#ifndef PTP_CLOCK_PRIORITY2</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a325fb61a4bd4128188ba62b299acdfb5">  168</a></span><span class="preprocessor">#define PTP_CLOCK_PRIORITY2 (128) </span></div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="comment">// ---- CAPABILITIES AND ANNOUNCE DATASET -------</span></div>
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span><span class="preprocessor">#ifndef PTP_WORST_ACCURACY</span></div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ab28b39e221c440eca728c0d5c41bf746">  174</a></span><span class="preprocessor">#define PTP_WORST_ACCURACY (PTP_CA_UNKNOWN) </span></div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span><span class="preprocessor">#ifndef PTP_BEST_CLOCK_CLASS</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#aebf65db47fececde895184fcf51b408b">  174</a></span><span class="preprocessor">#define PTP_BEST_CLOCK_CLASS (PTP_CC_DEFAULT) </span></div>
 <div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> </div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span><span class="preprocessor">#ifndef PTP_TIME_SOURCE</span></div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a7ee321887f0af755d73cddcacd90a73b">  178</a></span><span class="preprocessor">#define PTP_TIME_SOURCE (PTP_TSRC_INTERNAL_OSCILLATOR) </span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span><span class="preprocessor">#ifndef PTP_WORST_ACCURACY</span></div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ab28b39e221c440eca728c0d5c41bf746">  178</a></span><span class="preprocessor">#define PTP_WORST_ACCURACY (PTP_CA_UNKNOWN) </span></div>
 <div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span><span class="preprocessor">#ifndef PTP_FALLBACK_UTC_OFFSET</span></div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ac25d4a6821ef2a62b44de40887ff539e">  182</a></span><span class="preprocessor">#define PTP_FALLBACK_UTC_OFFSET (37) </span></div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span><span class="preprocessor">#ifndef PTP_TIME_SOURCE</span></div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a7ee321887f0af755d73cddcacd90a73b">  182</a></span><span class="preprocessor">#define PTP_TIME_SOURCE (PTP_TSRC_INTERNAL_OSCILLATOR) </span></div>
 <div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> </div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span><span class="comment">// ---- MASTER P2P SLAVE HANDLING -----</span></div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span><span class="preprocessor">#ifndef PTP_PDELAY_SLAVE_QUALIFICATION</span></div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#abef1265b11b3267eafb4d8533946c238">  188</a></span><span class="preprocessor">#define PTP_PDELAY_SLAVE_QUALIFICATION (3) </span></div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span><span class="preprocessor">#ifndef PTP_FALLBACK_UTC_OFFSET</span></div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ac25d4a6821ef2a62b44de40887ff539e">  186</a></span><span class="preprocessor">#define PTP_FALLBACK_UTC_OFFSET (37) </span></div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> </div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span><span class="comment">// ---- MASTER P2P SLAVE HANDLING -----</span></div>
 <div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span><span class="preprocessor">#ifndef PTP_PDELAY_DROPOUT</span></div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a3668f1354ef50b6201b0c5f995bf0979">  192</a></span><span class="preprocessor">#define PTP_PDELAY_DROPOUT PTP_PDELAY_SLAVE_QUALIFICATION </span></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span><span class="preprocessor">#ifndef PTP_PDELAY_SLAVE_QUALIFICATION</span></div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#abef1265b11b3267eafb4d8533946c238">  192</a></span><span class="preprocessor">#define PTP_PDELAY_SLAVE_QUALIFICATION (3) </span></div>
 <div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span><span class="comment">// ---- TERMINAL COLORS -----</span></div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span> </div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span><span class="comment">// clang-format off</span></div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span><span class="preprocessor">#ifndef PTP_PDELAY_DROPOUT</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a3668f1354ef50b6201b0c5f995bf0979">  196</a></span><span class="preprocessor">#define PTP_PDELAY_DROPOUT PTP_PDELAY_SLAVE_QUALIFICATION </span></div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span> </div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span><span class="preprocessor">#ifndef PTP_CUSTOM_COLORS </span></div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ad0c06915010c61bda8da5aa6eddcf9d3">  200</a></span><span class="preprocessor">#define PTP_COLOR_RED      &quot;\x1b[31m&quot;</span> </div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a8d56dbbc33119ae5ae4ebeb4ff4d36fd">  201</a></span><span class="preprocessor">#define PTP_COLOR_BRED     &quot;\x1b[91m&quot;</span> </div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a5410fc111b65d0cd829ffb0afe5e9351">  202</a></span><span class="preprocessor">#define PTP_COLOR_GREEN    &quot;\x1b[32m&quot;</span> </div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a7dad40dfcd0203756a303dc0a850cbd9">  203</a></span><span class="preprocessor">#define PTP_COLOR_BGREEN   &quot;\x1b[92m&quot;</span> </div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ad35673b30486f774da4c3aa969581be9">  204</a></span><span class="preprocessor">#define PTP_COLOR_YELLOW   &quot;\x1b[33m&quot;</span> </div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a6c4def3d4ec5786af20639d89c7219a3">  205</a></span><span class="preprocessor">#define PTP_COLOR_BYELLOW  &quot;\x1b[93m&quot;</span> </div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ad7406ac1a27f61b93e9549863de8f503">  206</a></span><span class="preprocessor">#define PTP_COLOR_BLUE     &quot;\x1b[34m&quot;</span> </div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a204ea0e4ad30a02109048500a28e5a71">  207</a></span><span class="preprocessor">#define PTP_COLOR_MAGENTA  &quot;\x1b[35m&quot;</span> </div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a8a38a56b777d4a3ef7d86c80edd51bdf">  208</a></span><span class="preprocessor">#define PTP_COLOR_BMAGENTA &quot;\x1b[95m&quot;</span> </div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a864329c36c60adb557ff34eef152507e">  209</a></span><span class="preprocessor">#define PTP_COLOR_CYAN     &quot;\x1b[36m&quot;</span> </div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#aca6528765765e0e1672b02542d7d1ac9">  210</a></span><span class="preprocessor">#define PTP_COLOR_RESET    &quot;\x1b[0m&quot;</span>  </div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> </div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span><span class="comment">// clang-format on</span></div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span><span class="comment">// ---- NETWORK-HOST CONVERSIONS ----</span></div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span><span class="comment">// -- These are STATICALLY COMPUTABLE macros! ---</span></div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a269a398fab4b61d3955f84b30a0c5605">  218</a></span><span class="preprocessor">#define FLEXPTP_htonl(a)          \</span></div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span><span class="preprocessor">    ((((a) &gt;&gt; 24) &amp; 0x000000ff) | \</span></div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span><span class="preprocessor">     (((a) &gt;&gt; 8) &amp; 0x0000ff00) |  \</span></div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span><span class="preprocessor">     (((a) &lt;&lt; 8) &amp; 0x00ff0000) |  \</span></div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span><span class="preprocessor">     (((a) &lt;&lt; 24) &amp; 0xff000000))</span></div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a64e252c931e0c1035f34c36a783d53fd">  224</a></span><span class="preprocessor">#define FLEXPTP_ntohl(a) FLEXPTP_htonl((a))</span></div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span> </div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a867a1d7417963441047eab62d663ba05">  226</a></span><span class="preprocessor">#define FLEXPTP_htons(a)     \</span></div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span><span class="preprocessor">    ((((a) &gt;&gt; 8) &amp; 0x00ff) | \</span></div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span><span class="preprocessor">     (((a) &lt;&lt; 8) &amp; 0xff00))</span></div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span><span class="comment">// ---- TERMINAL COLORS -----</span></div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span><span class="comment">// clang-format off</span></div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span><span class="preprocessor">#ifndef PTP_CUSTOM_COLORS </span></div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ad0c06915010c61bda8da5aa6eddcf9d3">  204</a></span><span class="preprocessor">#define PTP_COLOR_RED      &quot;\x1b[31m&quot;</span> </div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a8d56dbbc33119ae5ae4ebeb4ff4d36fd">  205</a></span><span class="preprocessor">#define PTP_COLOR_BRED     &quot;\x1b[91m&quot;</span> </div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a5410fc111b65d0cd829ffb0afe5e9351">  206</a></span><span class="preprocessor">#define PTP_COLOR_GREEN    &quot;\x1b[32m&quot;</span> </div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a7dad40dfcd0203756a303dc0a850cbd9">  207</a></span><span class="preprocessor">#define PTP_COLOR_BGREEN   &quot;\x1b[92m&quot;</span> </div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ad35673b30486f774da4c3aa969581be9">  208</a></span><span class="preprocessor">#define PTP_COLOR_YELLOW   &quot;\x1b[33m&quot;</span> </div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a6c4def3d4ec5786af20639d89c7219a3">  209</a></span><span class="preprocessor">#define PTP_COLOR_BYELLOW  &quot;\x1b[93m&quot;</span> </div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ad7406ac1a27f61b93e9549863de8f503">  210</a></span><span class="preprocessor">#define PTP_COLOR_BLUE     &quot;\x1b[34m&quot;</span> </div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a204ea0e4ad30a02109048500a28e5a71">  211</a></span><span class="preprocessor">#define PTP_COLOR_MAGENTA  &quot;\x1b[35m&quot;</span> </div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a8a38a56b777d4a3ef7d86c80edd51bdf">  212</a></span><span class="preprocessor">#define PTP_COLOR_BMAGENTA &quot;\x1b[95m&quot;</span> </div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a864329c36c60adb557ff34eef152507e">  213</a></span><span class="preprocessor">#define PTP_COLOR_CYAN     &quot;\x1b[36m&quot;</span> </div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#aca6528765765e0e1672b02542d7d1ac9">  214</a></span><span class="preprocessor">#define PTP_COLOR_RESET    &quot;\x1b[0m&quot;</span>  </div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> </div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span><span class="comment">// clang-format on</span></div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span><span class="comment">// ---- NETWORK-HOST CONVERSIONS ----</span></div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span><span class="comment">// -- These are STATICALLY COMPUTABLE macros! ---</span></div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a269a398fab4b61d3955f84b30a0c5605">  222</a></span><span class="preprocessor">#define FLEXPTP_htonl(a)          \</span></div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span><span class="preprocessor">    ((((a) &gt;&gt; 24) &amp; 0x000000ff) | \</span></div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span><span class="preprocessor">     (((a) &gt;&gt; 8) &amp; 0x0000ff00) |  \</span></div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span><span class="preprocessor">     (((a) &lt;&lt; 8) &amp; 0x00ff0000) |  \</span></div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span><span class="preprocessor">     (((a) &lt;&lt; 24) &amp; 0xff000000))</span></div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> </div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a64e252c931e0c1035f34c36a783d53fd">  228</a></span><span class="preprocessor">#define FLEXPTP_ntohl(a) FLEXPTP_htonl((a))</span></div>
 <div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> </div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a6fcf18471c396e83f5a50675444b8258">  230</a></span><span class="preprocessor">#define FLEXPTP_ntohs(a) FLEXPTP_htons((a))</span></div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> </div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span><span class="comment">// ----------------</span></div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a867a1d7417963441047eab62d663ba05">  230</a></span><span class="preprocessor">#define FLEXPTP_htons(a)     \</span></div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span><span class="preprocessor">    ((((a) &gt;&gt; 8) &amp; 0x00ff) | \</span></div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span><span class="preprocessor">     (((a) &lt;&lt; 8) &amp; 0xff00))</span></div>
 <div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> </div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ad5f0555b0fa10206af9936fd4a42306e">  234</a></span><span class="preprocessor">#define FLEXPTP_MS_TO_TICKS(ms) ((ms + (PTP_HEARTBEAT_TICKRATE_MS - 1)) / PTP_HEARTBEAT_TICKRATE_MS)  </span></div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#a6fcf18471c396e83f5a50675444b8258">  234</a></span><span class="preprocessor">#define FLEXPTP_ntohs(a) FLEXPTP_htons((a))</span></div>
 <div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ac76c134f363d13f30aecc02f1a59511a">  236</a></span><span class="preprocessor">#define FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS (20)</span></div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span><span class="comment">// ----------------</span></div>
 <div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> </div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span><span class="preprocessor">#endif </span><span class="comment">/* FLEXPTP_PTP_DEFS_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ad5f0555b0fa10206af9936fd4a42306e">  238</a></span><span class="preprocessor">#define FLEXPTP_MS_TO_TICKS(ms) ((ms + (PTP_HEARTBEAT_TICKRATE_MS - 1)) / PTP_HEARTBEAT_TICKRATE_MS)  </span></div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span> </div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno"><a class="line" href="ptp__defs_8h.html#ac76c134f363d13f30aecc02f1a59511a">  240</a></span><span class="preprocessor">#define FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS (20)</span></div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> </div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>}</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span> </div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span><span class="preprocessor">#endif </span><span class="comment">/* FLEXPTP_PTP_DEFS_H_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="afifo_8h_html"><div class="ttname"><a href="fifo_8h.html">fifo.h</a></div></div>
 <div class="ttc" id="aptp__defs_8h_html_a19f61a8981c67812a3504ce95219d3e2"><div class="ttname"><a href="ptp__defs_8h.html#a19f61a8981c67812a3504ce95219d3e2">PTP_IGMP_PRIMARY</a></div><div class="ttdeci">const ip_addr_t PTP_IGMP_PRIMARY</div><div class="ttdoc">Primary IGMP address.</div></div>
 <div class="ttc" id="aptp__defs_8h_html_a265c1b370ac13cc7ab0a7879cede2cdf"><div class="ttname"><a href="ptp__defs_8h.html#a265c1b370ac13cc7ab0a7879cede2cdf">PTP_ETHERNET_PEER_DELAY</a></div><div class="ttdeci">const uint8_t PTP_ETHERNET_PEER_DELAY[6]</div><div class="ttdoc">PTP's L2 Peer_Delay Ethernet address.</div><div class="ttdef"><b>Definition:</b> <a href="ptp__defs_8c_source.html#l00004">ptp_defs.c:4</a></div></div>
 <div class="ttc" id="aptp__defs_8h_html_a7e91a6219029b5fd9e7ce6798d8c8d43"><div class="ttname"><a href="ptp__defs_8h.html#a7e91a6219029b5fd9e7ce6798d8c8d43">PTP_ETHERNET_PRIMARY</a></div><div class="ttdeci">const uint8_t PTP_ETHERNET_PRIMARY[6]</div><div class="ttdoc">PTP's L2 Primary Ethernet address.</div><div class="ttdef"><b>Definition:</b> <a href="ptp__defs_8c_source.html#l00003">ptp_defs.c:3</a></div></div>
-<div class="ttc" id="aptp__defs_8h_html_ac1d28d6ef08f3c7e55700b1b18199097"><div class="ttname"><a href="ptp__defs_8h.html#ac1d28d6ef08f3c7e55700b1b18199097">ip4_addr_t</a></div><div class="ttdeci">ip4_addr ip4_addr_t</div><div class="ttdef"><b>Definition:</b> <a href="ptp__defs_8h_source.html#l00027">ptp_defs.h:27</a></div></div>
-<div class="ttc" id="aptp__defs_8h_html_ace0914133938da206cea00ef96e8061a"><div class="ttname"><a href="ptp__defs_8h.html#ace0914133938da206cea00ef96e8061a">ip_addr_t</a></div><div class="ttdeci">ip4_addr ip_addr_t</div><div class="ttdef"><b>Definition:</b> <a href="ptp__defs_8h_source.html#l00026">ptp_defs.h:26</a></div></div>
+<div class="ttc" id="aptp__defs_8h_html_ac1d28d6ef08f3c7e55700b1b18199097"><div class="ttname"><a href="ptp__defs_8h.html#ac1d28d6ef08f3c7e55700b1b18199097">ip4_addr_t</a></div><div class="ttdeci">ip4_addr ip4_addr_t</div><div class="ttdef"><b>Definition:</b> <a href="ptp__defs_8h_source.html#l00031">ptp_defs.h:31</a></div></div>
+<div class="ttc" id="aptp__defs_8h_html_ace0914133938da206cea00ef96e8061a"><div class="ttname"><a href="ptp__defs_8h.html#ace0914133938da206cea00ef96e8061a">ip_addr_t</a></div><div class="ttdeci">ip4_addr ip_addr_t</div><div class="ttdef"><b>Definition:</b> <a href="ptp__defs_8h_source.html#l00030">ptp_defs.h:30</a></div></div>
 <div class="ttc" id="aptp__defs_8h_html_ad851d0e9f75709e3c4e68311994120ff"><div class="ttname"><a href="ptp__defs_8h.html#ad851d0e9f75709e3c4e68311994120ff">PTP_IGMP_PEER_DELAY</a></div><div class="ttdeci">const ip_addr_t PTP_IGMP_PEER_DELAY</div><div class="ttdoc">Peer_Delay IGMP address.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

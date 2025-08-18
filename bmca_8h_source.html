@@ -124,19 +124,27 @@ $(document).ready(function(){initNavTree('bmca_8h_source.html',''); initResizabl
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="ptp__types_8h.html">ptp_types.h</a>&quot;</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keywordtype">int</span> <a class="code hl_function" href="bmca_8h.html#ab8333bd7ded259fb07ee5ce179e9b2c6">ptp_select_better_master</a>(<a class="code hl_struct" href="struct_ptp_announce_body.html">PtpMasterProperties</a> * pMP1, <a class="code hl_struct" href="struct_ptp_announce_body.html">PtpMasterProperties</a> * pMP2);</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keywordtype">void</span> <a class="code hl_function" href="bmca_8h.html#ab762665263cc9d44a6500a7bd1b0827d">ptp_handle_announce_msg</a>(<a class="code hl_struct" href="struct_ptp_announce_body.html">PtpAnnounceBody</a> *pAnn, <a class="code hl_struct" href="struct_ptp_header.html">PtpHeader</a> *pHeader);</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keywordtype">void</span> <a class="code hl_function" href="bmca_8h.html#a7e5c40fe2c860e51dfca0f10d9395625">ptp_bmca_init</a>();</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keywordtype">void</span> <a class="code hl_function" href="bmca_8h.html#a254b6b1b067615e76900751e78c33c3f">ptp_bmca_destroy</a>();</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keywordtype">void</span> <a class="code hl_function" href="bmca_8h.html#a990240d152a52b7c27a73f6fb8fa3e5c">ptp_bmca_reset</a>();</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="keywordtype">void</span> <a class="code hl_function" href="bmca_8h.html#a37bb05243e69024d549858b9629b3fbc">ptp_bmca_tick</a>();</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#endif </span><span class="comment">/* FLEXPTP_SBMC_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keywordtype">int</span> <a class="code hl_function" href="bmca_8h.html#ab8333bd7ded259fb07ee5ce179e9b2c6">ptp_select_better_master</a>(<a class="code hl_struct" href="struct_ptp_announce_body.html">PtpMasterProperties</a> * pMP1, <a class="code hl_struct" href="struct_ptp_announce_body.html">PtpMasterProperties</a> * pMP2);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keywordtype">void</span> <a class="code hl_function" href="bmca_8h.html#ab762665263cc9d44a6500a7bd1b0827d">ptp_handle_announce_msg</a>(<a class="code hl_struct" href="struct_ptp_announce_body.html">PtpAnnounceBody</a> *pAnn, <a class="code hl_struct" href="struct_ptp_header.html">PtpHeader</a> *pHeader);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keywordtype">void</span> <a class="code hl_function" href="bmca_8h.html#a7e5c40fe2c860e51dfca0f10d9395625">ptp_bmca_init</a>();</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="keywordtype">void</span> <a class="code hl_function" href="bmca_8h.html#a254b6b1b067615e76900751e78c33c3f">ptp_bmca_destroy</a>();</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="keywordtype">void</span> <a class="code hl_function" href="bmca_8h.html#a990240d152a52b7c27a73f6fb8fa3e5c">ptp_bmca_reset</a>();</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="keywordtype">void</span> <a class="code hl_function" href="bmca_8h.html#a37bb05243e69024d549858b9629b3fbc">ptp_bmca_tick</a>();</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>}</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">#endif </span><span class="comment">/* FLEXPTP_SBMC_H_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="abmca_8h_html_a254b6b1b067615e76900751e78c33c3f"><div class="ttname"><a href="bmca_8h.html#a254b6b1b067615e76900751e78c33c3f">ptp_bmca_destroy</a></div><div class="ttdeci">void ptp_bmca_destroy()</div><div class="ttdef"><b>Definition:</b> <a href="bmca_8c_source.html#l00205">bmca.c:205</a></div></div>
 <div class="ttc" id="abmca_8h_html_a37bb05243e69024d549858b9629b3fbc"><div class="ttname"><a href="bmca_8h.html#a37bb05243e69024d549858b9629b3fbc">ptp_bmca_tick</a></div><div class="ttdeci">void ptp_bmca_tick()</div><div class="ttdef"><b>Definition:</b> <a href="bmca_8c_source.html#l00072">bmca.c:72</a></div></div>
 <div class="ttc" id="abmca_8h_html_a7e5c40fe2c860e51dfca0f10d9395625"><div class="ttname"><a href="bmca_8h.html#a7e5c40fe2c860e51dfca0f10d9395625">ptp_bmca_init</a></div><div class="ttdeci">void ptp_bmca_init()</div><div class="ttdef"><b>Definition:</b> <a href="bmca_8c_source.html#l00191">bmca.c:191</a></div></div>
@@ -144,8 +152,8 @@ $(document).ready(function(){initNavTree('bmca_8h_source.html',''); initResizabl
 <div class="ttc" id="abmca_8h_html_ab762665263cc9d44a6500a7bd1b0827d"><div class="ttname"><a href="bmca_8h.html#ab762665263cc9d44a6500a7bd1b0827d">ptp_handle_announce_msg</a></div><div class="ttdeci">void ptp_handle_announce_msg(PtpAnnounceBody *pAnn, PtpHeader *pHeader)</div><div class="ttdef"><b>Definition:</b> <a href="bmca_8c_source.html#l00135">bmca.c:135</a></div></div>
 <div class="ttc" id="abmca_8h_html_ab8333bd7ded259fb07ee5ce179e9b2c6"><div class="ttname"><a href="bmca_8h.html#ab8333bd7ded259fb07ee5ce179e9b2c6">ptp_select_better_master</a></div><div class="ttdeci">int ptp_select_better_master(PtpMasterProperties *pMP1, PtpMasterProperties *pMP2)</div><div class="ttdef"><b>Definition:</b> <a href="bmca_8c_source.html#l00031">bmca.c:31</a></div></div>
 <div class="ttc" id="aptp__types_8h_html"><div class="ttname"><a href="ptp__types_8h.html">ptp_types.h</a></div><div class="ttdoc">This module defines the fundamental PTP message and state machine type, flags, bitfields and the PTP ...</div></div>
-<div class="ttc" id="astruct_ptp_announce_body_html"><div class="ttname"><a href="struct_ptp_announce_body.html">PtpAnnounceBody</a></div><div class="ttdoc">Contents of a PTP Announce message without the common PTP header.</div><div class="ttdef"><b>Definition:</b> <a href="ptp__types_8h_source.html#l00257">ptp_types.h:257</a></div></div>
-<div class="ttc" id="astruct_ptp_header_html"><div class="ttname"><a href="struct_ptp_header.html">PtpHeader</a></div><div class="ttdoc">PTP message header structure.</div><div class="ttdef"><b>Definition:</b> <a href="ptp__types_8h_source.html#l00076">ptp_types.h:77</a></div></div>
+<div class="ttc" id="astruct_ptp_announce_body_html"><div class="ttname"><a href="struct_ptp_announce_body.html">PtpAnnounceBody</a></div><div class="ttdoc">Contents of a PTP Announce message without the common PTP header.</div><div class="ttdef"><b>Definition:</b> <a href="ptp__types_8h_source.html#l00261">ptp_types.h:261</a></div></div>
+<div class="ttc" id="astruct_ptp_header_html"><div class="ttname"><a href="struct_ptp_header.html">PtpHeader</a></div><div class="ttdoc">PTP message header structure.</div><div class="ttdef"><b>Definition:</b> <a href="ptp__types_8h_source.html#l00080">ptp_types.h:81</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

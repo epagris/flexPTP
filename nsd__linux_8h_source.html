@@ -125,23 +125,31 @@ $(document).ready(function(){initNavTree('nsd__linux_8h_source.html',''); initRe
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;../../timeutils.h&quot;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keywordtype">bool</span> <a class="code hl_function" href="nsd__linux_8h.html#a6edc1ff63df269a7b677c07895f9412f">linux_nsd_preinit</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> * ifn);</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keywordtype">void</span> <a class="code hl_function" href="nsd__linux_8h.html#a105f4ac01f8344190e8b04abac8624e3">linux_nsd_cleanup</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keywordtype">void</span> <a class="code hl_function" href="nsd__linux_8h.html#a4dadff95b8b4f549feee680c380db26c">linux_set_time</a>(uint32_t seconds, uint32_t nanoseconds);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keywordtype">void</span> <a class="code hl_function" href="nsd__linux_8h.html#a593bb9483a71b58c35fadb476f8c6d2f">linux_adjust_clock</a>(<span class="keywordtype">double</span> tuning_ppb);</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keywordtype">void</span> <a class="code hl_function" href="nsd__linux_8h.html#a48af393927296bc585a78a966856d76d">linux_get_time</a>(<a class="code hl_struct" href="struct_timestamp_u.html">TimestampU</a> * pTime);</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#endif </span><span class="comment">// FLEXPTP_LINUX_NSD_LINUX_H</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keywordtype">bool</span> <a class="code hl_function" href="nsd__linux_8h.html#a6edc1ff63df269a7b677c07895f9412f">linux_nsd_preinit</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> * ifn);</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keywordtype">void</span> <a class="code hl_function" href="nsd__linux_8h.html#a105f4ac01f8344190e8b04abac8624e3">linux_nsd_cleanup</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keywordtype">void</span> <a class="code hl_function" href="nsd__linux_8h.html#a4dadff95b8b4f549feee680c380db26c">linux_set_time</a>(uint32_t seconds, uint32_t nanoseconds);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keywordtype">void</span> <a class="code hl_function" href="nsd__linux_8h.html#a593bb9483a71b58c35fadb476f8c6d2f">linux_adjust_clock</a>(<span class="keywordtype">double</span> tuning_ppb);</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="keywordtype">void</span> <a class="code hl_function" href="nsd__linux_8h.html#a48af393927296bc585a78a966856d76d">linux_get_time</a>(<a class="code hl_struct" href="struct_timestamp_u.html">TimestampU</a> * pTime);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>}</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#endif </span><span class="comment">// FLEXPTP_LINUX_NSD_LINUX_H</span></div>
 <div class="ttc" id="ansd__linux_8h_html_a105f4ac01f8344190e8b04abac8624e3"><div class="ttname"><a href="nsd__linux_8h.html#a105f4ac01f8344190e8b04abac8624e3">linux_nsd_cleanup</a></div><div class="ttdeci">void linux_nsd_cleanup(void)</div><div class="ttdef"><b>Definition:</b> <a href="nsd__linux_8c_source.html#l00207">nsd_linux.c:207</a></div></div>
 <div class="ttc" id="ansd__linux_8h_html_a48af393927296bc585a78a966856d76d"><div class="ttname"><a href="nsd__linux_8h.html#a48af393927296bc585a78a966856d76d">linux_get_time</a></div><div class="ttdeci">void linux_get_time(TimestampU *pTime)</div><div class="ttdef"><b>Definition:</b> <a href="nsd__linux_8c_source.html#l00639">nsd_linux.c:639</a></div></div>
 <div class="ttc" id="ansd__linux_8h_html_a4dadff95b8b4f549feee680c380db26c"><div class="ttname"><a href="nsd__linux_8h.html#a4dadff95b8b4f549feee680c380db26c">linux_set_time</a></div><div class="ttdeci">void linux_set_time(uint32_t seconds, uint32_t nanoseconds)</div><div class="ttdef"><b>Definition:</b> <a href="nsd__linux_8c_source.html#l00632">nsd_linux.c:632</a></div></div>
 <div class="ttc" id="ansd__linux_8h_html_a593bb9483a71b58c35fadb476f8c6d2f"><div class="ttname"><a href="nsd__linux_8h.html#a593bb9483a71b58c35fadb476f8c6d2f">linux_adjust_clock</a></div><div class="ttdeci">void linux_adjust_clock(double tuning_ppb)</div><div class="ttdef"><b>Definition:</b> <a href="nsd__linux_8c_source.html#l00618">nsd_linux.c:618</a></div></div>
 <div class="ttc" id="ansd__linux_8h_html_a6edc1ff63df269a7b677c07895f9412f"><div class="ttname"><a href="nsd__linux_8h.html#a6edc1ff63df269a7b677c07895f9412f">linux_nsd_preinit</a></div><div class="ttdeci">bool linux_nsd_preinit(const char *ifn)</div><div class="ttdef"><b>Definition:</b> <a href="nsd__linux_8c_source.html#l00076">nsd_linux.c:76</a></div></div>
-<div class="ttc" id="astruct_timestamp_u_html"><div class="ttname"><a href="struct_timestamp_u.html">TimestampU</a></div><div class="ttdoc">Timestamp (unsigned)</div><div class="ttdef"><b>Definition:</b> <a href="timeutils_8h_source.html#l00019">timeutils.h:20</a></div></div>
+<div class="ttc" id="astruct_timestamp_u_html"><div class="ttname"><a href="struct_timestamp_u.html">TimestampU</a></div><div class="ttdoc">Timestamp (unsigned)</div><div class="ttdef"><b>Definition:</b> <a href="timeutils_8h_source.html#l00023">timeutils.h:24</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -128,38 +128,46 @@ $(document).ready(function(){initNavTree('task__ptp_8h_source.html',''); initRes
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="event_8h.html">event.h</a>&quot;</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;<a class="code" href="ptp__types_8h.html">ptp_types.h</a>&quot;</span></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keywordtype">void</span> <a class="code hl_function" href="task__ptp_8h.html#a2fa3429450d28566339b689d464260f3">ptp_start_heartbeat_tmr</a>();</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keywordtype">void</span> <a class="code hl_function" href="task__ptp_8h.html#a858bb79ae107883c54da075e71f9ecac">ptp_stop_heartbeat_tmr</a>();</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keywordtype">bool</span> <a class="code hl_function" href="task__ptp_8h.html#aff77e313d172028af7484d66ef2cef1f">reg_task_ptp</a>();</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keywordtype">void</span> <a class="code hl_function" href="task__ptp_8h.html#a5fd98059e4c2ec1004c74064e17cbe4c">unreg_task_ptp</a>();</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keywordtype">bool</span> <a class="code hl_function" href="task__ptp_8h.html#a95e79be47c136a295b9b5d4313ea2148">is_flexPTP_operating</a>();</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="keywordtype">void</span> <a class="code hl_function" href="task__ptp_8h.html#a1409be7128c102f50cc590ec0aa817e0">ptp_receive_enqueue</a>(<span class="keyword">const</span> <span class="keywordtype">void</span> *pPayload, uint32_t len, uint32_t ts_sec, uint32_t ts_ns, <span class="keywordtype">int</span> tp);</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="keywordtype">bool</span> <a class="code hl_function" href="task__ptp_8h.html#a2b43e49ceba255ff05d4acdfa37a6869">ptp_transmit_enqueue</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_raw_ptp_message.html">RawPtpMessage</a> * pMsg);</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="keywordtype">void</span> <a class="code hl_function" href="task__ptp_8h.html#a6d8d64d0927e028889b55b6bff4c7d57">ptp_transmit_timestamp_cb</a>(uint32_t uid, uint32_t seconds, uint32_t nanoseconds);</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="keywordtype">bool</span> <a class="code hl_function" href="task__ptp_8h.html#aad30f8dedd228ec115b9603cd80de665">ptp_read_and_clear_transmit_timestamp</a>(uint32_t tag, <a class="code hl_struct" href="struct_timestamp_i.html">TimestampI</a> * pTs);</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="keywordtype">bool</span> <a class="code hl_function" href="task__ptp_8h.html#a73b5e9841da53dee4d9230d8a418b2ac">ptp_event_enqueue</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_ptp_core_event.html">PtpCoreEvent</a> * event);</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="preprocessor">#ifdef FLEXPTP_OSLESS</span></div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="keywordtype">void</span> <a class="code hl_function" href="task__ptp_8c.html#aec5bf8fe2ef6218628f1c23dc6029120">ptp_heartbeat_tmr_cb</a>();</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="keywordtype">void</span> <a class="code hl_function" href="task__ptp_8c.html#a2670d7e2f02b9edd806eeeb6b2782069">task_ptp</a>();</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="preprocessor">#endif </span><span class="comment">// TASK_PTP_H_</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keywordtype">void</span> <a class="code hl_function" href="task__ptp_8h.html#a2fa3429450d28566339b689d464260f3">ptp_start_heartbeat_tmr</a>();</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keywordtype">void</span> <a class="code hl_function" href="task__ptp_8h.html#a858bb79ae107883c54da075e71f9ecac">ptp_stop_heartbeat_tmr</a>();</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keywordtype">bool</span> <a class="code hl_function" href="task__ptp_8h.html#aff77e313d172028af7484d66ef2cef1f">reg_task_ptp</a>();</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="keywordtype">void</span> <a class="code hl_function" href="task__ptp_8h.html#a5fd98059e4c2ec1004c74064e17cbe4c">unreg_task_ptp</a>();</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="keywordtype">bool</span> <a class="code hl_function" href="task__ptp_8h.html#a95e79be47c136a295b9b5d4313ea2148">is_flexPTP_operating</a>();</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keywordtype">void</span> <a class="code hl_function" href="task__ptp_8h.html#a1409be7128c102f50cc590ec0aa817e0">ptp_receive_enqueue</a>(<span class="keyword">const</span> <span class="keywordtype">void</span> *pPayload, uint32_t len, uint32_t ts_sec, uint32_t ts_ns, <span class="keywordtype">int</span> tp);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="keywordtype">bool</span> <a class="code hl_function" href="task__ptp_8h.html#a2b43e49ceba255ff05d4acdfa37a6869">ptp_transmit_enqueue</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_raw_ptp_message.html">RawPtpMessage</a> * pMsg);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="keywordtype">void</span> <a class="code hl_function" href="task__ptp_8h.html#a6d8d64d0927e028889b55b6bff4c7d57">ptp_transmit_timestamp_cb</a>(uint32_t uid, uint32_t seconds, uint32_t nanoseconds);</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="keywordtype">bool</span> <a class="code hl_function" href="task__ptp_8h.html#aad30f8dedd228ec115b9603cd80de665">ptp_read_and_clear_transmit_timestamp</a>(uint32_t tag, <a class="code hl_struct" href="struct_timestamp_i.html">TimestampI</a> * pTs);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="keywordtype">bool</span> <a class="code hl_function" href="task__ptp_8h.html#a73b5e9841da53dee4d9230d8a418b2ac">ptp_event_enqueue</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_ptp_core_event.html">PtpCoreEvent</a> * event);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="preprocessor">#ifdef FLEXPTP_OSLESS</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="keywordtype">void</span> <a class="code hl_function" href="task__ptp_8c.html#aec5bf8fe2ef6218628f1c23dc6029120">ptp_heartbeat_tmr_cb</a>();</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="keywordtype">void</span> <a class="code hl_function" href="task__ptp_8c.html#a2670d7e2f02b9edd806eeeb6b2782069">task_ptp</a>();</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>}</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="preprocessor">#endif </span><span class="comment">// TASK_PTP_H_</span></div>
 <div class="ttc" id="aevent_8h_html"><div class="ttname"><a href="event_8h.html">event.h</a></div><div class="ttdoc">In this module are the core and user events defined.</div></div>
 <div class="ttc" id="aptp__types_8h_html"><div class="ttname"><a href="ptp__types_8h.html">ptp_types.h</a></div><div class="ttdoc">This module defines the fundamental PTP message and state machine type, flags, bitfields and the PTP ...</div></div>
-<div class="ttc" id="astruct_ptp_core_event_html"><div class="ttname"><a href="struct_ptp_core_event.html">PtpCoreEvent</a></div><div class="ttdef"><b>Definition:</b> <a href="event_8h_source.html#l00022">event.h:22</a></div></div>
-<div class="ttc" id="astruct_raw_ptp_message_html"><div class="ttname"><a href="struct_raw_ptp_message.html">RawPtpMessage</a></div><div class="ttdef"><b>Definition:</b> <a href="ptp__types_8h_source.html#l00182">ptp_types.h:182</a></div></div>
-<div class="ttc" id="astruct_timestamp_i_html"><div class="ttname"><a href="struct_timestamp_i.html">TimestampI</a></div><div class="ttdoc">Timestamp (signed)</div><div class="ttdef"><b>Definition:</b> <a href="timeutils_8h_source.html#l00028">timeutils.h:29</a></div></div>
+<div class="ttc" id="astruct_ptp_core_event_html"><div class="ttname"><a href="struct_ptp_core_event.html">PtpCoreEvent</a></div><div class="ttdef"><b>Definition:</b> <a href="event_8h_source.html#l00026">event.h:26</a></div></div>
+<div class="ttc" id="astruct_raw_ptp_message_html"><div class="ttname"><a href="struct_raw_ptp_message.html">RawPtpMessage</a></div><div class="ttdef"><b>Definition:</b> <a href="ptp__types_8h_source.html#l00186">ptp_types.h:186</a></div></div>
+<div class="ttc" id="astruct_timestamp_i_html"><div class="ttname"><a href="struct_timestamp_i.html">TimestampI</a></div><div class="ttdoc">Timestamp (signed)</div><div class="ttdef"><b>Definition:</b> <a href="timeutils_8h_source.html#l00032">timeutils.h:33</a></div></div>
 <div class="ttc" id="atask__ptp_8c_html_a2670d7e2f02b9edd806eeeb6b2782069"><div class="ttname"><a href="task__ptp_8c.html#a2670d7e2f02b9edd806eeeb6b2782069">task_ptp</a></div><div class="ttdeci">static void task_ptp(void *pParam)</div><div class="ttdef"><b>Definition:</b> <a href="task__ptp_8c_source.html#l00588">task_ptp.c:588</a></div></div>
 <div class="ttc" id="atask__ptp_8c_html_aec5bf8fe2ef6218628f1c23dc6029120"><div class="ttname"><a href="task__ptp_8c.html#aec5bf8fe2ef6218628f1c23dc6029120">ptp_heartbeat_tmr_cb</a></div><div class="ttdeci">static void ptp_heartbeat_tmr_cb(TimerHandle_t timer)</div><div class="ttdef"><b>Definition:</b> <a href="task__ptp_8c_source.html#l00148">task_ptp.c:148</a></div></div>
 <div class="ttc" id="atask__ptp_8h_html_a1409be7128c102f50cc590ec0aa817e0"><div class="ttname"><a href="task__ptp_8h.html#a1409be7128c102f50cc590ec0aa817e0">ptp_receive_enqueue</a></div><div class="ttdeci">void ptp_receive_enqueue(const void *pPayload, uint32_t len, uint32_t ts_sec, uint32_t ts_ns, int tp)</div><div class="ttdef"><b>Definition:</b> <a href="task__ptp_8c_source.html#l00457">task_ptp.c:457</a></div></div>
