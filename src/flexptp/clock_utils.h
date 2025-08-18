@@ -11,6 +11,10 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Print PTP hardware clock identity.
  * @param clockID clock ID in 64-bit LE representation
@@ -31,5 +35,9 @@ uint64_t hextoclkid(const char *str);
  * @param hwa hardware address of the network interface
  */
 void ptp_create_clock_identity(const uint8_t * hwa);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_CLOCK_UTILS_H_ */

@@ -11,6 +11,10 @@
 
 #include <stdbool.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief Collection type of possible predefined PTP log types.
  */
@@ -37,5 +41,9 @@ void ptp_log_enable(int logId, bool en);
  * Disable all logging features.
  */
 void ptp_log_disable_all();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_LOGGING_H_ */

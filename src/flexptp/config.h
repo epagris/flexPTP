@@ -12,6 +12,10 @@
 
 #include "ptp_types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief Global storable-loadable configuration.
  */
@@ -39,5 +43,9 @@ void ptp_load_config(const PtpConfig *pConfig); // load PTP-engine configuration
  * @param pDump pointer to config dump
  */
 void ptp_load_config_from_dump(const void *pDump);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_CONFIG */

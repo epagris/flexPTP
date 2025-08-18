@@ -15,6 +15,10 @@
 
 #include "ptp_types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Clear statitics.
  */
@@ -39,5 +43,9 @@ void ptp_collect_stats(int64_t d);
  * @param th threshold in nanoseconds
  */
 #define PTP_IS_LOCKED(th) ((ptp_get_stats()->filtTimeErr < (th)) && (ptp_get_current_master_clock_identity() != 0)) ///< Is the PTP clock seemingly locked considering threshold passed?
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_STATS_H_ */

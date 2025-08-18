@@ -5,6 +5,10 @@
 
 #include "../ptp_servo_types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Initialize the debug servo.
  */
@@ -28,6 +32,8 @@ void debug_servo_reset();
  */
 float debug_servo_run(int32_t dt, PtpServoAuxInput * pAux);
 
-
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SERVO_DEBUG_SERVO */

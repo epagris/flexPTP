@@ -9,6 +9,10 @@
 #ifndef FLEXPTP_EVENT
 #define FLEXPTP_EVENT
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // ----------- CORE EVENTS -----------
 
 typedef enum {
@@ -77,5 +81,9 @@ typedef enum {
 void ptp_invoke_user_event_cb(PtpUserEventCode uev);
 
 #define PTP_IUEV(uev) ptp_invoke_user_event_cb(uev);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_EVENT */

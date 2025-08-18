@@ -3,6 +3,10 @@
 
 #include "ptp_types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifdef FLEXPTP_FREERTOS
     #define FLEXPTP_ENTER_CRITICAL() taskENTER_CRITICAL();
 #elif defined(FLEXPTP_CMSIS_OS2)
@@ -14,5 +18,9 @@
 #elif defined(FLEXPTP_CMSIS_OS2)
     #define FLEXPTP_LEAVE_CRITICAL() __enable_interrupts();
 #endif 
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_CRITICAL */

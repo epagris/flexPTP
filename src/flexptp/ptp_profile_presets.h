@@ -12,6 +12,10 @@
 
 #include "ptp_types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Get profile by name.
  * 
@@ -57,5 +61,9 @@ const char * ptp_profile_preset_get_name(size_t i);
  * @return const pointer to the TLV chain that's associated the ith index or NULL
  */
 const char * ptp_tlv_chain_preset_get_name(size_t i);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PTP_PROFILE_PRESETS_H_ */

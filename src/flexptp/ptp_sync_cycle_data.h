@@ -26,6 +26,10 @@
 
 #include "timeutils.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // timestamp indices
 #define T1 (0)
 #define T2 (1)
@@ -61,5 +65,9 @@ typedef struct {
     TimestampI t[6]; ///< T1-T6 timestamps
     uint64_t cf[6]; ///< T1-T6 correction fields
 } PtpSyncCycleData;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_PTP_SYNC_CYCLE_DATA_H_ */

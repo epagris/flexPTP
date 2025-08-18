@@ -13,6 +13,10 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief Timestamp (unsigned)
  */
@@ -154,5 +158,9 @@ bool nonZeroI(const TimestampI *a);
  * @param ts pointer to timestamp object holding the time value
  */
 void tsPrint(char *str, const TimestampI *ts);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TIMEUTILS_H_ */

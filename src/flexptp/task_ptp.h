@@ -17,6 +17,10 @@
 #include "event.h"
 #include "ptp_types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Start the heartbeat timer.
  */
@@ -108,6 +112,10 @@ void ptp_heartbeat_tmr_cb();
  * FLEXPTP_OSLESS mode, otherwise the library internally manages it.
  */
 void task_ptp();
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif // TASK_PTP_H_

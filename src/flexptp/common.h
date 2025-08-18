@@ -12,6 +12,10 @@
 
 #include "ptp_types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Initialize Delay_Request header.
  */
@@ -58,5 +62,9 @@ void ptp_compute_mean_path_delay_p2p(const TimestampI *pTs, const uint64_t *pCf,
  * Reset functionality shared with both slave and master.
  */
 void ptp_common_reset();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_COMMON */

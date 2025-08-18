@@ -4,6 +4,10 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief FIFO lock function.
  * 
@@ -74,5 +78,9 @@ bool fifo_pop(Fifo *f, void *item);
  * @param f pointer to a FIFO object
  */
 void fifo_clear(Fifo *f);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* OSLESS_FIFO */

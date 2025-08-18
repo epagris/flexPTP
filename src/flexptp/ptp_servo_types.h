@@ -11,6 +11,10 @@
 
 #include "ptp_sync_cycle_data.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief Data to perform a full synchronization.
  */
@@ -22,5 +26,9 @@ typedef struct {
     double msgPeriodMs;       ///< Message period in ms
     int64_t measSyncPeriodNs; ///< Measured synchronization period (t1->t1)
 } PtpServoAuxInput;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_SIM_PTP_SERVO_TYPES_H_ */

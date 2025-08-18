@@ -20,6 +20,10 @@
 
 #include <flexptp_options.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Initialize flexPTP module.
  * 
@@ -73,5 +77,9 @@ void ptp_set_user_event_callback(PtpUserEventCallback userEventCb);
 extern PtpCoreState gPtpCoreState;
 extern const TimestampI zeroTs; // a zero timestamp
 ///\endcond
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PTP_CORE_H_ */

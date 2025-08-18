@@ -15,6 +15,10 @@
 #include "ptp_types.h"
 #include "timeutils.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Extract PTP flags from the rendered bitfield found in particular PTP messages.
  *
@@ -104,5 +108,9 @@ void ptp_write_delay_resp_id_data(void * pPayload , const PtpDelay_RespIdentific
  * @param pFlags pointer to an existing PTPFlags object
  */
 void ptp_clear_flags(PtpFlags *pFlags);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_MSG_UTILS_H_ */

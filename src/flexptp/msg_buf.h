@@ -6,6 +6,10 @@
 
 #include "ptp_types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define MSGBUF_TTL_DONT_AGE (0xFFFFFFFF) ///< Do not age messages
 
 #define MSGBUF_TAG_OVERWRITE (0x80000000) ///< Overwrite if a message exists with the same tag
@@ -150,5 +154,9 @@ void msgb_report(PtpMsgBuf *buf);
  * @return error code
  */
 uint32_t msgb_get_error(PtpMsgBuf * buf);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_MSG_BUF */

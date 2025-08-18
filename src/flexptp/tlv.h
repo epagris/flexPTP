@@ -11,6 +11,10 @@
 
 #include "ptp_types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Unfold TLVs to memory area beginning with dst up to maxLen bytes.
  * The algorithm stops at the first TLV that cannot fit the remaining size. Only
@@ -25,5 +29,9 @@
  * 
  */
 uint16_t ptp_tlv_insert(void * dst, const PtpProfileTlvElement * pad, PtpMessageType mt, uint16_t maxLen);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_TLV */

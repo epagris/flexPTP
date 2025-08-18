@@ -32,6 +32,10 @@
 #ifndef FLEXPTP_CLI_CMDS_H_
 #define FLEXPTP_CLI_CMDS_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Register flexPTP CLI commands. CLI_REG_CMD must be defined and operational to make this work.
  */
@@ -43,5 +47,8 @@ void ptp_register_cli_commands();
  */
 void ptp_remove_cli_commands();
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_CLI_CMDS_H_ */

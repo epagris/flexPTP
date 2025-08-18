@@ -14,6 +14,10 @@
 
 #include <flexptp_options.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // IP address of PTP-IGMP groups
 #define PTP_IGMP_DEFAULT_STR ("224.0.1.129")    ///< PTP default IGMP group
 #define PTP_IGMP_PEER_DELAY_STR ("224.0.0.107") ///< PTP Peer-Delay IGMP group
@@ -234,5 +238,9 @@ extern const uint8_t PTP_ETHERNET_PEER_DELAY[6]; ///< PTP's L2 Peer_Delay Ethern
 #define FLEXPTP_MS_TO_TICKS(ms) ((ms + (PTP_HEARTBEAT_TICKRATE_MS - 1)) / PTP_HEARTBEAT_TICKRATE_MS)  ///< Interval conversion between milliseconds and ticks
 
 #define FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS (20)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_PTP_DEFS_H_ */

@@ -5,6 +5,10 @@
 
 #include "../../timeutils.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Preinitialize the Linux network stack driver.
  *
@@ -40,5 +44,9 @@ void linux_adjust_clock(double tuning_ppb);
  * @param pTime pointer to a timestamp object
  */
 void linux_get_time(TimestampU * pTime);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // FLEXPTP_LINUX_NSD_LINUX_H

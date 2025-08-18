@@ -13,6 +13,10 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Convert logarithmic interval designator code to a milliseconds value.
  * Input must be in the inclusive range of [-6, 3]. 
@@ -52,5 +56,9 @@ uint64_t FLEXPTP_ntohll(uint64_t in);
  * @return value in LE representation
  */
 uint64_t FLEXPTP_htonll(uint64_t in);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_FORMAT_UTILS_H_ */

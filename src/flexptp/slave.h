@@ -11,6 +11,10 @@
 
 #include "ptp_types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Process PTP packet addressed to a slave clock.
  * @param pRawMsg pointer to the raw PTP message
@@ -47,5 +51,9 @@ void ptp_slave_disable();
  * Tick the slave module.
  */
 void ptp_slave_tick();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_SLAVE */

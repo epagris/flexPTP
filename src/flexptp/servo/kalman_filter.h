@@ -5,6 +5,10 @@
 
 #include "../ptp_servo_types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** A Kalman-filter based servo. This module implements the Kalman-filter introduced in the paper: 
  * 'Performance Analysis of Kalman-Filter-Based Clock Synchronization in IEEE 1588 Networks' by 
  * Giada Gorgi and Claudio Narduzzi (https://ieeexplore.ieee.org/document/5934411)
@@ -33,5 +37,8 @@ void kalman_filter_reset();
  */
 float kalman_filter_run(int32_t dt, PtpServoAuxInput * pAux);
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SERVO_KALMAN_FILTER */

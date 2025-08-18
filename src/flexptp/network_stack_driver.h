@@ -14,6 +14,10 @@
 
 #include "ptp_types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Initialize or reinitialize the Network Stack Driver.
  * 
@@ -41,5 +45,9 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid);
  * Join or leave IGMP groups associated with the current PTP profile.
  */
 void ptp_nsd_igmp_join_leave(bool join);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_NETWORK_STACK_DRIVER */

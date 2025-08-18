@@ -2,6 +2,11 @@
 #define HW_PORT_PTP_PORT_TIVA_TM4C1294_H_
 
 #include "../../timeutils.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Initialize PTP hardware.
  * 
@@ -16,5 +21,9 @@ void ptphw_init(uint32_t increment, uint32_t addend);
  * @param pTime pointer to a TimestampU object.
  */
 void ptphw_gettime(TimestampU * pTime);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* HW_PORT_PTP_PORT_TIVA_TM4C1294_H_ */

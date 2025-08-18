@@ -15,6 +15,10 @@
 #include "timeutils.h"
 #include "ptp_types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Set clock offset in nanoseconds.
  * 
@@ -323,5 +327,9 @@ void ptp_set_time(TimestampU * pT);
  * @param dt pointer to a TimestampI object holding the time offset
  */
 void ptp_update_time(TimestampI * dt);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_SETTINGS_INTERFACE_H_ */

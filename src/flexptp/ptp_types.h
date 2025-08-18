@@ -21,6 +21,10 @@
 
 #include <flexptp_options.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifdef FLEXPTP_FREERTOS
 typedef TimerHandle_t TimerType;
 #elif defined(FLEXPTP_CMSIS_OS2)
@@ -565,5 +569,9 @@ typedef struct {
         uint32_t pdelayReqTmr;        ///< Counter for PDelayReq transmission scheduling
     } master;
 } PtpCoreState;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_PTP_TYPES_H_ */

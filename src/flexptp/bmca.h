@@ -11,6 +11,10 @@
 
 #include "ptp_types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Select better master. (Not "best", with intent!)
  * 
@@ -48,5 +52,9 @@ void ptp_bmca_reset();
  * Call this to notify SBMC about the time passing.
  */
 void ptp_bmca_tick();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_SBMC_H_ */

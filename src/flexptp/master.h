@@ -11,6 +11,10 @@
 
 #include "ptp_types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Initialize the Master module.
  */
@@ -58,5 +62,9 @@ void ptp_master_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader);
  * @param pHeader pointer to a filled-out PtpHeader object
  */
 void ptp_construct_binary_sync(void * pData, const PtpHeader * pHeader); // create Sync message
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FLEXPTP_MASTER */
