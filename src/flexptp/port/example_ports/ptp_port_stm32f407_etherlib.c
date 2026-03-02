@@ -129,9 +129,8 @@ void ptphw_init(uint32_t increment, uint32_t addend) {
 }
 
 void ptphw_gettime(TimestampU *pTime) {
-	uint32_t sec;
-	uint32_t nsec;
-    ETHHW_GetPTPTime(ETH, &sec, &nsec);
-	pTime->sec = sec;
-	pTime->nanosec = nsec;
+    do {
+        pTime->sec = ETH->PTPTSHR;
+        pTime->nanosec = ETH->PTPTSLR;
+    } while (pTime->sec != ETH->PTPTSHR);
 }

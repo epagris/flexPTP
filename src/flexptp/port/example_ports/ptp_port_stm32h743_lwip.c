@@ -142,6 +142,8 @@ void ptphw_init(uint32_t increment, uint32_t addend) {
 }
 
 void ptphw_gettime(TimestampU *pTime) {
-    pTime->sec = ETH->MACSTSR;
-    pTime->nanosec = ETH->MACSTNR & ETH_MACSTNR_TSSS;
+    do {
+        pTime->sec = ETH->MACSTSR;
+        pTime->nanosec = ETH->MACSTNR & ETH_MACSTNR_TSSS;
+    } while (pTime->sec != ETH->MACSTSR);
 }
