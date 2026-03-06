@@ -165,7 +165,7 @@ static void ptp_send_sync_message() {
     sync_.pTxCb = ptp_send_follow_up;
     sync_.tx_dm = S.profile.delayMechanism;
     sync_.tx_mc = PTP_MC_EVENT;
-    sync_.ttl = FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS; //S.master.syncTickPeriod;
+    sync_.ttl = FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS; // S.master.syncTickPeriod;
 
     // send message
     ptp_transmit_enqueue(&sync_);
@@ -317,7 +317,7 @@ void ptp_master_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
             return;
         }
 
-        PtpDelay_RespIdentification delay_respID;                                                            // acquire PDelay_Resp(_Follow_Up) identification info
+        PtpDelay_RespIdentification delay_respID; // acquire PDelay_Resp(_Follow_Up) identification info
         ptp_read_delay_resp_id_data(&delay_respID, pRawMsg->data);
 
         if ((delay_respID.requestingSourceClockIdentity == S.hwoptions.clockIdentity) &&
@@ -439,19 +439,22 @@ void ptp_master_tick() {
     // gating signal for Sync and Announce transmission
     bool infoEn = (dm == PTP_DM_E2E) || ((dm == PTP_DM_P2P) && ((S.master.p2pSlave.state == PTP_P2PSS_ESTABLISHED) || (!(S.profile.flags & PTP_PF_ISSUE_SYNC_FOR_COMPLIANT_SLAVE_ONLY_IN_P2P))));
 
-    if (infoEn) {
-        // Sync transmission
-        if (++S.master.syncTmr >= S.master.syncTickPeriod) {
-            S.master.syncTmr = 0;
+    // Sync transmission
+    if (++S.master.syncTmr >= S.master.syncTickPeriod) {
+        S.master.syncTmr = 0;
+
+        if (infoEn) {
             ptp_send_sync_message();
             PTP_IUEV(PTP_UEV_SYNC_SENT);
         }
+    }
 
-        // Announce transmission
-        if (++S.master.announceTmr >= S.master.announceTickPeriod) { // advance Announce timer
-            S.master.announceTmr = 0;
-        }
+    // Announce transmission
+    if (++S.master.announceTmr >= S.master.announceTickPeriod) { // advance Announce timer
+        S.master.announceTmr = 0;
+    }
 
+    if (infoEn) {
         // shift Announce transmission phase with 1 tick
         if (S.master.announceTmr == 1) {
             ptp_send_announce_message();
