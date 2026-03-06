@@ -125,7 +125,7 @@ extern const uint8_t PTP_ETHERNET_PEER_DELAY[6]; ///< PTP's L2 Peer_Delay Ethern
 #endif
 
 #ifndef PTP_HEARTBEAT_TICKRATE_MS
-#define PTP_HEARTBEAT_TICKRATE_MS (62) ///< Heartbeat ticking period
+#define PTP_HEARTBEAT_TICKRATE_MS (31) ///< Heartbeat ticking period
 #endif
 
 #ifndef PTP_PORT_ID
