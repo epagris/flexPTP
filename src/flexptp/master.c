@@ -117,6 +117,7 @@ static void ptp_send_announce_message() {
     announce.pTxCb = NULL;
     announce.tx_dm = S.profile.delayMechanism;
     announce.tx_mc = PTP_MC_GENERAL;
+    announce.tx_mt = PTP_MT_Announce;
     announce.ttl = FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS;
 
     // send message
@@ -146,6 +147,7 @@ static void ptp_send_follow_up(const RawPtpMessage *pMsg) {
     followUp.pTxCb = NULL;
     followUp.tx_dm = S.profile.delayMechanism;
     followUp.tx_mc = PTP_MC_GENERAL;
+    followUp.tx_mt = PTP_MT_Follow_Up;
     followUp.ttl = FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS;
 
     // transmit
@@ -165,6 +167,7 @@ static void ptp_send_sync_message() {
     sync_.pTxCb = ptp_send_follow_up;
     sync_.tx_dm = S.profile.delayMechanism;
     sync_.tx_mc = PTP_MC_EVENT;
+    sync_.tx_mt = PTP_MT_Sync;
     sync_.ttl = FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS; // S.master.syncTickPeriod;
 
     // send message
@@ -201,6 +204,7 @@ static void ptp_send_delay_resp_message(const RawPtpMessage *pRawMsg, const PtpH
     delRespMsg.pTxCb = NULL;
     delRespMsg.tx_dm = PTP_DM_E2E;
     delRespMsg.tx_mc = PTP_MC_GENERAL;
+    delRespMsg.tx_mt = PTP_MT_Delay_Resp;
     delRespMsg.ttl = FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS;
 
     // send packet

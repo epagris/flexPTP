@@ -193,6 +193,7 @@ typedef struct RawPtpMessage_ {
     TxCb *pTxCb;             ///< transmit callback function
     PtpDelayMechanism tx_dm; ///< transmit transport type
     PtpMessageClass tx_mc;   ///< transmit message class
+    PtpMessageType tx_mt;    ///< transmit message type
 
     // --- data ---
     uint8_t data[MAX_PTP_MSG_SIZE]; ///< raw packet data

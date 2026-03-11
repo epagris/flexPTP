@@ -45,7 +45,11 @@ void ptp_nsd_igmp_join_leave(bool join) {
     }
 }
 
-#define CLOSE_CONNECTION_IF_EXISTS(d) if (d >= CBD_LOWEST_DESCRIPTOR) { close_connection(d); d = 0; }
+#define CLOSE_CONNECTION_IF_EXISTS(d) \
+    if (d >= CBD_LOWEST_DESCRIPTOR) { \
+        close_connection(d);          \
+        d = 0;                        \
+    }
 
 void ptp_nsd_init(PtpTransportType tp, PtpDelayMechanism dm) {
     // leave current IGMP group if applicable
@@ -80,7 +84,7 @@ void ptp_nsd_init(PtpTransportType tp, PtpDelayMechanism dm) {
     } break;
     case PTP_TP_802_3:
         PTP_L2 = cet_new_connblock(intf, ETHERTYPE_PTP, ptp_receive_cb); // open connection
-        ts_set_tx_callback(PTP_L2, ptp_transmit_cb);                  // set transmit callback
+        ts_set_tx_callback(PTP_L2, ptp_transmit_cb);                     // set transmit callback
         break;
     }
 
@@ -122,19 +126,23 @@ static void ptp_transmit_cb(uint32_t ts_s, uint32_t ts_ns, uint32_t tag) {
 
 void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
     PtpMessageClass mc = pMsg->tx_mc;
+    PtpMessageType mt = pMsg->tx_mt;
+
+    // is it a Peer Delay Mechanism related message?
+    bool isPDel_ = (mt == PTP_MT_PDelay_Req) || (mt == PTP_MT_PDelay_Resp) || (mt == PTP_MT_PDelay_Resp_Follow_Up);
 
     // narrow down by transport type
     if (TP == PTP_TP_IPv4) {
-        cbd conn = (mc == PTP_MC_EVENT) ? PTP_L4_EVENT : PTP_L4_GENERAL;                // select connection by message type
-        uint16_t port = (mc == PTP_MC_EVENT) ? PTP_PORT_EVENT : PTP_PORT_GENERAL;       // select port by message class
-        ip_addr_t ipaddr = (DM == PTP_DM_E2E) ? PTP_IGMP_PRIMARY : PTP_IGMP_PEER_DELAY; // select destination IP-address by delmech.
-        udp_sendto_arg(conn, pMsg->data, pMsg->size, ipaddr, port, uid);     // send packet
+        cbd conn = (mc == PTP_MC_EVENT) ? PTP_L4_EVENT : PTP_L4_GENERAL;          // select connection by message type
+        uint16_t port = (mc == PTP_MC_EVENT) ? PTP_PORT_EVENT : PTP_PORT_GENERAL; // select port by message class
+        ip_addr_t ipaddr = isPDel_ ? PTP_IGMP_PEER_DELAY : PTP_IGMP_PRIMARY;      // select destination IP-address by PDel*/default message types
+        udp_sendto_arg(conn, pMsg->data, pMsg->size, ipaddr, port, uid);          // send packet
     } else if (TP == PTP_TP_802_3) {
-        const uint8_t *ethaddr = (DM == PTP_DM_E2E) ? PTP_ETHERNET_PRIMARY : PTP_ETHERNET_PEER_DELAY; // select destination address by delmech.
+        const uint8_t *ethaddr = isPDel_ ? PTP_ETHERNET_PEER_DELAY : PTP_ETHERNET_PRIMARY; // select destination address by PDel*/default message types
         cet_send_arg(PTP_L2, ethaddr, pMsg->data, pMsg->size, uid);                        // send frame
     }
 }
 
-void ptp_nsd_get_interface_address(uint8_t * hwa) {
+void ptp_nsd_get_interface_address(uint8_t *hwa) {
     memcpy(hwa, get_default_interface()->mac, ETH_HW_ADDR_LEN);
 }

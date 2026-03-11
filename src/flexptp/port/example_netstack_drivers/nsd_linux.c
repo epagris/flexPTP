@@ -559,9 +559,13 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
 
     // get the message class
     PtpMessageClass mc = pMsg->tx_mc;
+    PtpMessageType mt = pMsg->tx_mt;
 
     // select connection by message type
     int sfd = (mc == PTP_MC_EVENT) ? event_fd : general_fd;
+
+    // is it a Peer Delay Mechanism related message?
+    bool isPDel_ = (mt == PTP_MT_PDelay_Req) || (mt == PTP_MT_PDelay_Resp) || (mt == PTP_MT_PDelay_Resp_Follow_Up);
 
     // narrow down by transport type
     if (TP == PTP_TP_IPv4) {
@@ -569,7 +573,7 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
         struct sockaddr_in addr;
         memset(&addr, 0, sizeof(addr));
         addr.sin_family = PF_INET;
-        addr.sin_addr.s_addr = (DM == PTP_DM_E2E) ? PTP_IGMP_PRIMARY : PTP_IGMP_PEER_DELAY; // select destination IP-address by delmech.
+        addr.sin_addr.s_addr = isPDel_ ? PTP_IGMP_PEER_DELAY : PTP_IGMP_PRIMARY; // select destination IP-address by by PDel*/default message types
         addr.sin_port = htons((mc == PTP_MC_EVENT) ? PTP_PORT_EVENT : PTP_PORT_GENERAL);    // select port by message class
 
         // send packet
@@ -578,7 +582,7 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
         }
     } else if (TP == PTP_TP_802_3) {
         // destination address
-        const uint8_t *ethaddr = (DM == PTP_DM_E2E) ? PTP_ETHERNET_PRIMARY : PTP_ETHERNET_PEER_DELAY; // select destination address by delmech.
+        const uint8_t *ethaddr = isPDel_ ? PTP_ETHERNET_PEER_DELAY : PTP_ETHERNET_PRIMARY; // select destination address by PDel*/default message types
 
         // prepare address object
         struct sockaddr_ll addr;
