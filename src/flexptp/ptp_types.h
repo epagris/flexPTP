@@ -364,6 +364,8 @@ typedef struct {
     uint8_t domainNumber;                            ///< PTP domain number
     uint8_t flags;                                   ///< Flags associated with this profile
     char tlvSet[PTP_MAX_TLV_PRESET_NAME_LENGTH + 1]; ///< Name of the corresponding TLV set
+    uint8_t primary_p2p_8023_destination[6];         ///< Primary custom destination address for P2P over Ethernet
+    uint8_t pdelay_p2p_8023_destination[6];          ///< PDel* custom destination address for P2P over Ethernet
 } PtpProfile;
 
 /**

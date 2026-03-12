@@ -356,7 +356,12 @@ bool reg_task_ptp() {
 #endif
 
     // initialize network stack driver
-    ptp_nsd_init(ptp_get_transport_type(), ptp_get_delay_mechanism());
+    NsdInitSettings nsdInit = {
+        ptp_get_transport_type(), 
+        ptp_get_delay_mechanism(),
+        {}, {}
+    };
+    ptp_nsd_init(&nsdInit);
 
     // create task
 #ifdef FLEXPTP_FREERTOS
@@ -403,7 +408,10 @@ bool reg_task_ptp() {
 // unregister PTP task
 void unreg_task_ptp() {
     ptp_remove_heartbeat_tmr(); // remove the heartbeat timer
-    ptp_nsd_init(-1, -1);       // de-initialize the network stack driver
+    NsdInitSettings nsdInit = {
+        -1, -1, {}, {}
+    };
+    ptp_nsd_init(&nsdInit);       // de-initialize the network stack driver
 #if defined(FLEXPTP_NON_LINUX_OS)
     if (sTH != NULL) {
 #ifdef FLEXPTP_FREERTOS

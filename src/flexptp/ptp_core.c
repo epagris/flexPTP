@@ -127,7 +127,12 @@ static void ptp_core_reset() {
     memset(&S.network, 0, sizeof(PtpNetworkState)); // network state
 
     // reinitialize the Network Stack Driver
-    ptp_nsd_init(ptp_get_transport_type(), ptp_get_delay_mechanism());
+    NsdInitSettings nsdInit = {
+        ptp_get_transport_type(),
+        ptp_get_delay_mechanism(),
+        {}, {}
+    };
+    ptp_nsd_init(&nsdInit);
 
     // reset statistics
     ptp_clear_stats();
