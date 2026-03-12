@@ -14,8 +14,10 @@
 #include <string.h>
 
 // initialize connection blocks to invalid states
-static struct udp_pcb *PTP_L4_EVENT = NULL;
-static struct udp_pcb *PTP_L4_GENERAL = NULL;
+static struct udp_pcb *PTP_L4_DEFAULT_EVENT = NULL;
+static struct udp_pcb *PTP_L4_DEFAULT_GENERAL = NULL;
+static struct udp_pcb *PTP_L4_PDELAY_EVENT = NULL;
+static struct udp_pcb *PTP_L4_PDELAY_GENERAL = NULL;
 
 // store current settings
 static PtpTransportType TP = -1;
@@ -29,9 +31,9 @@ void ptp_nsd_igmp_join_leave(bool join) {
     if (TP == PTP_TP_IPv4) {
         err_t (*igmp_fn)(const ip_addr_t *, const ip_addr_t *) = join ? igmp_joingroup : igmp_leavegroup; // join or leave
 
-        if (DM == PTP_DM_E2E) {
-            igmp_fn(&netif_default->ip_addr, &PTP_IGMP_PRIMARY); // join E2E DM message group
-        } else if (DM == PTP_DM_P2P) {
+        igmp_fn(&netif_default->ip_addr, &PTP_IGMP_PRIMARY); // join E2E DM message group
+
+        if (DM == PTP_DM_P2P) {
             igmp_fn(&netif_default->ip_addr, &PTP_IGMP_PEER_DELAY); // join P2P DM message group
         }
     }
@@ -45,15 +47,25 @@ void ptp_nsd_init(PtpTransportType tp, PtpDelayMechanism dm) {
     ptp_nsd_igmp_join_leave(false);
 
     // first, close all open connection blocks (zero CBDs won't cause trouble)
-    if (PTP_L4_EVENT != NULL) {
-        udp_disconnect(PTP_L4_EVENT);
-        udp_remove(PTP_L4_EVENT);
-        PTP_L4_EVENT = NULL;
+    if (PTP_L4_DEFAULT_EVENT != NULL) {
+        udp_disconnect(PTP_L4_DEFAULT_EVENT);
+        udp_remove(PTP_L4_DEFAULT_EVENT);
+        PTP_L4_DEFAULT_EVENT = NULL;
     }
-    if (PTP_L4_GENERAL != NULL) {
-        udp_disconnect(PTP_L4_GENERAL);
-        udp_remove(PTP_L4_GENERAL);
-        PTP_L4_GENERAL = NULL;
+    if (PTP_L4_DEFAULT_GENERAL != NULL) {
+        udp_disconnect(PTP_L4_DEFAULT_GENERAL);
+        udp_remove(PTP_L4_DEFAULT_GENERAL);
+        PTP_L4_DEFAULT_GENERAL = NULL;
+    }
+    if (PTP_L4_PDELAY_EVENT != NULL) {
+        udp_disconnect(PTP_L4_PDELAY_EVENT);
+        udp_remove(PTP_L4_PDELAY_EVENT);
+        PTP_L4_PDELAY_EVENT = NULL;
+    }
+    if (PTP_L4_PDELAY_GENERAL != NULL) {
+        udp_disconnect(PTP_L4_PDELAY_GENERAL);
+        udp_remove(PTP_L4_PDELAY_GENERAL);
+        PTP_L4_PDELAY_GENERAL = NULL;
     }
 
     // calling either parameter with -1 just closes connections
@@ -67,14 +79,23 @@ void ptp_nsd_init(PtpTransportType tp, PtpDelayMechanism dm) {
     // open only the necessary ones
     if (tp == PTP_TP_IPv4) {
         // open event and general connections
-        ip_addr_t addr = (dm == PTP_DM_E2E) ? PTP_IGMP_PRIMARY : PTP_IGMP_PEER_DELAY;
-        PTP_L4_EVENT = udp_new();
-        udp_bind(PTP_L4_EVENT, &addr, PTP_PORT_EVENT);
-        udp_recv(PTP_L4_EVENT, ptp_receive_cb, NULL);
+        PTP_L4_DEFAULT_EVENT = udp_new();
+        udp_bind(PTP_L4_DEFAULT_EVENT, &PTP_IGMP_PRIMARY, PTP_PORT_EVENT);
+        udp_recv(PTP_L4_DEFAULT_EVENT, ptp_receive_cb, NULL);
 
-        PTP_L4_GENERAL = udp_new();
-        udp_bind(PTP_L4_GENERAL, &addr, PTP_PORT_GENERAL);
-        udp_recv(PTP_L4_GENERAL, ptp_receive_cb, NULL);
+        PTP_L4_DEFAULT_GENERAL = udp_new();
+        udp_bind(PTP_L4_DEFAULT_GENERAL, &PTP_IGMP_PRIMARY, PTP_PORT_GENERAL);
+        udp_recv(PTP_L4_DEFAULT_GENERAL, ptp_receive_cb, NULL);
+
+        if (dm == PTP_DM_P2P) {
+            PTP_L4_PDELAY_EVENT = udp_new();
+            udp_bind(PTP_L4_PDELAY_EVENT, &PTP_IGMP_PEER_DELAY, PTP_PORT_EVENT);
+            udp_recv(PTP_L4_PDELAY_EVENT, ptp_receive_cb, NULL);
+
+            PTP_L4_PDELAY_GENERAL = udp_new();
+            udp_bind(PTP_L4_PDELAY_GENERAL, &PTP_IGMP_PEER_DELAY, PTP_PORT_GENERAL);
+            udp_recv(PTP_L4_PDELAY_GENERAL, ptp_receive_cb, NULL);
+        }
     }
 
     // store configuration
@@ -128,7 +149,7 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
 
     // narrow down by transport type
     if (TP == PTP_TP_IPv4) {
-        struct udp_pcb *conn = (mc == PTP_MC_EVENT) ? PTP_L4_EVENT : PTP_L4_GENERAL; // select connection by message type
+        struct udp_pcb *conn = (mc == PTP_MC_EVENT) ? PTP_L4_DEFAULT_EVENT : PTP_L4_DEFAULT_GENERAL; // select connection by message type
         uint16_t port = (mc == PTP_MC_EVENT) ? PTP_PORT_EVENT : PTP_PORT_GENERAL;    // select port by message class
         ip_addr_t ipaddr = isPDel_ ? PTP_IGMP_PEER_DELAY : PTP_IGMP_PRIMARY;         // select destination IP-address by PDel*/default message types
         udp_sendto(conn, p, &ipaddr, port);                                          // send packet
