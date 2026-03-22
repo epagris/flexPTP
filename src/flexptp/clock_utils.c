@@ -16,8 +16,8 @@
 void ptp_print_clock_identity(uint64_t clockID) {
 	uint8_t *p = (uint8_t*) &clockID;
 	uint8_t i;
-	for (i = 0; i < 8; i++) { // reverse byte order due to Network->Host byte order conversion
-		MSG("%02x", p[7 - i]);
+	for (i = 0; i < 8; i++) {
+		MSG("%02x", p[i]);
 	}
 }
 

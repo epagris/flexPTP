@@ -361,6 +361,8 @@ bool reg_task_ptp() {
         ptp_get_delay_mechanism(),
         {}, {}
     };
+    memcpy(nsdInit.primary_p2p_8023_dest, S.profile.primary_p2p_8023_destination, 6);
+    memcpy(nsdInit.pdelay_p2p_8023_dest, S.profile.pdelay_p2p_8023_destination, 6);
     ptp_nsd_init(&nsdInit);
 
     // create task
