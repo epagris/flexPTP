@@ -14,8 +14,8 @@
 #include <string.h>
 
 // initialize connection blocks to invalid states
-static struct udp_pcb *PTP_L4_DEFAULT_EVENT = NULL;
-static struct udp_pcb *PTP_L4_DEFAULT_GENERAL = NULL;
+static struct udp_pcb *PTP_L4_PRIMARY_EVENT = NULL;
+static struct udp_pcb *PTP_L4_PRIMARY_GENERAL = NULL;
 static struct udp_pcb *PTP_L4_PDELAY_EVENT = NULL;
 static struct udp_pcb *PTP_L4_PDELAY_GENERAL = NULL;
 
@@ -53,15 +53,15 @@ void ptp_nsd_init(const NsdInitSettings * init) {
     ptp_nsd_igmp_join_leave(false);
 
     // first, close all open connection blocks (zero CBDs won't cause trouble)
-    if (PTP_L4_DEFAULT_EVENT != NULL) {
-        udp_disconnect(PTP_L4_DEFAULT_EVENT);
-        udp_remove(PTP_L4_DEFAULT_EVENT);
-        PTP_L4_DEFAULT_EVENT = NULL;
+    if (PTP_L4_PRIMARY_EVENT != NULL) {
+        udp_disconnect(PTP_L4_PRIMARY_EVENT);
+        udp_remove(PTP_L4_PRIMARY_EVENT);
+        PTP_L4_PRIMARY_EVENT = NULL;
     }
-    if (PTP_L4_DEFAULT_GENERAL != NULL) {
-        udp_disconnect(PTP_L4_DEFAULT_GENERAL);
-        udp_remove(PTP_L4_DEFAULT_GENERAL);
-        PTP_L4_DEFAULT_GENERAL = NULL;
+    if (PTP_L4_PRIMARY_GENERAL != NULL) {
+        udp_disconnect(PTP_L4_PRIMARY_GENERAL);
+        udp_remove(PTP_L4_PRIMARY_GENERAL);
+        PTP_L4_PRIMARY_GENERAL = NULL;
     }
     if (PTP_L4_PDELAY_EVENT != NULL) {
         udp_disconnect(PTP_L4_PDELAY_EVENT);
@@ -84,15 +84,16 @@ void ptp_nsd_init(const NsdInitSettings * init) {
 
     // open only the necessary ones
     if (init->tp == PTP_TP_IPv4) {
-        // open event and general connections
-        PTP_L4_DEFAULT_EVENT = udp_new();
-        udp_bind(PTP_L4_DEFAULT_EVENT, &PTP_IGMP_PRIMARY, PTP_PORT_EVENT);
-        udp_recv(PTP_L4_DEFAULT_EVENT, ptp_receive_cb, NULL);
+        // open event and general PRIMARY connections
+        PTP_L4_PRIMARY_EVENT = udp_new();
+        udp_bind(PTP_L4_PRIMARY_EVENT, &PTP_IGMP_PRIMARY, PTP_PORT_EVENT);
+        udp_recv(PTP_L4_PRIMARY_EVENT, ptp_receive_cb, NULL);
 
-        PTP_L4_DEFAULT_GENERAL = udp_new();
-        udp_bind(PTP_L4_DEFAULT_GENERAL, &PTP_IGMP_PRIMARY, PTP_PORT_GENERAL);
-        udp_recv(PTP_L4_DEFAULT_GENERAL, ptp_receive_cb, NULL);
+        PTP_L4_PRIMARY_GENERAL = udp_new();
+        udp_bind(PTP_L4_PRIMARY_GENERAL, &PTP_IGMP_PRIMARY, PTP_PORT_GENERAL);
+        udp_recv(PTP_L4_PRIMARY_GENERAL, ptp_receive_cb, NULL);
 
+        // open event and general PDELAY* connections
         if (init->dm == PTP_DM_P2P) {
             PTP_L4_PDELAY_EVENT = udp_new();
             udp_bind(PTP_L4_PDELAY_EVENT, &PTP_IGMP_PEER_DELAY, PTP_PORT_EVENT);
@@ -166,14 +167,14 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
 
     // narrow down by transport type
     if (TP == PTP_TP_IPv4) {
-        struct udp_pcb *conn = (mc == PTP_MC_EVENT) ? PTP_L4_DEFAULT_EVENT : PTP_L4_DEFAULT_GENERAL; // select connection by message type
+        struct udp_pcb *conn = (mc == PTP_MC_EVENT) ? PTP_L4_PRIMARY_EVENT : PTP_L4_PRIMARY_GENERAL; // select connection by message type
         uint16_t port = (mc == PTP_MC_EVENT) ? PTP_PORT_EVENT : PTP_PORT_GENERAL;    // select port by message class
-        ip_addr_t ipaddr = isPDel_ ? PTP_IGMP_PEER_DELAY : PTP_IGMP_PRIMARY;         // select destination IP-address by PDel*/default message types
+        ip_addr_t ipaddr = isPDel_ ? PTP_IGMP_PEER_DELAY : PTP_IGMP_PRIMARY;         // select destination IP-address by PDel*/primary message types
         udp_sendto(conn, p, &ipaddr, port);                                          // send packet
     } else if (TP == PTP_TP_802_3) {
         const uint8_t *ethaddr = isPDel_ ? 
             (custom_p2p_8023_pdel_dest_valid ? custom_p2p_8023_pdel_dest : PTP_ETHERNET_PEER_DELAY) : 
-            (custom_p2p_8023_primary_dest_valid ? custom_p2p_8023_primary_dest : PTP_ETHERNET_PRIMARY); // select destination address by PDel*/default message types
+            (custom_p2p_8023_primary_dest_valid ? custom_p2p_8023_primary_dest : PTP_ETHERNET_PRIMARY); // select destination address by PDel*/primary message types
         ethernet_output(netif_default, p, (struct eth_addr *)netif_default->hwaddr, (struct eth_addr *)ethaddr, ETHERTYPE_PTP);
     }
 
