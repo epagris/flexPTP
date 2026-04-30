@@ -64,35 +64,38 @@ static void ptp_perform_correction() {
     delReqSl = S.slave.scd.t[T3];
     delReqMa = S.slave.scd.t[T4];
 
+    // prepare LOGID printing
+    const char * logIdStr = S.logging.logid ? "[LOG-TS:S] " : ""; // timestamp logging : slave
+
     // log timestamps (if enabled)
     if (S.profile.delayMechanism == PTP_DM_E2E) {
         CLILOG(S.logging.timestamps,
-               "seqID: %u\n"
-               "T1: %d.%09d <- Sync TX (master)\n"
-               "T2: %d.%09d <- Sync RX (slave) \n"
-               "T3: %d.%09d <- Del_Req TX (slave) \n"
-               "T4: %d.%09d <- Del_Req RX (master)\n\n",
-               (uint32_t)S.slave.messaging.sequenceID,
-               (int32_t)syncMa.sec, syncMa.nanosec,
-               (int32_t)syncSl.sec, syncSl.nanosec,
-               (int32_t)delReqSl.sec, delReqSl.nanosec,
-               (int32_t)delReqMa.sec, delReqMa.nanosec);
+               "%sseqID: %u\n"
+               "%sT1: %d.%09d <- Sync TX (master)\n"
+               "%sT2: %d.%09d <- Sync RX (slave) \n"
+               "%sT3: %d.%09d <- Del_Req TX (slave) \n"
+               "%sT4: %d.%09d <- Del_Req RX (master)\n\n",
+               logIdStr, (uint32_t)S.slave.messaging.sequenceID,
+               logIdStr, (int32_t)syncMa.sec, syncMa.nanosec,
+               logIdStr, (int32_t)syncSl.sec, syncSl.nanosec,
+               logIdStr, (int32_t)delReqSl.sec, delReqSl.nanosec,
+               logIdStr, (int32_t)delReqMa.sec, delReqMa.nanosec);
     } else if (S.profile.delayMechanism == PTP_DM_P2P) {
         CLILOG(S.logging.timestamps,
-               "seqID: %u\n"
-               "T1: %d.%09d <- Sync TX (master)\n"
-               "T2: %d.%09d <- Sync RX (slave)\n"
-               "t1: %d.%09d <- PDel_Req TX (our clock)\n"
-               "t2: %d.%09d <- PDel_Req RX (their clock)\n"
-               "t3: %d.%09d <- PDel_Resp TX (their clock)\n"
-               "t4: %d.%09d <- PDel_Resp RX (our clock)\n\n",
-               (uint32_t)S.slave.messaging.sequenceID,
-               (int32_t)S.slave.scd.t[0].sec, S.slave.scd.t[0].nanosec,
-               (int32_t)S.slave.scd.t[1].sec, S.slave.scd.t[1].nanosec,
-               (int32_t)S.slave.scd.t[2].sec, S.slave.scd.t[2].nanosec,
-               (int32_t)S.slave.scd.t[3].sec, S.slave.scd.t[3].nanosec,
-               (int32_t)S.slave.scd.t[4].sec, S.slave.scd.t[4].nanosec,
-               (int32_t)S.slave.scd.t[5].sec, S.slave.scd.t[5].nanosec);
+               "%sseqID: %u\n"
+               "%sT1: %d.%09d <- Sync TX (master)\n"
+               "%sT2: %d.%09d <- Sync RX (slave)\n"
+               "%st1: %d.%09d <- PDel_Req TX (our clock)\n"
+               "%st2: %d.%09d <- PDel_Req RX (their clock)\n"
+               "%st3: %d.%09d <- PDel_Resp TX (their clock)\n"
+               "%st4: %d.%09d <- PDel_Resp RX (our clock)\n\n",
+               logIdStr, (uint32_t)S.slave.messaging.sequenceID,
+               logIdStr, (int32_t)S.slave.scd.t[0].sec, S.slave.scd.t[0].nanosec,
+               logIdStr, (int32_t)S.slave.scd.t[1].sec, S.slave.scd.t[1].nanosec,
+               logIdStr, (int32_t)S.slave.scd.t[2].sec, S.slave.scd.t[2].nanosec,
+               logIdStr, (int32_t)S.slave.scd.t[3].sec, S.slave.scd.t[3].nanosec,
+               logIdStr, (int32_t)S.slave.scd.t[4].sec, S.slave.scd.t[4].nanosec,
+               logIdStr, (int32_t)S.slave.scd.t[5].sec, S.slave.scd.t[5].nanosec);
     }
 
     // ------------------------------
@@ -137,6 +140,7 @@ static void ptp_perform_correction() {
             PTP_SERVO_RESET();
 
             // print info
+            CLILOG(S.logging.logid && S.logging.info, "[LOG-INFO] ");
             CLILOG(S.logging.info, "Time difference has exceeded the coarse correction threshold [%" __PRI64_PREFIX "dns], compensation commenced!\n", d_ns);
         }
 
@@ -178,6 +182,7 @@ static void ptp_perform_correction() {
             ptp_tune_clock(skew_compensation_ppb);
 
             // log skew compensation
+            CLILOG(S.logging.logid && S.logging.info, "[LOG-INFO] ");
             CLILOG(S.logging.info, "[%u/%u] Skew compensation: % 6.4f ppb\n", fccntr + 1, PTP_FC_SKEW_CORRECTION_CYCLES, skew_compensation_ppb);
         } else if (fcs == PTP_FC_TIME_CORRECTION) { // time correction
             // compensate time error
@@ -190,8 +195,10 @@ static void ptp_perform_correction() {
             PTP_SET_CLOCK((uint32_t)ti.sec, ti.nanosec);
 
             // log time compensation
+            CLILOG(S.logging.logid && S.logging.info, "[LOG-INFO] ");
             CLILOG(S.logging.info, "[%u/%u] Time compensation: %" __PRI64_PREFIX "d ns\n", fccntr + 1, PTP_FC_TIME_CORRECTION_CYCLES, d_ns);
         } else if (fcs == PTP_FC_TIME_CORRECTION_PROPAGATION) {
+            CLILOG(S.logging.logid && S.logging.info, "[LOG-INFO] ");
             CLILOG(S.logging.info, "[%u/%u] Waiting for time compensation to propagate.\n", fccntr + 1, PTP_FC_TIME_PROPAGATION_CYCLES);
         }
 
@@ -222,12 +229,14 @@ static void ptp_perform_correction() {
 
     // log on cli (if enabled)
 #ifdef PTP_ADDEND_INTERFACE
+    CLILOG(S.logging.logid && S.logging.def, "[LOG-DEF:S:A] ") // default log : slave : addend interface
     int32_t d_ticks = tsToTick(&d, PTP_CLOCK_TICK_FREQ_HZ);
     CLILOG(S.logging.def, "%d %09d %d %09d %d " PTP_COLOR_BYELLOW "% 9d" PTP_COLOR_RESET " % 9d % 12u % 8.4f % 9" __PRI64_PREFIX "d % 9" __PRI64_PREFIX "u\n",
            (int32_t)syncMa.sec, syncMa.nanosec, (int32_t)delReqMa.sec, delReqMa.nanosec,
            (int32_t)d.sec, d.nanosec, d_ticks,
            S.hwclock.addend, corr_ppb, nsI(&S.network.meanPathDelay), (uint64_t)measSyncPeriod_ns);
 #elif defined(PTP_HLT_INTERFACE)
+    CLILOG(S.logging.logid && S.logging.def, "[LOG-DEF:S:H] ") // default log : slave : HLT interface
     CLILOG(S.logging.def, "%d %09d %d %09d %d " PTP_COLOR_BYELLOW "% 9d" PTP_COLOR_RESET " % 8.4f % 8.4f % 9" __PRI64_PREFIX "d % 9" __PRI64_PREFIX "u\n",
            (int32_t)syncMa.sec, syncMa.nanosec, (int32_t)delReqMa.sec, delReqMa.nanosec,
            (int32_t)d.sec, d.nanosec,
@@ -350,6 +359,7 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
                     ptp_commence_e2e_correction();
 
                     // log correction field (if enabled)
+                    CLILOG(S.logging.logid && S.logging.corr, "[LOG-CORR] ");
                     CLILOG(S.logging.corr, "C [Follow_Up]: %09" __PRI64_PREFIX "u\n", pHeader->correction_ns);
 
                     // dispatch FOLLOW_UP_RECVED event
@@ -405,6 +415,7 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
                     PTP_IUEV(PTP_UEV_DELAY_RESP_RECVED);
 
                     // log correction field (if enabled)
+                    CLILOG(S.logging.logid && S.logging.corr, "[LOG-CORR] ");
                     CLILOG(S.logging.corr, "C [Del_Resp]: %09" __PRI64_PREFIX "u\n", pHeader->correction_ns);
                 }
 
@@ -434,6 +445,7 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
                 PTP_IUEV(PTP_UEV_PDELAY_RESP_RECVED);
 
                 // log correction field (if enabled)
+                CLILOG(S.logging.logid && S.logging.corr, "[LOG-CORR] ");
                 CLILOG(S.logging.corr, "C [PDel_Resp]: %09" __PRI64_PREFIX "u\n", pHeader->correction_ns);
 
             } else if (mt == PTP_MT_PDelay_Resp_Follow_Up) { // PDelay_Resp_Follow_Up processing
@@ -461,6 +473,7 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
                     PTP_IUEV(PTP_UEV_PDELAY_RESP_FOLLOW_UP_RECVED);
 
                     // log correction field (if enabled)
+                    CLILOG(S.logging.logid && S.logging.corr, "[LOG-CORR] ");
                     CLILOG(S.logging.corr, "C [PDel_Resp_Follow_Up]: %09" __PRI64_PREFIX "u\n", pHeader->correction_ns);
                 }
 
@@ -530,6 +543,7 @@ void ptp_slave_tick() {
             // check that our last Delay_Req has been responded
             if (S.profile.logDelayReqPeriod != PTP_LOGPER_SYNCMATCHED) {
                 if (S.slave.messaging.delay_reqSequenceID != S.slave.messaging.lastRespondedDelReqId) {
+                    CLILOG(S.logging.logid && S.logging.info, "[LOG-INFO] ");
                     CLILOG(S.logging.info, "(P)Del_Req #%d: no response received!\n", S.slave.messaging.delay_reqSequenceID);
                     PTP_IUEV(PTP_UEV_NETWORK_ERROR); // dispatch network error event
                 }

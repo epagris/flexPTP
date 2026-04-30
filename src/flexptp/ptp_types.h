@@ -526,6 +526,7 @@ typedef struct {
         bool locked;       ///< clock lock state change
         bool bmca;         ///< BMCA state change
         bool transmission; ///< Transmission logging
+        bool logid;        ///< Print logging ID in front of each logline
     } logging;             ///< Logging
 
     PtpStats stats;                   ///< Statistics

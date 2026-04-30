@@ -219,6 +219,7 @@ static char *P2P_SLAVE_STATE_HINTS[] = {
     "ESTABLISHED"};
 
 #define PTP_MASTER_P2P_SLAVE_STATE_LOG() \
+    CLILOG(S.logging.logid && S.logging.def && (si->state != prevState), "[LOG-DEF:M:S] "); /* default log : master : slave state */ \
     CLILOG(S.logging.def && (si->state != prevState), "%s -> %s\n", P2P_SLAVE_STATE_HINTS[prevState], P2P_SLAVE_STATE_HINTS[si->state])
 
 /**
@@ -283,20 +284,24 @@ static void ptp_master_commence_mpd_computation() {
     TimestampI *mpd = &S.network.meanPathDelay;
     ptp_compute_mean_path_delay_p2p(scd->t, scd->cf, mpd);
 
+    // prepare LOGID printing
+    const char * logIdStr = S.logging.logid ? "[LOG-TS:M] " : ""; // timestamp logging : master
+    
     CLILOG(S.logging.timestamps,
-           "seqID: %u\n"
-           "T1: %d.%09d <- PDelay_Req TX (master)\n"
-           "T2: %d.%09d <- PDelay_Req RX (slave) \n"
-           "T3: %d.%09d <- PDelay_Resp TX (slave) \n"
-           "T4: %d.%09d <- PDelay_Resp RX (master)\n"
-           "    %09" __PRI64_PREFIX "u -- %09" __PRI64_PREFIX "u <- CF in PDelay_Resp and ..._Follow_Up\n\n",
-           (uint32_t)S.master.pdelay_reqSequenceID,
-           (int32_t)scd->t[T1].sec, scd->t[T1].nanosec,
-           (int32_t)scd->t[T2].sec, scd->t[T2].nanosec,
-           (int32_t)scd->t[T3].sec, scd->t[T3].nanosec,
-           (int32_t)scd->t[T4].sec, scd->t[T4].nanosec,
-           scd->cf[T2], scd->cf[T3]);
+           "%sseqID: %u\n"
+           "%sT1: %d.%09d <- PDelay_Req TX (master)\n"
+           "%sT2: %d.%09d <- PDelay_Req RX (slave) \n"
+           "%sT3: %d.%09d <- PDelay_Resp TX (slave) \n"
+           "%sT4: %d.%09d <- PDelay_Resp RX (master)\n"
+           "%s    %09" __PRI64_PREFIX "u -- %09" __PRI64_PREFIX "u <- CF in PDelay_Resp and ..._Follow_Up\n\n",
+           logIdStr, (uint32_t)S.master.pdelay_reqSequenceID,
+           logIdStr, (int32_t)scd->t[T1].sec, scd->t[T1].nanosec,
+           logIdStr, (int32_t)scd->t[T2].sec, scd->t[T2].nanosec,
+           logIdStr, (int32_t)scd->t[T3].sec, scd->t[T3].nanosec,
+           logIdStr, (int32_t)scd->t[T4].sec, scd->t[T4].nanosec,
+           logIdStr, scd->cf[T2], scd->cf[T3]);
 
+    CLILOG(S.logging.logid && S.logging.def, "[LOG-DEF:M:M] "); // default log : master : mean path delay
     CLILOG(S.logging.def, "%" __PRI64_PREFIX "d\n", nsI(mpd));
 }
 

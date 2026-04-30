@@ -46,6 +46,7 @@ static PtpLogPair sLogTable[PTP_LOG_N + 1] = {
     {PTP_LOG_LOCKED_STATE, NULL, &(S.logging.locked)},
     {PTP_LOG_BMCA, NULL, &(S.logging.bmca)},
     {PTP_LOG_TRANSMISSION, NULL, &(S.logging.transmission)},
+    {PTP_LOG_LOGID, NULL, &(S.logging.logid)},
     {-1, NULL, NULL}};
 
 void ptp_log_enable(int logId, bool en) {

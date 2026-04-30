@@ -504,6 +504,7 @@ void ptp_receive_enqueue(const void *pPayload, uint32_t len, uint32_t ts_sec, ui
 #endif
     } else {
         if (msgb_get_error(&sRawRxMsgBuf) == MSGB_ERR_FULL) {
+            CLILOG(S.logging.logid && S.logging.info, "[LOG-INFO] ");
             CLILOG(S.logging.info, "The PTP receive packet buffer is full, a packet was lost!\n");
         }
     }
@@ -537,6 +538,7 @@ bool ptp_transmit_enqueue(const RawPtpMessage *pMsg) {
         return true;
     } else {
         if (msgb_get_error(&sRawTxMsgBuf) == MSGB_ERR_FULL) {
+            CLILOG(S.logging.logid && S.logging.info, "[LOG-INFO] ");
             CLILOG(S.logging.info, "PTP TX Enqueue failed, buffer is full! (%u)\n", pMsg->tag);
             PTP_IUEV(PTP_UEV_QUEUE_ERROR); // dispatch QUEUE_ERROR event
         }
@@ -641,6 +643,7 @@ void task_ptp(void) {
         }
     } else {
         // error occurred, just skip this cycle
+        CLILOG(S.logging.logid && S.logging.info, "[LOG-INFO] ");
         CLILOG(S.logging.info, "A polling error occurred!\n");
         continue;
     }
@@ -666,6 +669,7 @@ void task_ptp(void) {
             // clang-format on
 
             // fetch the message
+            CLILOG(S.logging.logid && S.logging.transmission, "[LOG-TX] ");
             CLILOG(S.logging.transmission, "[% 8u]---> %u\n", S.ticks, ts.uid);
             RawPtpMessage *pRawMsg = msgb_get_by_uid(&sRawTxMsgBuf, ts.uid);
             if (pRawMsg != NULL) {
@@ -684,6 +688,7 @@ void task_ptp(void) {
                 // release message
                 if ((pRawMsg->tag == RPMT_RANDOM) || (pRawMsg->pTxCb != NULL)) {
                     msgb_free(&sRawTxMsgBuf, pRawMsg);
+                    CLILOG(S.logging.logid && S.logging.transmission, "[LOG-TX] ");
                     CLILOG(S.logging.transmission, "[% 8u] %u AUTOFREE\n", S.ticks, ts.uid);
                 }
             } else {
@@ -712,6 +717,7 @@ void task_ptp(void) {
             // fetch the message
             RawPtpMessage *pRawMsg = msgb_get_by_uid(&sRawTxMsgBuf, uid);
             if (pRawMsg != NULL) {
+                CLILOG(S.logging.logid && S.logging.transmission, "[LOG-TX] ");
                 CLILOG(S.logging.transmission, "[% 8u] %u (%u) --->\n", S.ticks, uid, pRawMsg->tag & (~((uint32_t)MSGBUF_TAG_OVERWRITE)));
                 ptp_nsd_transmit_msg(pRawMsg, uid);
 #ifdef FLEXPTP_LINUX

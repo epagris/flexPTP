@@ -39,6 +39,7 @@ void ptp_collect_stats(int64_t d) {
 
 	// set locked state
 	bool locked = ((fabs(S.stats.filtTimeErr) < (PTP_ACCURACY_LIMIT_NS)) && (ptp_get_current_master_clock_identity() != 0));
+	CLILOG(S.logging.logid && S.logging.locked, "[LOG-LCKD] ");
 	CLILOG(S.logging.locked && (locked != S.stats.locked), "PTP %s!\n", locked ? "LOCKED" : "DIVERGED");
 	
 	// invoke LOCKED/UNLOCKED event
