@@ -4,7 +4,6 @@
 
 #include "config.h"
 #include "event.h"
-#include "flexptp/port/osless/fifo.h"
 #include "msg_buf.h"
 #include "network_stack_driver.h"
 #include "profiles.h"
@@ -17,6 +16,10 @@
 #include <time.h>
 
 #include "minmax.h"
+
+#ifdef FLEXPTP_OSLESS
+#include "port/osless/fifo.h"
+#endif
 
 // ---------------------------
 
@@ -134,6 +137,8 @@ static PtpMsgBufBlock sRawTxMsgBufPool[TX_PACKET_FIFO_LENGTH];
 
 // ----------------------------
 
+// clang-format off
+
 /**
  * Provide the flexPTP with periodic ticks of PTP_HEARTBEAT_TICKRATE_MS intervals.
  * This function is only exposed if operating in FLEXPTP_OSLESS mode!
@@ -144,10 +149,9 @@ static PtpMsgBufBlock sRawTxMsgBufPool[TX_PACKET_FIFO_LENGTH];
 #ifndef FLEXPTP_OSLESS
 static
 #endif
-    void
-    ptp_heartbeat_tmr_cb(
+void ptp_heartbeat_tmr_cb(
 #ifdef FLEXPTP_FREERTOS
-        TimerHandle_t timer
+    TimerHandle_t timer
 #elif defined(FLEXPTP_CMSIS_OS2)
     void *arg
 #elif defined(FLEXPTP_LINUX)
@@ -157,6 +161,8 @@ static
     PtpCoreEvent event = {.code = PTP_CEV_HEARTBEAT, .w = 0, .dw = 0};
     ptp_event_enqueue(&event);
 }
+
+// clang-format on
 
 /**
  * Construct the heartbeat timer.
@@ -357,10 +363,10 @@ bool reg_task_ptp() {
 
     // initialize network stack driver
     NsdInitSettings nsdInit = {
-        ptp_get_transport_type(), 
+        ptp_get_transport_type(),
         ptp_get_delay_mechanism(),
-        {}, {}
-    };
+        {},
+        {}};
     memcpy(nsdInit.primary_p2p_8023_dest, S.profile.primary_p2p_8023_destination, 6);
     memcpy(nsdInit.pdelay_p2p_8023_dest, S.profile.pdelay_p2p_8023_destination, 6);
     ptp_nsd_init(&nsdInit);
@@ -411,9 +417,8 @@ bool reg_task_ptp() {
 void unreg_task_ptp() {
     ptp_remove_heartbeat_tmr(); // remove the heartbeat timer
     NsdInitSettings nsdInit = {
-        -1, -1, {}, {}
-    };
-    ptp_nsd_init(&nsdInit);       // de-initialize the network stack driver
+        -1, -1, {}, {}};
+    ptp_nsd_init(&nsdInit); // de-initialize the network stack driver
 #if defined(FLEXPTP_NON_LINUX_OS)
     if (sTH != NULL) {
 #ifdef FLEXPTP_FREERTOS
@@ -442,14 +447,16 @@ bool ptp_event_enqueue(const PtpCoreEvent *event) {
 
     bool ok;
 #ifdef FLEXPTP_FREERTOS
-    ok = xQueueSend(sEventFIFO, event, portMAX_DELAY) == pdPASS;
+    // push event and check success with no timeout:
+    // if the queue is full, then drop the event
+    ok = xQueueSend(sEventFIFO, event, 0) == pdPASS;
     if (ok) {
-        xQueueSend(sNotificationFIFO, &notif, portMAX_DELAY);
+        xQueueSend(sNotificationFIFO, &notif, 0);
     }
 #elif defined(FLEXPTP_CMSIS_OS2)
-    ok = osMessageQueuePut(sEventFIFO, event, 0, osWaitForever) == osOK;
+    ok = osMessageQueuePut(sEventFIFO, event, 0, 0U) == osOK;
     if (ok) {
-        osMessageQueuePut(sNotificationFIFO, &notif, 0, osWaitForever);
+        osMessageQueuePut(sNotificationFIFO, &notif, 0, 0U);
     }
 #elif defined(FLEXPTP_LINUX)
     size_t len = sizeof(PtpCoreEvent);
@@ -488,24 +495,53 @@ void ptp_receive_enqueue(const void *pPayload, uint32_t len, uint32_t ts_sec, ui
         // get the UID
         uint32_t uid = msgb_get_uid(&sRawRxMsgBuf, pMsgAlloc);
 
+        // set enqueue status
+        bool enqueueOK = false;
+
         // set the notification
         ProcThreadNotification notif = PTN_RECEIVE;
 #ifdef FLEXPTP_FREERTOS
-        xQueueSend(sRxPacketFIFO, &uid, portMAX_DELAY);       // send index
-        xQueueSend(sNotificationFIFO, &notif, portMAX_DELAY); // send notification
+        // attempt to push incoming message UID:
+        // if successful, also push the notification
+        if (xPortIsInsideInterrupt()) {
+            enqueueOK = (xQueueSendFromISR(sRxPacketFIFO, &uid, NULL) == pdPASS); // send index
+            if (enqueueOK) {
+                xQueueSendFromISR(sNotificationFIFO, &notif, NULL); // send notification
+            }
+        } else {
+            enqueueOK = (xQueueSend(sRxPacketFIFO, &uid, 0) == pdPASS); // send index
+            if (enqueueOK) {
+                xQueueSend(sNotificationFIFO, &notif, 0); // send notification
+            }
+        }
 #elif defined(FLEXPTP_CMSIS_OS2)
-        osMessageQueuePut(sRxPacketFIFO, &uid, 0, osWaitForever);
-        osMessageQueuePut(sNotificationFIFO, &notif, 0, osWaitForever);
+        enqueueOK = (osMessageQueuePut(sRxPacketFIFO, &uid, 0, 0U) == osOK);
+        if (enqueueOK) {
+            osMessageQueuePut(sNotificationFIFO, &notif, 0, 0U);
+        }
 #elif defined(FLEXPTP_LINUX)
-        write(sRxPacketFIFO[1], &uid, sizeof(uint32_t));
+        if (write(sRxPacketFIFO[1], &uid, sizeof(uint32_t)) > 0) {
+            enqueueOK = true;
+        }
 #elif defined(FLEXPTP_OSLESS)
-        fifo_push(&sRxPacketFIFO, &uid);
-        fifo_push(&sNotificationFIFO, &notif);
+        enqueueOK = fifo_push(&sRxPacketFIFO, &uid);
+        if (enqueueOK) {
+            fifo_push(&sNotificationFIFO, &notif);
+        }
 #endif
+        // if the message push has failed...
+        if (!enqueueOK) {
+            msgb_free(&sRawRxMsgBuf, pMsgAlloc); // free the allocated block
+            S.stats.drop_cntrs.rx++;             // increase the drop counter
+
+            // notify the user
+            CLILOG(S.logging.logid && S.logging.info, "[LOG-INFO] ");
+            CLILOG(S.logging.info, "Failed to enqueue a message to the receive queue, a packet was lost.\n");
+        }
     } else {
         if (msgb_get_error(&sRawRxMsgBuf) == MSGB_ERR_FULL) {
             CLILOG(S.logging.logid && S.logging.info, "[LOG-INFO] ");
-            CLILOG(S.logging.info, "The PTP receive packet buffer is full, a packet was lost!\n");
+            CLILOG(S.logging.info, "The PTP receive packet buffer is full, a packet has been lost!\n");
         }
     }
 }
@@ -516,26 +552,45 @@ bool ptp_transmit_enqueue(const RawPtpMessage *pMsg) {
         memcpy(pMsgAlloc, pMsg, sizeof(RawPtpMessage));
         msgb_commit(&sRawTxMsgBuf, pMsgAlloc);
         uint32_t uid = msgb_get_uid(&sRawTxMsgBuf, pMsgAlloc);
+        bool enqueueOK = false;
         ProcThreadNotification notif = PTN_TRANSMIT;
 #ifdef FLEXPTP_FREERTOS
-        BaseType_t hptWoken = false;
         if (xPortIsInsideInterrupt()) {
-            xQueueSendFromISR(sTxPacketFIFO, &uid, &hptWoken);
-            xQueueSendFromISR(sNotificationFIFO, &notif, &hptWoken);
+            enqueueOK = (xQueueSendFromISR(sTxPacketFIFO, &uid, NULL) == pdPASS);
+            if (enqueueOK) {
+                xQueueSendFromISR(sNotificationFIFO, &notif, NULL);
+            }
         } else {
-            xQueueSend(sTxPacketFIFO, &uid, portMAX_DELAY);
-            xQueueSend(sNotificationFIFO, &notif, portMAX_DELAY);
+            enqueueOK = (xQueueSend(sTxPacketFIFO, &uid, 0) == pdPASS);
+            if (enqueueOK) {
+                xQueueSend(sNotificationFIFO, &notif, 0);
+            }
         }
 #elif defined(FLEXPTP_CMSIS_OS2)
-        osMessageQueuePut(sTxPacketFIFO, &uid, 0, osWaitForever);
-        osMessageQueuePut(sNotificationFIFO, &notif, 0, osWaitForever);
+        enqueueOK = (osMessageQueuePut(sTxPacketFIFO, &uid, 0, 0U) == osOK);
+        if (enqueueOK) {
+            osMessageQueuePut(sNotificationFIFO, &notif, 0, 0U);
+        }
 #elif defined(FLEXPTP_LINUX)
-        write(sTxPacketFIFO[1], &uid, sizeof(uint32_t));
+        if (write(sTxPacketFIFO[1], &uid, sizeof(uint32_t)) > 0) {
+            enqueueOK = true;
+        }
 #elif defined(FLEXPTP_OSLESS)
-        fifo_push(&sTxPacketFIFO, &uid);
-        fifo_push(&sNotificationFIFO, &notif);
+        enqueueOK = fifo_push(&sTxPacketFIFO, &uid);
+        if (enqueueOK) {
+            fifo_push(&sNotificationFIFO, &notif);
+        }
 #endif
-        return true;
+        if (!enqueueOK) {
+            msgb_free(&sRawTxMsgBuf, pMsgAlloc); // free the allocated block
+            S.stats.drop_cntrs.tx++;             // increase the drop counter
+
+            // notify the user
+            CLILOG(S.logging.logid && S.logging.info, "[LOG-INFO] ");
+            CLILOG(S.logging.info, "Failed to enqueue a message to the transmit queue, a packet was lost.\n");
+        }
+
+        return enqueueOK;
     } else {
         if (msgb_get_error(&sRawTxMsgBuf) == MSGB_ERR_FULL) {
             CLILOG(S.logging.logid && S.logging.info, "[LOG-INFO] ");
@@ -551,26 +606,44 @@ void ptp_transmit_timestamp_cb(uint32_t uid, uint32_t seconds, uint32_t nanoseco
     TxTs ts = {.uid = uid, .seconds = seconds, .nanoseconds = nanoseconds};
 
     // dispatch notification
+    bool enqueueOK = false;
     ProcThreadNotification notif = PTN_TRANSMIT_DONE;
 #ifdef FLEXPTP_FREERTOS
-    BaseType_t hptWoken = false;
     if (xPortIsInsideInterrupt()) {
-        xQueueSendFromISR(sTxCbFIFO, &ts, &hptWoken);
-        xQueueSendFromISR(sNotificationFIFO, &notif, &hptWoken);
+        enqueueOK = (xQueueSendFromISR(sTxCbFIFO, &ts, NULL) == pdPASS);
+        if (enqueueOK) {
+            xQueueSendFromISR(sNotificationFIFO, &notif, NULL);
+        }
     } else {
-        xQueueSend(sTxCbFIFO, &ts, portMAX_DELAY);
-        xQueueSend(sNotificationFIFO, &notif, portMAX_DELAY);
+        enqueueOK = xQueueSend(sTxCbFIFO, &ts, 0);
+        if (enqueueOK) {
+            xQueueSend(sNotificationFIFO, &notif, 0);
+        }
     }
 #elif defined(FLEXPTP_CMSIS_OS2)
-    osMessageQueuePut(sTxCbFIFO, &ts, 0, osWaitForever);
-    osMessageQueuePut(sNotificationFIFO, &notif, 0, osWaitForever);
+    enqueueOK = (osMessageQueuePut(sTxCbFIFO, &ts, 0, 0U) == osOK);
+    if (enqueueOK) {
+        osMessageQueuePut(sNotificationFIFO, &notif, 0, 0U);
+    }
 #elif defined(FLEXPTP_LINUX)
-    write(sTxCbFIFO[1], &ts, sizeof(TxTs));
-    sem_post(&sTxCbSem);
+    if (write(sTxCbFIFO[1], &ts, sizeof(TxTs)) > 0) {
+        sem_post(&sTxCbSem);
+        enqueueOK = true;
+    }
 #elif defined(FLEXPTP_OSLESS)
-    fifo_push(&sTxCbFIFO, &ts);
-    fifo_push(&sNotificationFIFO, &notif);
+    enqueueOK = fifo_push(&sTxCbFIFO, &ts);
+    if (enqueueOK) {
+        fifo_push(&sNotificationFIFO, &notif);
+    }
 #endif
+
+    if (!enqueueOK) {
+        S.stats.drop_cntrs.txts++; // increase the drop counter
+
+        // notify the user
+        CLILOG(S.logging.logid && S.logging.info, "[LOG-INFO] ");
+        CLILOG(S.logging.info, "Failed to enqueue transmit timestamp to the queue, the transmit timestamp was lost.\n");
+    }
 }
 
 bool ptp_read_and_clear_transmit_timestamp(uint32_t tag, TimestampI *pTs) {
@@ -592,7 +665,7 @@ bool ptp_read_and_clear_transmit_timestamp(uint32_t tag, TimestampI *pTs) {
 /**
  * flexPTP's main loop.
  * This function is only exposed if operating in FLEXPTP_OSLESS mode!
- * 
+ *
  * Call this function periodically to advance internal processing if operating in
  * FLEXPTP_OSLESS mode, otherwise the library internally manages it.
  */
@@ -648,7 +721,7 @@ void task_ptp(void) {
         continue;
     }
 #elif defined(FLEXPTP_OSLESS)
-    fifo_pop(&sNotificationFIFO, &notification);
+fifo_pop(&sNotificationFIFO, &notification);
 #endif
         /* ---- TRANSMIT DONE ---- */
         if (notification & PTN_TRANSMIT_DONE) {

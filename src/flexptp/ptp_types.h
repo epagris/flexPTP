@@ -471,6 +471,11 @@ typedef struct {
 typedef struct {
     double filtTimeErr; ///< 0.1Hz lowpass-filtered time error
     bool locked;        ///< is the PTP locked to defined limit?
+    struct {
+        uint32_t rx;    ///< number of incoming messages dropped
+        uint32_t tx;    ///< number of outgoing messages dropped
+        uint32_t txts;  ///< number of transmit timestamps dropped
+    } drop_cntrs;       ///< drop counters
 } PtpStats;
 
 /**
