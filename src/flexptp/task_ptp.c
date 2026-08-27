@@ -503,8 +503,32 @@ void ptp_receive_enqueue(const void *pPayload, uint32_t len, uint32_t ts_sec, ui
         xQueueSend(sRxPacketFIFO, &uid, portMAX_DELAY);       // send index
         xQueueSend(sNotificationFIFO, &notif, portMAX_DELAY); // send notification
 #elif defined(FLEXPTP_CMSIS_OS2)
-        osMessageQueuePut(sRxPacketFIFO, &uid, 0, osWaitForever);
-        osMessageQueuePut(sNotificationFIFO, &notif, 0, osWaitForever);
+        /* Timeout 0, NOT osWaitForever. THIS ONE DEADLOCKS THE WHOLE NETWORK STACK.
+         *
+         * ptp_receive_cb() reaches here, and lwIP calls that from tcpip_thread with
+         * LOCK_TCPIP_CORE HELD. Blocking therefore puts the thread that owns the lwIP core lock
+         * to sleep still holding it, and the wait is circular:
+         *
+         *   tcpip_thread holds the core lock and blocks on sRxPacketFIFO being full;
+         *   sRxPacketFIFO is drained only by task_ptp();
+         *   task_ptp(), to send anything, calls ptp_transmit() -> LOCK_TCPIP_CORE.
+         *
+         * Neither moves and nothing times out. Every user of the lock stops for ever: ARP, ICMP,
+         * every UDP sender in the application, and PTP itself, which falls out of SLAVE and stays
+         * there. Only a reset recovers it. Measured on a NUCLEO-H563ZI by flooding the link for
+         * 120 s; both application senders were caught blocked in LOCK_TCPIP_CORE while the
+         * hardware sampling path carried on perfectly.
+         *
+         * Dropping a PTP message when the queue is full is the correct failure. The protocol is
+         * built for loss -- the servo already tolerates missing Sync and Delay_Resp, which is what
+         * the master timeout counter is for -- and the block is reclaimed by msgb_tick() when its
+         * RX_TTL_MS expires, so nothing leaks. */
+        if (osMessageQueuePut(sRxPacketFIFO, &uid, 0, 0U) == osOK) {
+            /* Index first, notification second, as in ptp_event_enqueue(): the notification only
+               says "something is available", never which, so a lost notification is picked up by
+               the next one. The reverse order strands task_ptp() reading an empty FIFO. */
+            osMessageQueuePut(sNotificationFIFO, &notif, 0, 0U);
+        }
 #elif defined(FLEXPTP_LINUX)
         write(sRxPacketFIFO[1], &uid, sizeof(uint32_t));
 #elif defined(FLEXPTP_OSLESS)
@@ -535,8 +559,12 @@ bool ptp_transmit_enqueue(const RawPtpMessage *pMsg) {
             xQueueSend(sNotificationFIFO, &notif, portMAX_DELAY);
         }
 #elif defined(FLEXPTP_CMSIS_OS2)
-        osMessageQueuePut(sTxPacketFIFO, &uid, 0, osWaitForever);
-        osMessageQueuePut(sNotificationFIFO, &notif, 0, osWaitForever);
+        /* Timeout 0, for the reason ptp_event_enqueue() gives above: master.c and common.c
+         * enqueue from task_ptp() itself, which is the only thread that drains sTxPacketFIFO.
+         * Blocking there is a self-deadlock the moment the queue fills. */
+        if (osMessageQueuePut(sTxPacketFIFO, &uid, 0, 0U) == osOK) {
+            osMessageQueuePut(sNotificationFIFO, &notif, 0, 0U);
+        }
 #elif defined(FLEXPTP_LINUX)
         write(sTxPacketFIFO[1], &uid, sizeof(uint32_t));
 #elif defined(FLEXPTP_OSLESS)
@@ -569,8 +597,14 @@ void ptp_transmit_timestamp_cb(uint32_t uid, uint32_t seconds, uint32_t nanoseco
         xQueueSend(sNotificationFIFO, &notif, portMAX_DELAY);
     }
 #elif defined(FLEXPTP_CMSIS_OS2)
-    osMessageQueuePut(sTxCbFIFO, &ts, 0, osWaitForever);
-    osMessageQueuePut(sNotificationFIFO, &notif, 0, osWaitForever);
+    /* Timeout 0, because this is reachable FROM AN ISR -- the FreeRTOS arm above says so, with its
+     * xPortIsInsideInterrupt() split. CMSIS-RTOS2 has no such split to make: osMessageQueuePut
+     * with a non-zero timeout is invalid from interrupt context and is rejected outright, so
+     * osWaitForever here does not block, it silently loses every transmit timestamp taken in an
+     * ISR. A timeout of 0 is valid from both contexts and is the only form that works in either. */
+    if (osMessageQueuePut(sTxCbFIFO, &ts, 0, 0U) == osOK) {
+        osMessageQueuePut(sNotificationFIFO, &notif, 0, 0U);
+    }
 #elif defined(FLEXPTP_LINUX)
     write(sTxCbFIFO[1], &ts, sizeof(TxTs));
     sem_post(&sTxCbSem);
