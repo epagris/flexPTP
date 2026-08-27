@@ -437,9 +437,28 @@ bool ptp_event_enqueue(const PtpCoreEvent *event) {
         xQueueSend(sNotificationFIFO, &notif, portMAX_DELAY);
     }
 #elif defined(FLEXPTP_CMSIS_OS2)
-    ok = osMessageQueuePut(sEventFIFO, event, 0, osWaitForever) == osOK;
+    /* Timeout 0, NOT osWaitForever.
+     *
+     * ptp_heartbeat_tmr_cb() calls this function, and CMSIS-RTOS2 runs osTimer callbacks in
+     * the RTOS's timer thread. That thread may not block: on ThreadX, _txe_queue_send()
+     * returns TX_WAIT_ERROR outright when the caller is &_tx_timer_thread and the wait option
+     * is not TX_NO_WAIT, which the CMSIS-RTOS2 wrapper reports as osErrorTimeout. So with
+     * osWaitForever EVERY heartbeat is rejected, ptp_process_event() never sees
+     * PTP_CEV_HEARTBEAT, ptp_bmca_tick() never runs, and the BMCA FSM is stranded in
+     * INITIALIZING -- where ptp_handle_announce_msg() discards every Announce through its
+     * `default:` arm and no master is ever selected. The same restriction applies to the
+     * FreeRTOS timer service task, where blocking risks deadlocking it instead.
+     *
+     * Dropping an event when the queue is full is the correct failure for a timer callback,
+     * and it also removes a self-deadlock: ptp_bmca_handle_state_change() enqueues from
+     * task_ptp() itself, i.e. from the only thread that drains this queue. */
+    ok = osMessageQueuePut(sEventFIFO, event, 0, 0U) == osOK;
     if (ok) {
-        osMessageQueuePut(sNotificationFIFO, &notif, 0, osWaitForever);
+        /* Event first, notification second, and both non-blocking. If the notification is
+           lost the event is not: it stays queued and is consumed by the next notification,
+           because the notification only says "an event is available", never which one. The
+           reverse order would strand task_ptp() in a blocking read of an empty event FIFO. */
+        osMessageQueuePut(sNotificationFIFO, &notif, 0, 0U);
     }
 #elif defined(FLEXPTP_LINUX)
     size_t len = sizeof(PtpCoreEvent);
