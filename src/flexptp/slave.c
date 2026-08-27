@@ -32,6 +32,13 @@
  * @param tuning_ppb clock tuning in PPB
  */
 static void ptp_tune_clock(float tuning_ppb) {
+    // Refuse a non-finite tuning value. Converting NaN or infinity to an integer is
+    // unpredictable (ARM yields 0, x86 yields INT64_MIN), so a single poisoned sample
+    // would either freeze the addend for ever or destroy it outright.
+    if (!isfinite(tuning_ppb)) {
+        return;
+    }
+
 #ifdef PTP_ADDEND_INTERFACE
     int64_t compAddend = (int64_t)S.hwclock.addend + (int64_t)(tuning_ppb * PTP_ADDEND_CORR_PER_PPB_F); // compute addend value
     S.hwclock.addend = MIN(compAddend, 0xFFFFFFFF);                                                     // limit to 32-bit range
@@ -125,6 +132,15 @@ static void ptp_perform_correction() {
     TimestampI measSyncPeriod;
     subTime(&measSyncPeriod, &syncMa, &(S.slave.prevSyncMa));
     int64_t measSyncPeriod_ns = nsI(&measSyncPeriod);
+
+    // A Sync cycle that did not advance in master time - the same Sync processed twice, or
+    // two Syncs bearing the same originTimestamp - gives a zero or negative measured period.
+    // Every servo divides by this value, so passing it on produces NaN and, because NaN
+    // propagates through the filter state, silently disables clock correction from then on.
+    if (measSyncPeriod_ns <= 0) {
+        CLILOG(S.logging.info, "Sync cycle did not advance in master time; cycle skipped.\n");
+        goto retain_cycle_data;
+    }
 
     // ------------------------------
 
