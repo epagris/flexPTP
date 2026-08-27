@@ -60,6 +60,18 @@ bool is_flexPTP_operating();
 void ptp_receive_enqueue(const void *pPayload, uint32_t len, uint32_t ts_sec, uint32_t ts_ns, int tp);
 
 /**
+ * Read the enqueue drop counters.
+ *
+ * The enqueue paths above drop rather than block when a queue is full; these count the
+ * refusals, so a saturated link shows up as a number instead of as silence.
+ *
+ * @param rx   refused receive enqueues, or NULL
+ * @param tx   refused transmit enqueues, or NULL
+ * @param txCb refused transmit-timestamp enqueues, or NULL
+ */
+void ptp_enqueue_drop_stats(uint32_t *rx, uint32_t *tx, uint32_t *txCb);
+
+/**
  * Put a PTP message into the transmit queue.
  * 
  * @param pMsg pointer to raw PTP message. Can be discarded after the function has returned.

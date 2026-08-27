@@ -472,6 +472,18 @@ bool ptp_event_enqueue(const PtpCoreEvent *event) {
     return ok;
 }
 
+/* Enqueues refused because a queue was full.
+ *
+ * These exist because the non-blocking puts above turn a hang into a drop, and a drop nobody
+ * counts is just a quieter bug. Read them with ptp_enqueue_drop_stats(). */
+static uint32_t sRxEnqueueDropped, sTxEnqueueDropped, sTxCbEnqueueDropped;
+
+void ptp_enqueue_drop_stats(uint32_t *rx, uint32_t *tx, uint32_t *txCb) {
+    if (rx) { *rx = sRxEnqueueDropped; }
+    if (tx) { *tx = sTxEnqueueDropped; }
+    if (txCb) { *txCb = sTxCbEnqueueDropped; }
+}
+
 // put ptp message onto processing queue
 void ptp_receive_enqueue(const void *pPayload, uint32_t len, uint32_t ts_sec, uint32_t ts_ns, int tp) {
     // only consider messages received on the matching transport layer
@@ -528,6 +540,8 @@ void ptp_receive_enqueue(const void *pPayload, uint32_t len, uint32_t ts_sec, ui
                says "something is available", never which, so a lost notification is picked up by
                the next one. The reverse order strands task_ptp() reading an empty FIFO. */
             osMessageQueuePut(sNotificationFIFO, &notif, 0, 0U);
+        } else {
+            sRxEnqueueDropped++;
         }
 #elif defined(FLEXPTP_LINUX)
         write(sRxPacketFIFO[1], &uid, sizeof(uint32_t));
@@ -564,6 +578,8 @@ bool ptp_transmit_enqueue(const RawPtpMessage *pMsg) {
          * Blocking there is a self-deadlock the moment the queue fills. */
         if (osMessageQueuePut(sTxPacketFIFO, &uid, 0, 0U) == osOK) {
             osMessageQueuePut(sNotificationFIFO, &notif, 0, 0U);
+        } else {
+            sTxEnqueueDropped++;
         }
 #elif defined(FLEXPTP_LINUX)
         write(sTxPacketFIFO[1], &uid, sizeof(uint32_t));
@@ -604,6 +620,8 @@ void ptp_transmit_timestamp_cb(uint32_t uid, uint32_t seconds, uint32_t nanoseco
      * ISR. A timeout of 0 is valid from both contexts and is the only form that works in either. */
     if (osMessageQueuePut(sTxCbFIFO, &ts, 0, 0U) == osOK) {
         osMessageQueuePut(sNotificationFIFO, &notif, 0, 0U);
+    } else {
+        sTxCbEnqueueDropped++;
     }
 #elif defined(FLEXPTP_LINUX)
     write(sTxCbFIFO[1], &ts, sizeof(TxTs));
