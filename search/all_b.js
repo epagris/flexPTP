@@ -20,7 +20,7 @@ var searchData=
   ['logdelayreqperiod_17',['logDelayReqPeriod',['../struct_ptp_profile.html#aa4a5197a9f19e733563837ba13b7d287',1,'PtpProfile']]],
   ['logenfn_18',['LogEnFn',['../logging_8c.html#a74f1eb2b4a7c7bf8070f8b26acfcc685',1,'logging.c']]],
   ['logenfn_19',['logEnFn',['../struct_ptp_log_pair.html#aa41fb09147ea99bf9b7ef84e5d0e4a10',1,'PtpLogPair']]],
-  ['logging_20',['logging',['../struct_ptp_core_state.html#aac454ff27abef049fb30897dc5969ae6',1,'PtpCoreState::logging()'],['../struct_ptp_config.html#a84f34d88e52a2347aaa56be8ee7cb6d1',1,'PtpConfig::logging()']]],
+  ['logging_20',['logging',['../struct_ptp_core_state.html#a136f2e5701d6f119ab36e26fb5f5546a',1,'PtpCoreState::logging()'],['../struct_ptp_config.html#a84f34d88e52a2347aaa56be8ee7cb6d1',1,'PtpConfig::logging()']]],
   ['logging_2ec_21',['logging.c',['../logging_8c.html',1,'']]],
   ['logging_2eh_22',['logging.h',['../logging_8h.html',1,'']]],
   ['logid_23',['logid',['../struct_ptp_core_state.html#a4aecc63d1b9b70644148d1ac5665627b',1,'PtpCoreState']]],

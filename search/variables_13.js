@@ -16,11 +16,13 @@ var searchData=
   ['transportspecific_13',['transportSpecific',['../struct_ptp_header.html#afa1879bafa3cd320eb711494f1714c42',1,'PtpHeader::transportSpecific()'],['../struct_ptp_profile.html#a565e44b1f5c8d3f032243d521061123f',1,'PtpProfile::transportSpecific()']]],
   ['transporttype_14',['transportType',['../struct_ptp_profile.html#ab41e92289a99a933196c0579584ee125',1,'PtpProfile']]],
   ['ts_15',['ts',['../struct_raw_ptp_message.html#a06502a84afe4ba1fbba014e46d371cce',1,'RawPtpMessage']]],
-  ['ttl_16',['ttl',['../struct_raw_ptp_message.html#a48b9f3382e0929bbd75cda2bf2838126',1,'RawPtpMessage::ttl()'],['../struct_ptp_msg_buf_block.html#a48b9f3382e0929bbd75cda2bf2838126',1,'PtpMsgBufBlock::ttl()']]],
+  ['ttl_16',['ttl',['../struct_ptp_msg_buf_block.html#a48b9f3382e0929bbd75cda2bf2838126',1,'PtpMsgBufBlock::ttl()'],['../struct_raw_ptp_message.html#a48b9f3382e0929bbd75cda2bf2838126',1,'RawPtpMessage::ttl()']]],
   ['tuning_5fnext_5fcycle_5fvalid_17',['tuning_next_cycle_valid',['../debug__servo_8c.html#abc1cb5270cec035f3ab4905af723d25f',1,'debug_servo.c']]],
   ['tuning_5fnext_5fppb_18',['tuning_next_ppb',['../debug__servo_8c.html#a400e0cd027dc35dc51f387f4203aaf1d',1,'debug_servo.c']]],
-  ['tx_5fdm_19',['tx_dm',['../struct_raw_ptp_message.html#a3b583b1797c3a7a9d9005d91dc0a4e9f',1,'RawPtpMessage']]],
-  ['tx_5fmc_20',['tx_mc',['../struct_raw_ptp_message.html#a55c08cfdeb417213fc90ff8725cdbab5',1,'RawPtpMessage']]],
-  ['tx_5fmt_21',['tx_mt',['../struct_raw_ptp_message.html#aa998d765533577b5b9810b3ab589f627',1,'RawPtpMessage']]],
-  ['type_22',['type',['../struct_ptp_tlv_header.html#acb5cfd209ba75c853d03f701e7f91679',1,'PtpTlvHeader']]]
+  ['tx_19',['tx',['../struct_ptp_stats.html#a9706173b2ed538efeb5ee4a952e2272f',1,'PtpStats']]],
+  ['tx_5fdm_20',['tx_dm',['../struct_raw_ptp_message.html#a3b583b1797c3a7a9d9005d91dc0a4e9f',1,'RawPtpMessage']]],
+  ['tx_5fmc_21',['tx_mc',['../struct_raw_ptp_message.html#a55c08cfdeb417213fc90ff8725cdbab5',1,'RawPtpMessage']]],
+  ['tx_5fmt_22',['tx_mt',['../struct_raw_ptp_message.html#aa998d765533577b5b9810b3ab589f627',1,'RawPtpMessage']]],
+  ['txts_23',['txts',['../struct_ptp_stats.html#a0197d75083ea503fe12c8e9d31c8eee3',1,'PtpStats']]],
+  ['type_24',['type',['../struct_ptp_tlv_header.html#acb5cfd209ba75c853d03f701e7f91679',1,'PtpTlvHeader']]]
 ];

@@ -11,7 +11,7 @@ var searchData=
   ['logannounceperiod_8',['logAnnouncePeriod',['../struct_ptp_profile.html#a7687a0ed0d897383d3ff43627eeab87a',1,'PtpProfile']]],
   ['logdelayreqperiod_9',['logDelayReqPeriod',['../struct_ptp_profile.html#aa4a5197a9f19e733563837ba13b7d287',1,'PtpProfile']]],
   ['logenfn_10',['logEnFn',['../struct_ptp_log_pair.html#aa41fb09147ea99bf9b7ef84e5d0e4a10',1,'PtpLogPair']]],
-  ['logging_11',['logging',['../struct_ptp_config.html#a84f34d88e52a2347aaa56be8ee7cb6d1',1,'PtpConfig::logging()'],['../struct_ptp_core_state.html#aac454ff27abef049fb30897dc5969ae6',1,'PtpCoreState::logging()']]],
+  ['logging_11',['logging',['../struct_ptp_config.html#a84f34d88e52a2347aaa56be8ee7cb6d1',1,'PtpConfig::logging()'],['../struct_ptp_core_state.html#a136f2e5701d6f119ab36e26fb5f5546a',1,'PtpCoreState::logging()']]],
   ['logid_12',['logid',['../struct_ptp_core_state.html#a4aecc63d1b9b70644148d1ac5665627b',1,'PtpCoreState']]],
   ['loginternals_13',['logInternals',['../pid__controller_8c.html#a4fab0a1000c3c7f3874a2fbf10ad3392',1,'pid_controller.c']]],
   ['logmessageperiod_14',['logMessagePeriod',['../struct_ptp_header.html#a0d710d88dd0b06608b0f09727f0b8f9a',1,'PtpHeader']]],

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['m2sstate_0',['m2sState',['../struct_ptp_slave_messaging_state.html#ad0c9f45855855a13e2201b234bd8dc56',1,'PtpSlaveMessagingState']]],
-  ['master_1',['master',['../struct_ptp_core_state.html#a5570488fe82480a0f683f19d046bf2b8',1,'PtpCoreState']]],
+  ['master_1',['master',['../struct_ptp_core_state.html#ad88d4356c2a404139f75baeec518b894',1,'PtpCoreState']]],
   ['masterannper_5fms_2',['masterAnnPer_ms',['../struct_ptp_bmca_state.html#ac2c9d0b58be6912863d971f4c8e457bb',1,'PtpBmcaState']]],
   ['masterprops_3',['masterProps',['../struct_ptp_bmca_state.html#a25d3bb8049c227870beb4436443c74c0',1,'PtpBmcaState']]],
   ['mastertocntr_4',['masterTOCntr',['../struct_ptp_bmca_state.html#a362f0de2909a16ae33cd64dbee2d0d0c',1,'PtpBmcaState']]],

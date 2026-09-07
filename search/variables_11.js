@@ -6,5 +6,6 @@ var searchData=
   ['reportcount_3',['reportCount',['../struct_ptp_p2_p_slave_info.html#a14dbd95c4669b76d6eb23f0abd7a3c90',1,'PtpP2PSlaveInfo']]],
   ['requestingsourceclockidentity_4',['requestingSourceClockIdentity',['../struct_ptp_delay___resp_identification.html#a4662e5e1e8dc5e8d9ea725942ee886a2',1,'PtpDelay_RespIdentification']]],
   ['requestingsourceportidentity_5',['requestingSourcePortIdentity',['../struct_ptp_delay___resp_identification.html#a646597c6713dab47cc8eeab469ba2c17',1,'PtpDelay_RespIdentification']]],
-  ['rx_5fctrl_5fbuf_6',['rx_ctrl_buf',['../nsd__linux_8c.html#ad8dd2a3133f4c5b1a7af74839a068305',1,'nsd_linux.c']]]
+  ['rx_6',['rx',['../struct_ptp_stats.html#a895532773c3204e1538191f155c7bac8',1,'PtpStats']]],
+  ['rx_5fctrl_5fbuf_7',['rx_ctrl_buf',['../nsd__linux_8c.html#ad8dd2a3133f4c5b1a7af74839a068305',1,'nsd_linux.c']]]
 ];

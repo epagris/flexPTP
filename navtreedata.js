@@ -201,7 +201,7 @@ var NAVTREEINDEX =
 "porting.html#port-config-master",
 "ptp__types_8h.html#a3f2d7e7b45322fb28732f5734365b2d3a4c6adfdd5b2e49e66f1db8ff5457e062",
 "stats_8c.html#a0e51f646bd833d4c81099b0018303b40",
-"task__ptp_8c.html#a40b9087c0168e13e36ca9c07ea8584fa"
+"task__ptp_8c.html#a2670d7e2f02b9edd806eeeb6b2782069"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -12,7 +12,7 @@ var searchData=
   ['size_9',['size',['../struct_ptp_profile_tlv_element.html#aaba88b24a21a6c70c895c0d55f4a69a0',1,'PtpProfileTlvElement::size()'],['../struct_raw_ptp_message.html#ab2c6b258f02add8fdf4cfc7c371dd772',1,'RawPtpMessage::size()']]],
   ['skew0_10',['skew0',['../debug__servo_8c.html#a5047075f96a62c1581a5864a521e7c90',1,'debug_servo.c']]],
   ['skew_5fprev_11',['skew_prev',['../debug__servo_8c.html#a341ef134c428ccd31f15ac6555096480',1,'debug_servo.c']]],
-  ['slave_12',['slave',['../struct_ptp_core_state.html#a8b7259527e965e592d607228f66f5bf6',1,'PtpCoreState']]],
+  ['slave_12',['slave',['../struct_ptp_core_state.html#a2ae522224c80b801136ab202e22e28a6',1,'PtpCoreState']]],
   ['slogintervalms_13',['sLogIntervalMs',['../format__utils_8c.html#a3ef889a0ec7ba30bb179ef65e7b7f3fe',1,'format_utils.c']]],
   ['slogtable_14',['sLogTable',['../logging_8c.html#a25b39bc62f3d48b2b1017cec61b9ef2c',1,'logging.c']]],
   ['sourceportid_15',['sourcePortID',['../struct_ptp_header.html#a8a57cb431de78dcd24a5af1d3af3fcb9',1,'PtpHeader']]],

@@ -134,12 +134,41 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a18a0f1e6c3d21c252b14ea6ae162e2ff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ptp_stats.html#a18a0f1e6c3d21c252b14ea6ae162e2ff">locked</a></td></tr>
 <tr class="memdesc:a18a0f1e6c3d21c252b14ea6ae162e2ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">is the PTP locked to defined limit?  <br /></td></tr>
 <tr class="separator:a18a0f1e6c3d21c252b14ea6ae162e2ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a215003f405283e0368093e15eb3d015b"><td class="memItemLeft" >struct {</td></tr>
+<tr class="memitem:a895532773c3204e1538191f155c7bac8"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="struct_ptp_stats.html#a895532773c3204e1538191f155c7bac8">rx</a></td></tr>
+<tr class="memdesc:a895532773c3204e1538191f155c7bac8"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of incoming messages dropped  <a href="struct_ptp_stats.html#a895532773c3204e1538191f155c7bac8">More...</a><br /></td></tr>
+<tr class="separator:a895532773c3204e1538191f155c7bac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9706173b2ed538efeb5ee4a952e2272f"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="struct_ptp_stats.html#a9706173b2ed538efeb5ee4a952e2272f">tx</a></td></tr>
+<tr class="memdesc:a9706173b2ed538efeb5ee4a952e2272f"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of outgoing messages dropped  <a href="struct_ptp_stats.html#a9706173b2ed538efeb5ee4a952e2272f">More...</a><br /></td></tr>
+<tr class="separator:a9706173b2ed538efeb5ee4a952e2272f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0197d75083ea503fe12c8e9d31c8eee3"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="struct_ptp_stats.html#a0197d75083ea503fe12c8e9d31c8eee3">txts</a></td></tr>
+<tr class="memdesc:a0197d75083ea503fe12c8e9d31c8eee3"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of transmit timestamps dropped  <a href="struct_ptp_stats.html#a0197d75083ea503fe12c8e9d31c8eee3">More...</a><br /></td></tr>
+<tr class="separator:a0197d75083ea503fe12c8e9d31c8eee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a215003f405283e0368093e15eb3d015b"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ptp_stats.html#a215003f405283e0368093e15eb3d015b">drop_cntrs</a></td></tr>
+<tr class="memdesc:a215003f405283e0368093e15eb3d015b"><td class="mdescLeft">&#160;</td><td class="mdescRight">drop counters  <br /></td></tr>
+<tr class="separator:a215003f405283e0368093e15eb3d015b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Structure for statistics. </p>
 
 <p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00471">471</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
+<a id="a215003f405283e0368093e15eb3d015b" name="a215003f405283e0368093e15eb3d015b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a215003f405283e0368093e15eb3d015b">&#9670;&#160;</a></span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct  { ... }  drop_cntrs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>drop counters </p>
+
+</div>
+</div>
 <a id="adfaac3dabe9e6a1863b6a2748fa25e60" name="adfaac3dabe9e6a1863b6a2748fa25e60"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adfaac3dabe9e6a1863b6a2748fa25e60">&#9670;&#160;</a></span>filtTimeErr</h2>
 
@@ -173,6 +202,60 @@ Data Fields</h2></td></tr>
 <p>is the PTP locked to defined limit? </p>
 
 <p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00473">473</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+
+</div>
+</div>
+<a id="a895532773c3204e1538191f155c7bac8" name="a895532773c3204e1538191f155c7bac8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a895532773c3204e1538191f155c7bac8">&#9670;&#160;</a></span>rx</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t rx</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>number of incoming messages dropped </p>
+
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00475">475</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+
+</div>
+</div>
+<a id="a9706173b2ed538efeb5ee4a952e2272f" name="a9706173b2ed538efeb5ee4a952e2272f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9706173b2ed538efeb5ee4a952e2272f">&#9670;&#160;</a></span>tx</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t tx</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>number of outgoing messages dropped </p>
+
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00476">476</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+
+</div>
+</div>
+<a id="a0197d75083ea503fe12c8e9d31c8eee3" name="a0197d75083ea503fe12c8e9d31c8eee3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0197d75083ea503fe12c8e9d31c8eee3">&#9670;&#160;</a></span>txts</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t txts</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>number of transmit timestamps dropped </p>
+
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00477">477</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
