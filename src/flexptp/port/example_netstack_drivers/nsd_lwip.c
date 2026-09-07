@@ -112,6 +112,13 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
     struct pbuf *p = NULL;
     p = pbuf_alloc((TP == PTP_TP_IPv4) ? PBUF_TRANSPORT : PBUF_LINK, pMsg->size, PBUF_RAM);
 
+    /* pbuf_alloc() returns NULL when lwIP's heap is exhausted, which sustained receive pressure
+     * will do. Dereferencing it here faulted the board rather than dropping a message -- and a
+     * transmit that cannot get memory is exactly the case where dropping is right. */
+    if (p == NULL) {
+        return;
+    }
+
     // fill buffer
     memcpy(p->payload, pMsg->data, pMsg->size);
 
