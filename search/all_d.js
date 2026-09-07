@@ -11,8 +11,8 @@ var searchData=
   ['network_8',['network',['../struct_ptp_core_state.html#ad3152e5b349dd81ec7e539538d459798',1,'PtpCoreState']]],
   ['network_5fstack_5fdriver_2eh_9',['network_stack_driver.h',['../network__stack__driver_8h.html',1,'']]],
   ['next_10',['next',['../struct_ptp_profile_tlv_element.html#a456b4a040ed86fc9ef66131d7af0b753',1,'PtpProfileTlvElement']]],
-  ['nonzeroi_11',['nonZeroI',['../timeutils_8c.html#ada6061bfcc5b646d43237ea7eaf649e7',1,'nonZeroI(const TimestampI *a):&#160;timeutils.c'],['../timeutils_8h.html#ada6061bfcc5b646d43237ea7eaf649e7',1,'nonZeroI(const TimestampI *a):&#160;timeutils.c']]],
-  ['normtime_12',['normTime',['../timeutils_8c.html#a3b876448cba5f01f2161ac6a92cf5f10',1,'normTime(TimestampI *t):&#160;timeutils.c'],['../timeutils_8h.html#a3b876448cba5f01f2161ac6a92cf5f10',1,'normTime(TimestampI *t):&#160;timeutils.c']]],
+  ['nonzeroi_11',['nonZeroI',['../timeutils_8h.html#ada6061bfcc5b646d43237ea7eaf649e7',1,'nonZeroI(const TimestampI *a):&#160;timeutils.c'],['../timeutils_8c.html#ada6061bfcc5b646d43237ea7eaf649e7',1,'nonZeroI(const TimestampI *a):&#160;timeutils.c']]],
+  ['normtime_12',['normTime',['../timeutils_8h.html#a3b876448cba5f01f2161ac6a92cf5f10',1,'normTime(TimestampI *t):&#160;timeutils.c'],['../timeutils_8c.html#a3b876448cba5f01f2161ac6a92cf5f10',1,'normTime(TimestampI *t):&#160;timeutils.c']]],
   ['notif_5fq_13',['notif_q',['../nsd__linux_8c.html#a3371ddfdbc8716f4e743a9bffd8b6695',1,'nsd_linux.c']]],
   ['notif_5fquit_5ftransceiver_5fthread_14',['NOTIF_QUIT_TRANSCEIVER_THREAD',['../nsd__linux_8c.html#a9ad1df4d169f93f8a61e3a6c94e7863b',1,'nsd_linux.c']]],
   ['notification_5ffifo_5flength_15',['NOTIFICATION_FIFO_LENGTH',['../task__ptp_8c.html#a761b896e14cf79b785ebe72bb5722863',1,'task_ptp.c']]],
@@ -21,7 +21,8 @@ var searchData=
   ['nsd_5flinux_2eh_18',['nsd_linux.h',['../nsd__linux_8h.html',1,'']]],
   ['nsd_5flwip_2ec_19',['nsd_lwip.c',['../nsd__lwip_8c.html',1,'']]],
   ['nsd_5fthread_20',['nsd_thread',['../nsd__linux_8c.html#af6d53f8d6d6938dde1cbcd95691310c5',1,'nsd_linux.c']]],
-  ['nsi_21',['nsI',['../timeutils_8c.html#aeafa0e99e33322bc15b3cd72e55c20cb',1,'nsI(const TimestampI *t):&#160;timeutils.c'],['../timeutils_8h.html#aeafa0e99e33322bc15b3cd72e55c20cb',1,'nsI(const TimestampI *t):&#160;timeutils.c']]],
-  ['nstotsi_22',['nsToTsI',['../timeutils_8c.html#a68a4c95e41c12a7c5571429724eab641',1,'nsToTsI(TimestampI *r, int64_t ns):&#160;timeutils.c'],['../timeutils_8h.html#a68a4c95e41c12a7c5571429724eab641',1,'nsToTsI(TimestampI *r, int64_t ns):&#160;timeutils.c']]],
-  ['nsu_23',['nsU',['../timeutils_8c.html#a01f0cfff16dabb344cf49fd17f852ca2',1,'nsU(const TimestampU *t):&#160;timeutils.c'],['../timeutils_8h.html#a01f0cfff16dabb344cf49fd17f852ca2',1,'nsU(const TimestampU *t):&#160;timeutils.c']]]
+  ['nsdinitsettings_21',['NsdInitSettings',['../struct_nsd_init_settings.html',1,'']]],
+  ['nsi_22',['nsI',['../timeutils_8c.html#aeafa0e99e33322bc15b3cd72e55c20cb',1,'nsI(const TimestampI *t):&#160;timeutils.c'],['../timeutils_8h.html#aeafa0e99e33322bc15b3cd72e55c20cb',1,'nsI(const TimestampI *t):&#160;timeutils.c']]],
+  ['nstotsi_23',['nsToTsI',['../timeutils_8c.html#a68a4c95e41c12a7c5571429724eab641',1,'nsToTsI(TimestampI *r, int64_t ns):&#160;timeutils.c'],['../timeutils_8h.html#a68a4c95e41c12a7c5571429724eab641',1,'nsToTsI(TimestampI *r, int64_t ns):&#160;timeutils.c']]],
+  ['nsu_24',['nsU',['../timeutils_8c.html#a01f0cfff16dabb344cf49fd17f852ca2',1,'nsU(const TimestampU *t):&#160;timeutils.c'],['../timeutils_8h.html#a01f0cfff16dabb344cf49fd17f852ca2',1,'nsU(const TimestampU *t):&#160;timeutils.c']]]
 ];

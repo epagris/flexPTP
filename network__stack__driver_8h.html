@@ -116,6 +116,7 @@ $(document).ready(function(){initNavTree('network__stack__driver_8h.html',''); i
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">network_stack_driver.h File Reference</div></div>
 </div><!--header-->
@@ -128,10 +129,16 @@ $(document).ready(function(){initNavTree('network__stack__driver_8h.html',''); i
 </div>
 <p><a href="network__stack__driver_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_nsd_init_settings.html">NsdInitSettings</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Network Stack Driver initialization object.  <a href="struct_nsd_init_settings.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a448d70ee83a66f7dd5f5e602c7f41b8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="network__stack__driver_8h.html#a448d70ee83a66f7dd5f5e602c7f41b8d">ptp_nsd_init</a> (<a class="el" href="ptp__types_8h.html#a2964210d435f30e9125953c23045ea0b">PtpTransportType</a> tp, <a class="el" href="ptp__types_8h.html#aa353086afe318bec4ec7ce3757ba478e">PtpDelayMechanism</a> dm)</td></tr>
-<tr class="separator:a448d70ee83a66f7dd5f5e602c7f41b8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24753749e0c2b12123c939fcddb1981e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="network__stack__driver_8h.html#a24753749e0c2b12123c939fcddb1981e">ptp_nsd_init</a> (const <a class="el" href="struct_nsd_init_settings.html">NsdInitSettings</a> *init)</td></tr>
+<tr class="separator:a24753749e0c2b12123c939fcddb1981e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8084e66715ef332fa46c677421f6b20f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="network__stack__driver_8h.html#a8084e66715ef332fa46c677421f6b20f">ptp_nsd_get_interface_address</a> (uint8_t *hwa)</td></tr>
 <tr class="separator:a8084e66715ef332fa46c677421f6b20f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a202fbe6ff51f6e1f54b9792ea10f3b25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="network__stack__driver_8h.html#a202fbe6ff51f6e1f54b9792ea10f3b25">ptp_nsd_transmit_msg</a> (<a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a> *pMsg, uint32_t uid)</td></tr>
@@ -168,7 +175,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00138">138</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00178">178</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
 
 </div>
 </div>
@@ -189,12 +196,12 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Join or leave IGMP groups associated with the current PTP profile. </p>
 
-<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00032">32</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00040">40</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
 
 </div>
 </div>
-<a id="a448d70ee83a66f7dd5f5e602c7f41b8d" name="a448d70ee83a66f7dd5f5e602c7f41b8d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a448d70ee83a66f7dd5f5e602c7f41b8d">&#9670;&#160;</a></span>ptp_nsd_init()</h2>
+<a id="a24753749e0c2b12123c939fcddb1981e" name="a24753749e0c2b12123c939fcddb1981e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24753749e0c2b12123c939fcddb1981e">&#9670;&#160;</a></span>ptp_nsd_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -202,32 +209,21 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void ptp_nsd_init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="ptp__types_8h.html#a2964210d435f30e9125953c23045ea0b">PtpTransportType</a>&#160;</td>
-          <td class="paramname"><em>tp</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">const <a class="el" href="struct_nsd_init_settings.html">NsdInitSettings</a> *&#160;</td>
+          <td class="paramname"><em>init</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="ptp__types_8h.html#aa353086afe318bec4ec7ce3757ba478e">PtpDelayMechanism</a>&#160;</td>
-          <td class="paramname"><em>dm</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Initialize or reinitialize the Network Stack Driver.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">tp</td><td>PTP transport type </td></tr>
-    <tr><td class="paramname">dm</td><td>PTP delay mechanism </td></tr>
+    <tr><td class="paramname">init</td><td>NSD initialization settings </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00050">50</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00063">63</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
 
 </div>
 </div>
@@ -265,7 +261,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00123">123</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00159">159</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
 
 </div>
 </div>

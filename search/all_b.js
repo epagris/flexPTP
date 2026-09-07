@@ -23,9 +23,10 @@ var searchData=
   ['logging_20',['logging',['../struct_ptp_core_state.html#aac454ff27abef049fb30897dc5969ae6',1,'PtpCoreState::logging()'],['../struct_ptp_config.html#a84f34d88e52a2347aaa56be8ee7cb6d1',1,'PtpConfig::logging()']]],
   ['logging_2ec_21',['logging.c',['../logging_8c.html',1,'']]],
   ['logging_2eh_22',['logging.h',['../logging_8h.html',1,'']]],
-  ['loginternals_23',['logInternals',['../pid__controller_8c.html#a4fab0a1000c3c7f3874a2fbf10ad3392',1,'pid_controller.c']]],
-  ['logmessageperiod_24',['logMessagePeriod',['../struct_ptp_header.html#a0d710d88dd0b06608b0f09727f0b8f9a',1,'PtpHeader']]],
-  ['logmsgperiod_25',['logMsgPeriod',['../struct_ptp_servo_aux_input.html#abb39f6832a248c19d5d483d1fcc5f896',1,'PtpServoAuxInput']]],
-  ['logsyncperiod_26',['logSyncPeriod',['../struct_ptp_slave_messaging_state.html#a7152060b72424b6a333d63fd43c15cfd',1,'PtpSlaveMessagingState::logSyncPeriod()'],['../struct_ptp_profile.html#a7152060b72424b6a333d63fd43c15cfd',1,'PtpProfile::logSyncPeriod()']]],
-  ['lwip_27',['LWIP',['../flexptp__options__mk64f_8h.html#a0b16f7d87defe461f8b183936f294d58',1,'LWIP():&#160;flexptp_options_mk64f.h'],['../flexptp__options__stm32h743_8h.html#a0b16f7d87defe461f8b183936f294d58',1,'LWIP():&#160;flexptp_options_stm32h743.h'],['../flexptp__options__tm4c1294_8h.html#a0b16f7d87defe461f8b183936f294d58',1,'LWIP():&#160;flexptp_options_tm4c1294.h']]]
+  ['logid_23',['logid',['../struct_ptp_core_state.html#a4aecc63d1b9b70644148d1ac5665627b',1,'PtpCoreState']]],
+  ['loginternals_24',['logInternals',['../pid__controller_8c.html#a4fab0a1000c3c7f3874a2fbf10ad3392',1,'pid_controller.c']]],
+  ['logmessageperiod_25',['logMessagePeriod',['../struct_ptp_header.html#a0d710d88dd0b06608b0f09727f0b8f9a',1,'PtpHeader']]],
+  ['logmsgperiod_26',['logMsgPeriod',['../struct_ptp_servo_aux_input.html#abb39f6832a248c19d5d483d1fcc5f896',1,'PtpServoAuxInput']]],
+  ['logsyncperiod_27',['logSyncPeriod',['../struct_ptp_profile.html#a7152060b72424b6a333d63fd43c15cfd',1,'PtpProfile::logSyncPeriod()'],['../struct_ptp_slave_messaging_state.html#a7152060b72424b6a333d63fd43c15cfd',1,'PtpSlaveMessagingState::logSyncPeriod()']]],
+  ['lwip_28',['LWIP',['../flexptp__options__mk64f_8h.html#a0b16f7d87defe461f8b183936f294d58',1,'LWIP():&#160;flexptp_options_mk64f.h'],['../flexptp__options__stm32h743_8h.html#a0b16f7d87defe461f8b183936f294d58',1,'LWIP():&#160;flexptp_options_stm32h743.h'],['../flexptp__options__tm4c1294_8h.html#a0b16f7d87defe461f8b183936f294d58',1,'LWIP():&#160;flexptp_options_tm4c1294.h']]]
 ];

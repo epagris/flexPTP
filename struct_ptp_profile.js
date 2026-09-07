@@ -6,6 +6,8 @@ var struct_ptp_profile =
     [ "logAnnouncePeriod", "struct_ptp_profile.html#a7687a0ed0d897383d3ff43627eeab87a", null ],
     [ "logDelayReqPeriod", "struct_ptp_profile.html#aa4a5197a9f19e733563837ba13b7d287", null ],
     [ "logSyncPeriod", "struct_ptp_profile.html#a7152060b72424b6a333d63fd43c15cfd", null ],
+    [ "pdelay_p2p_8023_destination", "struct_ptp_profile.html#ac6c8c8e2b3208d179ae1464219a98218", null ],
+    [ "primary_p2p_8023_destination", "struct_ptp_profile.html#a19a3efbcd31ee48006259c77909dd752", null ],
     [ "tlvSet", "struct_ptp_profile.html#ab8c66e2caead1feffe76d516d3099f0c", null ],
     [ "transportSpecific", "struct_ptp_profile.html#a565e44b1f5c8d3f032243d521061123f", null ],
     [ "transportType", "struct_ptp_profile.html#ab41e92289a99a933196c0579584ee125", null ]

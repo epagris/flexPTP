@@ -142,7 +142,7 @@ $(document).ready(function(){initNavTree('nsd__etherlib_8c.html',''); initResiza
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a351f965604b5c77e7388b617d73d35b3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#a351f965604b5c77e7388b617d73d35b3">CLOSE_CONNECTION_IF_EXISTS</a>(d)&#160;&#160;&#160;if (d &gt;= CBD_LOWEST_DESCRIPTOR) { close_connection(d); d = 0; }</td></tr>
+<tr class="memitem:a351f965604b5c77e7388b617d73d35b3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#a351f965604b5c77e7388b617d73d35b3">CLOSE_CONNECTION_IF_EXISTS</a>(d)</td></tr>
 <tr class="separator:a351f965604b5c77e7388b617d73d35b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -153,8 +153,8 @@ Functions</h2></td></tr>
 <tr class="separator:a02a429dfa3337a5cee57e3c3d6bab0a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a403275d7e5b31f6714a93ebd28d1c2e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#a403275d7e5b31f6714a93ebd28d1c2e4">ptp_nsd_igmp_join_leave</a> (bool join)</td></tr>
 <tr class="separator:a403275d7e5b31f6714a93ebd28d1c2e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a448d70ee83a66f7dd5f5e602c7f41b8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#a448d70ee83a66f7dd5f5e602c7f41b8d">ptp_nsd_init</a> (<a class="el" href="ptp__types_8h.html#a2964210d435f30e9125953c23045ea0b">PtpTransportType</a> tp, <a class="el" href="ptp__types_8h.html#aa353086afe318bec4ec7ce3757ba478e">PtpDelayMechanism</a> dm)</td></tr>
-<tr class="separator:a448d70ee83a66f7dd5f5e602c7f41b8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24753749e0c2b12123c939fcddb1981e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#a24753749e0c2b12123c939fcddb1981e">ptp_nsd_init</a> (const <a class="el" href="struct_nsd_init_settings.html">NsdInitSettings</a> *init)</td></tr>
+<tr class="separator:a24753749e0c2b12123c939fcddb1981e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a202fbe6ff51f6e1f54b9792ea10f3b25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#a202fbe6ff51f6e1f54b9792ea10f3b25">ptp_nsd_transmit_msg</a> (<a class="el" href="struct_raw_ptp_message.html">RawPtpMessage</a> *pMsg, uint32_t uid)</td></tr>
 <tr class="separator:a202fbe6ff51f6e1f54b9792ea10f3b25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8084e66715ef332fa46c677421f6b20f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#a8084e66715ef332fa46c677421f6b20f">ptp_nsd_get_interface_address</a> (uint8_t *hwa)</td></tr>
@@ -162,16 +162,30 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:aa0c7123f4d3efa1cd30aa1715084878b"><td class="memItemLeft" align="right" valign="top">static cbd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#aa0c7123f4d3efa1cd30aa1715084878b">PTP_L4_EVENT</a> = 0</td></tr>
-<tr class="separator:aa0c7123f4d3efa1cd30aa1715084878b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9af46da52d6215286c60e96fa2240893"><td class="memItemLeft" align="right" valign="top">static cbd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#a9af46da52d6215286c60e96fa2240893">PTP_L4_GENERAL</a> = 0</td></tr>
-<tr class="separator:a9af46da52d6215286c60e96fa2240893"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a203e1d9caa45e337d4fdda75259cef2d"><td class="memItemLeft" align="right" valign="top">static cbd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#a203e1d9caa45e337d4fdda75259cef2d">PTP_L4_PRIMARY_EVENT</a> = 0</td></tr>
+<tr class="separator:a203e1d9caa45e337d4fdda75259cef2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacfaf53a607a3809ba2a889a91311b6b"><td class="memItemLeft" align="right" valign="top">static cbd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#aacfaf53a607a3809ba2a889a91311b6b">PTP_L4_PRIMARY_GENERAL</a> = 0</td></tr>
+<tr class="separator:aacfaf53a607a3809ba2a889a91311b6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fb33590c55f422931c6c448f5eb6117"><td class="memItemLeft" align="right" valign="top">static cbd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#a3fb33590c55f422931c6c448f5eb6117">PTP_L4_PDELAY_EVENT</a> = 0</td></tr>
+<tr class="separator:a3fb33590c55f422931c6c448f5eb6117"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0df37f7942246381faaf4a3328206914"><td class="memItemLeft" align="right" valign="top">static cbd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#a0df37f7942246381faaf4a3328206914">PTP_L4_PDELAY_GENERAL</a> = 0</td></tr>
+<tr class="separator:a0df37f7942246381faaf4a3328206914"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa863a54948a41a5b7b147f0772d26c68"><td class="memItemLeft" align="right" valign="top">static cbd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#aa863a54948a41a5b7b147f0772d26c68">PTP_L2</a> = 0</td></tr>
 <tr class="separator:aa863a54948a41a5b7b147f0772d26c68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab386183992cbe47d6205ba4835eea139"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="ptp__types_8h.html#a2964210d435f30e9125953c23045ea0b">PtpTransportType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#ab386183992cbe47d6205ba4835eea139">TP</a> = -1</td></tr>
 <tr class="separator:ab386183992cbe47d6205ba4835eea139"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3bfa057811edd05c917814aff10c6bd9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="ptp__types_8h.html#aa353086afe318bec4ec7ce3757ba478e">PtpDelayMechanism</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#a3bfa057811edd05c917814aff10c6bd9">DM</a> = -1</td></tr>
 <tr class="separator:a3bfa057811edd05c917814aff10c6bd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47976346d38aba72bbe42ad0b66e6422"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#a47976346d38aba72bbe42ad0b66e6422">custom_p2p_8023_primary_dest_valid</a> = false</td></tr>
+<tr class="separator:a47976346d38aba72bbe42ad0b66e6422"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e8dae688eab446d4874cbb35beece88"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#a8e8dae688eab446d4874cbb35beece88">custom_p2p_8023_primary_dest</a> [6] = {}</td></tr>
+<tr class="separator:a8e8dae688eab446d4874cbb35beece88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e9676f1a9b28523635ec40f68a8f155"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#a9e9676f1a9b28523635ec40f68a8f155">custom_p2p_8023_pdel_dest_valid</a> = false</td></tr>
+<tr class="separator:a9e9676f1a9b28523635ec40f68a8f155"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0ff6549e3b8ba5a39e952b0b88c755b"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#ae0ff6549e3b8ba5a39e952b0b88c755b">custom_p2p_8023_pdel_dest</a> [6] = {}</td></tr>
+<tr class="separator:ae0ff6549e3b8ba5a39e952b0b88c755b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8916acbfa8046c3cc3f9cc9e4d32330"><td class="memItemLeft" align="right" valign="top">static const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nsd__etherlib_8c.html#ad8916acbfa8046c3cc3f9cc9e4d32330">zero_mac</a> [6] = {}</td></tr>
+<tr class="separator:ad8916acbfa8046c3cc3f9cc9e4d32330"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a351f965604b5c77e7388b617d73d35b3" name="a351f965604b5c77e7388b617d73d35b3"></a>
@@ -185,12 +199,16 @@ Variables</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">d</td><td>)</td>
-          <td>&#160;&#160;&#160;if (d &gt;= CBD_LOWEST_DESCRIPTOR) { close_connection(d); d = 0; }</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00048">48</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">if</span> (d &gt;= CBD_LOWEST_DESCRIPTOR) { \</div>
+<div class="line">        close_connection(d);          \</div>
+<div class="line">        d = 0;                        \</div>
+<div class="line">    }</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00057">57</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
 
 </div>
 </div>
@@ -218,7 +236,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00138">138</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00178">178</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
 
 </div>
 </div>
@@ -239,12 +257,12 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Join or leave IGMP groups associated with the current PTP profile. </p>
 
-<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00032">32</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00040">40</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
 
 </div>
 </div>
-<a id="a448d70ee83a66f7dd5f5e602c7f41b8d" name="a448d70ee83a66f7dd5f5e602c7f41b8d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a448d70ee83a66f7dd5f5e602c7f41b8d">&#9670;&#160;</a></span>ptp_nsd_init()</h2>
+<a id="a24753749e0c2b12123c939fcddb1981e" name="a24753749e0c2b12123c939fcddb1981e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24753749e0c2b12123c939fcddb1981e">&#9670;&#160;</a></span>ptp_nsd_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -252,32 +270,21 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">void ptp_nsd_init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="ptp__types_8h.html#a2964210d435f30e9125953c23045ea0b">PtpTransportType</a>&#160;</td>
-          <td class="paramname"><em>tp</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">const <a class="el" href="struct_nsd_init_settings.html">NsdInitSettings</a> *&#160;</td>
+          <td class="paramname"><em>init</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="ptp__types_8h.html#aa353086afe318bec4ec7ce3757ba478e">PtpDelayMechanism</a>&#160;</td>
-          <td class="paramname"><em>dm</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Initialize or reinitialize the Network Stack Driver.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">tp</td><td>PTP transport type </td></tr>
-    <tr><td class="paramname">dm</td><td>PTP delay mechanism </td></tr>
+    <tr><td class="paramname">init</td><td>NSD initialization settings </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00050">50</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00063">63</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
 
 </div>
 </div>
@@ -315,7 +322,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00123">123</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00159">159</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
 
 </div>
 </div>
@@ -353,7 +360,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00095">95</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00131">131</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
 
 </div>
 </div>
@@ -397,11 +404,107 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00119">119</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00155">155</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="ae0ff6549e3b8ba5a39e952b0b88c755b" name="ae0ff6549e3b8ba5a39e952b0b88c755b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0ff6549e3b8ba5a39e952b0b88c755b">&#9670;&#160;</a></span>custom_p2p_8023_pdel_dest</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t custom_p2p_8023_pdel_dest[6] = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00033">33</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+
+</div>
+</div>
+<a id="a9e9676f1a9b28523635ec40f68a8f155" name="a9e9676f1a9b28523635ec40f68a8f155"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e9676f1a9b28523635ec40f68a8f155">&#9670;&#160;</a></span>custom_p2p_8023_pdel_dest_valid</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool custom_p2p_8023_pdel_dest_valid = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00032">32</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+
+</div>
+</div>
+<a id="a8e8dae688eab446d4874cbb35beece88" name="a8e8dae688eab446d4874cbb35beece88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e8dae688eab446d4874cbb35beece88">&#9670;&#160;</a></span>custom_p2p_8023_primary_dest</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t custom_p2p_8023_primary_dest[6] = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00031">31</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+
+</div>
+</div>
+<a id="a47976346d38aba72bbe42ad0b66e6422" name="a47976346d38aba72bbe42ad0b66e6422"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47976346d38aba72bbe42ad0b66e6422">&#9670;&#160;</a></span>custom_p2p_8023_primary_dest_valid</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool custom_p2p_8023_primary_dest_valid = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00030">30</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+
+</div>
+</div>
 <a id="a3bfa057811edd05c917814aff10c6bd9" name="a3bfa057811edd05c917814aff10c6bd9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3bfa057811edd05c917814aff10c6bd9">&#9670;&#160;</a></span>DM</h2>
 
@@ -422,7 +525,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00027">27</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00029">29</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
 
 </div>
 </div>
@@ -446,12 +549,12 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00023">23</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00025">25</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
 
 </div>
 </div>
-<a id="aa0c7123f4d3efa1cd30aa1715084878b" name="aa0c7123f4d3efa1cd30aa1715084878b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0c7123f4d3efa1cd30aa1715084878b">&#9670;&#160;</a></span>PTP_L4_EVENT</h2>
+<a id="a3fb33590c55f422931c6c448f5eb6117" name="a3fb33590c55f422931c6c448f5eb6117"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fb33590c55f422931c6c448f5eb6117">&#9670;&#160;</a></span>PTP_L4_PDELAY_EVENT</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -460,7 +563,55 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">cbd PTP_L4_EVENT = 0</td>
+          <td class="memname">cbd PTP_L4_PDELAY_EVENT = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00023">23</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+
+</div>
+</div>
+<a id="a0df37f7942246381faaf4a3328206914" name="a0df37f7942246381faaf4a3328206914"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0df37f7942246381faaf4a3328206914">&#9670;&#160;</a></span>PTP_L4_PDELAY_GENERAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">cbd PTP_L4_PDELAY_GENERAL = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00024">24</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+
+</div>
+</div>
+<a id="a203e1d9caa45e337d4fdda75259cef2d" name="a203e1d9caa45e337d4fdda75259cef2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a203e1d9caa45e337d4fdda75259cef2d">&#9670;&#160;</a></span>PTP_L4_PRIMARY_EVENT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">cbd PTP_L4_PRIMARY_EVENT = 0</td>
         </tr>
       </table>
   </td>
@@ -474,8 +625,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a9af46da52d6215286c60e96fa2240893" name="a9af46da52d6215286c60e96fa2240893"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9af46da52d6215286c60e96fa2240893">&#9670;&#160;</a></span>PTP_L4_GENERAL</h2>
+<a id="aacfaf53a607a3809ba2a889a91311b6b" name="aacfaf53a607a3809ba2a889a91311b6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacfaf53a607a3809ba2a889a91311b6b">&#9670;&#160;</a></span>PTP_L4_PRIMARY_GENERAL</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -484,7 +635,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">cbd PTP_L4_GENERAL = 0</td>
+          <td class="memname">cbd PTP_L4_PRIMARY_GENERAL = 0</td>
         </tr>
       </table>
   </td>
@@ -518,7 +669,31 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00026">26</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00028">28</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
+
+</div>
+</div>
+<a id="ad8916acbfa8046c3cc3f9cc9e4d32330" name="ad8916acbfa8046c3cc3f9cc9e4d32330"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8916acbfa8046c3cc3f9cc9e4d32330">&#9670;&#160;</a></span>zero_mac</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint8_t zero_mac[6] = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="nsd__etherlib_8c_source.html#l00035">35</a> of file <a class="el" href="nsd__etherlib_8c_source.html">nsd_etherlib.c</a>.</p>
 
 </div>
 </div>

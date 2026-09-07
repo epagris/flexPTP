@@ -20,6 +20,7 @@ var struct_ptp_core_state =
     [ "info", "struct_ptp_core_state.html#ab3a88b183c8c84c0eafd43f2f40c7690", null ],
     [ "locked", "struct_ptp_core_state.html#a18a0f1e6c3d21c252b14ea6ae162e2ff", null ],
     [ "logging", "struct_ptp_core_state.html#aac454ff27abef049fb30897dc5969ae6", null ],
+    [ "logid", "struct_ptp_core_state.html#a4aecc63d1b9b70644148d1ac5665627b", null ],
     [ "master", "struct_ptp_core_state.html#a5570488fe82480a0f683f19d046bf2b8", null ],
     [ "messaging", "struct_ptp_core_state.html#a812483688f200bc143072fd745f8d00b", null ],
     [ "messaging", "struct_ptp_core_state.html#a7378b214d9a36da8c3d69fbf23168cc6", null ],

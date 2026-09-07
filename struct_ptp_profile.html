@@ -155,11 +155,17 @@ Data Fields</h2></td></tr>
 <tr class="memitem:ab8c66e2caead1feffe76d516d3099f0c"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ptp_profile.html#ab8c66e2caead1feffe76d516d3099f0c">tlvSet</a> [(7)+1]</td></tr>
 <tr class="memdesc:ab8c66e2caead1feffe76d516d3099f0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the corresponding TLV set.  <br /></td></tr>
 <tr class="separator:ab8c66e2caead1feffe76d516d3099f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19a3efbcd31ee48006259c77909dd752"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ptp_profile.html#a19a3efbcd31ee48006259c77909dd752">primary_p2p_8023_destination</a> [6]</td></tr>
+<tr class="memdesc:a19a3efbcd31ee48006259c77909dd752"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary custom destination address for P2P over Ethernet.  <br /></td></tr>
+<tr class="separator:a19a3efbcd31ee48006259c77909dd752"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6c8c8e2b3208d179ae1464219a98218"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ptp_profile.html#ac6c8c8e2b3208d179ae1464219a98218">pdelay_p2p_8023_destination</a> [6]</td></tr>
+<tr class="memdesc:ac6c8c8e2b3208d179ae1464219a98218"><td class="mdescLeft">&#160;</td><td class="mdescRight">PDel* custom destination address for P2P over Ethernet.  <br /></td></tr>
+<tr class="separator:ac6c8c8e2b3208d179ae1464219a98218"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>PTP profile structure. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00356">356</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00357">357</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="a26f5c34ce1e5b3a2263090b5badb9d53" name="a26f5c34ce1e5b3a2263090b5badb9d53"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a26f5c34ce1e5b3a2263090b5badb9d53">&#9670;&#160;</a></span>delayMechanism</h2>
@@ -175,7 +181,7 @@ Data Fields</h2></td></tr>
 
 <p>delay mechanism </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00359">359</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00360">360</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -193,7 +199,7 @@ Data Fields</h2></td></tr>
 
 <p>PTP domain number. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00363">363</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00364">364</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -211,7 +217,7 @@ Data Fields</h2></td></tr>
 
 <p>Flags associated with this profile. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00364">364</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00365">365</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -229,7 +235,7 @@ Data Fields</h2></td></tr>
 
 <p>logarithm of the Announce period (MASTER only) </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00362">362</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00363">363</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -247,7 +253,7 @@ Data Fields</h2></td></tr>
 
 <p>logarithm of (P)DelayReq period (SLAVE and MASTER) </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00360">360</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00361">361</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -265,7 +271,43 @@ Data Fields</h2></td></tr>
 
 <p>logarithm of the Sync transmission period (MASTER only) </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00361">361</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00362">362</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+
+</div>
+</div>
+<a id="ac6c8c8e2b3208d179ae1464219a98218" name="ac6c8c8e2b3208d179ae1464219a98218"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6c8c8e2b3208d179ae1464219a98218">&#9670;&#160;</a></span>pdelay_p2p_8023_destination</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t pdelay_p2p_8023_destination[6]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>PDel* custom destination address for P2P over Ethernet. </p>
+
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00368">368</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+
+</div>
+</div>
+<a id="a19a3efbcd31ee48006259c77909dd752" name="a19a3efbcd31ee48006259c77909dd752"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19a3efbcd31ee48006259c77909dd752">&#9670;&#160;</a></span>primary_p2p_8023_destination</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t primary_p2p_8023_destination[6]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Primary custom destination address for P2P over Ethernet. </p>
+
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00367">367</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -283,7 +325,7 @@ Data Fields</h2></td></tr>
 
 <p>Name of the corresponding TLV set. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00365">365</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00366">366</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -301,7 +343,7 @@ Data Fields</h2></td></tr>
 
 <p>majorSdoId ('transportSpecific') </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00358">358</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00359">359</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>
@@ -319,7 +361,7 @@ Data Fields</h2></td></tr>
 
 <p>transport layer </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00357">357</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00358">358</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
 
 </div>
 </div>

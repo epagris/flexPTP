@@ -1,6 +1,7 @@
 var annotated_dup =
 [
     [ "Fifo", "struct_fifo.html", "struct_fifo" ],
+    [ "NsdInitSettings", "struct_nsd_init_settings.html", "struct_nsd_init_settings" ],
     [ "PtpAnnounceBody", "struct_ptp_announce_body.html", "struct_ptp_announce_body" ],
     [ "PtpBmcaState", "struct_ptp_bmca_state.html", "struct_ptp_bmca_state" ],
     [ "PtpConfig", "struct_ptp_config.html", "struct_ptp_config" ],

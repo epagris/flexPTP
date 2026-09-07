@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>flexPTP: PtpProfileTlvElement Struct Reference</title>
+<title>flexPTP: NsdInitSettings Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,7 +89,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('struct_ptp_profile_tlv_element.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('struct_nsd_init_settings.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -117,116 +117,116 @@ $(document).ready(function(){initNavTree('struct_ptp_profile_tlv_element.html','
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">PtpProfileTlvElement Struct Reference</div></div>
+  <div class="headertitle"><div class="title">NsdInitSettings Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>PTP profile additional data list element.  
- <a href="struct_ptp_profile_tlv_element.html#details">More...</a></p>
+<p>Network Stack Driver initialization object.  
+ <a href="struct_nsd_init_settings.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="network__stack__driver_8h_source.html">network_stack_driver.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a0d49d74db4c035719c3867723cf7e779"><td class="memItemLeft" align="right" valign="top">const void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ptp_profile_tlv_element.html#a0d49d74db4c035719c3867723cf7e779">data</a></td></tr>
-<tr class="memdesc:a0d49d74db4c035719c3867723cf7e779"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the data block.  <br /></td></tr>
-<tr class="separator:a0d49d74db4c035719c3867723cf7e779"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaba88b24a21a6c70c895c0d55f4a69a0"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ptp_profile_tlv_element.html#aaba88b24a21a6c70c895c0d55f4a69a0">size</a></td></tr>
-<tr class="memdesc:aaba88b24a21a6c70c895c0d55f4a69a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the data block.  <br /></td></tr>
-<tr class="separator:aaba88b24a21a6c70c895c0d55f4a69a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0503091c25e631eadfb7e61abc8808ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="ptp__types_8h.html#a9e053fb4748c174bc1e870145f65db69">PtpMessageType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ptp_profile_tlv_element.html#a0503091c25e631eadfb7e61abc8808ea">msgType</a></td></tr>
-<tr class="memdesc:a0503091c25e631eadfb7e61abc8808ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message type into which this extension should be inserted.  <br /></td></tr>
-<tr class="separator:a0503091c25e631eadfb7e61abc8808ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a456b4a040ed86fc9ef66131d7af0b753"><td class="memItemLeft" align="right" valign="top">struct _PtpProfileAdditionalData *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ptp_profile_tlv_element.html#a456b4a040ed86fc9ef66131d7af0b753">next</a></td></tr>
-<tr class="memdesc:a456b4a040ed86fc9ef66131d7af0b753"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the next element of the list.  <br /></td></tr>
-<tr class="separator:a456b4a040ed86fc9ef66131d7af0b753"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5993fc84870443fcdd64aacdfebb564"><td class="memItemLeft" align="right" valign="top"><a class="el" href="ptp__types_8h.html#a2964210d435f30e9125953c23045ea0b">PtpTransportType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_nsd_init_settings.html#af5993fc84870443fcdd64aacdfebb564">tp</a></td></tr>
+<tr class="memdesc:af5993fc84870443fcdd64aacdfebb564"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transport Type.  <br /></td></tr>
+<tr class="separator:af5993fc84870443fcdd64aacdfebb564"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6889e081ba9564a6f275dc729d0ab1e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="ptp__types_8h.html#aa353086afe318bec4ec7ce3757ba478e">PtpDelayMechanism</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_nsd_init_settings.html#ad6889e081ba9564a6f275dc729d0ab1e">dm</a></td></tr>
+<tr class="memdesc:ad6889e081ba9564a6f275dc729d0ab1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delay Mechanism.  <br /></td></tr>
+<tr class="separator:ad6889e081ba9564a6f275dc729d0ab1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a366de7ba5ea1599fe90e608496cc39d9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_nsd_init_settings.html#a366de7ba5ea1599fe90e608496cc39d9">primary_p2p_8023_dest</a> [6]</td></tr>
+<tr class="memdesc:a366de7ba5ea1599fe90e608496cc39d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destination address for primary P2P messages over Ethernet.  <br /></td></tr>
+<tr class="separator:a366de7ba5ea1599fe90e608496cc39d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c6e6fdf201cd10552cf43c3ff72c590"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_nsd_init_settings.html#a9c6e6fdf201cd10552cf43c3ff72c590">pdelay_p2p_8023_dest</a> [6]</td></tr>
+<tr class="memdesc:a9c6e6fdf201cd10552cf43c3ff72c590"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destination address for PDel* P2P messages over Ethernet.  <br /></td></tr>
+<tr class="separator:a9c6e6fdf201cd10552cf43c3ff72c590"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PTP profile additional data list element. </p>
+<div class="textblock"><p>Network Stack Driver initialization object. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00337">337</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="network__stack__driver_8h_source.html#l00024">24</a> of file <a class="el" href="network__stack__driver_8h_source.html">network_stack_driver.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="a0d49d74db4c035719c3867723cf7e779" name="a0d49d74db4c035719c3867723cf7e779"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d49d74db4c035719c3867723cf7e779">&#9670;&#160;</a></span>data</h2>
+<a id="ad6889e081ba9564a6f275dc729d0ab1e" name="ad6889e081ba9564a6f275dc729d0ab1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6889e081ba9564a6f275dc729d0ab1e">&#9670;&#160;</a></span>dm</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const void* data</td>
+          <td class="memname"><a class="el" href="ptp__types_8h.html#aa353086afe318bec4ec7ce3757ba478e">PtpDelayMechanism</a> dm</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Pointer to the data block. </p>
+<p>Delay Mechanism. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00338">338</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="network__stack__driver_8h_source.html#l00026">26</a> of file <a class="el" href="network__stack__driver_8h_source.html">network_stack_driver.h</a>.</p>
 
 </div>
 </div>
-<a id="a0503091c25e631eadfb7e61abc8808ea" name="a0503091c25e631eadfb7e61abc8808ea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0503091c25e631eadfb7e61abc8808ea">&#9670;&#160;</a></span>msgType</h2>
+<a id="a9c6e6fdf201cd10552cf43c3ff72c590" name="a9c6e6fdf201cd10552cf43c3ff72c590"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c6e6fdf201cd10552cf43c3ff72c590">&#9670;&#160;</a></span>pdelay_p2p_8023_dest</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="ptp__types_8h.html#a9e053fb4748c174bc1e870145f65db69">PtpMessageType</a> msgType</td>
+          <td class="memname">uint8_t pdelay_p2p_8023_dest[6]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Message type into which this extension should be inserted. </p>
+<p>Destination address for PDel* P2P messages over Ethernet. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00340">340</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="network__stack__driver_8h_source.html#l00028">28</a> of file <a class="el" href="network__stack__driver_8h_source.html">network_stack_driver.h</a>.</p>
 
 </div>
 </div>
-<a id="a456b4a040ed86fc9ef66131d7af0b753" name="a456b4a040ed86fc9ef66131d7af0b753"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a456b4a040ed86fc9ef66131d7af0b753">&#9670;&#160;</a></span>next</h2>
+<a id="a366de7ba5ea1599fe90e608496cc39d9" name="a366de7ba5ea1599fe90e608496cc39d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a366de7ba5ea1599fe90e608496cc39d9">&#9670;&#160;</a></span>primary_p2p_8023_dest</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _PtpProfileAdditionalData* next</td>
+          <td class="memname">uint8_t primary_p2p_8023_dest[6]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Pointer to the next element of the list. </p>
+<p>Destination address for primary P2P messages over Ethernet. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00341">341</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="network__stack__driver_8h_source.html#l00027">27</a> of file <a class="el" href="network__stack__driver_8h_source.html">network_stack_driver.h</a>.</p>
 
 </div>
 </div>
-<a id="aaba88b24a21a6c70c895c0d55f4a69a0" name="aaba88b24a21a6c70c895c0d55f4a69a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaba88b24a21a6c70c895c0d55f4a69a0">&#9670;&#160;</a></span>size</h2>
+<a id="af5993fc84870443fcdd64aacdfebb564" name="af5993fc84870443fcdd64aacdfebb564"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5993fc84870443fcdd64aacdfebb564">&#9670;&#160;</a></span>tp</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t size</td>
+          <td class="memname"><a class="el" href="ptp__types_8h.html#a2964210d435f30e9125953c23045ea0b">PtpTransportType</a> tp</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Size of the data block. </p>
+<p>Transport Type. </p>
 
-<p class="definition">Definition at line <a class="el" href="ptp__types_8h_source.html#l00339">339</a> of file <a class="el" href="ptp__types_8h_source.html">ptp_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="network__stack__driver_8h_source.html#l00025">25</a> of file <a class="el" href="network__stack__driver_8h_source.html">network_stack_driver.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>src/flexptp/<a class="el" href="ptp__types_8h_source.html">ptp_types.h</a></li>
+<li>src/flexptp/<a class="el" href="network__stack__driver_8h_source.html">network_stack_driver.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="struct_ptp_profile_tlv_element.html">PtpProfileTlvElement</a></li>
+    <li class="navelem"><a class="el" href="struct_nsd_init_settings.html">NsdInitSettings</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

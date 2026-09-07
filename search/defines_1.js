@@ -13,7 +13,8 @@ var searchData=
   ['config_5flog_5fdef_10',['CONFIG_LOG_DEF',['../config_8c.html#ab94239dc51a080bc150e2f699f6c0e56',1,'config.c']]],
   ['config_5flog_5finfo_11',['CONFIG_LOG_INFO',['../config_8c.html#a85300016e00427d9bfe383d4046350b8',1,'config.c']]],
   ['config_5flog_5flocked_12',['CONFIG_LOG_LOCKED',['../config_8c.html#a42b2b5ee2b85283c1df544bd05e0a20e',1,'config.c']]],
-  ['config_5flog_5ftimestamps_13',['CONFIG_LOG_TIMESTAMPS',['../config_8c.html#a7d358ea1b693df32136dbe7e24658de2',1,'config.c']]],
-  ['config_5flog_5ftransmission_14',['CONFIG_LOG_TRANSMISSION',['../config_8c.html#ae097544c511ad5c2c5711519025229bf',1,'config.c']]],
-  ['ctrl_5fbuf_5fsize_15',['CTRL_BUF_SIZE',['../nsd__linux_8c.html#a7e199c11f03e398a6c038a0aca469e6c',1,'nsd_linux.c']]]
+  ['config_5flog_5flogid_13',['CONFIG_LOG_LOGID',['../config_8c.html#adf0303951bb266e2b1323b3cd7b529ae',1,'config.c']]],
+  ['config_5flog_5ftimestamps_14',['CONFIG_LOG_TIMESTAMPS',['../config_8c.html#a7d358ea1b693df32136dbe7e24658de2',1,'config.c']]],
+  ['config_5flog_5ftransmission_15',['CONFIG_LOG_TRANSMISSION',['../config_8c.html#ae097544c511ad5c2c5711519025229bf',1,'config.c']]],
+  ['ctrl_5fbuf_5fsize_16',['CTRL_BUF_SIZE',['../nsd__linux_8c.html#a7e199c11f03e398a6c038a0aca469e6c',1,'nsd_linux.c']]]
 ];

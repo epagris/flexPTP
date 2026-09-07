@@ -143,7 +143,7 @@ $(document).ready(function(){initNavTree('master_8c.html',''); initResizable(); 
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a50ba756ab7b29eb706f6faa4f7e56741"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="master_8c.html#a50ba756ab7b29eb706f6faa4f7e56741">PTP_MASTER_P2P_SLAVE_STATE_LOG</a>()&#160;&#160;&#160;    <a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#a916dcd9d22af4bd2d5c7c90958bf011a">CLILOG</a>(S.logging.def &amp;&amp; (si-&gt;state != prevState), &quot;%s -&gt; %s\n&quot;, <a class="el" href="master_8c.html#ae9b92a728e66fe362fbf8d0cc6445a70">P2P_SLAVE_STATE_HINTS</a>[prevState], <a class="el" href="master_8c.html#ae9b92a728e66fe362fbf8d0cc6445a70">P2P_SLAVE_STATE_HINTS</a>[si-&gt;state])</td></tr>
+<tr class="memitem:a50ba756ab7b29eb706f6faa4f7e56741"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="master_8c.html#a50ba756ab7b29eb706f6faa4f7e56741">PTP_MASTER_P2P_SLAVE_STATE_LOG</a>()</td></tr>
 <tr class="separator:a50ba756ab7b29eb706f6faa4f7e56741"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -209,12 +209,16 @@ Variables</h2></td></tr>
           <td class="memname">#define PTP_MASTER_P2P_SLAVE_STATE_LOG</td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;    <a class="el" href="flexptp__options__ch32f207__etherlib_8h.html#a916dcd9d22af4bd2d5c7c90958bf011a">CLILOG</a>(S.logging.def &amp;&amp; (si-&gt;state != prevState), &quot;%s -&gt; %s\n&quot;, <a class="el" href="master_8c.html#ae9b92a728e66fe362fbf8d0cc6445a70">P2P_SLAVE_STATE_HINTS</a>[prevState], <a class="el" href="master_8c.html#ae9b92a728e66fe362fbf8d0cc6445a70">P2P_SLAVE_STATE_HINTS</a>[si-&gt;state])</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00217">217</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<b>Value:</b><div class="fragment"><div class="line">    <a class="code hl_define" href="flexptp__options__ch32f207__etherlib_8h.html#a916dcd9d22af4bd2d5c7c90958bf011a">CLILOG</a>(S.logging.logid &amp;&amp; S.logging.def &amp;&amp; (si-&gt;state != prevState), <span class="stringliteral">&quot;[LOG-DEF:M:S] &quot;</span>); <span class="comment">/* default log : master : slave state */</span> \</div>
+<div class="line">    CLILOG(S.logging.def &amp;&amp; (si-&gt;state != prevState), <span class="stringliteral">&quot;%s -&gt; %s\n&quot;</span>, <a class="code hl_variable" href="master_8c.html#ae9b92a728e66fe362fbf8d0cc6445a70">P2P_SLAVE_STATE_HINTS</a>[prevState], <a class="code hl_variable" href="master_8c.html#ae9b92a728e66fe362fbf8d0cc6445a70">P2P_SLAVE_STATE_HINTS</a>[si-&gt;state])</div>
+<div class="ttc" id="aflexptp__options__ch32f207__etherlib_8h_html_a916dcd9d22af4bd2d5c7c90958bf011a"><div class="ttname"><a href="flexptp__options__ch32f207__etherlib_8h.html#a916dcd9d22af4bd2d5c7c90958bf011a">CLILOG</a></div><div class="ttdeci">#define CLILOG(en,...)</div><div class="ttdef"><b>Definition:</b> <a href="flexptp__options__ch32f207__etherlib_8h_source.html#l00073">flexptp_options_ch32f207_etherlib.h:73</a></div></div>
+<div class="ttc" id="amaster_8c_html_ae9b92a728e66fe362fbf8d0cc6445a70"><div class="ttname"><a href="master_8c.html#ae9b92a728e66fe362fbf8d0cc6445a70">P2P_SLAVE_STATE_HINTS</a></div><div class="ttdeci">static char * P2P_SLAVE_STATE_HINTS[]</div><div class="ttdef"><b>Definition:</b> <a href="master_8c_source.html#l00216">master.c:216</a></div></div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00221">221</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -323,7 +327,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00277">277</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00282">282</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -343,7 +347,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Destroy th eMaster module. </p>
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00377">377</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00386">386</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -363,7 +367,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Disable the master module. </p>
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00428">428</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00437">437</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -383,7 +387,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Enable the master module. </p>
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00404">404</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00413">413</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -403,7 +407,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Initialize the Master module. </p>
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00372">372</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00381">381</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -438,7 +442,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00225">225</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00230">230</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -476,7 +480,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00299">299</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00308">308</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -496,7 +500,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Reset the Master module. </p>
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00381">381</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00390">390</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -516,7 +520,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Pass ticks to the Master module. </p>
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00432">432</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00441">441</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -581,7 +585,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00174">174</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00177">177</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -609,7 +613,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00126">126</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00127">127</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -636,7 +640,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00155">155</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00157">157</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>
@@ -737,7 +741,7 @@ Variables</h2></td></tr>
 <div class="line">    <span class="stringliteral">&quot;CANDIDATE&quot;</span>,</div>
 <div class="line">    <span class="stringliteral">&quot;ESTABLISHED&quot;</span>}</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00212">212</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="master_8c_source.html#l00216">216</a> of file <a class="el" href="master_8c_source.html">master.c</a>.</p>
 
 </div>
 </div>

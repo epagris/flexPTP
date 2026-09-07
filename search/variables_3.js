@@ -11,5 +11,9 @@ var searchData=
   ['correction_5fns_8',['correction_ns',['../struct_ptp_header.html#ae1211043f4c4f80dd4c652dc98a8ac3e',1,'PtpHeader']]],
   ['correction_5fsubns_9',['correction_subns',['../struct_ptp_header.html#af6427e8df3564917f1d48d33cd334ba6',1,'PtpHeader']]],
   ['currentutcoffset_10',['currentUTCOffset',['../struct_ptp_announce_body.html#a19c0261c7d3bb1c4c97037e49f9fdf48',1,'PtpAnnounceBody']]],
-  ['cycle_11',['cycle',['../debug__servo_8c.html#a3e53e3b1e9d9b27da1e8c0c09e474ffc',1,'cycle():&#160;debug_servo.c'],['../kalman__filter_8c.html#a3e53e3b1e9d9b27da1e8c0c09e474ffc',1,'cycle():&#160;kalman_filter.c']]]
+  ['custom_5fp2p_5f8023_5fpdel_5fdest_11',['custom_p2p_8023_pdel_dest',['../nsd__etherlib_8c.html#ae0ff6549e3b8ba5a39e952b0b88c755b',1,'custom_p2p_8023_pdel_dest():&#160;nsd_etherlib.c'],['../nsd__lwip_8c.html#ae0ff6549e3b8ba5a39e952b0b88c755b',1,'custom_p2p_8023_pdel_dest():&#160;nsd_lwip.c']]],
+  ['custom_5fp2p_5f8023_5fpdel_5fdest_5fvalid_12',['custom_p2p_8023_pdel_dest_valid',['../nsd__etherlib_8c.html#a9e9676f1a9b28523635ec40f68a8f155',1,'custom_p2p_8023_pdel_dest_valid():&#160;nsd_etherlib.c'],['../nsd__lwip_8c.html#a9e9676f1a9b28523635ec40f68a8f155',1,'custom_p2p_8023_pdel_dest_valid():&#160;nsd_lwip.c']]],
+  ['custom_5fp2p_5f8023_5fprimary_5fdest_13',['custom_p2p_8023_primary_dest',['../nsd__etherlib_8c.html#a8e8dae688eab446d4874cbb35beece88',1,'custom_p2p_8023_primary_dest():&#160;nsd_etherlib.c'],['../nsd__lwip_8c.html#a8e8dae688eab446d4874cbb35beece88',1,'custom_p2p_8023_primary_dest():&#160;nsd_lwip.c']]],
+  ['custom_5fp2p_5f8023_5fprimary_5fdest_5fvalid_14',['custom_p2p_8023_primary_dest_valid',['../nsd__etherlib_8c.html#a47976346d38aba72bbe42ad0b66e6422',1,'custom_p2p_8023_primary_dest_valid():&#160;nsd_etherlib.c'],['../nsd__lwip_8c.html#a47976346d38aba72bbe42ad0b66e6422',1,'custom_p2p_8023_primary_dest_valid():&#160;nsd_lwip.c']]],
+  ['cycle_15',['cycle',['../debug__servo_8c.html#a3e53e3b1e9d9b27da1e8c0c09e474ffc',1,'cycle():&#160;debug_servo.c'],['../kalman__filter_8c.html#a3e53e3b1e9d9b27da1e8c0c09e474ffc',1,'cycle():&#160;kalman_filter.c']]]
 ];

@@ -7,5 +7,6 @@ var struct_raw_ptp_message =
     [ "ts", "struct_raw_ptp_message.html#a06502a84afe4ba1fbba014e46d371cce", null ],
     [ "ttl", "struct_raw_ptp_message.html#a48b9f3382e0929bbd75cda2bf2838126", null ],
     [ "tx_dm", "struct_raw_ptp_message.html#a3b583b1797c3a7a9d9005d91dc0a4e9f", null ],
-    [ "tx_mc", "struct_raw_ptp_message.html#a55c08cfdeb417213fc90ff8725cdbab5", null ]
+    [ "tx_mc", "struct_raw_ptp_message.html#a55c08cfdeb417213fc90ff8725cdbab5", null ],
+    [ "tx_mt", "struct_raw_ptp_message.html#aa998d765533577b5b9810b3ab589f627", null ]
 ];
