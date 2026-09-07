@@ -213,7 +213,7 @@ if (FLEXPTP_NETWORK_STACK)
     if (NOT FLEXPTP_DONT_LINK_NETWORK_LIB)
         target_link_libraries(${FLEXPTP_TARGET} ${FLEXPTP_NETWORK_STACK})
     endif()
-elseif()
+else()
     message("flexPTP: No network stack defined to link against! "
             "Please set FLEXPTP_NETWORK_STACK to a chosen network stack library!")
 endif()

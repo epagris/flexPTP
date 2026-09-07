@@ -10,6 +10,9 @@
 
 ## Features
 
+> [!TIP]
+> **A [comprehensive journal paper](https://www.sciencedirect.com/science/article/pii/S2352711026000877) has been recently published introducing and describing flexPTP in detail**
+
 flexPTP offers the following capabilities:
 
 - [IEEE 1588](https://ieeexplore.ieee.org/document/9120376) compatible **slave** and **master** OC implementation
@@ -49,7 +52,12 @@ The library package ships with hardware ports for several platforms, including:
 
 ...and a **[Linux example](https://github.com/epagris/flexPTP-linux)** 
 
-_All above example projects uses FreeRTOS and/or CMSIS OS2 except for the Linux and specific OS-less examples._
+_All above example projects use FreeRTOS and/or CMSIS OS2 except for the Linux and specific OS-less examples._
+
+**Third party examples** - a big thumbs up👍 for the creators:
+
+- **STM32H563**:
+  - Example: [STM32 NUCLEO-H563ZI flexPTP demo](https://github.com/damiendusha/flexPTP-demo-NUCLEO-H563ZI) by [damiendusha](https://github.com/damiendusha)
 
 ## Requirements
 
@@ -144,6 +152,8 @@ Our library achieves decent synchronization performance, usually **better than 1
 | ![TM4C1294-gPTP](manual/dumps/tm4c1294-gPTP.svg) | ![STM32F407-gPTP](manual/dumps/stm32f407-gPTP.svg) | ![STM32H743-gPTP](manual/dumps/stm32h743-gPTP.svg) |
 
 ## Related papers
+
+[flexPTP: Precision Time Protocol implementation for microcontrollers](https://www.sciencedirect.com/science/article/pii/S2352711026000877)
 
 [Time Synchronization Extension for the IO-Link Industrial Communication Protocol](https://ieeexplore.ieee.org/document/10747727)
 
