@@ -19,12 +19,21 @@ extern "C" {
 #endif
 
 /**
+* @brief Network Stack Driver initialization object
+*/
+typedef struct {
+  PtpTransportType tp; ///< Transport Type
+  PtpDelayMechanism dm; ///< Delay Mechanism
+  uint8_t primary_p2p_8023_dest[6]; ///< Destination address for primary P2P messages over Ethernet
+  uint8_t pdelay_p2p_8023_dest[6];  ///< Destination address for PDel* P2P messages over Ethernet
+} NsdInitSettings;
+
+/**
  * Initialize or reinitialize the Network Stack Driver.
  * 
- * @param tp PTP transport type
- * @param dm PTP delay mechanism
+ * @param init NSD initialization settings
  */
-void ptp_nsd_init(PtpTransportType tp, PtpDelayMechanism dm);
+void ptp_nsd_init(const NsdInitSettings * init);
 
 /**
  * Fetch the Ethernet network interface hardware address.

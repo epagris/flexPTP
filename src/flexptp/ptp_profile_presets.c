@@ -92,7 +92,9 @@ static PtpProfilePreset sPtpProfiles[PTP_PROFILE_N] = {
             1,
             0,
             PTP_PF_NO_FLAGS,
-            ""
+            "",
+            {},
+            {}
         }
     },
     {"gPTP",
@@ -105,7 +107,9 @@ static PtpProfilePreset sPtpProfiles[PTP_PROFILE_N] = {
             0,
             0,
             PTP_PF_ISSUE_SYNC_FOR_COMPLIANT_SLAVE_ONLY_IN_P2P,
-            "gptp"
+            "gptp",
+            { 0x01, 0x80, 0xC2, 0x00, 0x00, 0x0E },
+            { 0x01, 0x80, 0xC2, 0x00, 0x00, 0x0E }
         }
     },
     {"defp2p",
@@ -118,7 +122,9 @@ static PtpProfilePreset sPtpProfiles[PTP_PROFILE_N] = {
             1,
             0,
             PTP_PF_NO_FLAGS,
-            ""
+            "",
+            {},
+            {}
         }
     }
 };

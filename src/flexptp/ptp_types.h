@@ -193,6 +193,7 @@ typedef struct RawPtpMessage_ {
     TxCb *pTxCb;             ///< transmit callback function
     PtpDelayMechanism tx_dm; ///< transmit transport type
     PtpMessageClass tx_mc;   ///< transmit message class
+    PtpMessageType tx_mt;    ///< transmit message type
 
     // --- data ---
     uint8_t data[MAX_PTP_MSG_SIZE]; ///< raw packet data
@@ -363,6 +364,8 @@ typedef struct {
     uint8_t domainNumber;                            ///< PTP domain number
     uint8_t flags;                                   ///< Flags associated with this profile
     char tlvSet[PTP_MAX_TLV_PRESET_NAME_LENGTH + 1]; ///< Name of the corresponding TLV set
+    uint8_t primary_p2p_8023_destination[6];         ///< Primary custom destination address for P2P over Ethernet
+    uint8_t pdelay_p2p_8023_destination[6];          ///< PDel* custom destination address for P2P over Ethernet
 } PtpProfile;
 
 /**
@@ -523,6 +526,7 @@ typedef struct {
         bool locked;       ///< clock lock state change
         bool bmca;         ///< BMCA state change
         bool transmission; ///< Transmission logging
+        bool logid;        ///< Print logging ID in front of each logline
     } logging;             ///< Logging
 
     PtpStats stats;                   ///< Statistics

@@ -26,6 +26,7 @@ enum {
     PTP_LOG_LOCKED_STATE, ///< Signals the user if the PTP engine considers the clock have gotten locked.
     PTP_LOG_BMCA,         ///< Notifies the user about BMCA state changes
     PTP_LOG_TRANSMISSION, ///< Message transmission logging
+    PTP_LOG_LOGID,        ///< Prints formatted identifier before each log line
     PTP_LOG_N
 };
 

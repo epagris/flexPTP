@@ -356,7 +356,14 @@ bool reg_task_ptp() {
 #endif
 
     // initialize network stack driver
-    ptp_nsd_init(ptp_get_transport_type(), ptp_get_delay_mechanism());
+    NsdInitSettings nsdInit = {
+        ptp_get_transport_type(), 
+        ptp_get_delay_mechanism(),
+        {}, {}
+    };
+    memcpy(nsdInit.primary_p2p_8023_dest, S.profile.primary_p2p_8023_destination, 6);
+    memcpy(nsdInit.pdelay_p2p_8023_dest, S.profile.pdelay_p2p_8023_destination, 6);
+    ptp_nsd_init(&nsdInit);
 
     // create task
 #ifdef FLEXPTP_FREERTOS
@@ -403,7 +410,10 @@ bool reg_task_ptp() {
 // unregister PTP task
 void unreg_task_ptp() {
     ptp_remove_heartbeat_tmr(); // remove the heartbeat timer
-    ptp_nsd_init(-1, -1);       // de-initialize the network stack driver
+    NsdInitSettings nsdInit = {
+        -1, -1, {}, {}
+    };
+    ptp_nsd_init(&nsdInit);       // de-initialize the network stack driver
 #if defined(FLEXPTP_NON_LINUX_OS)
     if (sTH != NULL) {
 #ifdef FLEXPTP_FREERTOS
@@ -494,6 +504,7 @@ void ptp_receive_enqueue(const void *pPayload, uint32_t len, uint32_t ts_sec, ui
 #endif
     } else {
         if (msgb_get_error(&sRawRxMsgBuf) == MSGB_ERR_FULL) {
+            CLILOG(S.logging.logid && S.logging.info, "[LOG-INFO] ");
             CLILOG(S.logging.info, "The PTP receive packet buffer is full, a packet was lost!\n");
         }
     }
@@ -527,6 +538,7 @@ bool ptp_transmit_enqueue(const RawPtpMessage *pMsg) {
         return true;
     } else {
         if (msgb_get_error(&sRawTxMsgBuf) == MSGB_ERR_FULL) {
+            CLILOG(S.logging.logid && S.logging.info, "[LOG-INFO] ");
             CLILOG(S.logging.info, "PTP TX Enqueue failed, buffer is full! (%u)\n", pMsg->tag);
             PTP_IUEV(PTP_UEV_QUEUE_ERROR); // dispatch QUEUE_ERROR event
         }
@@ -631,6 +643,7 @@ void task_ptp(void) {
         }
     } else {
         // error occurred, just skip this cycle
+        CLILOG(S.logging.logid && S.logging.info, "[LOG-INFO] ");
         CLILOG(S.logging.info, "A polling error occurred!\n");
         continue;
     }
@@ -656,6 +669,7 @@ void task_ptp(void) {
             // clang-format on
 
             // fetch the message
+            CLILOG(S.logging.logid && S.logging.transmission, "[LOG-TX] ");
             CLILOG(S.logging.transmission, "[% 8u]---> %u\n", S.ticks, ts.uid);
             RawPtpMessage *pRawMsg = msgb_get_by_uid(&sRawTxMsgBuf, ts.uid);
             if (pRawMsg != NULL) {
@@ -674,6 +688,7 @@ void task_ptp(void) {
                 // release message
                 if ((pRawMsg->tag == RPMT_RANDOM) || (pRawMsg->pTxCb != NULL)) {
                     msgb_free(&sRawTxMsgBuf, pRawMsg);
+                    CLILOG(S.logging.logid && S.logging.transmission, "[LOG-TX] ");
                     CLILOG(S.logging.transmission, "[% 8u] %u AUTOFREE\n", S.ticks, ts.uid);
                 }
             } else {
@@ -702,6 +717,7 @@ void task_ptp(void) {
             // fetch the message
             RawPtpMessage *pRawMsg = msgb_get_by_uid(&sRawTxMsgBuf, uid);
             if (pRawMsg != NULL) {
+                CLILOG(S.logging.logid && S.logging.transmission, "[LOG-TX] ");
                 CLILOG(S.logging.transmission, "[% 8u] %u (%u) --->\n", S.ticks, uid, pRawMsg->tag & (~((uint32_t)MSGBUF_TAG_OVERWRITE)));
                 ptp_nsd_transmit_msg(pRawMsg, uid);
 #ifdef FLEXPTP_LINUX

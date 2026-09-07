@@ -14,14 +14,22 @@
 #include <string.h>
 
 // initialize connection blocks to invalid states
-static struct udp_pcb *PTP_L4_EVENT = NULL;
-static struct udp_pcb *PTP_L4_GENERAL = NULL;
+static struct udp_pcb *PTP_L4_PRIMARY_EVENT = NULL;
+static struct udp_pcb *PTP_L4_PRIMARY_GENERAL = NULL;
+static struct udp_pcb *PTP_L4_PDELAY_EVENT = NULL;
+static struct udp_pcb *PTP_L4_PDELAY_GENERAL = NULL;
 
 // store current settings
 static PtpTransportType TP = -1;
 static PtpDelayMechanism DM = -1;
+static bool custom_p2p_8023_primary_dest_valid = false;
+static uint8_t custom_p2p_8023_primary_dest[6] = {};
+static bool custom_p2p_8023_pdel_dest_valid = false;
+static uint8_t custom_p2p_8023_pdel_dest[6] = {};
 
-static void ptp_transmit_cb(uint32_t ts_s, uint32_t ts_ns, void * tag);
+static const uint8_t zero_mac[6] = {};
+
+static void ptp_transmit_cb(uint32_t ts_s, uint32_t ts_ns, void *tag);
 static void ptp_receive_cb(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, u16_t port);
 
 void ptp_nsd_igmp_join_leave(bool join) {
@@ -29,15 +37,15 @@ void ptp_nsd_igmp_join_leave(bool join) {
     if (TP == PTP_TP_IPv4) {
         err_t (*igmp_fn)(const ip_addr_t *, const ip_addr_t *) = join ? igmp_joingroup : igmp_leavegroup; // join or leave
 
-        if (DM == PTP_DM_E2E) {
-            igmp_fn(&netif_default->ip_addr, &PTP_IGMP_PRIMARY); // join E2E DM message group
-        } else if (DM == PTP_DM_P2P) {
+        igmp_fn(&netif_default->ip_addr, &PTP_IGMP_PRIMARY); // join E2E DM message group
+
+        if (DM == PTP_DM_P2P) {
             igmp_fn(&netif_default->ip_addr, &PTP_IGMP_PEER_DELAY); // join P2P DM message group
         }
     }
 }
 
-void ptp_nsd_init(PtpTransportType tp, PtpDelayMechanism dm) {
+void ptp_nsd_init(const NsdInitSettings * init) {
     // lock LWIP core
     LOCK_TCPIP_CORE();
 
@@ -45,19 +53,29 @@ void ptp_nsd_init(PtpTransportType tp, PtpDelayMechanism dm) {
     ptp_nsd_igmp_join_leave(false);
 
     // first, close all open connection blocks (zero CBDs won't cause trouble)
-    if (PTP_L4_EVENT != NULL) {
-        udp_disconnect(PTP_L4_EVENT);
-        udp_remove(PTP_L4_EVENT);
-        PTP_L4_EVENT = NULL;
+    if (PTP_L4_PRIMARY_EVENT != NULL) {
+        udp_disconnect(PTP_L4_PRIMARY_EVENT);
+        udp_remove(PTP_L4_PRIMARY_EVENT);
+        PTP_L4_PRIMARY_EVENT = NULL;
     }
-    if (PTP_L4_GENERAL != NULL) {
-        udp_disconnect(PTP_L4_GENERAL);
-        udp_remove(PTP_L4_GENERAL);
-        PTP_L4_GENERAL = NULL;
+    if (PTP_L4_PRIMARY_GENERAL != NULL) {
+        udp_disconnect(PTP_L4_PRIMARY_GENERAL);
+        udp_remove(PTP_L4_PRIMARY_GENERAL);
+        PTP_L4_PRIMARY_GENERAL = NULL;
+    }
+    if (PTP_L4_PDELAY_EVENT != NULL) {
+        udp_disconnect(PTP_L4_PDELAY_EVENT);
+        udp_remove(PTP_L4_PDELAY_EVENT);
+        PTP_L4_PDELAY_EVENT = NULL;
+    }
+    if (PTP_L4_PDELAY_GENERAL != NULL) {
+        udp_disconnect(PTP_L4_PDELAY_GENERAL);
+        udp_remove(PTP_L4_PDELAY_GENERAL);
+        PTP_L4_PDELAY_GENERAL = NULL;
     }
 
     // calling either parameter with -1 just closes connections
-    if ((tp == -1) || (dm == -1)) {
+    if ((init->tp == -1) || (init->dm == -1)) {
         // message transmission and reception is turned off
         TP = -1;
         DM = -1;
@@ -65,21 +83,42 @@ void ptp_nsd_init(PtpTransportType tp, PtpDelayMechanism dm) {
     }
 
     // open only the necessary ones
-    if (tp == PTP_TP_IPv4) {
-        // open event and general connections
-        ip_addr_t addr = (dm == PTP_DM_E2E) ? PTP_IGMP_PRIMARY : PTP_IGMP_PEER_DELAY;
-        PTP_L4_EVENT = udp_new();
-        udp_bind(PTP_L4_EVENT, &addr, PTP_PORT_EVENT);
-        udp_recv(PTP_L4_EVENT, ptp_receive_cb, NULL);
+    if (init->tp == PTP_TP_IPv4) {
+        // open event and general PRIMARY connections
+        PTP_L4_PRIMARY_EVENT = udp_new();
+        udp_bind(PTP_L4_PRIMARY_EVENT, &PTP_IGMP_PRIMARY, PTP_PORT_EVENT);
+        udp_recv(PTP_L4_PRIMARY_EVENT, ptp_receive_cb, NULL);
 
-        PTP_L4_GENERAL = udp_new();
-        udp_bind(PTP_L4_GENERAL, &addr, PTP_PORT_GENERAL);
-        udp_recv(PTP_L4_GENERAL, ptp_receive_cb, NULL);
+        PTP_L4_PRIMARY_GENERAL = udp_new();
+        udp_bind(PTP_L4_PRIMARY_GENERAL, &PTP_IGMP_PRIMARY, PTP_PORT_GENERAL);
+        udp_recv(PTP_L4_PRIMARY_GENERAL, ptp_receive_cb, NULL);
+
+        // open event and general PDELAY* connections
+        if (init->dm == PTP_DM_P2P) {
+            PTP_L4_PDELAY_EVENT = udp_new();
+            udp_bind(PTP_L4_PDELAY_EVENT, &PTP_IGMP_PEER_DELAY, PTP_PORT_EVENT);
+            udp_recv(PTP_L4_PDELAY_EVENT, ptp_receive_cb, NULL);
+
+            PTP_L4_PDELAY_GENERAL = udp_new();
+            udp_bind(PTP_L4_PDELAY_GENERAL, &PTP_IGMP_PEER_DELAY, PTP_PORT_GENERAL);
+            udp_recv(PTP_L4_PDELAY_GENERAL, ptp_receive_cb, NULL);
+        }
+    }
+
+    // if custom P2P 802.3 destination are given, store them
+    uint8_t mac_size = sizeof(zero_mac);
+    if (memcmp(init->primary_p2p_8023_dest, zero_mac, mac_size)) {
+        memcpy(custom_p2p_8023_primary_dest, &init->primary_p2p_8023_dest, mac_size);
+        custom_p2p_8023_primary_dest_valid = true;
+    }
+    if (memcmp(init->pdelay_p2p_8023_dest, zero_mac, mac_size)) {
+        memcpy(custom_p2p_8023_pdel_dest, &init->pdelay_p2p_8023_dest, mac_size);
+        custom_p2p_8023_pdel_dest_valid = true;
     }
 
     // store configuration
-    TP = tp;
-    DM = dm;
+    TP = init->tp;
+    DM = init->dm;
 
     // join new IGMP group
     ptp_nsd_igmp_join_leave(true);
@@ -96,8 +135,8 @@ static void ptp_receive_cb(void *pArg, struct udp_pcb *pPCB, struct pbuf *pP, co
     pbuf_free(pP);
 }
 
-static void ptp_transmit_cb(uint32_t ts_s, uint32_t ts_ns, void * tag) {
-    ptp_transmit_timestamp_cb((uint32_t) tag, ts_s, ts_ns);
+static void ptp_transmit_cb(uint32_t ts_s, uint32_t ts_ns, void *tag) {
+    ptp_transmit_timestamp_cb((uint32_t)tag, ts_s, ts_ns);
 }
 
 void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
@@ -107,6 +146,7 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
     }
 
     PtpMessageClass mc = pMsg->tx_mc;
+    PtpMessageType mt = pMsg->tx_mt;
 
     // allocate buffer
     struct pbuf *p = NULL;
@@ -129,14 +169,19 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
     // lock LWIP core
     LOCK_TCPIP_CORE();
 
+    // is it a Peer Delay Mechanism related message?
+    bool isPDel_ = (mt == PTP_MT_PDelay_Req) || (mt == PTP_MT_PDelay_Resp) || (mt == PTP_MT_PDelay_Resp_Follow_Up);
+
     // narrow down by transport type
     if (TP == PTP_TP_IPv4) {
-        struct udp_pcb *conn = (mc == PTP_MC_EVENT) ? PTP_L4_EVENT : PTP_L4_GENERAL;    // select connection by message type
-        uint16_t port = (mc == PTP_MC_EVENT) ? PTP_PORT_EVENT : PTP_PORT_GENERAL;       // select port by message class
-        ip_addr_t ipaddr = (DM == PTP_DM_E2E) ? PTP_IGMP_PRIMARY : PTP_IGMP_PEER_DELAY; // select destination IP-address by delmech.
-        udp_sendto(conn, p, &ipaddr, port);                                             // send packet
+        struct udp_pcb *conn = (mc == PTP_MC_EVENT) ? PTP_L4_PRIMARY_EVENT : PTP_L4_PRIMARY_GENERAL; // select connection by message type
+        uint16_t port = (mc == PTP_MC_EVENT) ? PTP_PORT_EVENT : PTP_PORT_GENERAL;    // select port by message class
+        ip_addr_t ipaddr = isPDel_ ? PTP_IGMP_PEER_DELAY : PTP_IGMP_PRIMARY;         // select destination IP-address by PDel*/primary message types
+        udp_sendto(conn, p, &ipaddr, port);                                          // send packet
     } else if (TP == PTP_TP_802_3) {
-        const uint8_t *ethaddr = (DM == PTP_DM_E2E) ? PTP_ETHERNET_PRIMARY : PTP_ETHERNET_PEER_DELAY; // select destination address by delmech.
+        const uint8_t *ethaddr = isPDel_ ? 
+            (custom_p2p_8023_pdel_dest_valid ? custom_p2p_8023_pdel_dest : PTP_ETHERNET_PEER_DELAY) : 
+            (custom_p2p_8023_primary_dest_valid ? custom_p2p_8023_primary_dest : PTP_ETHERNET_PRIMARY); // select destination address by PDel*/primary message types
         ethernet_output(netif_default, p, (struct eth_addr *)netif_default->hwaddr, (struct eth_addr *)ethaddr, ETHERTYPE_PTP);
     }
 

@@ -33,32 +33,39 @@
 #define LINUX_NSD_TS_DEBUG (0)         // timestamp debugging
 #define LINUX_NSD_TX_ENQUEUE_DEBUG (0) // transmit enqueue debugging
 
-// initialize connection blocks to invalid states
-static int event_fd = -1;
-static int general_fd = -1;
+// initialize sockets with invalid states
+static int primary_event_fd = -1;
+static int primary_general_fd = -1;
+static int pdelay_event_fd = -1;
+static int pdelay_general_fd = -1;
 
 // store current settings
 static PtpTransportType TP = -1;
 static PtpDelayMechanism DM = -1;
+static uint8_t p2p_8023_primary_dest[6] = {};
+static uint8_t p2p_8023_pdel_dest[6] = {};
+static bool identical_p2p_8023_dests = false;
+
+static const uint8_t zero_mac[ETH_ALEN] = {};
 
 // interface data
-static uint16_t if_idx;                // interface index
-static char if_name[IFNAMSIZ];         // name of the interface
+static uint16_t if_idx; // interface index
+static char if_name[IFNAMSIZ]; // name of the interface
 static uint8_t if_hwaddr[IFHWADDRLEN]; // hardware address of the interface
-static struct sockaddr_in if_ipaddr;   // IP-address of the interface
+static struct sockaddr_in if_ipaddr; // IP-address of the interface
 
 // hardware clock data
 #define PHY_FILE_NAME_SIZE (16)
-static uint16_t phc_index;                     // index of the PHC
+static uint16_t phc_index; // index of the PHC
 static char phc_file_name[PHY_FILE_NAME_SIZE]; // PHC device file name
-static int phc_fd;                             // PHC file descriptor
-static clockid_t phc_clkid;                    // PHC clock id
+static int phc_fd; // PHC file descriptor
+static clockid_t phc_clkid; // PHC clock id
 
 // transception management
-static int notif_q[2];               // notification queue
-static int matching_q[2];            // message pointer queue
+static int notif_q[2]; // notification queue
+static int matching_q[2]; // message pointer queue
 static pthread_t transceiver_thread; // thread managing transmission and reception
-static void *nsd_thread(void *arg);  // thread function
+static void *nsd_thread(void *arg); // thread function
 
 #define PRINT_HWADDR(a) MSG("%02X:%02X:%02X:%02X:%02X:%02X", a[0], a[1], a[2], a[3], a[4], a[5]);
 
@@ -138,7 +145,7 @@ bool linux_nsd_preinit(const char *ifn) {
     struct ethtool_ts_info tsi = {.cmd = ETHTOOL_GET_TS_INFO};
     memset(&ifr, 0, sizeof(ifr));
     strncpy(ifr.ifr_name, if_name, IFNAMSIZ - 1);
-    ifr.ifr_data = (caddr_t)&tsi;
+    ifr.ifr_data = (caddr_t) &tsi;
     err = ioctl(fd, SIOCETHTOOL, &ifr);
     if (err < 0) {
         MSG("Failed to query the interface timestamp capabilities!\n");
@@ -211,19 +218,15 @@ void linux_nsd_cleanup(void) {
     }
 }
 
-static void socket_join_igmp(int fd) {
+static void socket_join_igmp(int fd, in_addr_t igmp_addr) {
     // fill in the multicast assignment request
     struct ip_mreq mreq;
-    if (DM == PTP_DM_E2E) {
-        mreq.imr_multiaddr.s_addr = PTP_IGMP_PRIMARY;
-    } else if (DM == PTP_DM_P2P) {
-        mreq.imr_multiaddr.s_addr = PTP_IGMP_PEER_DELAY;
-    }
+    mreq.imr_multiaddr.s_addr = igmp_addr;
     mreq.imr_interface = if_ipaddr.sin_addr;
 
     // join the IGMP group
     // man 7 ip
-    int err = setsockopt(event_fd, IPPROTO_IP, IP_ADD_MEMBERSHIP, &mreq, sizeof(mreq));
+    int err = setsockopt(primary_event_fd, IPPROTO_IP, IP_ADD_MEMBERSHIP, &mreq, sizeof(mreq));
     if (err < 0) {
         // MSG("Could not join the required network group!\n");
     }
@@ -232,23 +235,29 @@ static void socket_join_igmp(int fd) {
 void ptp_nsd_igmp_join_leave(bool join) {
     // only join IGMP if Transport Type is IP
     if ((TP == PTP_TP_IPv4) && join) {
-        if (event_fd > 0) {
-            socket_join_igmp(event_fd);
+        if (primary_event_fd > 0) {
+            socket_join_igmp(primary_event_fd, PTP_IGMP_PRIMARY);
         }
-        if (general_fd > 0) {
-            socket_join_igmp(general_fd);
+        if (primary_general_fd > 0) {
+            socket_join_igmp(primary_general_fd, PTP_IGMP_PRIMARY);
+        }
+        if (pdelay_event_fd > 0) {
+            socket_join_igmp(pdelay_event_fd, PTP_IGMP_PEER_DELAY);
+        }
+        if (pdelay_general_fd > 0) {
+            socket_join_igmp(pdelay_general_fd, PTP_IGMP_PEER_DELAY);
         }
     }
 
     // don't have to explicitly leave the IGMP group
 }
 
-static int open_udp_socket(PtpDelayMechanism dm, uint16_t port, const char *hint) {
+static int open_udp_socket(in_addr_t s_addr, uint16_t port, const char *hint) {
     // prepare socket address
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
     addr.sin_family = PF_INET;
-    addr.sin_addr.s_addr = (dm == PTP_DM_E2E) ? PTP_IGMP_PRIMARY : PTP_IGMP_PEER_DELAY;
+    addr.sin_addr.s_addr = s_addr;
 
     // create socket
     // man 2 socket
@@ -278,7 +287,7 @@ static int open_udp_socket(PtpDelayMechanism dm, uint16_t port, const char *hint
     // bind the socket
     // man 2 bind
     addr.sin_port = htons(port);
-    err = bind(sfd, (struct sockaddr *)&addr, sizeof(addr));
+    err = bind(sfd, (struct sockaddr *) &addr, sizeof(addr));
     if (err < 0) {
         MSG("Could not bind the %s socket!\n", hint);
         goto cleanup;
@@ -292,9 +301,7 @@ cleanup:
     return -1;
 }
 
-static int open_raw_socket(PtpDelayMechanism dm, bool bind_socket, const char *hint) {
-    const uint8_t *ethaddr = (dm == PTP_DM_E2E) ? PTP_ETHERNET_PRIMARY : PTP_ETHERNET_PEER_DELAY;
-
+static int open_raw_socket(const uint8_t *ethaddr, bool bind_socket, const char *hint) {
     // create socket
     // SOCK_DGRAM: use the kernel features to fill in the Ethernet header
     int sfd = socket(AF_PACKET, SOCK_DGRAM, htons(PTP_ETHERTYPE));
@@ -318,7 +325,7 @@ static int open_raw_socket(PtpDelayMechanism dm, bool bind_socket, const char *h
     // man 2 bind
     int err;
     if (bind_socket) {
-        err = bind(sfd, (struct sockaddr *)&addr, sizeof(addr));
+        err = bind(sfd, (struct sockaddr *) &addr, sizeof(addr));
         if (err < 0) {
             MSG("Could not bind the %s socket!\n", hint);
         }
@@ -355,7 +362,7 @@ static void enable_timestamping(int sfd) {
     memset(&ifreq, 0, sizeof(ifreq));
     memset(&cfg, 0, sizeof(cfg));
     strncpy(ifreq.ifr_name, if_name, IFNAMSIZ - 1);
-    ifreq.ifr_data = (void *)&cfg;
+    ifreq.ifr_data = (void *) &cfg;
 
     // get current timestamping settings
     err = ioctl(sfd, SIOCGHWTSTAMP, &ifreq);
@@ -390,21 +397,31 @@ static char msg_buf[MSG_BUF_SIZE];
 #define CTRL_BUF_SIZE (256)
 static char rx_ctrl_buf[CTRL_BUF_SIZE];
 
+static void clear_revents_by_fd(int fd, unsigned short revent, struct pollfd * pfd, int nfds) {
+    for (int i = 0; i < nfds; i++) {
+        if (pfd[i].fd == fd) {
+            pfd[i].revents &= (short int)(~revent);
+        }
+    }
+}
+
 static void *nsd_thread(void *arg) {
     bool run = true;
     while (run) {
         // populate the poll list
         struct pollfd pfd[] = {
             {.fd = notif_q[0], .events = POLLIN},
-            {.fd = event_fd, .events = POLLIN | POLLPRI},
-            {.fd = general_fd, .events = POLLIN},
+            {.fd = primary_event_fd, .events = POLLIN | POLLPRI},
+            {.fd = primary_general_fd, .events = POLLIN},
+            {.fd = pdelay_event_fd, .events = POLLIN | POLLPRI},
+            {.fd = pdelay_general_fd, .events = POLLIN},
         };
 
-        // in IEEE 802.3 mode only the first two slots are used
-        int n = (TP == PTP_TP_IPv4) ? 3 : 2;
+        // pdelay_* sockets have to be listened only in P2P delay mechanism modes
+        const int n = ((DM == PTP_DM_P2P) && !identical_p2p_8023_dests) ? 5 : 3;
 
         // make the poll
-        int pret = poll(pfd, n, -1);
+        const int pret = poll(pfd, n, -1);
         if (pret > 0) {
             // notifications
             if (pfd[0].revents & POLLIN) {
@@ -416,9 +433,8 @@ static void *nsd_thread(void *arg) {
                 }
             }
 
-            // something had happened on the event message socket
-            if (pfd[1].revents != 0) {
-
+            // something have happened on the event message socket
+            if ((pfd[1].revents != 0) || (pfd[3].revents != 0)) {
                 // prepare for message reception
                 struct iovec iov = {msg_buf, MSG_BUF_SIZE};
                 struct msghdr msg;
@@ -433,32 +449,40 @@ static void *nsd_thread(void *arg) {
                 msg.msg_control = rx_ctrl_buf;
                 msg.msg_controllen = CTRL_BUF_SIZE;
 
-                // event message TRANSMISSION timestamp feedback
+                // event message TRANSMISSION timestamp feedback PRIMARY
                 // https://www.kernel.org/doc/html/latest/networking/timestamping.html#scm-timestamping-records
-                if (pfd[1].revents & POLLPRI) {
-                    ssize_t size = recvmsg(event_fd, &msg, MSG_ERRQUEUE); // get transmit timestamps from the error queue
+                while ((pfd[1].revents & POLLPRI) || (pfd[3].revents & POLLPRI)) {
+                    int fd = (pfd[1].revents & POLLPRI) ? primary_event_fd : pdelay_event_fd; // select socket
+                    ssize_t size = recvmsg(fd, &msg, MSG_ERRQUEUE);
+                    // get transmit timestamps from the error queue
                     struct cmsghdr *cm; // iterate over the chain of control messages
                     for (cm = CMSG_FIRSTHDR(&msg); cm != NULL; cm = CMSG_NXTHDR(&msg, cm)) {
                         int level = cm->cmsg_level;
                         int type = cm->cmsg_type;
                         if ((level == SOL_SOCKET) && (type == SO_TIMESTAMPING)) {
-                            struct timespec *ts = (struct timespec *)CMSG_DATA(cm); // get data from the timestamp control message
+                            struct timespec *ts = (struct timespec *) CMSG_DATA(cm);
+                            // get data from the timestamp control message
                             uint32_t uid = 0;
                             read(matching_q[0], &uid, sizeof(uint32_t));
 
                             struct timespec now;
                             clock_gettime(CLOCK_REALTIME, &now);
-                            CLILOG(LINUX_NSD_TS_DEBUG, "[%lu.%09lu] TX TS: (%u) %lu.%09lu\n", now.tv_sec, now.tv_nsec, uid, ts[2].tv_sec, ts[2].tv_nsec);
+                            CLILOG(LINUX_NSD_TS_DEBUG, "[%lu.%09lu] TX TS: (%u) %lu.%09lu\n", now.tv_sec, now.tv_nsec,
+                                   uid, ts[2].tv_sec, ts[2].tv_nsec);
 
                             // invoke the transmit timestamp callback, the hardware timestamp always comes in ts[2]
                             ptp_transmit_timestamp_cb(uid, ts[2].tv_sec, ts[2].tv_nsec);
                         }
                     }
+
+                    // clear relevant events
+                    clear_revents_by_fd(fd, POLLPRI, pfd, n);
                 }
 
                 // event message RECEPTION
-                if (pfd[1].revents & POLLIN) {
-                    ssize_t size = recvmsg(event_fd, &msg, 0);
+                while ((pfd[1].revents & POLLIN) || (pfd[3].revents & POLLIN)) {
+                    int fd = (pfd[1].revents & POLLIN) ? primary_event_fd : pdelay_event_fd; // select socket
+                    ssize_t size = recvmsg(fd, &msg, 0);
                     struct cmsghdr *cm;
                     struct timespec ts;
                     memset(&ts, 0, sizeof(ts));
@@ -467,24 +491,27 @@ static void *nsd_thread(void *arg) {
                         int level = cm->cmsg_level;
                         int type = cm->cmsg_type;
                         if ((level == SOL_SOCKET) && (type == SO_TIMESTAMPING)) {
-                            struct timespec *tsa = (struct timespec *)CMSG_DATA(cm); // get pointer to the timestamps
-                            ts = tsa[2];                                             // extract the hardware timestamp
-                            ts_found = true;                                         // indicate that timestamp was found
+                            struct timespec *tsa = (struct timespec *) CMSG_DATA(cm); // get pointer to the timestamps
+                            ts = tsa[2]; // extract the hardware timestamp
+                            ts_found = true; // indicate that timestamp was found
                             CLILOG(LINUX_NSD_TS_DEBUG, "RX TS: %lu.%09lu\n", ts.tv_sec, ts.tv_nsec);
                         }
                     }
 
-                    // forward only event messages over IPv4 and ALL messages over Ethernet
+                    // forward only event messages with timestamps
                     if (((TP == PTP_TP_IPv4) && (ts_found)) || (TP == PTP_TP_802_3)) {
                         ptp_receive_enqueue(msg_buf, size, ts.tv_sec, ts.tv_nsec, TP);
                     }
+
+                    // clear relevant events
+                    clear_revents_by_fd(fd, POLLIN, pfd, n);
                 }
             }
 
             // general message reception (in IPv4 mode)
             if (TP == PTP_TP_IPv4) {
                 if (pfd[2].revents & POLLIN) {
-                    ssize_t size = recv(general_fd, msg_buf, MSG_BUF_SIZE, 0);
+                    ssize_t size = recv(primary_general_fd, msg_buf, MSG_BUF_SIZE, 0);
                     if (size > 0) {
                         ptp_receive_enqueue(msg_buf, size, 0, 0, TP);
                     }
@@ -496,7 +523,7 @@ static void *nsd_thread(void *arg) {
     return NULL;
 }
 
-void ptp_nsd_init(PtpTransportType tp, PtpDelayMechanism dm) {
+void ptp_nsd_init(const NsdInitSettings *init) {
     // leave current IGMP group if applicable
     ptp_nsd_igmp_join_leave(false);
 
@@ -506,34 +533,68 @@ void ptp_nsd_init(PtpTransportType tp, PtpDelayMechanism dm) {
         pthread_join(transceiver_thread, NULL);
         transceiver_thread = 0;
     }
-    if (event_fd > 0) {
-        close(event_fd);
-        event_fd = -1;
+    if (primary_event_fd > 0) {
+        close(primary_event_fd);
+        primary_event_fd = -1;
     }
-    if (general_fd > 0) {
-        close(general_fd);
-        general_fd = -1;
+    if (primary_general_fd > 0) {
+        close(primary_general_fd);
+        primary_general_fd = -1;
+    }
+    if (pdelay_event_fd > 0) {
+        close(pdelay_event_fd);
+        pdelay_event_fd = -1;
+    }
+    if (pdelay_general_fd > 0) {
+        close(pdelay_general_fd);
+        pdelay_general_fd = -1;
     }
 
     // calling either parameter with -1 just closes connections
-    if ((tp == -1) || (dm == -1)) {
+    if ((init->tp == -1) || (init->dm == -1)) {
         // message transmission and reception is turned off
         TP = -1;
         DM = -1;
         return;
     }
 
+    // if custom P2P 802.3 destination are given, store them
+    if (memcmp(init->primary_p2p_8023_dest, zero_mac, ETH_ALEN) != 0) {
+        memcpy(p2p_8023_primary_dest, &init->primary_p2p_8023_dest, ETH_ALEN);
+    } else {
+        memcpy(p2p_8023_primary_dest, PTP_ETHERNET_PRIMARY, ETH_ALEN);
+    }
+
+    if (memcmp(init->pdelay_p2p_8023_dest, zero_mac, ETH_ALEN) != 0) {
+        memcpy(p2p_8023_pdel_dest, &init->pdelay_p2p_8023_dest, ETH_ALEN);
+    } else {
+        memcpy(p2p_8023_pdel_dest, PTP_ETHERNET_PEER_DELAY, ETH_ALEN);
+    }
+
+    // detect if Primary and PDelay request addresses were the same
+    identical_p2p_8023_dests = !memcmp(p2p_8023_primary_dest, p2p_8023_pdel_dest, ETH_ALEN);
+
     // open event and general connections
-    if (tp == PTP_TP_IPv4) {
-        event_fd = open_udp_socket(dm, PTP_PORT_EVENT, "EVENT");
-        general_fd = open_udp_socket(dm, PTP_PORT_GENERAL, "GENERAL");
-    } else if (tp == PTP_TP_802_3) {
-        event_fd = open_raw_socket(dm, true, "EVENT");
-        general_fd = open_raw_socket(dm, false, "GENERAL");
+    if (init->tp == PTP_TP_IPv4) {
+        primary_event_fd = open_udp_socket(PTP_IGMP_PRIMARY, PTP_PORT_EVENT, "EVENT_PRIMARY");
+        primary_general_fd = open_udp_socket(PTP_IGMP_PRIMARY, PTP_PORT_GENERAL, "GENERAL_PRIMARY");
+
+        if (init->dm == PTP_DM_P2P) {
+            pdelay_event_fd = open_udp_socket(PTP_IGMP_PEER_DELAY, PTP_PORT_EVENT, "EVENT_PDELAY");
+            pdelay_general_fd = open_udp_socket(PTP_IGMP_PEER_DELAY, PTP_PORT_GENERAL, "GENERAL_PDELAY");
+        }
+    } else if (init->tp == PTP_TP_802_3) {
+        primary_event_fd = open_raw_socket(PTP_ETHERNET_PRIMARY, true, "EVENT_PRIMARY");
+        primary_general_fd = open_raw_socket(PTP_ETHERNET_PRIMARY, false, "GENERAL_PRIMARY");
+
+        if ((init->dm == PTP_DM_P2P) && !identical_p2p_8023_dests) {
+            pdelay_event_fd = open_raw_socket(PTP_ETHERNET_PEER_DELAY, true, "EVENT_PDELAY");
+            pdelay_general_fd = open_raw_socket(PTP_ETHERNET_PEER_DELAY, false, "GENERAL_PDELAY");
+        }
     }
 
     // enable timestamping on the event socket
-    enable_timestamping(event_fd);
+    enable_timestamping(primary_event_fd);
 
     // create the transceiver thread
     transceiver_thread = 0;
@@ -542,8 +603,8 @@ void ptp_nsd_init(PtpTransportType tp, PtpDelayMechanism dm) {
     }
 
     // store configuration
-    TP = tp;
-    DM = dm;
+    TP = init->tp;
+    DM = init->dm;
 
     // join new IGMP group
     ptp_nsd_igmp_join_leave(true);
@@ -559,9 +620,13 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
 
     // get the message class
     PtpMessageClass mc = pMsg->tx_mc;
+    PtpMessageType mt = pMsg->tx_mt;
 
     // select connection by message type
-    int sfd = (mc == PTP_MC_EVENT) ? event_fd : general_fd;
+    int sfd = (mc == PTP_MC_EVENT) ? primary_event_fd : primary_general_fd;
+
+    // is it a Peer Delay Mechanism related message?
+    bool isPDel_ = (mt == PTP_MT_PDelay_Req) || (mt == PTP_MT_PDelay_Resp) || (mt == PTP_MT_PDelay_Resp_Follow_Up);
 
     // narrow down by transport type
     if (TP == PTP_TP_IPv4) {
@@ -569,16 +634,17 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
         struct sockaddr_in addr;
         memset(&addr, 0, sizeof(addr));
         addr.sin_family = PF_INET;
-        addr.sin_addr.s_addr = (DM == PTP_DM_E2E) ? PTP_IGMP_PRIMARY : PTP_IGMP_PEER_DELAY; // select destination IP-address by delmech.
-        addr.sin_port = htons((mc == PTP_MC_EVENT) ? PTP_PORT_EVENT : PTP_PORT_GENERAL);    // select port by message class
+        addr.sin_addr.s_addr = isPDel_ ? PTP_IGMP_PEER_DELAY : PTP_IGMP_PRIMARY;
+        // select destination IP-address by PDel*/primary message types
+        addr.sin_port = htons((mc == PTP_MC_EVENT) ? PTP_PORT_EVENT : PTP_PORT_GENERAL); // select port by message class
 
         // send packet
-        if (sendto(sfd, pMsg->data, pMsg->size, 0, (struct sockaddr *)&addr, sizeof(addr)) == pMsg->size) {
+        if (sendto(sfd, pMsg->data, pMsg->size, 0, (struct sockaddr *) &addr, sizeof(addr)) == pMsg->size) {
             send_ok = true;
         }
     } else if (TP == PTP_TP_802_3) {
         // destination address
-        const uint8_t *ethaddr = (DM == PTP_DM_E2E) ? PTP_ETHERNET_PRIMARY : PTP_ETHERNET_PEER_DELAY; // select destination address by delmech.
+        const uint8_t *ethaddr = isPDel_ ? PTP_ETHERNET_PEER_DELAY : PTP_ETHERNET_PRIMARY; // select destination address by PDel*/primary message types
 
         // prepare address object
         struct sockaddr_ll addr;
@@ -588,9 +654,9 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
         addr.sll_protocol = htons(PTP_ETHERTYPE);
         memcpy(addr.sll_addr, ethaddr, ETH_ALEN);
 
-        if (sendto(sfd, pMsg->data, pMsg->size, 0, (struct sockaddr *)&addr, sizeof(addr)) == pMsg->size) {
+        if (sendto(sfd, pMsg->data, pMsg->size, 0, (struct sockaddr *) &addr, sizeof(addr)) == pMsg->size) {
             send_ok = true;
-        };
+        }
     }
 
     // send message UID to the queue or invoke the TX callback
@@ -623,7 +689,7 @@ void linux_adjust_clock(double tuning_ppb) {
     }
     memset(&tx, 0, sizeof(struct timex));
     tx.modes = ADJ_FREQUENCY;
-    tx.freq = (__syscall_slong_t)(tuning_ppb * PPB_TO_TUNING_SCALER);
+    tx.freq = (__syscall_slong_t) (tuning_ppb * PPB_TO_TUNING_SCALER);
     if (clock_adjtime(phc_clkid, &tx) != 0) {
         MSG("Failed to adjust PHC frequency!\n");
     }

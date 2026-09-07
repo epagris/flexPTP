@@ -50,8 +50,10 @@ static char *BMCA_HINTS[] = {
     "DISABLED"};
 
 #define SBMC_PRINT_LOG(p, c) \
-    if (S.logging.bmca)      \
-        MSG("%s -> %s\n", BMCA_HINTS[(p)], BMCA_HINTS[(c)]);
+    if (S.logging.bmca) {     \
+        CLILOG(S.logging.logid, "[LOG-BMCA] ") \
+        MSG("%s -> %s\n", BMCA_HINTS[(p)], BMCA_HINTS[(c)]); \
+    }
 
 // handle possible state change
 static void ptp_bmca_handle_state_change(PtpBmcaFsmState state) {

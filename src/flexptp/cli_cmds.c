@@ -63,6 +63,8 @@ static CMD_FUNCTION(CB_log) {
             ptp_log_enable(PTP_LOG_LOCKED_STATE, logEn);
         } else if (!strcmp(ppArgs[0], "bmca")) {
             ptp_log_enable(PTP_LOG_BMCA, logEn);
+        } else if (!strcmp(ppArgs[0], "logid")) {
+            ptp_log_enable(PTP_LOG_LOGID, logEn);
         } else {
             return -1;
         }
@@ -359,7 +361,7 @@ void ptp_register_cli_commands() {
 #ifdef CLI_REG_CMD
     sCmds[CMD_RESET] = CLI_REG_CMD("ptp reset \t\t\tReset PTP subsystem", 2, 0, CB_reset);
     sCmds[CMD_OFFSET] = CLI_REG_CMD("ptp servo offset [offset_ns] \t\t\tSet or query clock offset", 3, 0, CB_offset);
-    sCmds[CMD_LOG] = CLI_REG_CMD("ptp log {def|corr|ts|info|locked|bmca} {on|off} \t\t\tTurn on or off logging", 2, 2, CB_log);
+    sCmds[CMD_LOG] = CLI_REG_CMD("ptp log {def|corr|ts|info|locked|bmca|logid} {on|off} \t\t\tTurn on or off logging", 2, 2, CB_log);
     sCmds[CMD_TIME] = CLI_REG_CMD("time [ns] \t\t\tPrint time", 1, 0, CB_time);
     sCmds[CMD_MASTER] = CLI_REG_CMD("ptp master [[un]prefer] [clockid] \t\t\tMaster clock settings", 2, 0, CB_master);
     sCmds[CMD_PTPINFO] = CLI_REG_CMD("ptp info \t\t\tPrint PTP info", 2, 0, CB_ptpinfo);

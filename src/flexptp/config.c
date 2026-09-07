@@ -19,6 +19,7 @@
 #define CONFIG_LOG_LOCKED (0x10)       ///< Inform the user if the clock diverges or locks
 #define CONFIG_LOG_BMCA (0x20)         ///< Peek BMCA state changes
 #define CONFIG_LOG_TRANSMISSION (0x40) ///< Log transmission events
+#define CONFIG_LOG_LOGID (0x80)        ///< Print log IDs
 #define CONFIG_LOG_ALL (0x7F)          ///< All logging options packed
 
 ///\cond 0
@@ -37,6 +38,7 @@ void ptp_store_config(PtpConfig *pConfig) {
                        CONFIG_ADD_LOGGING(S.logging.locked, CONFIG_LOG_LOCKED) |
                        CONFIG_ADD_LOGGING(S.logging.bmca, CONFIG_LOG_BMCA) |
                        CONFIG_ADD_LOGGING(S.logging.transmission, CONFIG_LOG_TRANSMISSION);
+                       CONFIG_ADD_LOGGING(S.logging.logid, CONFIG_LOG_LOGID);
     pConfig->priority1 = S.capabilities.priority1;
     pConfig->priority2 = S.capabilities.priority2;
 }
@@ -77,6 +79,7 @@ void ptp_load_config(const PtpConfig *pConfig) {
     S.logging.locked = (pConfig->logging & CONFIG_LOG_LOCKED) != 0;
     S.logging.bmca = (pConfig->logging & CONFIG_LOG_BMCA) != 0;
     S.logging.transmission = (pConfig->logging & CONFIG_LOG_TRANSMISSION) != 0;
+    S.logging.logid = (pConfig->logging & CONFIG_LOG_LOGID) != 0;
 }
 
 void ptp_load_config_from_dump(const void *pDump) {

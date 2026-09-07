@@ -49,6 +49,7 @@ void ptp_send_delay_req_message() {
     // delReqMsg.pTs = (S.bmca.state == PTP_BMCA_SLAVE) ? (&(S.slave.scd.t[T3])) : (&(S.master.scd.t[T1])); // timestamp writeback address
     delReqMsg.tx_dm = S.profile.delayMechanism;
     delReqMsg.tx_mc = PTP_MC_EVENT;
+    delReqMsg.tx_mt = delReqHeader.messageType;
     delReqMsg.pTxCb = NULL; // empty_tx_cb;
     delReqMsg.ttl = ((S.bmca.state == PTP_BMCA_SLAVE) ? ((S.profile.logDelayReqPeriod == PTP_LOGPER_SYNCMATCHED) ? FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS : S.slave.delReqTickPeriod) : S.master.pdelayReqTickPeriod);
 
@@ -89,6 +90,7 @@ void ptp_send_pdelay_resp_follow_up(const RawPtpMessage *pMsg) {
     pdelRespFUpMsg.size = PTP_PCKT_SIZE_PDELAY_RESP_FOLLOW_UP;
     pdelRespFUpMsg.tx_dm = PTP_DM_P2P;
     pdelRespFUpMsg.tx_mc = PTP_MC_GENERAL;
+    pdelRespFUpMsg.tx_mt = PTP_MT_PDelay_Resp_Follow_Up;
     pdelRespFUpMsg.pTxCb = NULL;
     pdelRespFUpMsg.ttl = FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS;
 
@@ -128,6 +130,7 @@ void ptp_send_pdelay_resp(const RawPtpMessage *pMsg) {
     pdelRespMsg.pTxCb = ptp_send_pdelay_resp_follow_up;
     pdelRespMsg.tx_dm = PTP_DM_P2P;
     pdelRespMsg.tx_mc = PTP_MC_EVENT;
+    pdelRespMsg.tx_mt = PTP_MT_PDelay_Resp;
     pdelRespMsg.ttl = FLEXPTP_RANDOM_TAGGED_MESSAGE_TTL_TICKS;
 
     // MSG("PDelResp: %d.%09d\n", (int32_t)t2.sec, t2.nanosec);

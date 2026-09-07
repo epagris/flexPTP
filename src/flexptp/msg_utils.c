@@ -147,7 +147,6 @@ void ptp_construct_binary_announce_message(void * pData, const PtpAnnounceBody *
     // convert to big endian
     uint16_t currentUTCOffset = FLEXPTP_ntohs(pAnnounce->currentUTCOffset);
     uint16_t grandmasterClockVariance = FLEXPTP_ntohs(pAnnounce->grandmasterClockVariance);
-    uint64_t grandmasterClockIdentity = FLEXPTP_ntohll(pAnnounce->grandmasterClockIdentity);
     uint16_t localStepsRemoved = FLEXPTP_ntohs(pAnnounce->localStepsRemoved);
 
     // copy header fields
@@ -157,7 +156,7 @@ void ptp_construct_binary_announce_message(void * pData, const PtpAnnounceBody *
     memcpy(p + 5, &pAnnounce->grandmasterClockAccuracy, 1);
     memcpy(p + 6, &grandmasterClockVariance, 2);
     memcpy(p + 8, &pAnnounce->priority2, 1);
-    memcpy(p + 9, &grandmasterClockIdentity, 8);
+    memcpy(p + 9, &pAnnounce->grandmasterClockIdentity, 8);
     memcpy(p + 17, &localStepsRemoved, 2);
     memcpy(p + 19, &pAnnounce->timeSource, 1);
 }
