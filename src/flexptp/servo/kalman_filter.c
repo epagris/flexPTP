@@ -303,6 +303,12 @@ float kalman_filter_run(int32_t dt, PtpServoAuxInput *pAux) {
         goto retain_cycle_data;
     }
 
+    // A non-positive measured Sync period divides by zero below, in both the skew
+    // measurement and insert_DT(). Skip the cycle rather than poison the state.
+    if (pAux->measSyncPeriodNs <= 0) {
+        goto retain_cycle_data;
+    }
+
     /* ---- PREPARE THE PARAMETERS ---- */
 
     // calculate input data
@@ -364,6 +370,15 @@ float kalman_filter_run(int32_t dt, PtpServoAuxInput *pAux) {
     double tuning_coefficient = (fabs(x[0]) > FAST_TUNING_THRESHOLD) ? FAST_TUNING_COEFFICIENT : CALM_TUNING_COEFFICIENT;
     double tuning = -x[1] + ((-x[0] * 1E+09 / pAux->measSyncPeriodNs) * tuning_coefficient);
     tuning_ppb = tuning * 1E+09;
+
+    // Guard against a non-finite state. NaN and infinity propagate through every
+    // subsequent update, so one bad sample latches the filter permanently: the tuning
+    // value stays NaN, which prints as 0.0000 and converts to a zero clock correction.
+    // The servo then looks healthy while the clock free-runs. Restart instead.
+    if (!isfinite(tuning_ppb) || !isfinite(x[0]) || !isfinite(x[1])) {
+        kalman_filter_reset();
+        return 0.0f;
+    }
 
     // feed back tuning
     u[0] = 0;
