@@ -188,6 +188,20 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
     // unlock LWIP core
     UNLOCK_TCPIP_CORE();
 
+    /* Untag the pbuf before releasing it.
+     *
+     * tx_cb and tag live in LWIP_PBUF_CUSTOM_DATA, which lwIP does not initialise on
+     * allocation -- it manages its own fields and nothing else. So whatever is left here
+     * survives into the next allocation that lands on this memory, and a port that gates
+     * hardware transmit timestamping on `p->tx_cb != NULL`, which is the only signal this
+     * driver offers, then requests a timestamp for a frame that never asked for one and
+     * reports it against a stale uid.
+     *
+     * The send above is synchronous -- udp_sendto() and ethernet_output() reach
+     * netif->linkoutput before returning -- so the driver has already taken both values. */
+    p->tx_cb = NULL;
+    p->tag = NULL;
+
     pbuf_free(p); // release buffer
 }
 
