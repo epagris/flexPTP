@@ -105,15 +105,26 @@ void ptp_nsd_init(const NsdInitSettings * init) {
         }
     }
 
-    // if custom P2P 802.3 destination are given, store them
-    uint8_t mac_size = sizeof(zero_mac);
-    if (memcmp(init->primary_p2p_8023_dest, zero_mac, mac_size)) {
-        memcpy(custom_p2p_8023_primary_dest, &init->primary_p2p_8023_dest, mac_size);
-        custom_p2p_8023_primary_dest_valid = true;
+    /* Custom P2P 802.3 destinations, RECOMPUTED rather than latched.
+     *
+     * An all-zero field means "use the standard address", and it is expressed by the absence
+     * of an override -- so a profile that supplies none has to take the previous profile's
+     * override out of effect. ptp_nsd_init() runs on every profile change, and flags that are
+     * only ever set to true made the switch one-way: gPTP, which supplies 01:80:C2:00:00:0E,
+     * followed by any other preset, left the node still transmitting to 01:80:C2:00:00:0E
+     * while reporting the new profile. */
+    const uint8_t mac_size = sizeof(zero_mac);
+
+    custom_p2p_8023_primary_dest_valid =
+        (memcmp(init->primary_p2p_8023_dest, zero_mac, mac_size) != 0);
+    if (custom_p2p_8023_primary_dest_valid) {
+        memcpy(custom_p2p_8023_primary_dest, init->primary_p2p_8023_dest, mac_size);
     }
-    if (memcmp(init->pdelay_p2p_8023_dest, zero_mac, mac_size)) {
-        memcpy(custom_p2p_8023_pdel_dest, &init->pdelay_p2p_8023_dest, mac_size);
-        custom_p2p_8023_pdel_dest_valid = true;
+
+    custom_p2p_8023_pdel_dest_valid =
+        (memcmp(init->pdelay_p2p_8023_dest, zero_mac, mac_size) != 0);
+    if (custom_p2p_8023_pdel_dest_valid) {
+        memcpy(custom_p2p_8023_pdel_dest, init->pdelay_p2p_8023_dest, mac_size);
     }
 
     // store configuration
