@@ -70,6 +70,7 @@ PtpTransportType ptp_get_transport_type() {
 
 void ptp_set_transport_type(PtpTransportType tp) {
     S.profile.transportType = tp;
+    ptp_reset(); // this is mandatory, exactly as it is for the delay mechanism below
 }
 
 void ptp_set_delay_mechanism(PtpDelayMechanism dm) {
