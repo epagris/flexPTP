@@ -93,7 +93,14 @@ void ptp_nsd_init(const NsdInitSettings * init) {
         udp_bind(PTP_L4_PRIMARY_GENERAL, &PTP_IGMP_PRIMARY, PTP_PORT_GENERAL);
         udp_recv(PTP_L4_PRIMARY_GENERAL, ptp_receive_cb, NULL);
 
-        // open event and general PDELAY* connections
+        /* Open event and general PDELAY* connections.
+         *
+         * These are RECEIVE-only. Transmit below always uses the PRIMARY pair and overrides
+         * the destination per message type with udp_sendto(), which is correct: both pairs
+         * bind the same local ports, so the pcb a datagram leaves through does not change
+         * anything on the wire. Selecting the PDelay pair for transmit instead would change
+         * only which pcb the source binding comes from -- so do not "fix" the selection
+         * below to match; there is nothing there to fix. */
         if (init->dm == PTP_DM_P2P) {
             PTP_L4_PDELAY_EVENT = udp_new();
             udp_bind(PTP_L4_PDELAY_EVENT, &PTP_IGMP_PEER_DELAY, PTP_PORT_EVENT);
@@ -174,6 +181,8 @@ void ptp_nsd_transmit_msg(RawPtpMessage *pMsg, uint32_t uid) {
 
     // narrow down by transport type
     if (TP == PTP_TP_IPv4) {
+        // Always the PRIMARY pair: the destination, not the pcb, is what selects the group.
+        // See the note on the PDELAY* pcbs in ptp_nsd_init().
         struct udp_pcb *conn = (mc == PTP_MC_EVENT) ? PTP_L4_PRIMARY_EVENT : PTP_L4_PRIMARY_GENERAL; // select connection by message type
         uint16_t port = (mc == PTP_MC_EVENT) ? PTP_PORT_EVENT : PTP_PORT_GENERAL;    // select port by message class
         ip_addr_t ipaddr = isPDel_ ? PTP_IGMP_PEER_DELAY : PTP_IGMP_PRIMARY;         // select destination IP-address by PDel*/primary message types
