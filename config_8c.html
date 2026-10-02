@@ -154,7 +154,7 @@ Macros</h2></td></tr>
 <tr class="memitem:adf0303951bb266e2b1323b3cd7b529ae"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8c.html#adf0303951bb266e2b1323b3cd7b529ae">CONFIG_LOG_LOGID</a>&#160;&#160;&#160;(0x80)</td></tr>
 <tr class="memdesc:adf0303951bb266e2b1323b3cd7b529ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print log IDs.  <br /></td></tr>
 <tr class="separator:adf0303951bb266e2b1323b3cd7b529ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae027cf3e3acd22a2fe98753993efe2d5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8c.html#ae027cf3e3acd22a2fe98753993efe2d5">CONFIG_LOG_ALL</a>&#160;&#160;&#160;(0x7F)</td></tr>
+<tr class="memitem:ae027cf3e3acd22a2fe98753993efe2d5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8c.html#ae027cf3e3acd22a2fe98753993efe2d5">CONFIG_LOG_ALL</a></td></tr>
 <tr class="memdesc:ae027cf3e3acd22a2fe98753993efe2d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">All logging options packed.  <br /></td></tr>
 <tr class="separator:ae027cf3e3acd22a2fe98753993efe2d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -175,14 +175,25 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define CONFIG_LOG_ALL&#160;&#160;&#160;(0x7F)</td>
+          <td class="memname">#define CONFIG_LOG_ALL</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
+<b>Value:</b><div class="fragment"><div class="line">    (<a class="code hl_define" href="config_8c.html#ab94239dc51a080bc150e2f699f6c0e56">CONFIG_LOG_DEF</a> | <a class="code hl_define" href="config_8c.html#a85300016e00427d9bfe383d4046350b8">CONFIG_LOG_INFO</a> | <a class="code hl_define" href="config_8c.html#a622933e699b87e0bc280c3e070990f7a">CONFIG_LOG_CORR</a> |                     \</div>
+<div class="line">     <a class="code hl_define" href="config_8c.html#a7d358ea1b693df32136dbe7e24658de2">CONFIG_LOG_TIMESTAMPS</a> | <a class="code hl_define" href="config_8c.html#a42b2b5ee2b85283c1df544bd05e0a20e">CONFIG_LOG_LOCKED</a> | <a class="code hl_define" href="config_8c.html#a4e0513a932bcbe9be56b5d6804b23847">CONFIG_LOG_BMCA</a> |            \</div>
+<div class="line">     <a class="code hl_define" href="config_8c.html#ae097544c511ad5c2c5711519025229bf">CONFIG_LOG_TRANSMISSION</a> | <a class="code hl_define" href="config_8c.html#adf0303951bb266e2b1323b3cd7b529ae">CONFIG_LOG_LOGID</a>)</div>
+<div class="ttc" id="aconfig_8c_html_a42b2b5ee2b85283c1df544bd05e0a20e"><div class="ttname"><a href="config_8c.html#a42b2b5ee2b85283c1df544bd05e0a20e">CONFIG_LOG_LOCKED</a></div><div class="ttdeci">#define CONFIG_LOG_LOCKED</div><div class="ttdoc">Inform the user if the clock diverges or locks.</div><div class="ttdef"><b>Definition:</b> <a href="config_8c_source.html#l00019">config.c:19</a></div></div>
+<div class="ttc" id="aconfig_8c_html_a4e0513a932bcbe9be56b5d6804b23847"><div class="ttname"><a href="config_8c.html#a4e0513a932bcbe9be56b5d6804b23847">CONFIG_LOG_BMCA</a></div><div class="ttdeci">#define CONFIG_LOG_BMCA</div><div class="ttdoc">Peek BMCA state changes.</div><div class="ttdef"><b>Definition:</b> <a href="config_8c_source.html#l00020">config.c:20</a></div></div>
+<div class="ttc" id="aconfig_8c_html_a622933e699b87e0bc280c3e070990f7a"><div class="ttname"><a href="config_8c.html#a622933e699b87e0bc280c3e070990f7a">CONFIG_LOG_CORR</a></div><div class="ttdeci">#define CONFIG_LOG_CORR</div><div class="ttdoc">Correction field logging.</div><div class="ttdef"><b>Definition:</b> <a href="config_8c_source.html#l00017">config.c:17</a></div></div>
+<div class="ttc" id="aconfig_8c_html_a7d358ea1b693df32136dbe7e24658de2"><div class="ttname"><a href="config_8c.html#a7d358ea1b693df32136dbe7e24658de2">CONFIG_LOG_TIMESTAMPS</a></div><div class="ttdeci">#define CONFIG_LOG_TIMESTAMPS</div><div class="ttdoc">Timestamp logging.</div><div class="ttdef"><b>Definition:</b> <a href="config_8c_source.html#l00018">config.c:18</a></div></div>
+<div class="ttc" id="aconfig_8c_html_a85300016e00427d9bfe383d4046350b8"><div class="ttname"><a href="config_8c.html#a85300016e00427d9bfe383d4046350b8">CONFIG_LOG_INFO</a></div><div class="ttdeci">#define CONFIG_LOG_INFO</div><div class="ttdoc">General info logging.</div><div class="ttdef"><b>Definition:</b> <a href="config_8c_source.html#l00016">config.c:16</a></div></div>
+<div class="ttc" id="aconfig_8c_html_ab94239dc51a080bc150e2f699f6c0e56"><div class="ttname"><a href="config_8c.html#ab94239dc51a080bc150e2f699f6c0e56">CONFIG_LOG_DEF</a></div><div class="ttdeci">#define CONFIG_LOG_DEF</div><div class="ttdoc">Default logging.</div><div class="ttdef"><b>Definition:</b> <a href="config_8c_source.html#l00015">config.c:15</a></div></div>
+<div class="ttc" id="aconfig_8c_html_adf0303951bb266e2b1323b3cd7b529ae"><div class="ttname"><a href="config_8c.html#adf0303951bb266e2b1323b3cd7b529ae">CONFIG_LOG_LOGID</a></div><div class="ttdeci">#define CONFIG_LOG_LOGID</div><div class="ttdoc">Print log IDs.</div><div class="ttdef"><b>Definition:</b> <a href="config_8c_source.html#l00022">config.c:22</a></div></div>
+<div class="ttc" id="aconfig_8c_html_ae097544c511ad5c2c5711519025229bf"><div class="ttname"><a href="config_8c.html#ae097544c511ad5c2c5711519025229bf">CONFIG_LOG_TRANSMISSION</a></div><div class="ttdeci">#define CONFIG_LOG_TRANSMISSION</div><div class="ttdoc">Log transmission events.</div><div class="ttdef"><b>Definition:</b> <a href="config_8c_source.html#l00021">config.c:21</a></div></div>
+</div><!-- fragment -->
 <p>All logging options packed. </p>
 
-<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00023">23</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00027">27</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
 
 </div>
 </div>
@@ -353,7 +364,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00046">46</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00050">50</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
 
 </div>
 </div>
@@ -379,7 +390,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00085">85</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00089">89</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
 
 </div>
 </div>
@@ -405,7 +416,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00031">31</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="config_8c_source.html#l00035">35</a> of file <a class="el" href="config_8c_source.html">config.c</a>.</p>
 
 </div>
 </div>
