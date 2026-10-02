@@ -39,9 +39,8 @@ void ptp_collect_stats(int64_t d) {
 
 	// set locked state
 	bool locked = ((fabs(S.stats.filtTimeErr) < (PTP_ACCURACY_LIMIT_NS)) && (ptp_get_current_master_clock_identity() != 0));
-	// The prefix carries the SAME condition as the line it prefixes. Without the state-change
-	// term it printed on every call -- and ptp_collect_stats() runs once per Sync -- so the
-	// console filled with bare "[LOG-LCKD] " markers and no messages behind them.
+
+	// print "[LOG-LCKD]" only once
 	bool lockStateChanged = (locked != S.stats.locked);
 	CLILOG(S.logging.logid && S.logging.locked && lockStateChanged, "[LOG-LCKD] ");
 	CLILOG(S.logging.locked && lockStateChanged, "PTP %s!\n", locked ? "LOCKED" : "DIVERGED");
