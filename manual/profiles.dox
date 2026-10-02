@@ -1,0 +1,36 @@
+/** \page profiles Bundled profiles
+
+The library ships with built-in support for some profiles that can be selected from the CLI right away.
+
+# `default` profile
+
+Standard IEEE 1588 E2E UDP default profile.
+
+# `gPTP` / 802.1AS profile
+
+Standard IEEE 802.1AS gPTP profile.
+
+# Power Utility profile
+
+IEC/IEEE 61850-9-3 Power Utility Profile with the following setting:
+
+| Parameter | Value | Rationale |
+|-----------|-------|-----------|
+| transportType | PTP_TP_802_3 | Standard mandates Ethernet Layer 2 (Annex F) |
+| transportSpecific | PTP_TSPEC_UNKNOWN_DEF | Not used for this profile |
+| delayMechanism | PTP_DM_P2P | Peer-to-Peer is mandatory (Annex J.4) |
+| logDelayReqPeriod | 0 | Pdelay_Req interval = 1 s |
+| logSyncPeriod | 0 | Sync interval = 1 s |
+| logAnnouncePeriod | 0 | Announce interval = 1 s |
+| domainNumber | 93 | Recommended by the standard |
+| flags | PTP_PF_NO_FLAGS | No special flags required |
+| tlvSet | "" | No mandatory TLVs for basic synchronization |
+| primary_p2p_8023_destination | 01:18:19:00:00:00 | Standard multicast MAC address |
+| pdelay_p2p_8023_destination | 01:80:C2:00:00:0E | pDelay-specific multicast MAC address |
+
+Adjusting `PTP_HEARTBEAT_TICKRATE_MS` to 125ms is advised when using the Power Utility Profile.
+Doing so eliminates interval truncations caused by shorter, integer-only internal tick periods.
+
+The profile extension has been submitted by [mothgKVA](https://github.com/mothgKVA).
+
+*/
