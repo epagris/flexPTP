@@ -18,7 +18,7 @@ var examples =
     ] ],
     [ "Performance measurements", "index.html#autotoc_md28", null ],
     [ "Related papers", "index.html#autotoc_md29", null ],
-    [ "Maintainers, contributors", "index.html#autotoc_md30", null ],
+    [ "Maintainers", "index.html#autotoc_md30", null ],
     [ "Licensing", "index.html#autotoc_md31", null ],
     [ "See also", "index.html#autotoc_md32", null ],
     [ "All-around examples", "examples.html#autotoc_md13", null ],

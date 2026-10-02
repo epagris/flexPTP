@@ -9,7 +9,7 @@ var indexSectionsWithContent =
   6: "bpr",
   7: "bmprs",
   8: "acefklmnoprstv",
-  9: "ceips"
+  9: "bceips"
 };
 
 var indexSectionNames =

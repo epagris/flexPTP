@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['events_20and_20logging_0',['Events and logging',['../monitoring.html',1,'']]],
-  ['examples_1',['Examples',['../examples.html',1,'index']]]
+  ['cli_20interface_0',['CLI interface',['../cli.html',1,'']]],
+  ['clock_20servo_1',['Clock servo',['../servo.html',1,'']]],
+  ['compiling_20the_20library_2',['Compiling the library',['../building.html',1,'']]]
 ];

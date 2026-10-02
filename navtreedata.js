@@ -116,55 +116,60 @@ var NAVTREE =
         [ "Runtime configuration", "porting.html#autotoc_md70", null ]
       ] ]
     ] ],
+    [ "Bundled profiles", "profiles.html", [
+      [ "<tt>default</tt> profile", "profiles.html#autotoc_md71", null ],
+      [ "<tt>gPTP</tt> / 802.1AS profile", "profiles.html#autotoc_md72", null ],
+      [ "Power Utility profile", "profiles.html#autotoc_md73", null ]
+    ] ],
     [ "Project organization", "project_organization.html", [
-      [ "Modules", "project_organization.html#autotoc_md71", [
-        [ "Types, constants and definitions", "project_organization.html#autotoc_md72", null ],
-        [ "Settings", "project_organization.html#autotoc_md73", null ],
-        [ "Logging and statistics", "project_organization.html#autotoc_md74", null ],
-        [ "Utilities", "project_organization.html#autotoc_md75", null ],
-        [ "Messaging", "project_organization.html#autotoc_md76", null ],
-        [ "Events", "project_organization.html#autotoc_md77", null ],
-        [ "Core:", "project_organization.html#autotoc_md78", null ]
+      [ "Modules", "project_organization.html#autotoc_md74", [
+        [ "Types, constants and definitions", "project_organization.html#autotoc_md75", null ],
+        [ "Settings", "project_organization.html#autotoc_md76", null ],
+        [ "Logging and statistics", "project_organization.html#autotoc_md77", null ],
+        [ "Utilities", "project_organization.html#autotoc_md78", null ],
+        [ "Messaging", "project_organization.html#autotoc_md79", null ],
+        [ "Events", "project_organization.html#autotoc_md80", null ],
+        [ "Core:", "project_organization.html#autotoc_md81", null ]
       ] ]
     ] ],
     [ "Clock servo", "servo.html", [
-      [ "Clock servo", "servo.html#autotoc_md79", [
-        [ "Interface", "servo.html#autotoc_md80", null ],
-        [ "Bundled controllers", "servo.html#autotoc_md81", [
-          [ "PID-controller", "servo.html#autotoc_md82", [
-            [ "CLI commands", "servo.html#autotoc_md83", null ],
-            [ "Example usage definitions", "servo.html#autotoc_md84", null ]
-          ] ],
-          [ "Kalman-filter", "servo.html#autotoc_md85", [
+      [ "Clock servo", "servo.html#autotoc_md82", [
+        [ "Interface", "servo.html#autotoc_md83", null ],
+        [ "Bundled controllers", "servo.html#autotoc_md84", [
+          [ "PID-controller", "servo.html#autotoc_md85", [
             [ "CLI commands", "servo.html#autotoc_md86", null ],
             [ "Example usage definitions", "servo.html#autotoc_md87", null ]
           ] ],
-          [ "Debug servo", "servo.html#autotoc_md88", [
+          [ "Kalman-filter", "servo.html#autotoc_md88", [
             [ "CLI commands", "servo.html#autotoc_md89", null ],
             [ "Example usage definitions", "servo.html#autotoc_md90", null ]
+          ] ],
+          [ "Debug servo", "servo.html#autotoc_md91", [
+            [ "CLI commands", "servo.html#autotoc_md92", null ],
+            [ "Example usage definitions", "servo.html#autotoc_md93", null ]
           ] ]
         ] ]
       ] ]
     ] ],
     [ "Software structure", "swoperation.html", [
-      [ "Internal modules", "swoperation.html#autotoc_md91", [
+      [ "Internal modules", "swoperation.html#autotoc_md94", [
         [ "Core", "swoperation.html#core", [
-          [ "Initialization", "swoperation.html#autotoc_md92", null ],
-          [ "Reset", "swoperation.html#autotoc_md93", null ]
+          [ "Initialization", "swoperation.html#autotoc_md95", null ],
+          [ "Reset", "swoperation.html#autotoc_md96", null ]
         ] ],
         [ "Best Master Clock Algorithm", "swoperation.html#best-master-clock-algorithm", null ],
         [ "Master", "swoperation.html#master", [
-          [ "Compliant peer", "swoperation.html#autotoc_md94", null ],
-          [ "P2P Mean Path Delay", "swoperation.html#autotoc_md95", [
-            [ "Two-step clock mode", "swoperation.html#autotoc_md96", null ],
-            [ "One-step clock mode", "swoperation.html#autotoc_md97", null ]
+          [ "Compliant peer", "swoperation.html#autotoc_md97", null ],
+          [ "P2P Mean Path Delay", "swoperation.html#autotoc_md98", [
+            [ "Two-step clock mode", "swoperation.html#autotoc_md99", null ],
+            [ "One-step clock mode", "swoperation.html#autotoc_md100", null ]
           ] ]
         ] ],
         [ "Slave", "swoperation.html#slave", [
-          [ "Time error", "swoperation.html#autotoc_md98", null ],
-          [ "Mean Path Delay", "swoperation.html#autotoc_md99", [
-            [ "Two-step clock mode", "swoperation.html#autotoc_md100", null ],
-            [ "One-step clock mode", "swoperation.html#autotoc_md101", null ]
+          [ "Time error", "swoperation.html#autotoc_md101", null ],
+          [ "Mean Path Delay", "swoperation.html#autotoc_md102", [
+            [ "Two-step clock mode", "swoperation.html#autotoc_md103", null ],
+            [ "One-step clock mode", "swoperation.html#autotoc_md104", null ]
           ] ]
         ] ]
       ] ],
@@ -199,9 +204,9 @@ var NAVTREEINDEX =
 "flexptp__options__stm32h743_8h.html#a61bf41647b76c270fe5bb7079eada447",
 "minmax_8h.html#a3acffbd305ee72dcd4593c0d8af64a4f",
 "porting.html#port-config-master",
-"ptp__types_8h.html#a3f2d7e7b45322fb28732f5734365b2d3a4c6adfdd5b2e49e66f1db8ff5457e062",
-"stats_8c.html#a0e51f646bd833d4c81099b0018303b40",
-"task__ptp_8c.html#a2670d7e2f02b9edd806eeeb6b2782069"
+"ptp__types_8h.html#a2964210d435f30e9125953c23045ea0ba0d18b938a553d2c2eddb2113b1aca22c",
+"slave_8h.html#a68cf8777261442862f4c04933015431b",
+"swoperation.html#master"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

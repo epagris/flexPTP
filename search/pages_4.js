@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['software_20structure_0',['Software structure',['../swoperation.html',1,'']]],
-  ['stm32h743_20low_20level_20lwip_20driver_20modifications_20to_20support_20timestamp_20communication_1',['STM32H743 low level lwIP driver modifications to support timestamp communication',['../_h743_ethernetif_modifications.html',1,'examples']]]
+  ['porting_20and_20configuration_0',['Porting and configuration',['../porting.html',1,'']]],
+  ['project_20organization_1',['Project organization',['../project_organization.html',1,'']]]
 ];

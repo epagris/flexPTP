@@ -6,6 +6,7 @@ var ptp__profile__presets_8c =
       [ "PTP_PROFILE_DEFAULT", "ptp__profile__presets_8c.html#a3d593949992cf943af35d4d81e56578dad3179e29d4577536f73333d526d2f558", null ],
       [ "PTP_PROFILE_GPTP", "ptp__profile__presets_8c.html#a3d593949992cf943af35d4d81e56578da732818465dd90dad16e34576762ef3a7", null ],
       [ "PTP_PROFILE_DEF_P2P", "ptp__profile__presets_8c.html#a3d593949992cf943af35d4d81e56578da4da3c1ce10993b198a79ab62a7b1a270", null ],
+      [ "PTP_PROFILE_PUP_61850", "ptp__profile__presets_8c.html#a3d593949992cf943af35d4d81e56578da8c7a7c53b52cdcf2bc7a2e4584eda4ab", null ],
       [ "PTP_PROFILE_N", "ptp__profile__presets_8c.html#a3d593949992cf943af35d4d81e56578dad1ff0565353d221567e773a0d2292a67", null ]
     ] ],
     [ "PtpTlvPresetEnum", "ptp__profile__presets_8c.html#a896a1d3a5dbbe04c54de256e0cd68fcd", [

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>flexPTP: Related Pages</title>
+<title>flexPTP: Bundled profiles</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,7 +89,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('pages.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('profiles.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -114,23 +114,50 @@ $(document).ready(function(){initNavTree('pages.html',''); initResizable(); });
 </div>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">Related Pages</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">Bundled profiles </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock">Here is a list of all related documentation pages:</div><div class="directory">
-<table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_0_" class="arrow" onclick="toggleFolder('0_')">&#9658;</span><a class="el" href="building.html" target="_self">Compiling the library</a></td><td class="desc"></td></tr>
-<tr id="row_1_" class="odd"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_1_" class="arrow" onclick="toggleFolder('1_')">&#9658;</span><a class="el" href="cli.html" target="_self">CLI interface</a></td><td class="desc"></td></tr>
-<tr id="row_2_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_2_" class="arrow" onclick="toggleFolder('2_')">&#9658;</span><a class="el" href="monitoring.html" target="_self">Events and logging</a></td><td class="desc"></td></tr>
-<tr id="row_3_" class="odd"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_3_" class="arrow" onclick="toggleFolder('3_')">&#9658;</span><a class="el" href="porting.html" target="_self">Porting and configuration</a></td><td class="desc"></td></tr>
-<tr id="row_4_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_4_" class="arrow" onclick="toggleFolder('4_')">&#9658;</span><a class="el" href="profiles.html" target="_self">Bundled profiles</a></td><td class="desc"></td></tr>
-<tr id="row_5_" class="odd"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_5_" class="arrow" onclick="toggleFolder('5_')">&#9658;</span><a class="el" href="project_organization.html" target="_self">Project organization</a></td><td class="desc"></td></tr>
-<tr id="row_6_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_6_" class="arrow" onclick="toggleFolder('6_')">&#9658;</span><a class="el" href="servo.html" target="_self">Clock servo</a></td><td class="desc"></td></tr>
-<tr id="row_7_" class="odd"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_7_" class="arrow" onclick="toggleFolder('7_')">&#9658;</span><a class="el" href="swoperation.html" target="_self">Software structure</a></td><td class="desc"></td></tr>
+<div class="textblock"><p>The library ships with built-in support for some profiles that can be selected from the CLI right away.</p>
+<h1><a class="anchor" id="autotoc_md71"></a>
+&lt;tt&gt;default&lt;/tt&gt; profile</h1>
+<p>Standard IEEE 1588 E2E UDP default profile.</p>
+<h1><a class="anchor" id="autotoc_md72"></a>
+&lt;tt&gt;gPTP&lt;/tt&gt; / 802.1AS profile</h1>
+<p>Standard IEEE 802.1AS gPTP profile.</p>
+<h1><a class="anchor" id="autotoc_md73"></a>
+Power Utility profile</h1>
+<p>IEC/IEEE 61850-9-3 Power Utility Profile with the following setting:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Parameter   </th><th class="markdownTableHeadNone">Value   </th><th class="markdownTableHeadNone">Rationale    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">transportType   </td><td class="markdownTableBodyNone">PTP_TP_802_3   </td><td class="markdownTableBodyNone">Standard mandates Ethernet Layer 2 (Annex F)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">transportSpecific   </td><td class="markdownTableBodyNone">PTP_TSPEC_UNKNOWN_DEF   </td><td class="markdownTableBodyNone">Not used for this profile    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">delayMechanism   </td><td class="markdownTableBodyNone">PTP_DM_P2P   </td><td class="markdownTableBodyNone">Peer-to-Peer is mandatory (Annex J.4)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">logDelayReqPeriod   </td><td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">Pdelay_Req interval = 1 s    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">logSyncPeriod   </td><td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">Sync interval = 1 s    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">logAnnouncePeriod   </td><td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">Announce interval = 1 s    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">domainNumber   </td><td class="markdownTableBodyNone">93   </td><td class="markdownTableBodyNone">Recommended by the standard    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">flags   </td><td class="markdownTableBodyNone">PTP_PF_NO_FLAGS   </td><td class="markdownTableBodyNone">No special flags required    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">tlvSet   </td><td class="markdownTableBodyNone">""   </td><td class="markdownTableBodyNone">No mandatory TLVs for basic synchronization    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">primary_p2p_8023_destination   </td><td class="markdownTableBodyNone">01:18:19:00:00:00   </td><td class="markdownTableBodyNone">Standard multicast MAC address    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">pdelay_p2p_8023_destination   </td><td class="markdownTableBodyNone">01:80:C2:00:00:0E   </td><td class="markdownTableBodyNone">pDelay-specific multicast MAC address   </td></tr>
 </table>
-</div><!-- directory -->
-</div><!-- contents -->
+<p>Adjusting <code>PTP_HEARTBEAT_TICKRATE_MS</code> to 125ms is advised when using the Power Utility Profile. Doing so eliminates interval truncations caused by shorter, integer-only internal tick periods.</p>
+<p>The profile extension has been submitted by <a href="https://github.com/mothgKVA">mothgKVA</a>. </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
