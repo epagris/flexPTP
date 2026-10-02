@@ -20,10 +20,7 @@
 #define CONFIG_LOG_BMCA (0x20)         ///< Peek BMCA state changes
 #define CONFIG_LOG_TRANSMISSION (0x40) ///< Log transmission events
 #define CONFIG_LOG_LOGID (0x80)        ///< Print log IDs
-/* Derived from the flags rather than written as a literal. ptp_load_config() rejects the whole
-   record if any bit outside this mask is set, so a literal that falls behind the flag list does
-   not merely ignore the new flag -- it discards the user's entire retained configuration and
-   reports it as corrupted. That is what a bare 0x7F did once CONFIG_LOG_LOGID took bit 0x80. */
+
 #define CONFIG_LOG_ALL                                                        \
     (CONFIG_LOG_DEF | CONFIG_LOG_INFO | CONFIG_LOG_CORR |                     \
      CONFIG_LOG_TIMESTAMPS | CONFIG_LOG_LOCKED | CONFIG_LOG_BMCA |            \
