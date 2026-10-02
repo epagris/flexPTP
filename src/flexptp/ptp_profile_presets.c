@@ -12,6 +12,7 @@ enum PtpProfileEnum {
     PTP_PROFILE_DEFAULT, // default profile
     PTP_PROFILE_GPTP,    // gPTP (802.1AS)
     PTP_PROFILE_DEF_P2P, // default, but with P2P delay mechanism
+    PTP_PROFILE_PUP_61850, 	// Power Utility Profile (IEC/IEEE 61850-9-3)
     PTP_PROFILE_N
 };
 
@@ -125,6 +126,21 @@ static PtpProfilePreset sPtpProfiles[PTP_PROFILE_N] = {
             "",
             {},
             {}
+        }
+    },
+    { "PUP",    // Power Utility Profile (IEC/IEEE 61850-9-3)
+        {
+            PTP_TP_802_3,
+            PTP_TSPEC_UNKNOWN_DEF,
+            PTP_DM_P2P,
+            0,                          // Pdelay_Req interval 1s
+            0,                          // Sync interval 1s
+            0,                          // Announce interval 1s
+            93,                         // Standard recommends domain 93 for IEC 61850-9-3
+            PTP_PF_NO_FLAGS,
+            "",
+            { 0x01, 0x18, 0x19, 0x00, 0x00, 0x00 },
+            { 0x01, 0x80, 0xC2, 0x00, 0x00, 0x0E }
         }
     }
 };

@@ -165,10 +165,16 @@ Our library achieves decent synchronization performance, usually **better than 1
 
 [Methods of Peripheral Synchronization in Real-Time Cyber-Physical Systems](https://ieeexplore.ieee.org/document/10178979/)
 
-## Maintainers, contributors
+## Maintainers
 
 - András Wiesner ([Epagris](https://github.com/epagris))
 - Tamás Kovácsházy ([khazy](https://github.com/khazy))
+  
+## Contributors
+
+- [textrix](https://github.com/textrix)
+- [damiendusha](https://github.com/damiendusha)
+- [mothgKVA](https://github.com/mothgKVA)
 
 ## Licensing
 
