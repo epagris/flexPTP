@@ -139,7 +139,7 @@ static PtpProfilePreset sPtpProfiles[PTP_PROFILE_N] = {
             93,                         // Standard recommends domain 93 for IEC 61850-9-3
             PTP_PF_NO_FLAGS,
             "",
-            { 0x01, 0x18, 0x19, 0x00, 0x00, 0x00 },
+            { 0x01, 0x1B, 0x19, 0x00, 0x00, 0x00 },
             { 0x01, 0x80, 0xC2, 0x00, 0x00, 0x0E }
         }
     }
