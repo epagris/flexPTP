@@ -136,7 +136,12 @@ void ptp_extract_announce_message(PtpAnnounceBody *pAnnounce, void *pPayload) {
 
     pAnnounce->currentUTCOffset = FLEXPTP_ntohs(pAnnounce->currentUTCOffset);
     pAnnounce->grandmasterClockVariance = FLEXPTP_ntohs(pAnnounce->grandmasterClockVariance);
-    pAnnounce->grandmasterClockIdentity = FLEXPTP_ntohll(pAnnounce->grandmasterClockIdentity);
+    // NO byte swap on grandmasterClockIdentity. A clock identity is an octet array, and
+    // everywhere else in flexPTP the uint64_t holding one keeps those octets in wire order:
+    // ptp_create_clock_identity() builds it that way, the header's clockIdentity is memcpy'd
+    // in both directions without a swap, hextoclkid() produces it, and both
+    // ptp_print_clock_identity() and ptp_construct_binary_announce_message() now read it that
+    // way. Swapping here made the Announce body the one exception.
     pAnnounce->localStepsRemoved = FLEXPTP_ntohs(pAnnounce->localStepsRemoved);
 }
 
