@@ -38,7 +38,7 @@ void ptp_init_delay_req_header() {
     delReqHeader.sourcePortID = PTP_PORT_ID;
     delReqHeader.sequenceID = 0; // will increase in every sync cycle
     delReqHeader.control = (S.profile.delayMechanism == PTP_DM_E2E) ? PTP_CON_Delay_Req : PTP_CON_Other;
-    delReqHeader.logMessagePeriod = 0;
+    delReqHeader.logMessagePeriod = 0x7F;
 }
 
 void ptp_send_delay_req_message() {
