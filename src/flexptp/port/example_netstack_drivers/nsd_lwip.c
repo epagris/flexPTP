@@ -234,7 +234,9 @@ err_t hook_unknown_ethertype(struct pbuf *pbuf, struct netif *netif) {
     etherType = FLEXPTP_ntohs(etherType);
     if (etherType == ETHERTYPE_PTP) {
         // verify Ethernet address
-        if (!memcmp(PTP_ETHERNET_PRIMARY, pbuf->payload, 6) || !memcmp(PTP_ETHERNET_PEER_DELAY, pbuf->payload, 6)) { //
+    	const uint8_t *pdel_des_ethaddr = (custom_p2p_8023_pdel_dest_valid ? custom_p2p_8023_pdel_dest : PTP_ETHERNET_PEER_DELAY);
+    	const uint8_t *primary_dest_ethaddr = (custom_p2p_8023_primary_dest_valid ? custom_p2p_8023_primary_dest : PTP_ETHERNET_PRIMARY);
+        if (!memcmp(primary_dest_ethaddr, pbuf->payload, 6) || !memcmp(pdel_des_ethaddr, pbuf->payload, 6)) { //
             ptp_receive_enqueue(((uint8_t *)pbuf->payload) + ETHERNET_HEADER_LENGTH, pbuf->len - ETHERNET_HEADER_LENGTH, pbuf->time_s, pbuf->time_ns, PTP_TP_802_3);
         }
     }
