@@ -214,6 +214,9 @@ void ptp_process_event(const PtpCoreEvent *event) {
     case PTP_CEV_BMCA_STATE_CHANGED: {
         PtpBmcaFsmState bmcaState = event->w.w;
         if (bmcaState == PTP_BMCA_SLAVE) {
+            // ptp_slave_reset must be used to resolve the issue
+            // when the mode switches between slave/master/slave. 
+            ptp_slave_reset();
             ptp_slave_enable();
         } else if (bmcaState == PTP_BMCA_MASTER) {
             ptp_master_enable();
