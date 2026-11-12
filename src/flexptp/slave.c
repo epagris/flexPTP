@@ -376,7 +376,7 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
 
                     // log correction field (if enabled)
                     CLILOG(S.logging.logid && S.logging.corr, "[LOG-CORR] ");
-                    CLILOG(S.logging.corr, "C [Follow_Up]: %09" __PRI64_PREFIX "u\n", pHeader->correction_ns);
+                    CLILOG(S.logging.corr, "C [Follow_Up]: %09" __PRI64_PREFIX "i\n", pHeader->correction_ns);
 
                     // dispatch FOLLOW_UP_RECVED event
                     PTP_IUEV(PTP_UEV_FOLLOW_UP_RECVED);
@@ -432,7 +432,7 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
 
                     // log correction field (if enabled)
                     CLILOG(S.logging.logid && S.logging.corr, "[LOG-CORR] ");
-                    CLILOG(S.logging.corr, "C [Del_Resp]: %09" __PRI64_PREFIX "u\n", pHeader->correction_ns);
+                    CLILOG(S.logging.corr, "C [Del_Resp]: %09" __PRI64_PREFIX "i\n", pHeader->correction_ns);
                 }
 
             } else if (mt == PTP_MT_PDelay_Resp) { // PDelay_Resp processing
@@ -462,7 +462,7 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
 
                 // log correction field (if enabled)
                 CLILOG(S.logging.logid && S.logging.corr, "[LOG-CORR] ");
-                CLILOG(S.logging.corr, "C [PDel_Resp]: %09" __PRI64_PREFIX "u\n", pHeader->correction_ns);
+                CLILOG(S.logging.corr, "C [PDel_Resp]: %09" __PRI64_PREFIX "i\n", pHeader->correction_ns);
 
             } else if (mt == PTP_MT_PDelay_Resp_Follow_Up) { // PDelay_Resp_Follow_Up processing
                 // don't fall for rogue messages
@@ -490,7 +490,7 @@ void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
 
                     // log correction field (if enabled)
                     CLILOG(S.logging.logid && S.logging.corr, "[LOG-CORR] ");
-                    CLILOG(S.logging.corr, "C [PDel_Resp_Follow_Up]: %09" __PRI64_PREFIX "u\n", pHeader->correction_ns);
+                    CLILOG(S.logging.corr, "C [PDel_Resp_Follow_Up]: %09" __PRI64_PREFIX "i\n", pHeader->correction_ns);
                 }
 
                 // no other messages are accepted

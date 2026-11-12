@@ -59,12 +59,13 @@ void ptp_extract_header(PtpHeader *pHeader, const void *pPayload) {
     uint16_t flags;
 
     // copy header fields
+    uint64_t correctionField;
     memcpy(&pHeader->messageType, p + 0, 1);
     memcpy(&pHeader->versionPTP, p + 1, 1);
     memcpy(&pHeader->messageLength, p + 2, 2);
     memcpy(&pHeader->domainNumber, p + 4, 1);
     memcpy(&flags, p + 6, 2);
-    memcpy(&pHeader->correction_ns, p + 8, 8);
+    memcpy(&correctionField, p + 8, 8);
     memcpy(&pHeader->clockIdentity, p + 20, 8);
     memcpy(&pHeader->sourcePortID, p + 28, 2);
     memcpy(&pHeader->sequenceID, p + 30, 2);
@@ -77,9 +78,9 @@ void ptp_extract_header(PtpHeader *pHeader, const void *pPayload) {
     // read flags
     ptp_load_flags(&pHeader->flags, FLEXPTP_ntohs(flags));
 
-    // read correction field
-    pHeader->correction_subns = FLEXPTP_ntohll(pHeader->correction_ns) & 0xffff;
-    pHeader->correction_ns = FLEXPTP_ntohll(pHeader->correction_ns) >> 16;
+    // read correction field parts
+    pHeader->correction_subns = FLEXPTP_ntohll(correctionField) & 0xffff;
+    pHeader->correction_ns = ((int64_t) (FLEXPTP_ntohll(correctionField))) / 0x10000;
 
     pHeader->messageLength = FLEXPTP_ntohs(pHeader->messageLength);
     pHeader->sourcePortID = FLEXPTP_ntohs(pHeader->sourcePortID);
@@ -100,7 +101,7 @@ void ptp_construct_binary_header(void *pData, const PtpHeader *pHeader) {
     uint16_t flags = FLEXPTP_htons(ptp_write_flags(&pHeader->flags)); // convert from header fields
 
     // fill in correction value
-    uint64_t correction = FLEXPTP_htonll((pHeader->correction_ns << 16) | (pHeader->correction_subns));
+    uint64_t correctionField = FLEXPTP_htonll((pHeader->correction_ns << 16) | (pHeader->correction_subns));
 
     // copy fields
     firstByte = (pHeader->transportSpecific << 4) | (pHeader->messageType & 0x0f);
@@ -110,7 +111,7 @@ void ptp_construct_binary_header(void *pData, const PtpHeader *pHeader) {
     memcpy(p + 2, &messageLength, 2);
     memcpy(p + 4, &pHeader->domainNumber, 1);
     memcpy(p + 6, &flags, 2);
-    memcpy(p + 8, &correction, 8);
+    memcpy(p + 8, &correctionField, 8);
     memcpy(p + 20, &pHeader->clockIdentity, 8);
     memcpy(p + 28, &sourcePortID, 2);
     memcpy(p + 30, &sequenceID, 2);

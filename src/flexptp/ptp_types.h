@@ -100,8 +100,8 @@ typedef struct
     PtpFlags flags; ///< Flags
 
     // 8-15.
-    uint64_t correction_ns;    ///< Correction nanoseconds
-    uint32_t correction_subns; ///< Correction subnanoseconds
+    int64_t correction_ns;    ///< Correction nanoseconds
+    uint16_t correction_subns; ///< Correction subnanoseconds
 
     // 16-19.
     uint32_t _r3;
