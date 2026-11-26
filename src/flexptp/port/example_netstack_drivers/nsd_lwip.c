@@ -138,9 +138,27 @@ void ptp_nsd_init(const NsdInitSettings * init) {
     UNLOCK_TCPIP_CORE();
 }
 
+/* Enqueue `len` bytes of `p` starting at `offset`, whether or not they are contiguous.
+ *
+ * p->len is the length of the FIRST pbuf of a chain only; the message is p->tot_len. Both receive
+ * paths used to pass p->len, so a message split across a chain reached flexPTP truncated -- and
+ * looking complete. That needs a port whose receive buffers are smaller than a PTP frame (a small
+ * PBUF_POOL_BUFSIZE, or a driver that chains small DMA buffers), which is uncommon, but nothing
+ * here may assume it. The contiguous case, which is nearly every frame, is unchanged; a chain is
+ * copied into a MAX_PTP_MSG_SIZE buffer, which is all ptp_receive_enqueue() keeps anyway. */
+static void ptp_enqueue_pbuf(struct pbuf *p, uint16_t offset, uint16_t len, PtpTransportType tp) {
+    if ((uint32_t)offset + len <= p->len) {
+        ptp_receive_enqueue(((uint8_t *)p->payload) + offset, len, p->time_s, p->time_ns, tp);
+    } else {
+        uint8_t msg[MAX_PTP_MSG_SIZE];
+        uint16_t copied = pbuf_copy_partial(p, msg, LWIP_MIN(len, (uint16_t)sizeof(msg)), offset);
+        ptp_receive_enqueue(msg, copied, p->time_s, p->time_ns, tp);
+    }
+}
+
 static void ptp_receive_cb(void *pArg, struct udp_pcb *pPCB, struct pbuf *pP, const ip_addr_t *pAddr, uint16_t port) {
     // put msg into the queue
-    ptp_receive_enqueue(pP->payload, pP->len, pP->time_s, pP->time_ns, PTP_TP_IPv4);
+    ptp_enqueue_pbuf(pP, 0, pP->tot_len, PTP_TP_IPv4);
 
     // release pbuf resources
     pbuf_free(pP);
@@ -237,7 +255,9 @@ err_t hook_unknown_ethertype(struct pbuf *pbuf, struct netif *netif) {
     	const uint8_t *pdel_des_ethaddr = (custom_p2p_8023_pdel_dest_valid ? custom_p2p_8023_pdel_dest : PTP_ETHERNET_PEER_DELAY);
     	const uint8_t *primary_dest_ethaddr = (custom_p2p_8023_primary_dest_valid ? custom_p2p_8023_primary_dest : PTP_ETHERNET_PRIMARY);
         if (!memcmp(primary_dest_ethaddr, pbuf->payload, 6) || !memcmp(pdel_des_ethaddr, pbuf->payload, 6)) { //
-            ptp_receive_enqueue(((uint8_t *)pbuf->payload) + ETHERNET_HEADER_LENGTH, pbuf->len - ETHERNET_HEADER_LENGTH, pbuf->time_s, pbuf->time_ns, PTP_TP_802_3);
+            // ethernet_input() has already rejected frames of ETHERNET_HEADER_LENGTH or less, so
+            // the subtraction cannot underflow; tot_len, not len, because the frame may be chained.
+            ptp_enqueue_pbuf(pbuf, ETHERNET_HEADER_LENGTH, pbuf->tot_len - ETHERNET_HEADER_LENGTH, PTP_TP_802_3);
         }
     }
 
