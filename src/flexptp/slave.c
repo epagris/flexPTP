@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
+#include "bmca.h"
 #include "common.h"
 
 #include "format_utils.h"
@@ -325,6 +326,21 @@ static void ptp_commence_p2p_correction(uint32_t pdelRespSeqId) {
 void ptp_slave_process_message(RawPtpMessage *pRawMsg, PtpHeader *pHeader) {
     PtpMessageType mt = pHeader->messageType;
     PtpDelayMechanism dm = S.profile.delayMechanism;
+
+    // Sync, Follow_Up and Delay_Resp count only from the selected master's port. Taken from any
+    // sender, one foreign Sync between two of the master's cycles parked the slave on a
+    // sequenceId that never came, and the master's own Sync was then discarded: a second,
+    // misconfigured master on the domain stopped synchronisation while the BMCA still reported
+    // the right master. Peer-delay messages are between link neighbours and are not filtered.
+    if (((mt == PTP_MT_Sync) || (mt == PTP_MT_Follow_Up) || (mt == PTP_MT_Delay_Resp)) && !ptp_bmca_is_parent(pHeader)) {
+        return;
+    }
+
+    // A Sync from the master while its previous Follow_Up is still awaited starts a new cycle:
+    // that Follow_Up was lost, and waiting for it only throws away this cycle as well.
+    if ((mt == PTP_MT_Sync) && (S.slave.messaging.m2sState == SWaitFollowUp)) {
+        S.slave.messaging.m2sState = SIdle;
+    }
 
     // process non-Announce messages
     if (mt == PTP_MT_Sync || mt == PTP_MT_Follow_Up) {

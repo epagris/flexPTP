@@ -34,6 +34,17 @@ int ptp_select_better_master(PtpMasterProperties * pMP1, PtpMasterProperties * p
 void ptp_handle_announce_msg(PtpAnnounceBody *pAnn, PtpHeader *pHeader);
 
 /**
+ * Is this message from the selected master's port -- the port whose Announce won the BMCA?
+ *
+ * That is the parent port, not the grandmaster: behind a boundary clock or a gPTP bridge, Sync
+ * comes from the neighbouring port, which is also where the winning Announce came from.
+ *
+ * @param pHeader header of the received message
+ * @return true if the message's sourcePortIdentity is the parent port's
+ */
+bool ptp_bmca_is_parent(const PtpHeader *pHeader);
+
+/**
  * Initialize SBMC module.
  */
 void ptp_bmca_init();

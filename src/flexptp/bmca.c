@@ -172,10 +172,13 @@ void ptp_handle_announce_msg(PtpAnnounceBody *pAnn, PtpHeader *pHeader) {
         break;
     }
 
-    // if master has changed, then calculate Announce period
+    // if master has changed, then calculate Announce period, and remember which port it speaks
+    // from: a slave takes Sync, Follow_Up and Delay_Resp from that port only
     if (masterChanged) {
         S.bmca.masterTOCntr = 0;
         s->masterAnnPer_ms = ptp_logi2ms(pHeader->logMessagePeriod);
+        s->parentClockIdentity = pHeader->clockIdentity;
+        s->parentPortNumber = pHeader->sourcePortID;
     }
 
     // clear Master timeout if relevant Announce has arrived
@@ -188,6 +191,10 @@ void ptp_handle_announce_msg(PtpAnnounceBody *pAnn, PtpHeader *pHeader) {
 
     // handle possible state change
     ptp_bmca_handle_state_change(state);
+}
+
+bool ptp_bmca_is_parent(const PtpHeader *pHeader) {
+    return (pHeader->clockIdentity == S.bmca.parentClockIdentity) && (pHeader->sourcePortID == S.bmca.parentPortNumber);
 }
 
 void ptp_bmca_init() {

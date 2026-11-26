@@ -329,6 +329,8 @@ typedef struct {
     uint16_t masterTOCntr;           ///< Current master announce dropout counter
     uint32_t stateDuration;          ///< Heartbeat cycles since last state transition
     bool preventMasterSwitchOver;    ///< Set if master switchover is prohibited
+    uint64_t parentClockIdentity;    ///< sourcePortIdentity of the selected master's Announce: clockIdentity
+    uint16_t parentPortNumber;       ///< ... and portNumber. The port a slave takes Sync, Follow_Up and Delay_Resp from
 } PtpBmcaState;
 
 /**
