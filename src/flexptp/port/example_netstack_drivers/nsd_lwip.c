@@ -75,10 +75,24 @@ void ptp_nsd_init(const NsdInitSettings * init) {
     }
 
     // calling either parameter with -1 just closes connections
-    if ((init->tp == -1) || (init->dm == -1)) {
+    //
+    // Compared as the ENUM's -1, not the int's. unreg_task_ptp() passes {-1, -1}, which is
+    // stored into PtpTransportType/PtpDelayMechanism fields; both enums are non-negative, so on a
+    // short-enum ABI -- arm-none-eabi GCC's default -- they are unsigned bytes, the -1 is stored
+    // as 255, and `init->tp == -1` is always false. GCC then deletes this branch outright and a
+    // shutdown request falls through as a "transport 255" reconfiguration instead. Casting the
+    // constant to the field's type makes the comparison mean the same thing on every ABI.
+    if ((init->tp == (PtpTransportType)-1) || (init->dm == (PtpDelayMechanism)-1)) {
         // message transmission and reception is turned off
         TP = -1;
         DM = -1;
+
+        // Release the core lock taken above. This early return used to leave it held: with
+        // LWIP_TCPIP_CORE_LOCKING the core mutex then stays owned by a thread that has moved on,
+        // and the whole stack stops, not just PTP -- ARP, ICMP and every other UDP/TCP user block
+        // on the next LOCK_TCPIP_CORE() for ever. Wherever the branch above is live (int-sized
+        // enums, or short ones once the comparison is fixed), unreg_task_ptp() comes through here.
+        UNLOCK_TCPIP_CORE();
         return;
     }
 
