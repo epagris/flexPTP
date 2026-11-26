@@ -39,7 +39,19 @@ void task_ptp(void); // osless task function
 
 // ---------------------------
 
-static bool sPTP_operating = false; // does the PTP subsystem operate?
+static volatile bool sPTP_operating = false; // does the PTP subsystem operate?
+
+#if defined(FLEXPTP_NON_LINUX_OS)
+#ifndef PTP_TASK_STOP_TIMEOUT_MS
+#define PTP_TASK_STOP_TIMEOUT_MS (2000) ///< How long unreg_task_ptp() waits for the PTP task to stop at a safe point
+#endif
+#ifdef FLEXPTP_FREERTOS
+#include "semphr.h"
+static SemaphoreHandle_t sParked = NULL; ///< given by the PTP task once it has stopped where it holds nothing
+#elif defined(FLEXPTP_CMSIS_OS2)
+static osSemaphoreId_t sParked = NULL; ///< given by the PTP task once it has stopped where it holds nothing
+#endif
+#endif
 
 // ---------------------------
 
@@ -311,12 +323,14 @@ static void ptp_destroy_message_queues() {
     vQueueDelete(sEventFIFO);
     vQueueDelete(sNotificationFIFO);
     vQueueDelete(sTxCbFIFO);
+    sRxPacketFIFO = sTxPacketFIFO = sEventFIFO = sNotificationFIFO = sTxCbFIFO = NULL; // no dangling handles
 #elif defined(FLEXPTP_CMSIS_OS2)
     osMessageQueueDelete(sRxPacketFIFO);
     osMessageQueueDelete(sTxPacketFIFO);
     osMessageQueueDelete(sEventFIFO);
     osMessageQueueDelete(sNotificationFIFO);
     osMessageQueueDelete(sTxCbFIFO);
+    sRxPacketFIFO = sTxPacketFIFO = sEventFIFO = sNotificationFIFO = sTxCbFIFO = NULL; // no dangling handles
 #elif defined(FLEXPTP_LINUX)
     CLOSE_PIPE(sRxPacketFIFO);
     CLOSE_PIPE(sTxPacketFIFO);
@@ -414,13 +428,62 @@ bool reg_task_ptp() {
 }
 
 // unregister PTP task
+#if defined(FLEXPTP_NON_LINUX_OS)
+/**
+ * Have the PTP task stop where it holds nothing, and wait for it to say so.
+ *
+ * Deleting it wherever it happens to be is not safe: a task deleted while it holds a mutex leaves
+ * that mutex held for ever -- lwIP's core lock inside a transmit, an application's console lock
+ * inside a log line -- and the next task to take it blocks for good, or, through priority
+ * inheritance, follows the holder pointer into the freed task. So the task is sent a
+ * PTP_CEV_TERMINATE, answers at the end of its loop iteration, where every step is complete, and
+ * parks. If it does not answer within PTP_TASK_STOP_TIMEOUT_MS it is deleted where it is, as before.
+ */
+static void ptp_park_task(void) {
+#ifdef FLEXPTP_FREERTOS
+    if (xTaskGetCurrentTaskHandle() == sTH) {
+        return;
+    }
+    sParked = xSemaphoreCreateBinary();
+#elif defined(FLEXPTP_CMSIS_OS2)
+    if (osThreadGetId() == sTH) {
+        return;
+    }
+    sParked = osSemaphoreNew(1, 0, NULL);
+#endif
+    if (sParked == NULL) {
+        return;
+    }
+    PtpCoreEvent event = {.code = PTP_CEV_TERMINATE, .w = 0, .dw = 0};
+    if (ptp_event_enqueue(&event)) {
+#ifdef FLEXPTP_FREERTOS
+        xSemaphoreTake(sParked, pdMS_TO_TICKS(PTP_TASK_STOP_TIMEOUT_MS));
+#elif defined(FLEXPTP_CMSIS_OS2)
+        osSemaphoreAcquire(sParked, (osKernelGetTickFreq() * PTP_TASK_STOP_TIMEOUT_MS) / 1000);
+#endif
+    }
+#ifdef FLEXPTP_FREERTOS
+    vSemaphoreDelete(sParked);
+#elif defined(FLEXPTP_CMSIS_OS2)
+    osSemaphoreDelete(sParked);
+#endif
+    sParked = NULL;
+}
+#endif
+
 void unreg_task_ptp() {
+    // Stop accepting work FIRST. From here on, a received message, or a transmit timestamp that a
+    // MAC driver reports for a frame sent just before the stop, is dropped at the door. This used
+    // to be the last step, after the queues had been deleted -- with their handles left dangling
+    // -- so a late timestamp was posted into freed memory.
+    sPTP_operating = false;
+
     ptp_remove_heartbeat_tmr(); // remove the heartbeat timer
-    NsdInitSettings nsdInit = {
-        -1, -1, {}, {}};
-    ptp_nsd_init(&nsdInit); // de-initialize the network stack driver
+
+    // stop the task before closing the network stack driver it transmits through
 #if defined(FLEXPTP_NON_LINUX_OS)
     if (sTH != NULL) {
+        ptp_park_task();
 #ifdef FLEXPTP_FREERTOS
         vTaskDelete(sTH); // delete task
 #elif defined(FLEXPTP_CMSIS_OS2)
@@ -435,9 +498,13 @@ void unreg_task_ptp() {
         pthread_join(sTH, NULL);
     }
 #endif
+
+    NsdInitSettings nsdInit = {
+        -1, -1, {}, {}};
+    ptp_nsd_init(&nsdInit); // de-initialize the network stack driver
+
     ptp_deinit();                 // ptp subsystem de-initialization
     ptp_destroy_message_queues(); // destroy message queues and buffers
-    sPTP_operating = false;       // the PTP subsystem is NOT operating anymore
 }
 
 // ---------------------------
@@ -446,6 +513,11 @@ bool ptp_event_enqueue(const PtpCoreEvent *event) {
     ProcThreadNotification notif = PTN_EVENT;
 
     bool ok;
+#if defined(FLEXPTP_NON_LINUX_OS)
+    if (sEventFIFO == NULL) { // stopped: the queues are gone (a CLI `ptp reset` after a stop, say)
+        return false;
+    }
+#endif
 #ifdef FLEXPTP_FREERTOS
     // push event and check success with no timeout:
     // if the queue is full, then drop the event
@@ -602,6 +674,13 @@ bool ptp_transmit_enqueue(const RawPtpMessage *pMsg) {
 }
 
 void ptp_transmit_timestamp_cb(uint32_t uid, uint32_t seconds, uint32_t nanoseconds) {
+    // Dropped once PTP is stopping: the queues below are deleted, or about to be. A MAC driver
+    // reports a frame's timestamp whenever its transmission completes -- after the stop, for a
+    // frame queued just before it.
+    if (!sPTP_operating) {
+        return;
+    }
+
     // create timestamp association object
     TxTs ts = {.uid = uid, .seconds = seconds, .nanoseconds = nanoseconds};
 
@@ -859,6 +938,22 @@ fifo_pop(&sNotificationFIFO, &notification);
             if (event.code == PTP_CEV_TERMINATE) {
 #ifdef FLEXPTP_LINUX
                 run = false;
+#elif defined(FLEXPTP_FREERTOS)
+                // every step of this iteration is complete, so nothing is held: say so, and park
+                // until unreg_task_ptp() deletes this task (see ptp_park_task())
+                if (sParked != NULL) {
+                    xSemaphoreGive(sParked);
+                }
+                for (;;) {
+                    vTaskSuspend(NULL);
+                }
+#elif defined(FLEXPTP_CMSIS_OS2)
+                if (sParked != NULL) {
+                    osSemaphoreRelease(sParked);
+                }
+                for (;;) {
+                    osThreadSuspend(osThreadGetId());
+                }
 #endif
             }
         }
