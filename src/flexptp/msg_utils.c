@@ -52,6 +52,42 @@ uint16_t ptp_write_flags(const PtpFlags *pFlags) {
 }
 
 // extract fields from a PTP header
+// fixed size of each message type, without TLVs; 0 where flexPTP does not parse the body
+static uint16_t ptp_msg_min_length(uint8_t messageType) {
+    switch (messageType) {
+    case PTP_MT_Sync:
+        return PTP_PCKT_SIZE_SYNC;
+    case PTP_MT_Delay_Req:
+        return PTP_PCKT_SIZE_DELAY_REQ;
+    case PTP_MT_PDelay_Req:
+        return PTP_PCKT_SIZE_PDELAY_REQ;
+    case PTP_MT_PDelay_Resp:
+        return PTP_PCKT_SIZE_PDELAY_RESP;
+    case PTP_MT_Follow_Up:
+        return PTP_PCKT_SIZE_FOLLOW_UP;
+    case PTP_MT_Delay_Resp:
+        return PTP_PCKT_SIZE_DELAY_RESP;
+    case PTP_MT_PDelay_Resp_Follow_Up:
+        return PTP_PCKT_SIZE_PDELAY_RESP_FOLLOW_UP;
+    case PTP_MT_Announce:
+        return PTP_PCKT_SIZE_ANNOUNCE;
+    default:
+        return PTP_HEADER_LENGTH;
+    }
+}
+
+bool ptp_msg_plausible(const void *pPayload, uint32_t len) {
+    const uint8_t *p = (const uint8_t *)pPayload;
+    if (len < PTP_HEADER_LENGTH) {
+        return false;
+    }
+    if ((p[1] & 0x0F) != 2) { // versionPTP
+        return false;
+    }
+    uint32_t messageLength = ((uint32_t)p[2] << 8) | p[3];
+    return (messageLength <= len) && (messageLength >= ptp_msg_min_length(p[0] & 0x0F));
+}
+
 void ptp_extract_header(PtpHeader *pHeader, const void *pPayload) {
     // cast header to byte accessible form
     uint8_t *p = (uint8_t *)pPayload;

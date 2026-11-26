@@ -5,6 +5,7 @@
 #include "config.h"
 #include "event.h"
 #include "msg_buf.h"
+#include "msg_utils.h"
 #include "network_stack_driver.h"
 #include "profiles.h"
 #include "ptp_core.h"
@@ -474,6 +475,14 @@ bool ptp_event_enqueue(const PtpCoreEvent *event) {
 void ptp_receive_enqueue(const void *pPayload, uint32_t len, uint32_t ts_sec, uint32_t ts_ns, int tp) {
     // only consider messages received on the matching transport layer
     if ((!sPTP_operating) || (tp != ptp_get_transport_type())) {
+        return;
+    }
+
+    // Drop what cannot be a PTPv2 message before it takes a buffer. Everything downstream parses
+    // a whole common header, and each handler its fixed body, out of the receive slot whatever
+    // was received -- so a short datagram used to be parsed partly from the bytes the previous
+    // message left there, and a PTPv1 message as a PTPv2 one.
+    if (!ptp_msg_plausible(pPayload, len)) {
         return;
     }
 

@@ -45,6 +45,20 @@ uint16_t ptp_write_flags(const PtpFlags *pFlags);
 void ptp_extract_header(PtpHeader *pHeader, const void *pPayload);
 
 /**
+ * Can these bytes be a PTPv2 message flexPTP may parse?
+ *
+ * At least a common header; versionPTP 2 (the low nibble -- the high one is minorVersionPTP,
+ * which 1588-2019 devices set to 1); a messageLength no longer than what arrived, and no
+ * shorter than its message type's fixed part. A datagram LONGER than messageLength is accepted:
+ * that is padding, which every 802.3 frame shorter than 60 bytes carries.
+ *
+ * @param pPayload received bytes, starting at the PTP common header
+ * @param len number of bytes received
+ * @return true if the message may be parsed
+ */
+bool ptp_msg_plausible(const void *pPayload, uint32_t len);
+
+/**
  * Render PtpHeader object to binary (raw) form.
  * 
  * @param pData pointer to the beginning of the binary destination
