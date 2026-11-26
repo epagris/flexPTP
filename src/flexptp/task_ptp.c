@@ -55,8 +55,14 @@ static bool sPTP_operating = false; // does the PTP subsystem operate?
 // FIFO for incoming packets
 #if defined(FLEXPTP_NON_LINUX_OS) || defined(FLEXPTP_OSLESS)
 #define EVENT_FIFO_LENGTH (16)        ///< Event FIFO length
-#define NOTIFICATION_FIFO_LENGTH (16) ///< Notification FIFO length
 #define TX_CALLBACK_FIFO_LENGTH (10)  ///< Transmit callback FIFO length
+
+// Each item pushed onto one of the four FIFOs above is followed by one notification, and the task
+// takes one item per notification. So the notification FIFO must have room for every item they
+// can hold together: if it fills while one of them still has room, an item goes in without its
+// notification, and the task takes every later item from that FIFO one notification late, for
+// good -- a received one, once traffic is slow, past its TTL, i.e. not at all.
+#define NOTIFICATION_FIFO_LENGTH (RX_PACKET_FIFO_LENGTH + TX_PACKET_FIFO_LENGTH + EVENT_FIFO_LENGTH + TX_CALLBACK_FIFO_LENGTH) ///< Notification FIFO length
 #endif
 
 #define TX_TTL_MS (2000) ///< TTL for outbound packets
