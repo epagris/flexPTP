@@ -193,6 +193,21 @@ static void ptp_send_delay_resp_message(const RawPtpMessage *pRawMsg, const PtpH
     header.clockIdentity = S.hwoptions.clockIdentity; // set our clock identity
     header.control = PTP_CON_Delay_Resp;
 
+    // logMessageInterval of a Delay_Resp is the master's logMinDelayReqInterval (IEEE 1588-2019
+    // Table 42; 1588-2008 Table 24) -- the interval the slave should space its Delay_Reqs at.
+    // The header above is a copy of the incoming Delay_Req, whose logMessageInterval is 0x7F
+    // by the same table, so without this the master echoes 0x7F back and a ptp4l slave logs
+    // "ignore bogus delay request interval 2^127".
+    //
+    // PTP_LOGPER_SYNCMATCHED is flexPTP's own "send a Delay_Req after every Sync", and it is 127
+    // -- the same bit pattern as 0x7F -- so copying logDelayReqPeriod through unexamined would
+    // reintroduce the bug for exactly that profile. The interval it means is the Sync interval.
+    int8_t logMinDelayReqInterval = S.profile.logDelayReqPeriod;
+    if (logMinDelayReqInterval == PTP_LOGPER_SYNCMATCHED) {
+        logMinDelayReqInterval = S.profile.logSyncPeriod;
+    }
+    header.logMessagePeriod = logMinDelayReqInterval;
+
     // write fields
     ptp_construct_binary_header(delRespMsg.data, &header);        // HEADER
     ptp_write_binary_timestamps(delRespMsg.data, &t4, 1);         // t4 TIMESTAMP
